@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -6,6 +6,147 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+:root {
+    --brand-primary: #059669;
+    --brand-secondary: #2563eb;
+    --brand-accent: #10b981;
+    --brand-light: #f0fdf4;
+    --brand-dark: #064e3b;
+    --brand-gray: #6b7280;
+    --brand-white: #ffffff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@utility brand-gradient {
+    background-color: var(--brand-primary);
+}
+
+@utility brand-text {
+    color: var(--brand-primary);
+}
+
+@utility brand-accent {
+    color: var(--brand-secondary);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 16px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@utility animate-fadeInUp {
+    animation: fadeInUp 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes floatSlow {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@utility animate-floatSlow {
+    animation: floatSlow 6s ease-in-out infinite;
+}
+
+/* 3D tilt cards */
+.tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 300ms ease, box-shadow 300ms ease;
+}
+.tilt-card:hover {
+    transform: perspective(800px) rotateX(6deg) rotateY(-6deg) translateY(-4px);
+    box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.2);
+}
+
+/* Border helper */
+.gradient-border {
+    border: 2px solid var(--brand-primary);
+    border-radius: 1rem;
+}
+
+/* Slider transitions */
+@keyframes kenBurns {
+    0% {
+        transform: scale(1) translateZ(0);
+    }
+    100% {
+        transform: scale(1.08) translateZ(0);
+    }
+}
+.kenburns {
+    animation: kenBurns 10s ease-in-out infinite alternate;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.fade-in {
+    animation: fadeIn 600ms ease both;
+}
+
+/* Buttons and links */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.6rem;
+    padding: 0.625rem 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+.btn-primary {
+    background: var(--brand-primary);
+    color: var(--brand-white);
+    border: 2px solid var(--brand-primary);
+}
+.btn-primary:hover {
+    background: var(--brand-dark);
+    border-color: var(--brand-dark);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    transform: translateY(-1px);
+}
+.btn-secondary {
+    background: transparent;
+    color: var(--brand-secondary);
+    border: 2px solid var(--brand-secondary);
+}
+.btn-secondary:hover {
+    background: var(--brand-secondary);
+    color: var(--brand-white);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transform: translateY(-1px);
+}
+.link-secondary {
+    color: var(--brand-secondary);
+    text-decoration: none;
+}
+.link-secondary:hover {
+    color: var(--brand-primary);
+    text-decoration: underline;
 }
