@@ -1,57 +1,335 @@
-## PHASE 6: PERFORMANCE OPTIMIZATION (CONTINUED)
-==================================================
+# HASSEL MICROFINANCE INSTITUTION - FRONTEND DEVELOPMENT PLAN (UPDATED)
+# ========================================================================
 
-### 6.4 API Performance
-- **Request Optimization**: Minimize API calls and data transfer
-- **Response Caching**: Cache API responses in memory
-- **Pagination**: Efficient data loading with pagination
-- **Error Handling**: Graceful API error handling and retry logic
-- **Loading States**: Skeleton loaders and progress indicators
+## PROJECT OVERVIEW
+- **Technology Stack**: Vue.js 3 + Tailwind CSS + Laravel API
+- **Multi-language Support**: English, Pashto, Farsi
+- **Design System**: Modern, Professional, Agricultural Theme
+- **Architecture**: Single Page Application (SPA) with API integration
+- **Business Focus**: 7 Main Business Pillars Integration
 
-## PHASE 7: ADMIN DASHBOARD INTEGRATION
+## PHASE 1: DESIGN SYSTEM & FOUNDATION
 ========================================
 
-### 7.1 Admin Interface Components
+### 1.1 Color Palette & Typography
+- **Primary Colors**: Forest Green (#2D5016), Earth Brown (#8B4513)
+- **Secondary Colors**: Sage Green (#87A96B), Cream (#F5F5DC), Wheat (#F5DEB3)
+- **Accent Colors**: Sky Blue (#87CEEB), Sunset Orange (#FF8C00)
+- **Typography**: Google Fonts (Poppins for headings, Inter for body)
+- **Icons**: Font Awesome 6 (solid, regular, brands)
+
+### 1.2 Component Library
+- **Base Components**: Button, Input, Card, Modal, Dropdown, Tabs
+- **Layout Components**: Header, Footer, Sidebar, Container, Grid
+- **Content Components**: Hero, Section, Testimonial, Stats, Gallery
+- **Form Components**: ContactForm, SearchForm, FilterForm, RegistrationForm
+- **Navigation Components**: Navbar, Breadcrumb, Pagination
+- **Business Pillar Components**: PillarCard, ProgramCard, ToolCard, ImpactMetric
+
+### 1.3 Animation System
+- **Transitions**: fadeInUp, slideInLeft, slideInRight, zoomIn
+- **Hover Effects**: scale, shadow, color transitions
+- **Loading States**: skeleton loaders, spinners, progress bars
+- **Scroll Animations**: Intersection Observer API integration
+
+## PHASE 2: CORE PAGES DEVELOPMENT
+==================================
+
+### 2.1 Home Page (/)
+- **Hero Section**: Image slider with Ken Burns effect, CTA buttons
+- **Welcome Section**: Brief introduction with animated stats
+- **Vision/Mission/Values**: Card grid with icons and animations
+- **Business Pillars Overview**: 7 main pillars with icons and brief descriptions
+  - Smart & Sustainable Farming
+  - Agri-Education & Capacity Building
+  - Agri-Tech Solutions
+  - Seed & Input Supply Chain
+  - Post-Harvest & Market Access
+  - Community Empowerment & Inclusion
+  - Environmental Stewardship
+- **Who We Are**: Company overview with history timeline
+- **Latest News**: Preview of recent news articles (API integration)
+- **Photo Gallery**: Image grid with lightbox functionality
+- **Stakeholders**: Partner logos and information
+- **Funding Partners**: Donor recognition section
+- **Statistics**: Animated counters for beneficiaries, projects, staff
+- **Closing CTA**: Contact information and call-to-action
+
+### 2.2 About Us Page (/about)
+- **Hero Section**: Company overview with background image
+- **Who We Are**: Detailed company description
+- **Our History**: Interactive timeline with milestones
+- **Goals & Objectives**: Structured content with icons
+- **Strategic Partnerships**: Partner information and logos
+- **Leadership Team**: Executive board and team member profiles
+- **Organization Structure**: Visual org chart
+- **Geographical Coverage**: Map showing service areas
+- **What We Do**: Services overview with detailed descriptions
+
+### 2.3 Our Work Page (/our-work)
+- **Hero Section**: Services overview with compelling imagery
+- **Thematic Areas**: 
+  - Agriculture (crop loans, equipment financing)
+  - Livestock (animal husbandry, veterinary services)
+  - Financial Services (savings, insurance, remittances)
+- **Financial Products**:
+  - Sharia-Compliant (Murabaha, Ijara, Wakala)
+  - Conventional (term loans, credit lines)
+- **Our Impact**: Statistics and success metrics
+- **Process Flow**: Step-by-step loan application process
+- **Client Testimonials**: Success stories and feedback
+
+### 2.4 Business Pillars Pages
+
+#### 2.4.1 Smart & Sustainable Farming (/smart-farming)
+- **Hero Section**: Modern farming techniques showcase
+- **Techniques Overview**: Drip irrigation, greenhouse farming, precision agriculture
+- **Climate-Resilient Crops**: Information and recommendations
+- **Organic Practices**: Benefits and implementation guides
+- **Success Stories**: Case studies and farmer testimonials
+- **Interactive Tools**: Calculators and assessment tools
+- **Resource Library**: Guides, videos, and documentation
+
+#### 2.4.2 Agri-Education & Capacity Building (/education)
+- **Hero Section**: Training and education overview
+- **Training Programs**: List with registration functionality
+  - Soil health management
+  - Crop rotation techniques
+  - Pest management strategies
+  - Water conservation methods
+- **Workshop Schedule**: Calendar with upcoming events
+- **Field Schools**: Location-based learning opportunities
+- **Online Resources**: E-learning modules and materials
+- **Instructor Profiles**: Expert team and qualifications
+- **Certification Programs**: Skills certification and recognition
+
+#### 2.4.3 Agri-Tech Solutions (/agri-tech)
+- **Hero Section**: Technology solutions showcase
+- **Mobile Apps**: Download links and feature descriptions
+  - Farm management apps
+  - Weather monitoring tools
+  - Crop disease identification
+  - Market price tracking
+- **Sensor Technology**: IoT devices and data collection
+- **Weather Forecasting**: Real-time weather data and alerts
+- **Crop Disease Alerts**: Early warning system
+- **Yield Prediction**: AI-powered forecasting tools
+- **Tech Support**: Tutorials and help documentation
+
+#### 2.4.4 Seed & Input Supply Chain (/supply-chain)
+- **Hero Section**: Quality seeds and inputs overview
+- **Product Catalog**: Seeds, fertilizers, pesticides with specifications
+- **Quality Assurance**: Testing and certification information
+- **Distribution Network**: Map of supply points and partners
+- **Order System**: Online ordering and delivery tracking
+- **Supplier Partnerships**: Trusted supplier information
+- **Seasonal Recommendations**: Crop-specific input guidance
+
+#### 2.4.5 Post-Harvest & Market Access (/market-access)
+- **Hero Section**: Market access and post-harvest support
+- **Storage Solutions**: Facilities and services
+- **Packaging Services**: Professional packaging options
+- **Logistics Support**: Transportation and delivery
+- **Direct-to-Market**: Bypass middlemen channels
+- **Export Opportunities**: International market access
+- **Market Prices**: Real-time price information
+- **Market Intelligence**: Trends and analysis
+
+#### 2.4.6 Community Empowerment & Inclusion (/community)
+- **Hero Section**: Community empowerment overview
+- **Women in Agriculture**: Specialized programs and support
+- **Youth Engagement**: Young farmer initiatives
+- **Cooperative Farming**: Group farming models and benefits
+- **Inclusive Business**: Accessible financial services
+- **Community Success Stories**: Local impact examples
+- **Leadership Development**: Community leader training
+- **Social Impact**: Community development metrics
+
+#### 2.4.7 Environmental Stewardship (/environment)
+- **Hero Section**: Environmental sustainability focus
+- **Reforestation Projects**: Tree planting initiatives
+- **Soil Conservation**: Erosion prevention techniques
+- **Water Management**: Sustainable water use practices
+- **Sustainability Metrics**: Environmental impact dashboard
+- **Climate Action**: Carbon footprint reduction
+- **Biodiversity Protection**: Ecosystem preservation
+- **Environmental Reports**: Impact assessments and progress
+
+### 2.5 Resources & Media Page (/resources)
+- **Hero Section**: Resources overview with search functionality
+- **Tab Navigation**: News, Publications, Success Stories, RFPs/RFQs, Gallery, Programs
+- **News Tab**: 
+  - Article list with filters (date, category, language)
+  - Article detail view with related articles
+  - Search and pagination functionality
+- **Publications Tab**:
+  - Document list with download links
+  - PDF preview functionality
+  - Category filtering
+- **Success Stories Tab**:
+  - Client story cards with images
+  - Story detail view with full narrative
+  - Category and location filters
+- **RFPs/RFQs Tab**:
+  - Active and closed opportunities
+  - Document downloads and submission forms
+  - Deadline tracking
+- **Gallery Tab**:
+  - Photo galleries with categories
+  - Lightbox image viewer
+  - Image download functionality
+- **Programs Tab**:
+  - Training programs with registration
+  - Community programs information
+  - Environmental projects showcase
+
+### 2.6 Careers Page (/careers)
+- **Hero Section**: Career opportunities overview
+- **Why Work With Us**: Company culture and benefits
+- **Current Openings**: Job listings with filters
+- **Job Detail View**: Full job description and application form
+- **Application Process**: Step-by-step guide
+- **Employee Benefits**: Comprehensive benefits package
+- **Application Form**: Multi-step application with file upload
+
+### 2.7 Contact Us Page (/contact)
+- **Hero Section**: Contact information overview
+- **Contact Form**: Multi-field form with validation
+- **Regional Offices**: Office locations with maps
+- **Contact Information**: Phone, email, address details
+- **Office Hours**: Business hours and availability
+- **Map Integration**: Interactive location map
+- **Social Media**: Links to social platforms
+
+## PHASE 3: API INTEGRATION
+============================
+
+### 3.1 API Service Layer
+- **Base API Service**: Axios configuration and interceptors
+- **Authentication Service**: Login, logout, token management
+- **Content Services**: News, Publications, Galleries, Jobs
+- **Business Pillar Services**: Programs, Tools, Projects, Registrations
+- **Translation Service**: Multi-language content handling
+- **File Upload Service**: Image and document uploads
+
+### 3.2 State Management
+- **Vuex/Pinia Store**: Centralized state management
+- **Modules**: Auth, Content, BusinessPillars, UI, Language
+- **Actions**: API calls and data mutations
+- **Getters**: Computed state properties
+- **Mutations**: State updates
+
+### 3.3 Data Fetching
+- **Home Page Data**: Statistics, latest news, galleries, pillar highlights
+- **Content Pages**: Dynamic content from API
+- **Business Pillar Data**: Programs, tools, projects, registrations
+- **Search Functionality**: Content search across all types
+- **Pagination**: Load more and infinite scroll
+- **Caching**: Local storage for performance
+
+## PHASE 4: MULTI-LANGUAGE SUPPORT
+===================================
+
+### 4.1 Internationalization (i18n)
+- **Vue i18n Setup**: Language detection and switching
+- **Language Files**: JSON files for each language
+- **Static Content**: Hardcoded text translations
+- **Dynamic Content**: API-driven translations
+- **RTL Support**: Right-to-left layout for Pashto/Farsi
+
+### 4.2 Language Switching
+- **Language Selector**: Dropdown in header
+- **URL Structure**: /en/, /pashto/, /farsi/ prefixes
+- **Default Language**: English as fallback
+- **Language Persistence**: Remember user preference
+- **Content Loading**: Load appropriate language content
+
+## PHASE 5: RESPONSIVE DESIGN
+==============================
+
+### 5.1 Mobile-First Approach
+- **Breakpoints**: Mobile (320px), Tablet (768px), Desktop (1024px+)
+- **Touch Interactions**: Swipe, tap, pinch gestures
+- **Mobile Navigation**: Hamburger menu with slide-out
+- **Touch-Friendly**: Large buttons and touch targets
+- **Performance**: Optimized for mobile networks
+
+### 5.2 Cross-Browser Compatibility
+- **Modern Browsers**: Chrome, Firefox, Safari, Edge
+- **Progressive Enhancement**: Graceful degradation
+- **CSS Fallbacks**: Vendor prefixes and fallbacks
+- **JavaScript Polyfills**: ES6+ feature support
+- **Testing**: Cross-browser testing checklist
+
+## PHASE 6: PERFORMANCE OPTIMIZATION
+=====================================
+
+### 6.1 Loading Performance
+- **Code Splitting**: Route-based and component-based splitting
+- **Lazy Loading**: Images and components loaded on demand
+- **Bundle Optimization**: Tree shaking and minification
+- **CDN Integration**: Static asset delivery
+- **Caching Strategy**: Browser and server-side caching
+
+### 6.2 Image Optimization
+- **Responsive Images**: Different sizes for different devices
+- **WebP Format**: Modern image format with fallbacks
+- **Lazy Loading**: Intersection Observer for images
+- **Compression**: Optimized file sizes
+- **Placeholders**: Skeleton loaders during image load
+
+### 6.3 SEO Optimization
+- **Meta Tags**: Dynamic meta tags for each page
+- **Open Graph**: Social media sharing optimization
+- **Structured Data**: JSON-LD markup for search engines
+- **Sitemap**: XML sitemap generation
+- **Robots.txt**: Search engine crawling instructions
+
+## PHASE 7: INTERACTIVE FEATURES
+=================================
+
+### 7.1 Program Registration System
+- **Training Program Registration**: Multi-step registration forms
+- **Community Program Signup**: Easy enrollment process
+- **Market Access Application**: Business opportunity applications
+- **Registration Management**: User dashboard for enrolled programs
+- **Email Notifications**: Confirmation and reminder emails
+
+### 7.2 Interactive Tools
+- **Crop Calculator**: Yield and profit calculations
+- **Weather Widget**: Real-time weather information
+- **Disease Identifier**: Image-based crop disease detection
+- **Market Price Tracker**: Live price updates
+- **Sustainability Calculator**: Environmental impact assessment
+
+### 7.3 User Engagement Features
+- **Newsletter Signup**: Email subscription functionality
+- **Social Sharing**: Share content on social media
+- **Comments System**: User feedback and engagement
+- **Bookmarking**: Save favorite content for later
+- **Print Functionality**: Print-friendly page layouts
+
+## PHASE 8: ADMIN DASHBOARD INTEGRATION
+========================================
+
+### 8.1 Admin Interface Components
 - **Dashboard Overview**: Statistics, recent activity, quick actions
 - **Content Management**: CRUD interfaces for all content types
+- **Business Pillar Management**: Programs, tools, projects management
+- **Registration Management**: User program registrations
 - **Media Library**: File upload, organization, and management
 - **User Management**: Admin user creation and role management
 - **Translation Management**: Multi-language content editing
-- **Analytics**: Basic usage statistics and reports
+- **Analytics**: Usage statistics and reports
 
-### 7.2 Admin Features
+### 8.2 Admin Features
 - **Content Editor**: Rich text editor for news and publications
+- **Program Editor**: Training and community program management
 - **Image Upload**: Drag-and-drop image upload with preview
 - **File Management**: PDF and document upload/management
 - **Bulk Operations**: Mass content operations and updates
 - **Content Preview**: Live preview of content before publishing
 - **Draft System**: Save and manage draft content
-
-## PHASE 8: ADVANCED FEATURES
-==============================
-
-### 8.1 Search Functionality
-- **Global Search**: Search across all content types
-- **Advanced Filters**: Date, category, language, status filters
-- **Search Suggestions**: Auto-complete and suggestions
-- **Search Results**: Paginated and categorized results
-- **Search Analytics**: Track popular search terms
-
-### 8.2 Interactive Features
-- **Contact Forms**: Multi-step forms with validation
-- **Newsletter Signup**: Email subscription functionality
-- **Social Sharing**: Share content on social media
-- **Print Functionality**: Print-friendly page layouts
-- **Bookmarking**: Save favorite content for later
-- **Comments System**: User feedback and engagement
-
-### 8.3 Accessibility Features
-- **WCAG Compliance**: Meet accessibility standards
-- **Keyboard Navigation**: Full keyboard accessibility
-- **Screen Reader Support**: Proper ARIA labels and descriptions
-- **High Contrast Mode**: Alternative color schemes
-- **Font Size Controls**: User-adjustable text sizes
-- **Focus Management**: Clear focus indicators
 
 ## PHASE 9: TESTING & QUALITY ASSURANCE
 =========================================
@@ -66,6 +344,7 @@
 ### 9.2 Integration Testing
 - **API Integration**: Test frontend-backend communication
 - **User Flows**: Test complete user journeys
+- **Business Pillar Flows**: Test program registration and management
 - **Cross-Browser**: Test across different browsers
 - **Mobile Testing**: Test on various mobile devices
 - **Performance Testing**: Load and stress testing
@@ -92,11 +371,13 @@
 - **Error Tracking**: Real-time error monitoring
 - **Performance Monitoring**: Core Web Vitals tracking
 - **User Analytics**: User behavior and engagement tracking
+- **Business Metrics**: Program registrations and engagement
 - **Uptime Monitoring**: Service availability monitoring
 - **Security Monitoring**: Security threat detection
 
 ### 10.3 Maintenance & Updates
 - **Content Updates**: Regular content refresh procedures
+- **Program Updates**: Training and community program updates
 - **Security Updates**: Regular security patches and updates
 - **Performance Optimization**: Ongoing performance improvements
 - **Backup Strategy**: Regular data and content backups
@@ -115,15 +396,26 @@
 - [ ] Home page with all sections and API integration
 - [ ] About page with complete content structure
 - [ ] Our Work page with services and products
+- [ ] All 7 Business Pillar pages implemented
 - [ ] Resources page with tabbed content and search
 - [ ] Careers page with job listings and applications
 - [ ] Contact page with forms and location info
+
+### Business Pillar Integration
+- [ ] Smart & Sustainable Farming page with tools
+- [ ] Agri-Education page with program registration
+- [ ] Agri-Tech Solutions page with app downloads
+- [ ] Supply Chain page with product catalog
+- [ ] Market Access page with services
+- [ ] Community Empowerment page with programs
+- [ ] Environmental Stewardship page with metrics
 
 ### API Integration
 - [ ] All API services implemented and tested
 - [ ] State management system working
 - [ ] Data fetching and caching implemented
 - [ ] Error handling and loading states
+- [ ] Program registration system working
 
 ### Multi-Language Support
 - [ ] i18n system fully implemented
@@ -156,35 +448,56 @@
 ## ESTIMATED TIMELINE
 ====================
 
-### Phase 1-2: Design & Core Pages (5-7 days)
+### Phase 1-2: Design & Core Pages (7-9 days)
 - Design system and component library
 - All main pages with static content
+- All 7 business pillar pages
 - Basic responsive design
 
-### Phase 3-4: API Integration & i18n (4-5 days)
+### Phase 3-4: API Integration & i18n (5-6 days)
 - API service layer implementation
 - State management setup
 - Multi-language support
+- Program registration system
 
-### Phase 5-6: Responsive & Performance (3-4 days)
+### Phase 5-6: Responsive & Performance (4-5 days)
 - Mobile optimization
 - Performance optimization
 - SEO implementation
 
-### Phase 7-8: Admin & Advanced Features (4-5 days)
+### Phase 7-8: Interactive Features & Admin (6-7 days)
+- Interactive tools and calculators
+- Program registration system
 - Admin dashboard integration
-- Search and interactive features
-- Accessibility improvements
+- Advanced features
 
-### Phase 9-10: Testing & Deployment (3-4 days)
+### Phase 9-10: Testing & Deployment (4-5 days)
 - Comprehensive testing
 - Production deployment
 - Monitoring setup
 
-**Total Estimated Time**: 19-25 days
+**Total Estimated Time**: 26-32 days
 
 ## TECHNICAL SPECIFICATIONS
 ===========================
 
 ### Frontend Stack
-- **Framework**: Vue.js 3 with Composition AP
+- **Framework**: Vue.js 3 with Composition API
+- **Styling**: Tailwind CSS with custom components
+- **State Management**: Pinia
+- **Routing**: Vue Router 4
+- **HTTP Client**: Axios
+- **Internationalization**: Vue i18n
+- **Build Tool**: Vite
+- **Testing**: Vitest + Vue Test Utils
+
+### Key Features
+- **Responsive Design**: Mobile-first approach
+- **Multi-language**: English, Pashto, Farsi support
+- **Business Pillars**: 7 dedicated pillar pages
+- **Interactive Tools**: Calculators, weather, disease ID
+- **Program Registration**: Training and community programs
+- **Admin Dashboard**: Content and program management
+- **Performance**: Optimized loading and caching
+- **SEO**: Search engine optimization
+- **Accessibility**: WCAG comp
