@@ -1,0 +1,297 @@
+# HASSEL MICROFINANCE INSTITUTION - BACKEND DEVELOPMENT PLAN
+# ================================================================
+
+## PROJECT OVERVIEW
+- **Technology Stack**: Laravel 10 + MySQL + Vue.js 3 + Tailwind CSS
+- **Multi-language Support**: English, Pashto, Farsi
+- **Admin System**: Single admin with ability to create additional users
+- **Content Strategy**: Static content in code, Dynamic content in database
+
+## PHASE 1: DATABASE DESIGN & MIGRATIONS
+========================================
+
+### 1.1 Core Tables (Dynamic Content Only)
+- **news** - Latest news and updates
+  - id, title, slug, excerpt, content, featured_image, status, published_at, created_at, updated_at
+- **publications** - Reports and publications
+  - id, title, slug, description, file_path, file_type, status, published_at, created_at, updated_at
+- **success_stories** - Client success stories
+  - id, title, slug, client_name, story, image, status, published_at, created_at, updated_at
+- **rfps_rfqs** - Request for proposals/quotes
+  - id, title, slug, description, file_path, deadline, status, published_at, created_at, updated_at
+- **galleries** - Photo galleries
+  - id, title, slug, description, cover_image, status, created_at, updated_at
+- **gallery_images** - Individual gallery photos
+  - id, gallery_id, title, image_path, alt_text, sort_order, created_at, updated_at
+- **job_announcements** - Career postings
+  - id, title, slug, description, requirements, location, salary_range, deadline, status, published_at, created_at, updated_at
+- **contacts** - Contact form submissions
+  - id, name, email, phone, subject, message, status, created_at, updated_at
+- **beneficiaries_stats** - Numbers of beneficiaries, projects, staff
+  - id, stat_type, value, description, year, created_at, updated_at
+
+### 1.2 Business Pillar Content Tables
+- **training_programs** - Agri-education and capacity building
+  - id, title, slug, description, program_type, duration, location, instructor, max_participants, start_date, end_date, status, created_at, updated_at
+- **agri_tech_tools** - Technology solutions and apps
+  - id, name, slug, description, tool_type, features, download_link, platform, version, status, created_at, updated_at
+- **market_access_programs** - Post-harvest and market support
+  - id, title, slug, description, program_type, target_crops, location, partner_organizations, status, created_at, updated_at
+- **environmental_projects** - Sustainability and environmental initiatives
+  - id, title, slug, description, project_type, impact_metrics, location, funding_source, status, created_at, updated_at
+- **community_programs** - Women, youth, and cooperative programs
+  - id, title, slug, description, target_group, program_type, location, partner_organizations, status, created_at, updated_at
+- **program_registrations** - User registrations for programs
+  - id, program_type, program_id, user_name, email, phone, location, registration_date, status, created_at, updated_at
+
+### 1.3 Translation System
+- **translations** - Master translation table
+  - id, model_type, model_id, field_name, language, content, created_at, updated_at
+
+### 1.4 User Management
+- **users** - Admin users
+  - id, name, email, password, role, status, created_at, updated_at
+
+## PHASE 2: MODELS & RELATIONSHIPS
+==================================
+
+### 2.1 Core Models
+- **News** - Has many translations, belongs to user
+- **Publication** - Has many translations, belongs to user
+- **SuccessStory** - Has many translations, belongs to user
+- **RfpRfq** - Has many translations, belongs to user
+- **Gallery** - Has many gallery_images, has many translations, belongs to user
+- **GalleryImage** - Belongs to gallery
+- **JobAnnouncement** - Has many translations, belongs to user
+- **Contact** - Belongs to user (admin who handles it)
+- **BeneficiariesStat** - Has many translations
+- **Translation** - Polymorphic relationship to all content models
+- **User** - Has many news, publications, success_stories, etc.
+
+### 2.2 Business Pillar Models
+- **TrainingProgram** - Has many translations, has many program_registrations, belongs to user
+- **AgriTechTool** - Has many translations, belongs to user
+- **MarketAccessProgram** - Has many translations, has many program_registrations, belongs to user
+- **EnvironmentalProject** - Has many translations, belongs to user
+- **CommunityProgram** - Has many translations, has many program_registrations, belongs to user
+- **ProgramRegistration** - Belongs to training_program/market_access_program/community_program
+
+### 2.3 Model Features
+- **Fillable properties** for mass assignment
+- **Casts** for dates, booleans, etc.
+- **Accessors/Mutators** for formatted data
+- **Scopes** for filtering (published, active, etc.)
+- **Relationships** properly defined
+
+## PHASE 3: API CONTROLLERS
+===========================
+
+### 3.1 Public API Controllers
+- **SiteController** - Main public endpoints
+  - home() - Returns home page data
+  - about() - Returns about page data
+  - news() - Returns news list with pagination
+  - newsShow($slug) - Returns single news article
+  - publications() - Returns publications list
+  - successStories() - Returns success stories
+  - rfpsRfqs() - Returns RFPs/RFQs
+  - gallery() - Returns galleries list
+  - galleryShow($slug) - Returns single gallery with images
+  - jobs() - Returns job announcements
+  - contact() - Handles contact form submission
+  - stats() - Returns beneficiaries statistics
+
+### 3.2 Admin API Controllers
+- **AdminController** - Dashboard data
+- **AdminNewsController** - News CRUD operations
+- **AdminPublicationController** - Publications CRUD
+- **AdminSuccessStoryController** - Success stories CRUD
+- **AdminRfpRfqController** - RFPs/RFQs CRUD
+- **AdminGalleryController** - Galleries CRUD
+- **AdminJobController** - Jobs CRUD
+- **AdminContactController** - Contact submissions management
+- **AdminStatsController** - Statistics management
+- **AdminTranslationController** - Translation management
+
+## PHASE 4: REQUEST VALIDATION
+==============================
+
+### 4.1 Form Request Classes
+- **StoreNewsRequest** - News creation validation
+- **UpdateNewsRequest** - News update validation
+- **StorePublicationRequest** - Publication creation validation
+- **UpdatePublicationRequest** - Publication update validation
+- **StoreSuccessStoryRequest** - Success story creation validation
+- **UpdateSuccessStoryRequest** - Success story update validation
+- **StoreRfpRfqRequest** - RFP/RFQ creation validation
+- **UpdateRfpRfqRequest** - RFP/RFQ update validation
+- **StoreGalleryRequest** - Gallery creation validation
+- **UpdateGalleryRequest** - Gallery update validation
+- **StoreJobRequest** - Job creation validation
+- **UpdateJobRequest** - Job update validation
+- **ContactRequest** - Contact form validation
+
+## PHASE 5: API RESOURCES
+=========================
+
+### 5.1 Resource Classes
+- **NewsResource** - News API response formatting
+- **PublicationResource** - Publications API response formatting
+- **SuccessStoryResource** - Success stories API response formatting
+- **RfpRfqResource** - RFPs/RFQs API response formatting
+- **GalleryResource** - Galleries API response formatting
+- **JobResource** - Jobs API response formatting
+- **ContactResource** - Contact submissions API response formatting
+- **StatsResource** - Statistics API response formatting
+
+## PHASE 6: ROUTES & MIDDLEWARE
+===============================
+
+### 6.1 API Routes (api.php)
+- **Public Routes**: /api/home, /api/about, /api/news, /api/publications, etc.
+- **Admin Routes**: /api/admin/* (protected by auth middleware)
+- **Language Routes**: All routes support ?lang=en/pashto/farsi parameter
+
+### 6.2 Web Routes (web.php)
+- **SPA Route**: Catch-all route for Vue.js SPA
+- **Admin Routes**: /admin/* for admin dashboard
+
+### 6.3 Middleware
+- **LanguageMiddleware** - Handles language switching
+- **AdminMiddleware** - Protects admin routes
+- **CorsMiddleware** - Handles cross-origin requests
+
+## PHASE 7: SERVICES & HELPERS
+==============================
+
+### 7.1 Services
+- **TranslationService** - Handles multi-language content
+- **FileUploadService** - Handles file uploads
+- **ImageOptimizationService** - Optimizes uploaded images
+- **EmailService** - Sends contact form emails
+- **SlugService** - Generates unique slugs
+
+### 7.2 Helpers
+- **LanguageHelper** - Language detection and switching
+- **ContentHelper** - Content formatting and processing
+- **DateHelper** - Date formatting for different languages
+
+## PHASE 8: SEEDERS & FACTORIES
+===============================
+
+### 8.1 Seeders
+- **DatabaseSeeder** - Main seeder
+- **NewsSeeder** - Sample news articles
+- **PublicationSeeder** - Sample publications
+- **SuccessStorySeeder** - Sample success stories
+- **GallerySeeder** - Sample galleries
+- **JobSeeder** - Sample job announcements
+- **StatsSeeder** - Sample statistics
+- **TranslationSeeder** - Sample translations
+
+### 8.2 Factories
+- **NewsFactory** - News model factory
+- **PublicationFactory** - Publication model factory
+- **SuccessStoryFactory** - Success story model factory
+- **GalleryFactory** - Gallery model factory
+- **JobFactory** - Job model factory
+
+## PHASE 9: CONFIGURATION
+=========================
+
+### 9.1 Config Files
+- **app.php** - Application configuration
+- **database.php** - Database configuration
+- **filesystems.php** - File storage configuration
+- **mail.php** - Email configuration
+- **translation.php** - Translation configuration
+
+### 9.2 Environment Variables
+- Database credentials
+- Mail configuration
+- File storage paths
+- Translation settings
+
+## PHASE 10: TESTING
+===================
+
+### 10.1 Feature Tests
+- **NewsTest** - News CRUD operations
+- **PublicationTest** - Publication CRUD operations
+- **GalleryTest** - Gallery CRUD operations
+- **JobTest** - Job CRUD operations
+- **ContactTest** - Contact form submission
+- **TranslationTest** - Multi-language functionality
+
+### 10.2 Unit Tests
+- **Model Tests** - Model relationships and methods
+- **Service Tests** - Service class functionality
+- **Helper Tests** - Helper function functionality
+
+## PHASE 11: DOCUMENTATION
+==========================
+
+### 11.1 API Documentation
+- **API Endpoints** - Complete list with examples
+- **Request/Response Formats** - Data structure documentation
+- **Authentication** - Admin authentication flow
+- **Error Handling** - Error response formats
+
+### 11.2 Admin Documentation
+- **Content Management** - How to manage different content types
+- **Translation Management** - How to add/edit translations
+- **File Management** - How to upload and manage files
+- **User Management** - How to create additional admin users
+
+## PHASE 12: DEPLOYMENT PREPARATION
+===================================
+
+### 12.1 Production Configuration
+- **Environment Variables** - Production settings
+- **Database Optimization** - Indexes and performance
+- **File Storage** - Production file storage setup
+- **Caching** - Redis/Memcached configuration
+
+### 12.2 Security
+- **CSRF Protection** - Cross-site request forgery protection
+- **XSS Protection** - Cross-site scripting protection
+- **SQL Injection Prevention** - Parameterized queries
+- **File Upload Security** - Secure file handling
+
+## COMPLETION CRITERIA
+=====================
+- [ ] All migrations created and tested
+- [ ] All models created with relationships
+- [ ] All API controllers implemented
+- [ ] All request validation classes created
+- [ ] All API resources implemented
+- [ ] All routes configured
+- [ ] All middleware implemented
+- [ ] All services and helpers created
+- [ ] All seeders and factories created
+- [ ] All configuration files updated
+- [ ] All tests written and passing
+- [ ] API documentation completed
+- [ ] Admin documentation completed
+- [ ] Production configuration ready
+- [ ] Security measures implemented
+
+## ESTIMATED TIMELINE
+====================
+- **Phase 1-2**: 2-3 days (Database & Models)
+- **Phase 3-4**: 3-4 days (Controllers & Validation)
+- **Phase 5-6**: 2-3 days (Resources & Routes)
+- **Phase 7-8**: 2-3 days (Services & Seeders)
+- **Phase 9-10**: 2-3 days (Configuration & Testing)
+- **Phase 11-12**: 1-2 days (Documentation & Deployment)
+
+**Total Estimated Time**: 12-18 days
+
+## NOTES
+=======
+- All static content (Vision, Mission, Values, History, etc.) will be hardcoded in Vue components
+- Only dynamic content that needs admin management will be in database
+- Multi-language support through translation table and i18n
+- Single admin system with ability to create additional users
+- Focus on simplicity and maintainability
+- No unnecessary complexity or over-engineering
