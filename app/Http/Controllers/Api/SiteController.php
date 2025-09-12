@@ -34,8 +34,8 @@ class SiteController extends Controller
   public function about()
   {
     return response()->json([
-      'title' => 'About HMI',
-      'content' => 'Hassel Microfinance Institution (HMI) advances financial inclusion...'
+      'title' => 'About MAI',
+      'content' => 'Mount Agro Institution (MAI) advances financial inclusion...'
     ]);
   }
 

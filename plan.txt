@@ -1,4 +1,5 @@
-# HASSEL MICROFINANCE INSTITUTION - BACKEND DEVELOPMENT PLAN
+# MOUNT AGRO INSTITUTION - BACKEND DEVELOPMENT PLAN
+
 # ================================================================
 
 ## PROJECT OVERVIEW
