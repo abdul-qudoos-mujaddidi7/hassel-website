@@ -3,63 +3,98 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AgriTechTool;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AdminAgriTechToolController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        //
+        $query = AgriTechTool::query();
+
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->has('tool_type')) {
+            $query->where('tool_type', $request->tool_type);
+        }
+
+        $tools = $query->orderBy('created_at', 'desc')->paginate(15);
+        return response()->json($tools);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(Request $request): JsonResponse
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|unique:agri_tech_tools,slug|max:255',
+            'description' => 'required|string',
+            'tool_type' => 'required|in:mobile_app,web_platform,hardware,software,sensor',
+            'platform' => 'nullable|string|max:100',
+            'version' => 'nullable|string|max:50',
+            'features' => 'nullable|json',
+            'download_link' => 'nullable|url',
+            'status' => 'required|in:draft,published,archived',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $validator->validated();
+
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['name']);
+        }
+
+        $tool = AgriTechTool::create($data);
+
+        return response()->json(['message' => 'AgriTech tool created', 'tool' => $tool], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function show(AgriTechTool $agriTechTool): JsonResponse
     {
-        //
+        return response()->json(['tool' => $agriTechTool]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, AgriTechTool $agriTechTool): JsonResponse
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|unique:agri_tech_tools,slug,' . $agriTechTool->id,
+            'description' => 'required|string',
+            'tool_type' => 'required|in:mobile_app,web_platform,hardware,software,sensor',
+            'platform' => 'nullable|string|max:100',
+            'version' => 'nullable|string|max:50',
+            'features' => 'nullable|json',
+            'download_link' => 'nullable|url',
+            'status' => 'required|in:draft,published,archived',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $validator->validated();
+
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['name']);
+        }
+
+        $agriTechTool->update($data);
+
+        return response()->json(['message' => 'AgriTech tool updated', 'tool' => $agriTechTool->fresh()]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy(AgriTechTool $agriTechTool): JsonResponse
     {
-        //
-    }
+        $agriTechTool->translations()->delete();
+        $agriTechTool->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(['message' => 'AgriTech tool deleted']);
     }
 }

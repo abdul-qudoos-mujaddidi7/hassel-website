@@ -3,63 +3,132 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
 
 class AdminContactController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of contact submissions
      */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        //
+        $query = Contact::query();
+
+        // Apply filters
+        if ($request->has('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('email', 'like', '%' . $request->search . '%')
+                    ->orWhere('subject', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->has('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+
+        if ($request->has('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        $contacts = $query->orderBy('created_at', 'desc')
+            ->paginate($request->get('per_page', 15));
+
+        return response()->json($contacts);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the specified contact submission
      */
-    public function create()
+    public function show(Contact $contact): JsonResponse
     {
-        //
+        return response()->json(['contact' => $contact]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Remove the specified contact submission
      */
-    public function store(Request $request)
+    public function destroy(Contact $contact): JsonResponse
     {
-        //
+        $contact->delete();
+
+        return response()->json([
+            'message' => 'Contact submission deleted successfully'
+        ]);
     }
 
     /**
-     * Display the specified resource.
+     * Bulk delete contact submissions
      */
-    public function show(string $id)
+    public function bulkDelete(Request $request): JsonResponse
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'ids' => 'required|array',
+            'ids.*' => 'exists:contacts,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $count = Contact::whereIn('id', $request->ids)->delete();
+
+        return response()->json([
+            'message' => "{$count} contact submissions deleted successfully"
+        ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Get contact statistics
      */
-    public function edit(string $id)
+    public function stats(): JsonResponse
     {
-        //
+        return response()->json([
+            'total' => Contact::count(),
+            'this_month' => Contact::whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year)
+                ->count(),
+            'this_week' => Contact::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
+                ->count(),
+            'today' => Contact::whereDate('created_at', today())->count(),
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Export contact submissions to CSV
      */
-    public function update(Request $request, string $id)
+    public function export(Request $request): JsonResponse
     {
-        //
-    }
+        $query = Contact::query();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if ($request->has('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+
+        if ($request->has('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        $contacts = $query->orderBy('created_at', 'desc')->get();
+
+        // In a real implementation, you would generate and return a CSV file
+        // For now, return the data that could be exported
+        return response()->json([
+            'message' => 'Export data prepared',
+            'count' => $contacts->count(),
+            'data' => $contacts->map(function ($contact) {
+                return [
+                    'name' => $contact->name,
+                    'email' => $contact->email,
+                    'phone' => $contact->phone,
+                    'subject' => $contact->subject,
+                    'message' => $contact->message,
+                    'created_at' => $contact->created_at->format('Y-m-d H:i:s'),
+                ];
+            })
+        ]);
     }
 }

@@ -3,63 +3,91 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CommunityProgram;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AdminCommunityProgramController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        //
+        $query = CommunityProgram::with('registrations');
+
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $programs = $query->orderBy('created_at', 'desc')->paginate(15);
+        return response()->json($programs);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(Request $request): JsonResponse
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'slug' => 'nullable|string|unique:community_programs,slug|max:255',
+            'description' => 'required|string',
+            'program_type' => 'required|in:capacity_building,financial_literacy,leadership,entrepreneurship,cooperative',
+            'target_group' => 'required|in:women,youth,cooperatives,farmers,all',
+            'partner_organizations' => 'nullable|json',
+            'status' => 'required|in:draft,published,archived',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $validator->validated();
+
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
+
+        $program = CommunityProgram::create($data);
+
+        return response()->json(['message' => 'Community program created', 'program' => $program], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function show(CommunityProgram $communityProgram): JsonResponse
     {
-        //
+        return response()->json(['program' => $communityProgram->load('registrations')]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, CommunityProgram $communityProgram): JsonResponse
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'slug' => 'nullable|string|unique:community_programs,slug,' . $communityProgram->id,
+            'description' => 'required|string',
+            'program_type' => 'required|in:capacity_building,financial_literacy,leadership,entrepreneurship,cooperative',
+            'target_group' => 'required|in:women,youth,cooperatives,farmers,all',
+            'partner_organizations' => 'nullable|json',
+            'status' => 'required|in:draft,published,archived',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $validator->validated();
+
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
+
+        $communityProgram->update($data);
+
+        return response()->json(['message' => 'Community program updated', 'program' => $communityProgram->fresh()]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy(CommunityProgram $communityProgram): JsonResponse
     {
-        //
-    }
+        $communityProgram->translations()->delete();
+        $communityProgram->registrations()->delete();
+        $communityProgram->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(['message' => 'Community program deleted']);
     }
 }
