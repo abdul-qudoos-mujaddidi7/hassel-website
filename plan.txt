@@ -87,23 +87,48 @@
 ## PHASE 3: API CONTROLLERS
 ===========================
 
-### 3.1 Public API Controllers
-- **SiteController** - Main public endpoints
-  - home() - Returns home page data
-  - about() - Returns about page data
-  - news() - Returns news list with pagination
-  - newsShow($slug) - Returns single news article
-  - publications() - Returns publications list
-  - successStories() - Returns success stories
-  - rfpsRfqs() - Returns RFPs/RFQs
-  - gallery() - Returns galleries list
-  - galleryShow($slug) - Returns single gallery with images
-  - jobs() - Returns job announcements
-  - contact() - Handles contact form submission
-  - stats() - Returns beneficiaries statistics
+### 3.1 Public API Controllers (Separated by Responsibility)
 
-### 3.2 Admin API Controllers
-- **AdminController** - Dashboard data
+#### 3.1.1 Core Content Controllers
+- **HomeController** - Home page data and general site info
+  - index() - Returns home page data with stats, latest content
+  - about() - Returns about page information
+  - stats() - Returns beneficiaries statistics
+- **NewsController** - News content management
+  - index() - Returns news list with pagination
+  - show($slug) - Returns single news article
+- **PublicationController** - Publications management  
+  - index() - Returns publications list
+- **SuccessStoryController** - Success stories
+  - index() - Returns success stories list
+- **RfpRfqController** - RFPs/RFQs management
+  - index() - Returns RFPs/RFQs list
+- **GalleryController** - Photo galleries
+  - index() - Returns galleries list
+  - show($slug) - Returns single gallery with images
+- **JobController** - Job announcements
+  - index() - Returns job announcements
+- **ContactController** - Contact form handling
+  - store() - Handles contact form submission
+
+#### 3.1.2 Business Pillar Controllers
+- **TrainingProgramController** - Training programs
+  - index() - Returns training programs list
+  - show($slug) - Returns single training program
+- **AgriTechToolController** - Agricultural technology tools
+  - index() - Returns agri-tech tools list
+  - show($slug) - Returns single agri-tech tool
+- **MarketAccessProgramController** - Market access programs
+  - index() - Returns market access programs
+- **EnvironmentalProjectController** - Environmental projects
+  - index() - Returns environmental projects
+- **CommunityProgramController** - Community programs
+  - index() - Returns community programs
+- **ProgramRegistrationController** - Program registration handling
+  - store() - Handles program registrations
+
+### 3.2 Core Admin API Controllers
+- **AdminController** - Dashboard data and overview
 - **AdminNewsController** - News CRUD operations
 - **AdminPublicationController** - Publications CRUD
 - **AdminSuccessStoryController** - Success stories CRUD
@@ -114,10 +139,18 @@
 - **AdminStatsController** - Statistics management
 - **AdminTranslationController** - Translation management
 
+### 3.3 Business Pillar Admin Controllers
+- **AdminTrainingProgramController** - Training programs CRUD operations
+- **AdminAgriTechToolController** - Agri-tech tools CRUD operations
+- **AdminMarketAccessProgramController** - Market access programs CRUD
+- **AdminEnvironmentalProjectController** - Environmental projects CRUD
+- **AdminCommunityProgramController** - Community programs CRUD
+- **AdminProgramRegistrationController** - Program registrations management
+
 ## PHASE 4: REQUEST VALIDATION
 ==============================
 
-### 4.1 Form Request Classes
+### 4.1 Core Content Form Request Classes
 - **StoreNewsRequest** - News creation validation
 - **UpdateNewsRequest** - News update validation
 - **StorePublicationRequest** - Publication creation validation
@@ -132,26 +165,73 @@
 - **UpdateJobRequest** - Job update validation
 - **ContactRequest** - Contact form validation
 
+### 4.2 Business Pillar Form Request Classes
+- **StoreTrainingProgramRequest** - Training program creation validation
+- **UpdateTrainingProgramRequest** - Training program update validation
+- **StoreAgriTechToolRequest** - Agri-tech tool creation validation
+- **UpdateAgriTechToolRequest** - Agri-tech tool update validation
+- **StoreMarketAccessProgramRequest** - Market access program creation validation
+- **UpdateMarketAccessProgramRequest** - Market access program update validation
+- **StoreEnvironmentalProjectRequest** - Environmental project creation validation
+- **UpdateEnvironmentalProjectRequest** - Environmental project update validation
+- **StoreCommunityProgramRequest** - Community program creation validation
+- **UpdateCommunityProgramRequest** - Community program update validation
+- **ProgramRegistrationRequest** - Program registration validation
+
 ## PHASE 5: API RESOURCES
 =========================
 
-### 5.1 Resource Classes
+### 5.1 Core Content Resource Classes
 - **NewsResource** - News API response formatting
 - **PublicationResource** - Publications API response formatting
 - **SuccessStoryResource** - Success stories API response formatting
 - **RfpRfqResource** - RFPs/RFQs API response formatting
 - **GalleryResource** - Galleries API response formatting
+- **GalleryImageResource** - Gallery images API response formatting
 - **JobResource** - Jobs API response formatting
 - **ContactResource** - Contact submissions API response formatting
 - **StatsResource** - Statistics API response formatting
+- **TranslationResource** - Translation API response formatting
+
+### 5.2 Business Pillar Resource Classes
+- **TrainingProgramResource** - Training programs API response formatting
+- **AgriTechToolResource** - Agri-tech tools API response formatting
+- **MarketAccessProgramResource** - Market access programs API response formatting
+- **EnvironmentalProjectResource** - Environmental projects API response formatting
+- **CommunityProgramResource** - Community programs API response formatting
+- **ProgramRegistrationResource** - Program registrations API response formatting
 
 ## PHASE 6: ROUTES & MIDDLEWARE
 ===============================
 
-### 6.1 API Routes (api.php)
-- **Public Routes**: /api/home, /api/about, /api/news, /api/publications, etc.
+### 6.1 API Routes (api.php) - Clean Controller Structure
+- **Core Content Routes**:
+  - /api/ (HomeController@index) - Home page data
+  - /api/about (HomeController@about) - About page
+  - /api/stats (HomeController@stats) - Statistics
+  - /api/news (NewsController@index) - News list
+  - /api/news/{slug} (NewsController@show) - Single news
+  - /api/publications (PublicationController@index) - Publications
+  - /api/success-stories (SuccessStoryController@index) - Success stories
+  - /api/rfps-rfqs (RfpRfqController@index) - RFPs/RFQs
+  - /api/galleries (GalleryController@index) - Galleries list
+  - /api/galleries/{slug} (GalleryController@show) - Single gallery
+  - /api/jobs (JobController@index) - Job announcements
+  - /api/contact (ContactController@store) - Contact form (POST)
+
+- **Business Pillar Routes**:
+  - /api/training-programs (TrainingProgramController@index)
+  - /api/training-programs/{slug} (TrainingProgramController@show)
+  - /api/agri-tech-tools (AgriTechToolController@index)
+  - /api/agri-tech-tools/{slug} (AgriTechToolController@show)
+  - /api/market-access-programs (MarketAccessProgramController@index)
+  - /api/environmental-projects (EnvironmentalProjectController@index)
+  - /api/community-programs (CommunityProgramController@index)
+  - /api/program-register (ProgramRegistrationController@store) (POST)
+
 - **Admin Routes**: /api/admin/* (protected by auth middleware)
-- **Language Routes**: All routes support ?lang=en/pashto/farsi parameter
+  - Organized by resource with proper separation of concerns
+- **Language Support**: All routes support ?lang=en/pashto/farsi parameter
 
 ### 6.2 Web Routes (web.php)
 - **SPA Route**: Catch-all route for Vue.js SPA
@@ -216,7 +296,7 @@
 ## PHASE 10: TESTING
 ===================
 
-### 10.1 Feature Tests
+### 10.1 Core Content Feature Tests
 - **NewsTest** - News CRUD operations
 - **PublicationTest** - Publication CRUD operations
 - **GalleryTest** - Gallery CRUD operations
@@ -224,7 +304,15 @@
 - **ContactTest** - Contact form submission
 - **TranslationTest** - Multi-language functionality
 
-### 10.2 Unit Tests
+### 10.2 Business Pillar Feature Tests
+- **TrainingProgramTest** - Training program CRUD and registration
+- **AgriTechToolTest** - Agri-tech tool CRUD operations
+- **MarketAccessProgramTest** - Market access program CRUD
+- **EnvironmentalProjectTest** - Environmental project CRUD
+- **CommunityProgramTest** - Community program CRUD
+- **ProgramRegistrationTest** - Program registration functionality
+
+### 10.3 Unit Tests
 - **Model Tests** - Model relationships and methods
 - **Service Tests** - Service class functionality
 - **Helper Tests** - Helper function functionality
@@ -261,32 +349,57 @@
 
 ## COMPLETION CRITERIA
 =====================
-- [ ] All migrations created and tested
-- [ ] All models created with relationships
-- [ ] All API controllers implemented
+
+### Database & Models
+- [x] All core content migrations created and tested
+- [x] All business pillar migrations created and tested
+- [x] Translation system migration created
+- [x] All models created with relationships and features
+- [x] Polymorphic relationships implemented
+
+### API Layer
+- [ ] Core content API controllers implemented
+- [ ] Business pillar API controllers implemented  
+- [ ] Public SiteController with all endpoints
+- [ ] All admin controllers implemented
+- [ ] Program registration system implemented
 - [ ] All request validation classes created
 - [ ] All API resources implemented
-- [ ] All routes configured
+- [ ] All routes configured (core + business pillars)
+
+### System Features
 - [ ] All middleware implemented
-- [ ] All services and helpers created
+- [ ] Translation service and helpers created
+- [ ] File upload and management services
 - [ ] All seeders and factories created
 - [ ] All configuration files updated
-- [ ] All tests written and passing
-- [ ] API documentation completed
-- [ ] Admin documentation completed
+
+### Testing & Quality
+- [ ] Core content tests written and passing
+- [ ] Business pillar tests written and passing
+- [ ] Model relationship tests completed
+- [ ] API integration tests completed
+
+### Documentation & Deployment
+- [ ] Complete API documentation
+- [ ] Admin user documentation
+- [ ] Business pillar documentation
 - [ ] Production configuration ready
 - [ ] Security measures implemented
 
-## ESTIMATED TIMELINE
-====================
-- **Phase 1-2**: 2-3 days (Database & Models)
-- **Phase 3-4**: 3-4 days (Controllers & Validation)
-- **Phase 5-6**: 2-3 days (Resources & Routes)
-- **Phase 7-8**: 2-3 days (Services & Seeders)
-- **Phase 9-10**: 2-3 days (Configuration & Testing)
-- **Phase 11-12**: 1-2 days (Documentation & Deployment)
+## ESTIMATED TIMELINE (UPDATED)
+===============================
+- **Phase 1-2**: ✅ **COMPLETED** (Database & Models - Core + Business Pillars)
+- **Phase 3**: 4-5 days (API Controllers - Core + Business Pillars + Registration)
+- **Phase 4**: 3-4 days (Request Validation - Core + Business Pillars)
+- **Phase 5**: 3-4 days (API Resources - Core + Business Pillars)
+- **Phase 6**: 2-3 days (Routes & Middleware - Extended routing)
+- **Phase 7-8**: 3-4 days (Services & Seeders - Enhanced with business logic)
+- **Phase 9-10**: 3-4 days (Configuration & Testing - Comprehensive testing)
+- **Phase 11-12**: 2-3 days (Documentation & Deployment)
 
-**Total Estimated Time**: 12-18 days
+**Total Estimated Time**: 20-27 days (expanded from original 12-18 days)
+**Reason for Expansion**: Added 6 business pillar models with full CRUD operations
 
 ## NOTES
 =======
