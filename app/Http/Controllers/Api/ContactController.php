@@ -6,34 +6,30 @@ use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\ContactRequest;
+use App\Services\EmailService;
 
 class ContactController extends Controller
 {
+    protected EmailService $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
     /**
      * Handle contact form submission
      */
-    public function store(Request $request): JsonResponse
+    public function store(ContactRequest $request): JsonResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'subject' => 'required|string|max:255',
-            'message' => 'required|string|max:2000',
-        ]);
+        $contact = Contact::create($request->validated());
 
-        $contact = Contact::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'subject' => $request->subject,
-            'message' => $request->message,
-            'status' => 'new'
-        ]);
+        // Send email notifications
+        $this->emailService->sendContactFormNotification($contact);
+        $this->emailService->sendContactFormConfirmation($contact);
 
         return response()->json([
-            'message' => 'Thank you for your message. We will get back to you soon.',
-            'contact_id' => $contact->id
+            'message' => 'Thank you for your message. We will get back to you soon.'
         ], 201);
     }
 

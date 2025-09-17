@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Translation;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\TranslationResource;
 
 class AdminTranslationController extends Controller
 {
@@ -15,28 +15,32 @@ class AdminTranslationController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $query = Translation::with('model');
+        $query = Translation::query();
 
-        if ($request->has('language')) {
-            $query->forLanguage($request->language);
+        if ($request->language) {
+            $query->where('language', $request->language);
         }
 
-        if ($request->has('model_type')) {
+        if ($request->model_type) {
             $query->where('model_type', $request->model_type);
         }
 
-        if ($request->has('field_name')) {
-            $query->forField($request->field_name);
+        if ($request->field_name) {
+            $query->where('field_name', $request->field_name);
         }
 
-        if ($request->has('search')) {
-            $query->where('content', 'like', '%' . $request->search . '%');
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('field_name', 'like', "%{$request->search}%")
+                    ->orWhere('translated_value', 'like', "%{$request->search}%");
+            });
         }
 
-        $translations = $query->orderBy('created_at', 'desc')
+        $translations = $query->with('model')
+            ->orderBy('created_at', 'desc')
             ->paginate($request->get('per_page', 15));
 
-        return response()->json($translations);
+        return TranslationResource::collection($translations);
     }
 
     /**
@@ -44,37 +48,35 @@ class AdminTranslationController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'model_type' => 'required|string|max:255',
+        $request->validate([
+            'model_type' => 'required|string',
             'model_id' => 'required|integer',
             'field_name' => 'required|string|max:255',
             'language' => 'required|in:pashto,farsi',
-            'content' => 'required|string',
+            'translated_value' => 'required|string',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        // Check if translation already exists
+        $existingTranslation = Translation::where([
+            'model_type' => $request->model_type,
+            'model_id' => $request->model_id,
+            'field_name' => $request->field_name,
+            'language' => $request->language,
+        ])->first();
+
+        if ($existingTranslation) {
+            $existingTranslation->update(['translated_value' => $request->translated_value]);
+            $translation = $existingTranslation;
+            $message = 'Translation updated successfully';
+        } else {
+            $translation = Translation::create($request->validated());
+            $message = 'Translation created successfully';
         }
-
-        // Check if translation already exists for this combination
-        $exists = Translation::where('model_type', $request->model_type)
-            ->where('model_id', $request->model_id)
-            ->where('field_name', $request->field_name)
-            ->where('language', $request->language)
-            ->exists();
-
-        if ($exists) {
-            return response()->json([
-                'errors' => ['translation' => ['Translation for this field and language already exists.']]
-            ], 422);
-        }
-
-        $translation = Translation::create($validator->validated());
 
         return response()->json([
-            'message' => 'Translation created successfully',
-            'translation' => $translation
-        ], 201);
+            'message' => $message,
+            'translation' => new TranslationResource($translation)
+        ], $existingTranslation ? 200 : 201);
     }
 
     /**
@@ -82,7 +84,9 @@ class AdminTranslationController extends Controller
      */
     public function show(Translation $translation): JsonResponse
     {
-        return response()->json(['translation' => $translation->load('model')]);
+        return response()->json([
+            'translation' => new TranslationResource($translation->load('model'))
+        ]);
     }
 
     /**
@@ -90,19 +94,15 @@ class AdminTranslationController extends Controller
      */
     public function update(Request $request, Translation $translation): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'content' => 'required|string',
+        $request->validate([
+            'translated_value' => 'required|string',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $translation->update(['content' => $request->content]);
+        $translation->update(['translated_value' => $request->translated_value]);
 
         return response()->json([
             'message' => 'Translation updated successfully',
-            'translation' => $translation->fresh()
+            'translation' => new TranslationResource($translation)
         ]);
     }
 
@@ -119,90 +119,70 @@ class AdminTranslationController extends Controller
     }
 
     /**
+     * Bulk operations for translations
+     */
+    public function bulkUpdate(Request $request): JsonResponse
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:translations,id',
+            'action' => 'required|in:delete',
+        ]);
+
+        if ($request->action === 'delete') {
+            Translation::whereIn('id', $request->ids)->delete();
+        }
+
+        return response()->json([
+            'message' => 'Bulk operation completed successfully'
+        ]);
+    }
+
+    /**
      * Get translations for a specific model
      */
-    public function forModel(Request $request): JsonResponse
+    public function getModelTranslations(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'model_type' => 'required|string',
             'model_id' => 'required|integer',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $translations = Translation::forModel($request->model_type, $request->model_id)
-            ->get()
-            ->groupBy(['language', 'field_name']);
-
-        return response()->json(['translations' => $translations]);
-    }
-
-    /**
-     * Bulk create/update translations for a model
-     */
-    public function bulkStore(Request $request): JsonResponse
-    {
-        $validator = Validator::make($request->all(), [
-            'model_type' => 'required|string|max:255',
-            'model_id' => 'required|integer',
-            'translations' => 'required|array',
-            'translations.*.field_name' => 'required|string|max:255',
-            'translations.*.language' => 'required|in:pashto,farsi',
-            'translations.*.content' => 'required|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $created = 0;
-        $updated = 0;
-
-        foreach ($request->translations as $translationData) {
-            $translation = Translation::updateOrCreate(
-                [
-                    'model_type' => $request->model_type,
-                    'model_id' => $request->model_id,
-                    'field_name' => $translationData['field_name'],
-                    'language' => $translationData['language'],
-                ],
-                [
-                    'content' => $translationData['content'],
-                ]
-            );
-
-            if ($translation->wasRecentlyCreated) {
-                $created++;
-            } else {
-                $updated++;
-            }
-        }
+        $translations = Translation::where([
+            'model_type' => $request->model_type,
+            'model_id' => $request->model_id,
+        ])->get();
 
         return response()->json([
-            'message' => "Translations processed: {$created} created, {$updated} updated",
-            'created' => $created,
-            'updated' => $updated,
+            'translations' => TranslationResource::collection($translations)
         ]);
     }
 
     /**
-     * Get translation statistics
+     * Dashboard stats
      */
     public function stats(): JsonResponse
     {
         return response()->json([
-            'total' => Translation::count(),
-            'by_language' => Translation::selectRaw('language, count(*) as count')
-                ->groupBy('language')
-                ->get()
-                ->pluck('count', 'language'),
-            'by_model_type' => Translation::selectRaw('model_type, count(*) as count')
+            'total_translations' => Translation::count(),
+            'pashto_translations' => Translation::where('language', 'pashto')->count(),
+            'farsi_translations' => Translation::where('language', 'farsi')->count(),
+            'translations_by_model' => Translation::selectRaw('model_type, count(*) as count')
                 ->groupBy('model_type')
-                ->get()
                 ->pluck('count', 'model_type'),
-            'recent' => Translation::orderBy('created_at', 'desc')->limit(10)->get(),
+            'recent_translations' => Translation::where('created_at', '>=', now()->subDays(7))->count(),
+        ]);
+    }
+
+    /**
+     * Get supported languages and model types for filtering
+     */
+    public function getFilters(): JsonResponse
+    {
+        return response()->json([
+            'languages' => ['pashto', 'farsi'],
+            'model_types' => Translation::distinct()->pluck('model_type')->values(),
+            'field_names' => Translation::distinct()->pluck('field_name')->values(),
         ]);
     }
 }

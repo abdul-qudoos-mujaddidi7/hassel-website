@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\NewsRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Services\FileUploadService;
 
 class AdminNewsController extends Controller
 {
+    protected FileUploadService $fileUploadService;
+
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
     /**
      * Display a listing of news articles
      */
@@ -40,38 +47,17 @@ class AdminNewsController extends Controller
     /**
      * Store a newly created news article
      */
-    public function store(Request $request): JsonResponse
+    public function store(NewsRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'slug' => 'nullable|string|unique:news,slug|max:255',
-            'excerpt' => 'required|string|max:500',
-            'content' => 'required|string',
-            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'status' => 'required|in:draft,published,archived',
-            'published_at' => 'nullable|date',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $data = $validator->validated();
-
-        // Handle slug generation
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
-        }
+        $data = $request->validated();
 
         // Handle featured image upload
         if ($request->hasFile('featured_image')) {
-            $imagePath = $request->file('featured_image')->store('news', 'public');
-            $data['featured_image'] = $imagePath;
-        }
-
-        // Set published_at if status is published and no date provided
-        if ($data['status'] === 'published' && empty($data['published_at'])) {
-            $data['published_at'] = now();
+            $data['featured_image'] = $this->fileUploadService->upload(
+                $request->file('featured_image'),
+                'featured_image',
+                'news'
+            );
         }
 
         $news = News::create($data);
@@ -93,42 +79,18 @@ class AdminNewsController extends Controller
     /**
      * Update the specified news article
      */
-    public function update(Request $request, News $news): JsonResponse
+    public function update(NewsRequest $request, News $news): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'slug' => 'nullable|string|unique:news,slug,' . $news->id . '|max:255',
-            'excerpt' => 'required|string|max:500',
-            'content' => 'required|string',
-            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'status' => 'required|in:draft,published,archived',
-            'published_at' => 'nullable|date',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $data = $validator->validated();
-
-        // Handle slug generation
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
-        }
+        $data = $request->validated();
 
         // Handle featured image upload
         if ($request->hasFile('featured_image')) {
-            // Delete old image if exists
-            if ($news->featured_image) {
-                Storage::disk('public')->delete($news->featured_image);
-            }
-            $imagePath = $request->file('featured_image')->store('news', 'public');
-            $data['featured_image'] = $imagePath;
-        }
-
-        // Set published_at if status changed to published and no date provided
-        if ($data['status'] === 'published' && $news->status !== 'published' && empty($data['published_at'])) {
-            $data['published_at'] = now();
+            $data['featured_image'] = $this->fileUploadService->replace(
+                $request->file('featured_image'),
+                'featured_image',
+                $news->featured_image,
+                'news'
+            );
         }
 
         $news->update($data);
@@ -146,7 +108,7 @@ class AdminNewsController extends Controller
     {
         // Delete featured image if exists
         if ($news->featured_image) {
-            Storage::disk('public')->delete($news->featured_image);
+            $this->fileUploadService->delete($news->featured_image);
         }
 
         // Delete associated translations

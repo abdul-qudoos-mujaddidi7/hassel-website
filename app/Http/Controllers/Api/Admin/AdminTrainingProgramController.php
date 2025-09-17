@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Http\Requests\TrainingProgramRequest;
+use App\Http\Resources\TrainingProgramResource;
 
 class AdminTrainingProgramController extends Controller
 {
@@ -37,13 +39,13 @@ class AdminTrainingProgramController extends Controller
         $programs = $query->orderBy('start_date', 'desc')
             ->paginate($request->get('per_page', 15));
 
-        return response()->json($programs);
+        return TrainingProgramResource::collection($programs);
     }
 
     /**
      * Store a newly created training program
      */
-    public function store(Request $request): JsonResponse
+    public function store(TrainingProgramRequest $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',

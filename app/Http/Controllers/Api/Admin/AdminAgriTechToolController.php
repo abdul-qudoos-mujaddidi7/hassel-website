@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\AgriTechTool;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\AgriTechToolRequest;
+use App\Http\Resources\AgriTechToolResource;
 
 class AdminAgriTechToolController extends Controller
 {
@@ -15,86 +16,114 @@ class AdminAgriTechToolController extends Controller
     {
         $query = AgriTechTool::query();
 
-        if ($request->has('status')) {
+        if ($request->status) {
             $query->where('status', $request->status);
         }
 
-        if ($request->has('tool_type')) {
+        if ($request->tool_type) {
             $query->where('tool_type', $request->tool_type);
         }
 
-        $tools = $query->orderBy('created_at', 'desc')->paginate(15);
-        return response()->json($tools);
-    }
-
-    public function store(Request $request): JsonResponse
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'slug' => 'nullable|string|unique:agri_tech_tools,slug|max:255',
-            'description' => 'required|string',
-            'tool_type' => 'required|in:mobile_app,web_platform,hardware,software,sensor',
-            'platform' => 'nullable|string|max:100',
-            'version' => 'nullable|string|max:50',
-            'features' => 'nullable|json',
-            'download_link' => 'nullable|url',
-            'status' => 'required|in:draft,published,archived',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', "%{$request->search}%")
+                    ->orWhere('description', 'like', "%{$request->search}%");
+            });
         }
 
-        $data = $validator->validated();
+        $tools = $query->orderBy('created_at', 'desc')
+            ->paginate($request->get('per_page', 15));
 
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['name']);
+        return AgriTechToolResource::collection($tools);
+    }
+
+    public function store(AgriTechToolRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('agritech-tools', 'public');
         }
 
         $tool = AgriTechTool::create($data);
 
-        return response()->json(['message' => 'AgriTech tool created', 'tool' => $tool], 201);
+        return response()->json([
+            'message' => 'Agri-tech tool created successfully',
+            'tool' => new AgriTechToolResource($tool)
+        ], 201);
     }
 
     public function show(AgriTechTool $agriTechTool): JsonResponse
     {
-        return response()->json(['tool' => $agriTechTool]);
+        return response()->json(['tool' => new AgriTechToolResource($agriTechTool)]);
     }
 
-    public function update(Request $request, AgriTechTool $agriTechTool): JsonResponse
+    public function update(AgriTechToolRequest $request, AgriTechTool $agriTechTool): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'slug' => 'nullable|string|unique:agri_tech_tools,slug,' . $agriTechTool->id,
-            'description' => 'required|string',
-            'tool_type' => 'required|in:mobile_app,web_platform,hardware,software,sensor',
-            'platform' => 'nullable|string|max:100',
-            'version' => 'nullable|string|max:50',
-            'features' => 'nullable|json',
-            'download_link' => 'nullable|url',
-            'status' => 'required|in:draft,published,archived',
-        ]);
+        $data = $request->validated();
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $data = $validator->validated();
-
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['name']);
+        if ($request->hasFile('image')) {
+            if ($agriTechTool->image) {
+                Storage::disk('public')->delete($agriTechTool->image);
+            }
+            $data['image'] = $request->file('image')->store('agritech-tools', 'public');
         }
 
         $agriTechTool->update($data);
 
-        return response()->json(['message' => 'AgriTech tool updated', 'tool' => $agriTechTool->fresh()]);
+        return response()->json([
+            'message' => 'Agri-tech tool updated successfully',
+            'tool' => new AgriTechToolResource($agriTechTool)
+        ]);
     }
 
     public function destroy(AgriTechTool $agriTechTool): JsonResponse
     {
-        $agriTechTool->translations()->delete();
+        if ($agriTechTool->image) {
+            Storage::disk('public')->delete($agriTechTool->image);
+        }
+
         $agriTechTool->delete();
 
-        return response()->json(['message' => 'AgriTech tool deleted']);
+        return response()->json(['message' => 'Agri-tech tool deleted successfully']);
+    }
+
+    public function bulkUpdate(Request $request): JsonResponse
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:agri_tech_tools,id',
+            'action' => 'required|in:publish,unpublish,archive,delete',
+        ]);
+
+        $tools = AgriTechTool::whereIn('id', $request->ids);
+
+        switch ($request->action) {
+            case 'publish':
+                $tools->update(['status' => 'published', 'published_at' => now()]);
+                break;
+            case 'unpublish':
+                $tools->update(['status' => 'draft']);
+                break;
+            case 'archive':
+                $tools->update(['status' => 'archived']);
+                break;
+            case 'delete':
+                foreach ($tools->get() as $tool) {
+                    $this->destroy($tool);
+                }
+                break;
+        }
+
+        return response()->json(['message' => ucfirst($request->action) . ' operation completed successfully']);
+    }
+
+    public function stats(): JsonResponse
+    {
+        return response()->json([
+            'total_tools' => AgriTechTool::count(),
+            'published_tools' => AgriTechTool::published()->count(),
+            'draft_tools' => AgriTechTool::draft()->count(),
+        ]);
     }
 }

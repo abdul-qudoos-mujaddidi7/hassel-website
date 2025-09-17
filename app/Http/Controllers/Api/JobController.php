@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JobAnnouncement;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\JobResource;
 
 class JobController extends Controller
 {
@@ -14,7 +15,6 @@ class JobController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $language = $request->get('lang', 'en');
         $status = $request->get('status', 'open'); // open, closed, all
         $location = $request->get('location'); // filter by location
 
@@ -40,17 +40,7 @@ class JobController extends Controller
 
         $jobs = $query->orderBy('deadline', 'asc')->paginate(12);
 
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $jobs->getCollection()->transform(function ($item) use ($language) {
-                $item->title = $item->getTranslation('title', $language);
-                $item->description = $item->getTranslation('description', $language);
-                $item->requirements = $item->getTranslation('requirements', $language);
-                return $item;
-            });
-        }
-
-        return response()->json($jobs);
+        return JobResource::collection($jobs);
     }
 
     /**
@@ -58,24 +48,9 @@ class JobController extends Controller
      */
     public function show(string $slug, Request $request): JsonResponse
     {
-        $language = $request->get('lang', 'en');
-
         $job = JobAnnouncement::where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
-
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $job->title = $job->getTranslation('title', $language);
-            $job->description = $job->getTranslation('description', $language);
-            $job->requirements = $job->getTranslation('requirements', $language);
-        }
-
-        // Add computed properties
-        $job->is_open = $job->is_open;
-        $job->is_expired = $job->is_expired;
-        $job->days_remaining = $job->days_remaining;
-        $job->requirements_list = $job->requirements_list;
 
         // Get related jobs (same location or similar)
         $relatedJobs = JobAnnouncement::open()
@@ -89,8 +64,8 @@ class JobController extends Controller
             ->get();
 
         return response()->json([
-            'job' => $job,
-            'related_jobs' => $relatedJobs
+            'job' => new JobResource($job),
+            'related_jobs' => JobResource::collection($relatedJobs)
         ]);
     }
 

@@ -111,8 +111,20 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@mountagro.af'),
+        'name' => env('MAIL_FROM_NAME', 'Mount Agro Institution'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Email Address
+    |--------------------------------------------------------------------------
+    |
+    | This email address will receive notifications for contact forms,
+    | program registrations, and other admin notifications.
+    |
+    */
+
+    'admin_email' => env('MAIL_ADMIN_EMAIL', 'admin@mountagro.af'),
 
 ];

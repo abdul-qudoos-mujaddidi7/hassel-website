@@ -6,151 +6,104 @@ use App\Http\Controllers\Controller;
 use App\Models\Publication;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Http\Requests\PublicationRequest;
+use App\Http\Resources\PublicationResource;
+use App\Services\FileUploadService;
 
 class AdminPublicationController extends Controller
 {
-    /**
-     * Display a listing of publications
-     */
+    protected FileUploadService $fileUploadService;
+
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
+
     public function index(Request $request): JsonResponse
     {
+        $status = $request->get('status');
+        $type = $request->get('file_type');
+        $search = $request->get('search');
+
         $query = Publication::query();
 
-        // Apply filters
-        if ($request->has('status')) {
-            $query->where('status', $request->status);
+        if ($status) {
+            $query->where('status', $status);
         }
 
-        if ($request->has('file_type')) {
-            $query->where('file_type', $request->file_type);
+        if ($type) {
+            $query->where('file_type', $type);
         }
 
-        if ($request->has('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('title', 'like', '%' . $request->search . '%')
-                    ->orWhere('description', 'like', '%' . $request->search . '%');
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
             });
         }
 
         $publications = $query->orderBy('created_at', 'desc')
             ->paginate($request->get('per_page', 15));
 
-        return response()->json($publications);
+        return PublicationResource::collection($publications);
     }
 
-    /**
-     * Store a newly created publication
-     */
-    public function store(Request $request): JsonResponse
+    public function store(PublicationRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'slug' => 'nullable|string|unique:publications,slug|max:255',
-            'description' => 'required|string|max:1000',
-            'file_path' => 'required|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:10240',
-            'file_type' => 'required|in:report,manual,guideline,policy,research,other',
-            'status' => 'required|in:draft,published,archived',
-            'published_at' => 'nullable|date',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $data = $validator->validated();
-
-        // Handle slug generation
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
-        }
+        $data = $request->validated();
 
         // Handle file upload
         if ($request->hasFile('file_path')) {
-            $filePath = $request->file('file_path')->store('publications', 'public');
-            $data['file_path'] = $filePath;
-        }
-
-        // Set published_at if status is published and no date provided
-        if ($data['status'] === 'published' && empty($data['published_at'])) {
-            $data['published_at'] = now();
+            $data['file_path'] = $this->fileUploadService->upload(
+                $request->file('file_path'),
+                'document',
+                'publications'
+            );
         }
 
         $publication = Publication::create($data);
 
         return response()->json([
             'message' => 'Publication created successfully',
-            'publication' => $publication
+            'publication' => new PublicationResource($publication)
         ], 201);
     }
 
-    /**
-     * Display the specified publication
-     */
     public function show(Publication $publication): JsonResponse
     {
-        return response()->json(['publication' => $publication]);
+        return response()->json([
+            'publication' => new PublicationResource($publication)
+        ]);
     }
 
-    /**
-     * Update the specified publication
-     */
-    public function update(Request $request, Publication $publication): JsonResponse
+    public function update(PublicationRequest $request, Publication $publication): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'slug' => 'nullable|string|unique:publications,slug,' . $publication->id . '|max:255',
-            'description' => 'required|string|max:1000',
-            'file_path' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:10240',
-            'file_type' => 'required|in:report,manual,guideline,policy,research,other',
-            'status' => 'required|in:draft,published,archived',
-            'published_at' => 'nullable|date',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $data = $validator->validated();
-
-        // Handle slug generation
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
-        }
+        $data = $request->validated();
 
         // Handle file upload
         if ($request->hasFile('file_path')) {
-            // Delete old file if exists
-            if ($publication->file_path) {
-                Storage::disk('public')->delete($publication->file_path);
-            }
-            $filePath = $request->file('file_path')->store('publications', 'public');
-            $data['file_path'] = $filePath;
-        }
-
-        // Set published_at if status changed to published and no date provided
-        if ($data['status'] === 'published' && $publication->status !== 'published' && empty($data['published_at'])) {
-            $data['published_at'] = now();
+            $data['file_path'] = $this->fileUploadService->replace(
+                $request->file('file_path'),
+                'document',
+                $publication->file_path,
+                'publications'
+            );
         }
 
         $publication->update($data);
 
         return response()->json([
             'message' => 'Publication updated successfully',
-            'publication' => $publication->fresh()
+            'publication' => new PublicationResource($publication)
         ]);
     }
 
-    /**
-     * Remove the specified publication
-     */
     public function destroy(Publication $publication): JsonResponse
     {
-        // Delete file if exists
+        // Delete associated file
         if ($publication->file_path) {
-            Storage::disk('public')->delete($publication->file_path);
+            $this->fileUploadService->delete($publication->file_path);
         }
 
         // Delete associated translations
@@ -163,19 +116,46 @@ class AdminPublicationController extends Controller
         ]);
     }
 
-    /**
-     * Get publication statistics
-     */
+    public function bulkUpdate(Request $request): JsonResponse
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:publications,id',
+            'action' => 'required|in:publish,unpublish,archive,delete',
+        ]);
+
+        $publications = Publication::whereIn('id', $request->ids);
+
+        switch ($request->action) {
+            case 'publish':
+                $publications->update(['status' => 'published', 'published_at' => now()]);
+                break;
+            case 'unpublish':
+                $publications->update(['status' => 'draft']);
+                break;
+            case 'archive':
+                $publications->update(['status' => 'archived']);
+                break;
+            case 'delete':
+                foreach ($publications->get() as $publication) {
+                    $this->destroy($publication);
+                }
+                break;
+        }
+
+        return response()->json([
+            'message' => ucfirst($request->action) . ' operation completed successfully'
+        ]);
+    }
+
     public function stats(): JsonResponse
     {
         return response()->json([
-            'total' => Publication::count(),
-            'published' => Publication::published()->count(),
-            'draft' => Publication::draft()->count(),
-            'archived' => Publication::where('status', 'archived')->count(),
-            'by_type' => Publication::selectRaw('file_type, count(*) as count')
+            'total_publications' => Publication::count(),
+            'published_publications' => Publication::published()->count(),
+            'draft_publications' => Publication::draft()->count(),
+            'publications_by_type' => Publication::selectRaw('file_type, count(*) as count')
                 ->groupBy('file_type')
-                ->get()
                 ->pluck('count', 'file_type'),
         ]);
     }

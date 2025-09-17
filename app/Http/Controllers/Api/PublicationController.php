@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Publication;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\PublicationResource;
 
 class PublicationController extends Controller
 {
@@ -26,16 +27,7 @@ class PublicationController extends Controller
 
         $publications = $query->orderBy('published_at', 'desc')->paginate(12);
 
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $publications->getCollection()->transform(function ($item) use ($language) {
-                $item->title = $item->getTranslation('title', $language);
-                $item->description = $item->getTranslation('description', $language);
-                return $item;
-            });
-        }
-
-        return response()->json($publications);
+        return PublicationResource::collection($publications);
     }
 
     /**

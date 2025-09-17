@@ -6,83 +6,161 @@ use App\Http\Controllers\Controller;
 use App\Models\RfpRfq;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\RfpRfqRequest;
+use App\Http\Resources\RfpRfqResource;
 
 class AdminRfpRfqController extends Controller
 {
+    /**
+     * Display a listing of RFPs/RFQs
+     */
     public function index(Request $request): JsonResponse
     {
+        $status = $request->get('status');
+        $search = $request->get('search');
+
         $query = RfpRfq::query();
 
-        if ($request->has('status')) {
-            $query->where('status', $request->status);
+        if ($status) {
+            $query->where('status', $status);
         }
 
-        $rfps = $query->orderBy('deadline', 'desc')->paginate(15);
-        return response()->json($rfps);
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $rfps = $query->orderBy('deadline', 'desc')
+            ->paginate($request->get('per_page', 15));
+
+        return RfpRfqResource::collection($rfps);
     }
 
-    public function store(Request $request): JsonResponse
+    /**
+     * Store a newly created RFP/RFQ
+     */
+    public function store(RfpRfqRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'slug' => 'nullable|string|unique:rfps_rfqs,slug|max:255',
-            'description' => 'required|string',
-            'deadline' => 'required|date|after:today',
-            'status' => 'required|in:draft,published,archived',
-        ]);
+        $data = $request->validated();
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $data = $validator->validated();
-
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
+        // Handle document upload
+        if ($request->hasFile('document_path')) {
+            $documentPath = $request->file('document_path')->store('rfp-rfq', 'public');
+            $data['document_path'] = $documentPath;
         }
 
         $rfp = RfpRfq::create($data);
 
-        return response()->json(['message' => 'RFP/RFQ created', 'rfp' => $rfp], 201);
+        return response()->json([
+            'message' => 'RFP/RFQ created successfully',
+            'rfp' => new RfpRfqResource($rfp)
+        ], 201);
     }
 
+    /**
+     * Display the specified RFP/RFQ
+     */
     public function show(RfpRfq $rfpRfq): JsonResponse
     {
-        return response()->json(['rfp' => $rfpRfq]);
+        return response()->json([
+            'rfp' => new RfpRfqResource($rfpRfq)
+        ]);
     }
 
-    public function update(Request $request, RfpRfq $rfpRfq): JsonResponse
+    /**
+     * Update the specified RFP/RFQ
+     */
+    public function update(RfpRfqRequest $request, RfpRfq $rfpRfq): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'slug' => 'nullable|string|unique:rfps_rfqs,slug,' . $rfpRfq->id,
-            'description' => 'required|string',
-            'deadline' => 'required|date',
-            'status' => 'required|in:draft,published,archived',
-        ]);
+        $data = $request->validated();
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+        // Handle document upload
+        if ($request->hasFile('document_path')) {
+            // Delete old document
+            if ($rfpRfq->document_path) {
+                Storage::disk('public')->delete($rfpRfq->document_path);
+            }
 
-        $data = $validator->validated();
-
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
+            $documentPath = $request->file('document_path')->store('rfp-rfq', 'public');
+            $data['document_path'] = $documentPath;
         }
 
         $rfpRfq->update($data);
 
-        return response()->json(['message' => 'RFP/RFQ updated', 'rfp' => $rfpRfq->fresh()]);
+        return response()->json([
+            'message' => 'RFP/RFQ updated successfully',
+            'rfp' => new RfpRfqResource($rfpRfq)
+        ]);
     }
 
+    /**
+     * Remove the specified RFP/RFQ
+     */
     public function destroy(RfpRfq $rfpRfq): JsonResponse
     {
-        $rfpRfq->translations()->delete();
+        // Delete associated document
+        if ($rfpRfq->document_path) {
+            Storage::disk('public')->delete($rfpRfq->document_path);
+        }
+
         $rfpRfq->delete();
 
-        return response()->json(['message' => 'RFP/RFQ deleted']);
+        return response()->json([
+            'message' => 'RFP/RFQ deleted successfully'
+        ]);
+    }
+
+    /**
+     * Bulk operations
+     */
+    public function bulkUpdate(Request $request): JsonResponse
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:rfp_rfqs,id',
+            'action' => 'required|in:publish,unpublish,archive,delete,close',
+        ]);
+
+        $rfps = RfpRfq::whereIn('id', $request->ids);
+
+        switch ($request->action) {
+            case 'publish':
+                $rfps->update(['status' => 'published', 'published_at' => now()]);
+                break;
+            case 'unpublish':
+                $rfps->update(['status' => 'draft']);
+                break;
+            case 'archive':
+                $rfps->update(['status' => 'archived']);
+                break;
+            case 'close':
+                $rfps->update(['deadline' => now()->subDay()]);
+                break;
+            case 'delete':
+                foreach ($rfps->get() as $rfp) {
+                    $this->destroy($rfp);
+                }
+                break;
+        }
+
+        return response()->json([
+            'message' => ucfirst($request->action) . ' operation completed successfully'
+        ]);
+    }
+
+    /**
+     * Dashboard stats
+     */
+    public function stats(): JsonResponse
+    {
+        return response()->json([
+            'total_rfps' => RfpRfq::count(),
+            'open_rfps' => RfpRfq::open()->count(),
+            'closed_rfps' => RfpRfq::closed()->count(),
+            'published_rfps' => RfpRfq::published()->count(),
+        ]);
     }
 }

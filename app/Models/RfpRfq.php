@@ -11,6 +11,8 @@ class RfpRfq extends Model
 {
     use HasFactory;
 
+    protected $table = 'rfps_rfqs';
+
     protected $fillable = [
         'title',
         'slug',

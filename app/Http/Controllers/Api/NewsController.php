@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\NewsResource;
 
 class NewsController extends Controller
 {
@@ -20,16 +21,7 @@ class NewsController extends Controller
             ->orderBy('published_at', 'desc')
             ->paginate(12);
 
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $news->getCollection()->transform(function ($item) use ($language) {
-                $item->title = $item->getTranslation('title', $language);
-                $item->excerpt = $item->getTranslation('excerpt', $language);
-                return $item;
-            });
-        }
-
-        return response()->json($news);
+        return NewsResource::collection($news);
     }
 
     /**
@@ -43,13 +35,6 @@ class NewsController extends Controller
             ->where('status', 'published')
             ->firstOrFail();
 
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $news->title = $news->getTranslation('title', $language);
-            $news->content = $news->getTranslation('content', $language);
-            $news->excerpt = $news->getTranslation('excerpt', $language);
-        }
-
         // Get related news (3 most recent, excluding current)
         $relatedNews = News::published()
             ->where('id', '!=', $news->id)
@@ -57,18 +42,9 @@ class NewsController extends Controller
             ->limit(3)
             ->get();
 
-        // Apply translations to related news
-        if ($language !== 'en') {
-            $relatedNews->transform(function ($item) use ($language) {
-                $item->title = $item->getTranslation('title', $language);
-                $item->excerpt = $item->getTranslation('excerpt', $language);
-                return $item;
-            });
-        }
-
         return response()->json([
-            'news' => $news,
-            'related_news' => $relatedNews
+            'news' => new NewsResource($news),
+            'related_news' => NewsResource::collection($relatedNews)
         ]);
     }
 }

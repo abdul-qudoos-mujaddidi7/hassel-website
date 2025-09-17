@@ -6,129 +6,155 @@ use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\ContactResource;
 
 class AdminContactController extends Controller
 {
     /**
-     * Display a listing of contact submissions
+     * Display a listing of contact messages
      */
     public function index(Request $request): JsonResponse
     {
+        $status = $request->get('status');
+        $search = $request->get('search');
+
         $query = Contact::query();
 
-        // Apply filters
-        if ($request->has('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                    ->orWhere('email', 'like', '%' . $request->search . '%')
-                    ->orWhere('subject', 'like', '%' . $request->search . '%');
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('subject', 'like', "%{$search}%");
             });
-        }
-
-        if ($request->has('date_from')) {
-            $query->whereDate('created_at', '>=', $request->date_from);
-        }
-
-        if ($request->has('date_to')) {
-            $query->whereDate('created_at', '<=', $request->date_to);
         }
 
         $contacts = $query->orderBy('created_at', 'desc')
             ->paginate($request->get('per_page', 15));
 
-        return response()->json($contacts);
+        return ContactResource::collection($contacts);
     }
 
     /**
-     * Display the specified contact submission
+     * Display the specified contact message
      */
     public function show(Contact $contact): JsonResponse
     {
-        return response()->json(['contact' => $contact]);
+        // Mark as read when viewed
+        if ($contact->status === 'unread') {
+            $contact->update(['status' => 'read']);
+        }
+
+        return response()->json([
+            'contact' => new ContactResource($contact)
+        ]);
     }
 
     /**
-     * Remove the specified contact submission
+     * Update contact status
+     */
+    public function updateStatus(Request $request, Contact $contact): JsonResponse
+    {
+        $request->validate([
+            'status' => 'required|in:unread,read,replied,resolved',
+            'notes' => 'nullable|string|max:1000'
+        ]);
+
+        $contact->update([
+            'status' => $request->status,
+            'admin_notes' => $request->notes
+        ]);
+
+        return response()->json([
+            'message' => 'Contact status updated successfully',
+            'contact' => new ContactResource($contact)
+        ]);
+    }
+
+    /**
+     * Remove the specified contact message
      */
     public function destroy(Contact $contact): JsonResponse
     {
         $contact->delete();
 
         return response()->json([
-            'message' => 'Contact submission deleted successfully'
+            'message' => 'Contact message deleted successfully'
         ]);
     }
 
     /**
-     * Bulk delete contact submissions
+     * Bulk operations
      */
-    public function bulkDelete(Request $request): JsonResponse
+    public function bulkUpdate(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'exists:contacts,id',
+            'ids.*' => 'integer|exists:contacts,id',
+            'action' => 'required|in:mark_read,mark_unread,mark_replied,mark_resolved,delete',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        $contacts = Contact::whereIn('id', $request->ids);
+
+        switch ($request->action) {
+            case 'mark_read':
+                $contacts->update(['status' => 'read']);
+                break;
+            case 'mark_unread':
+                $contacts->update(['status' => 'unread']);
+                break;
+            case 'mark_replied':
+                $contacts->update(['status' => 'replied']);
+                break;
+            case 'mark_resolved':
+                $contacts->update(['status' => 'resolved']);
+                break;
+            case 'delete':
+                $contacts->delete();
+                break;
         }
 
-        $count = Contact::whereIn('id', $request->ids)->delete();
-
         return response()->json([
-            'message' => "{$count} contact submissions deleted successfully"
+            'message' => ucfirst($request->action) . ' operation completed successfully'
         ]);
     }
 
     /**
-     * Get contact statistics
+     * Dashboard stats
      */
     public function stats(): JsonResponse
     {
         return response()->json([
-            'total' => Contact::count(),
-            'this_month' => Contact::whereMonth('created_at', now()->month)
-                ->whereYear('created_at', now()->year)
-                ->count(),
-            'this_week' => Contact::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
-                ->count(),
-            'today' => Contact::whereDate('created_at', today())->count(),
+            'total_messages' => Contact::count(),
+            'unread_messages' => Contact::where('status', 'unread')->count(),
+            'read_messages' => Contact::where('status', 'read')->count(),
+            'replied_messages' => Contact::where('status', 'replied')->count(),
+            'resolved_messages' => Contact::where('status', 'resolved')->count(),
+            'recent_messages' => Contact::where('created_at', '>=', now()->subDays(7))->count(),
         ]);
     }
 
     /**
-     * Export contact submissions to CSV
+     * Export contact messages
      */
     public function export(Request $request): JsonResponse
     {
-        $query = Contact::query();
+        $format = $request->get('format', 'csv');
 
-        if ($request->has('date_from')) {
-            $query->whereDate('created_at', '>=', $request->date_from);
-        }
+        // This would typically generate a file and return a download link
+        // For now, just return the data that would be exported
+        $contacts = Contact::select(['name', 'email', 'subject', 'message', 'status', 'created_at'])
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        if ($request->has('date_to')) {
-            $query->whereDate('created_at', '<=', $request->date_to);
-        }
-
-        $contacts = $query->orderBy('created_at', 'desc')->get();
-
-        // In a real implementation, you would generate and return a CSV file
-        // For now, return the data that could be exported
         return response()->json([
-            'message' => 'Export data prepared',
+            'message' => 'Export ready',
+            'format' => $format,
             'count' => $contacts->count(),
-            'data' => $contacts->map(function ($contact) {
-                return [
-                    'name' => $contact->name,
-                    'email' => $contact->email,
-                    'phone' => $contact->phone,
-                    'subject' => $contact->subject,
-                    'message' => $contact->message,
-                    'created_at' => $contact->created_at->format('Y-m-d H:i:s'),
-                ];
-            })
+            'data' => $contacts
         ]);
     }
 }

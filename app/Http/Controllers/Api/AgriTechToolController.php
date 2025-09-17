@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AgriTechTool;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\AgriTechToolResource;
 
 class AgriTechToolController extends Controller
 {
@@ -14,7 +15,6 @@ class AgriTechToolController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $language = $request->get('lang', 'en');
         $toolType = $request->get('tool_type'); // filter by tool type
         $platform = $request->get('platform'); // filter by platform
 
@@ -32,16 +32,7 @@ class AgriTechToolController extends Controller
 
         $tools = $query->orderBy('created_at', 'desc')->paginate(12);
 
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $tools->getCollection()->transform(function ($item) use ($language) {
-                $item->name = $item->getTranslation('name', $language);
-                $item->description = $item->getTranslation('description', $language);
-                return $item;
-            });
-        }
-
-        return response()->json($tools);
+        return AgriTechToolResource::collection($tools);
     }
 
     /**
@@ -49,23 +40,9 @@ class AgriTechToolController extends Controller
      */
     public function show(string $slug, Request $request): JsonResponse
     {
-        $language = $request->get('lang', 'en');
-
         $tool = AgriTechTool::where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
-
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $tool->name = $tool->getTranslation('name', $language);
-            $tool->description = $tool->getTranslation('description', $language);
-        }
-
-        // Add computed properties
-        $tool->is_downloadable = $tool->is_downloadable;
-        $tool->tool_type_display = $tool->tool_type_display;
-        $tool->platform_display = $tool->platform_display;
-        $tool->features_list = $tool->features_list;
 
         // Get related tools (same type or platform)
         $relatedTools = AgriTechTool::published()
@@ -79,8 +56,8 @@ class AgriTechToolController extends Controller
             ->get();
 
         return response()->json([
-            'tool' => $tool,
-            'related_tools' => $relatedTools
+            'tool' => new AgriTechToolResource($tool),
+            'related_tools' => AgriTechToolResource::collection($relatedTools)
         ]);
     }
 

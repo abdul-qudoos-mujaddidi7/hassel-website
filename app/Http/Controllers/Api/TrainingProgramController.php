@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TrainingProgram;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\TrainingProgramResource;
 
 class TrainingProgramController extends Controller
 {
@@ -14,39 +15,27 @@ class TrainingProgramController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $language = $request->get('lang', 'en');
-        $status = $request->get('status', 'all'); // all, upcoming, ongoing, completed
+        $perPage = $request->get('per_page', 10);
+        $status = $request->get('status'); // e.g., 'upcoming', 'ongoing', 'completed'
+        $programType = $request->get('program_type');
 
-        $query = TrainingProgram::published();
+        $query = TrainingProgram::published()->orderBy('start_date', 'desc');
 
-        // Apply status filter
-        switch ($status) {
-            case 'upcoming':
-                $query->upcoming();
-                break;
-            case 'ongoing':
-                $query->ongoing();
-                break;
-            case 'completed':
-                $query->completed();
-                break;
-            default:
-                // Show all published programs
-                break;
+        if ($status === 'upcoming') {
+            $query->upcoming();
+        } elseif ($status === 'ongoing') {
+            $query->ongoing();
+        } elseif ($status === 'completed') {
+            $query->completed();
         }
 
-        $programs = $query->orderBy('start_date', 'asc')->paginate(12);
-
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $programs->getCollection()->transform(function ($item) use ($language) {
-                $item->title = $item->getTranslation('title', $language);
-                $item->description = $item->getTranslation('description', $language);
-                return $item;
-            });
+        if ($programType) {
+            $query->where('program_type', $programType);
         }
 
-        return response()->json($programs);
+        $programs = $query->paginate($perPage);
+
+        return TrainingProgramResource::collection($programs);
     }
 
     /**
@@ -54,66 +43,26 @@ class TrainingProgramController extends Controller
      */
     public function show(string $slug, Request $request): JsonResponse
     {
-        $language = $request->get('lang', 'en');
-
-        $program = TrainingProgram::where('slug', $slug)
-            ->where('status', 'published')
-            ->with('registrations')
-            ->firstOrFail();
-
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $program->title = $program->getTranslation('title', $language);
-            $program->description = $program->getTranslation('description', $language);
-        }
-
-        // Add computed properties
-        $program->can_register = $program->canRegister();
-        $program->available_spots = $program->available_spots;
-        $program->is_full = $program->is_full;
-        $program->registration_count = $program->registrations()->where('status', 'approved')->count();
-
-        // Get related programs (same type, excluding current)
-        $relatedPrograms = TrainingProgram::published()
-            ->where('id', '!=', $program->id)
-            ->where('program_type', $program->program_type)
-            ->orderBy('start_date', 'asc')
-            ->limit(3)
-            ->get();
-
-        // Apply translations to related programs
-        if ($language !== 'en') {
-            $relatedPrograms->transform(function ($item) use ($language) {
-                $item->title = $item->getTranslation('title', $language);
-                $item->description = $item->getTranslation('description', $language);
-                return $item;
-            });
-        }
+        $program = TrainingProgram::published()->where('slug', $slug)->firstOrFail();
 
         return response()->json([
-            'program' => $program,
-            'related_programs' => $relatedPrograms
+            'program' => new TrainingProgramResource($program)
         ]);
     }
 
     /**
-     * Get training program types for filtering
+     * Get program types for filtering
      */
     public function types(): JsonResponse
     {
-        $types = TrainingProgram::published()
-            ->distinct()
-            ->pluck('program_type')
-            ->filter()
-            ->values();
-
-        return response()->json([
-            'types' => $types->map(function ($type) {
-                return [
-                    'value' => $type,
-                    'label' => ucwords(str_replace('_', ' ', $type))
-                ];
-            })
-        ]);
+        // This could be dynamic from a lookup table or config
+        $types = [
+            'basic',
+            'advanced',
+            'specialized',
+            'workshop',
+            'field_school'
+        ];
+        return response()->json(['program_types' => $types]);
     }
 }

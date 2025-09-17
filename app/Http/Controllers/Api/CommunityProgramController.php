@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CommunityProgram;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\CommunityProgramResource;
 
 class CommunityProgramController extends Controller
 {
@@ -14,7 +15,6 @@ class CommunityProgramController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $language = $request->get('lang', 'en');
         $targetGroup = $request->get('target_group'); // filter by target group
         $programType = $request->get('program_type'); // filter by program type
         $status = $request->get('status', 'all'); // ongoing, completed, all
@@ -46,16 +46,7 @@ class CommunityProgramController extends Controller
 
         $programs = $query->orderBy('created_at', 'desc')->paginate(12);
 
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $programs->getCollection()->transform(function ($item) use ($language) {
-                $item->title = $item->getTranslation('title', $language);
-                $item->description = $item->getTranslation('description', $language);
-                return $item;
-            });
-        }
-
-        return response()->json($programs);
+        return CommunityProgramResource::collection($programs);
     }
 
     /**
@@ -63,23 +54,10 @@ class CommunityProgramController extends Controller
      */
     public function show(string $slug, Request $request): JsonResponse
     {
-        $language = $request->get('lang', 'en');
-
         $program = CommunityProgram::where('slug', $slug)
             ->where('status', 'published')
             ->with('registrations')
             ->firstOrFail();
-
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $program->title = $program->getTranslation('title', $language);
-            $program->description = $program->getTranslation('description', $language);
-        }
-
-        // Add computed properties
-        $program->target_group_display = $program->target_group_display;
-        $program->program_type_display = $program->program_type_display;
-        $program->partner_organizations_list = $program->partner_organizations_list;
 
         // Get related programs (same target group)
         $relatedPrograms = CommunityProgram::published()
@@ -90,8 +68,8 @@ class CommunityProgramController extends Controller
             ->get();
 
         return response()->json([
-            'program' => $program,
-            'related_programs' => $relatedPrograms
+            'program' => new CommunityProgramResource($program),
+            'related_programs' => CommunityProgramResource::collection($relatedPrograms)
         ]);
     }
 

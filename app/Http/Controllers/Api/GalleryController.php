@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\GalleryResource;
 
 class GalleryController extends Controller
 {
@@ -21,16 +22,7 @@ class GalleryController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(12);
 
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $galleries->getCollection()->transform(function ($item) use ($language) {
-                $item->title = $item->getTranslation('title', $language);
-                $item->description = $item->getTranslation('description', $language);
-                return $item;
-            });
-        }
-
-        return response()->json($galleries);
+        return GalleryResource::collection($galleries);
     }
 
     /**
@@ -47,12 +39,6 @@ class GalleryController extends Controller
             }])
             ->firstOrFail();
 
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $gallery->title = $gallery->getTranslation('title', $language);
-            $gallery->description = $gallery->getTranslation('description', $language);
-        }
-
         // Get related galleries (same category or recent)
         $relatedGalleries = Gallery::published()
             ->where('id', '!=', $gallery->id)
@@ -60,18 +46,9 @@ class GalleryController extends Controller
             ->limit(3)
             ->get();
 
-        // Apply translations to related galleries
-        if ($language !== 'en') {
-            $relatedGalleries->transform(function ($item) use ($language) {
-                $item->title = $item->getTranslation('title', $language);
-                $item->description = $item->getTranslation('description', $language);
-                return $item;
-            });
-        }
-
         return response()->json([
-            'gallery' => $gallery,
-            'related_galleries' => $relatedGalleries
+            'gallery' => new GalleryResource($gallery),
+            'related_galleries' => GalleryResource::collection($relatedGalleries)
         ]);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SuccessStory;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\SuccessStoryResource;
 
 class SuccessStoryController extends Controller
 {
@@ -20,17 +21,7 @@ class SuccessStoryController extends Controller
             ->orderBy('published_at', 'desc')
             ->paginate(12);
 
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $stories->getCollection()->transform(function ($item) use ($language) {
-                $item->title = $item->getTranslation('title', $language);
-                $item->story = $item->getTranslation('story', $language);
-                $item->client_name = $item->getTranslation('client_name', $language);
-                return $item;
-            });
-        }
-
-        return response()->json($stories);
+        return SuccessStoryResource::collection($stories);
     }
 
     /**
@@ -44,13 +35,6 @@ class SuccessStoryController extends Controller
             ->where('status', 'published')
             ->firstOrFail();
 
-        // Apply translations if needed
-        if ($language !== 'en') {
-            $story->title = $story->getTranslation('title', $language);
-            $story->story = $story->getTranslation('story', $language);
-            $story->client_name = $story->getTranslation('client_name', $language);
-        }
-
         // Get related success stories
         $relatedStories = SuccessStory::published()
             ->where('id', '!=', $story->id)
@@ -58,18 +42,9 @@ class SuccessStoryController extends Controller
             ->limit(3)
             ->get();
 
-        // Apply translations to related stories
-        if ($language !== 'en') {
-            $relatedStories->transform(function ($item) use ($language) {
-                $item->title = $item->getTranslation('title', $language);
-                $item->client_name = $item->getTranslation('client_name', $language);
-                return $item;
-            });
-        }
-
         return response()->json([
-            'story' => $story,
-            'related_stories' => $relatedStories
+            'story' => new SuccessStoryResource($story),
+            'related_stories' => SuccessStoryResource::collection($relatedStories)
         ]);
     }
 }
