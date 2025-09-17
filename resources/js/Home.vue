@@ -539,13 +539,13 @@
                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                 >
                     <div
-                        class="relative group rounded-professional-lg overflow-hidden card-hover"
+                        class="relative group rounded-professional-lg overflow-hidden card-hover bg-white shadow-lg"
                     >
                         <div
                             class="aspect-w-16 aspect-h-12 bg-gradient-to-br from-green-500 to-green-600"
                         >
                             <div
-                                class="flex items-center justify-center text-white"
+                                class="flex items-center justify-center text-white p-6"
                             >
                                 <div class="text-center">
                                     <svg
@@ -568,15 +568,13 @@
                             </div>
                         </div>
                         <div
-                            class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center"
+                            class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center p-6"
                         >
-                            <div
-                                class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
+                            <div class="text-white text-center">
                                 <h3 class="text-xl font-bold mb-2">
                                     E-Commerce Platform
                                 </h3>
-                                <p class="text-sm">
+                                <p class="text-sm text-green-100">
                                     Modern online store solution
                                 </p>
                             </div>
@@ -584,13 +582,13 @@
                     </div>
 
                     <div
-                        class="relative group rounded-professional-lg overflow-hidden card-hover"
+                        class="relative group rounded-professional-lg overflow-hidden card-hover bg-white shadow-lg"
                     >
                         <div
                             class="aspect-w-16 aspect-h-12 bg-gradient-to-br from-emerald-500 to-emerald-600"
                         >
                             <div
-                                class="flex items-center justify-center text-white"
+                                class="flex items-center justify-center text-white p-6"
                             >
                                 <div class="text-center">
                                     <svg
@@ -613,15 +611,13 @@
                             </div>
                         </div>
                         <div
-                            class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center"
+                            class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center p-6"
                         >
-                            <div
-                                class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
+                            <div class="text-white text-center">
                                 <h3 class="text-xl font-bold mb-2">
                                     Analytics Dashboard
                                 </h3>
-                                <p class="text-sm">
+                                <p class="text-sm text-emerald-100">
                                     Real-time business intelligence
                                 </p>
                             </div>
@@ -629,13 +625,13 @@
                     </div>
 
                     <div
-                        class="relative group rounded-professional-lg overflow-hidden card-hover"
+                        class="relative group rounded-professional-lg overflow-hidden card-hover bg-white shadow-lg"
                     >
                         <div
                             class="aspect-w-16 aspect-h-12 bg-gradient-to-br from-yellow-500 to-orange-500"
                         >
                             <div
-                                class="flex items-center justify-center text-white"
+                                class="flex items-center justify-center text-white p-6"
                             >
                                 <div class="text-center">
                                     <svg
@@ -658,15 +654,13 @@
                             </div>
                         </div>
                         <div
-                            class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center"
+                            class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center p-6"
                         >
-                            <div
-                                class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
+                            <div class="text-white text-center">
                                 <h3 class="text-xl font-bold mb-2">
                                     Mobile App
                                 </h3>
-                                <p class="text-sm">
+                                <p class="text-sm text-yellow-100">
                                     Cross-platform mobile solution
                                 </p>
                             </div>
