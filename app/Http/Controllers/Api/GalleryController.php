@@ -13,7 +13,7 @@ class GalleryController extends Controller
     /**
      * Get galleries list with pagination and language support
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $language = $request->get('lang', 'en');
 

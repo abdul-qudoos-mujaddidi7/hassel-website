@@ -13,7 +13,7 @@ class TrainingProgramController extends Controller
     /**
      * Get training programs list with filtering and pagination
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $perPage = $request->get('per_page', 10);
         $status = $request->get('status'); // e.g., 'upcoming', 'ongoing', 'completed'

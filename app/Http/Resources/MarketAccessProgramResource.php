@@ -15,9 +15,9 @@ class MarketAccessProgramResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'program_type' => $this->program_type,
-            'program_type_display' => $this->program_type_display,
-            'target_crops' => $this->target_crops_list,
-            'partner_organizations' => $this->partner_organizations_list,
+            'program_type_display' => ucwords(str_replace('_', ' ', $this->program_type)),
+            'target_crops' => $this->target_crops,
+            'partner_organizations' => $this->partner_organizations,
             'status' => $this->status,
             'created_at' => $this->created_at->toDateTimeString(),
 

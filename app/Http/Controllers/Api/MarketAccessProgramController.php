@@ -13,7 +13,7 @@ class MarketAccessProgramController extends Controller
     /**
      * Get market access programs list with filtering and pagination
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $programType = $request->get('program_type'); // filter by program type
         $crop = $request->get('crop'); // filter by target crop

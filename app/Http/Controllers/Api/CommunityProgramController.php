@@ -13,7 +13,7 @@ class CommunityProgramController extends Controller
     /**
      * Get community programs list with filtering and pagination
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $targetGroup = $request->get('target_group'); // filter by target group
         $programType = $request->get('program_type'); // filter by program type

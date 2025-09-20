@@ -78,8 +78,8 @@ class LanguageMiddleware
             }
         }
 
-        // 3. Session (for future web interface)
-        if (session()->has('language')) {
+        // 3. Session (for future web interface) - Skip for API routes
+        if (!$request->is('api/*') && session()->has('language')) {
             return session('language');
         }
 

@@ -13,7 +13,7 @@ class EnvironmentalProjectController extends Controller
     /**
      * Get environmental projects list with filtering and pagination
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $projectType = $request->get('project_type'); // filter by project type
         $status = $request->get('status', 'all'); // ongoing, completed, all

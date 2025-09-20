@@ -13,7 +13,7 @@ class AgriTechToolController extends Controller
     /**
      * Get agri-tech tools list with filtering and pagination
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $toolType = $request->get('tool_type'); // filter by tool type
         $platform = $request->get('platform'); // filter by platform

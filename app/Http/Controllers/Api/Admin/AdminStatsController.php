@@ -8,11 +8,18 @@ use App\Models\Publication;
 use App\Models\Contact;
 use App\Models\ProgramRegistration;
 use App\Models\Translation;
+use App\Models\BeneficiariesStat;
 use Illuminate\Http\JsonResponse;
 use App\Http\Resources\StatsResource;
 
 class AdminStatsController extends Controller
 {
+    public function index()
+    {
+        $stats = BeneficiariesStat::all();
+        return response()->json(['data' => $stats]);
+    }
+
     public function dashboard(): JsonResponse
     {
         $stats = [

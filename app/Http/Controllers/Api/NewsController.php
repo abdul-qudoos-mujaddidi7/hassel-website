@@ -13,7 +13,7 @@ class NewsController extends Controller
     /**
      * Get news list with pagination and language support
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $language = $request->get('lang', 'en');
 
@@ -27,7 +27,7 @@ class NewsController extends Controller
     /**
      * Get single news article with related articles
      */
-    public function show(string $slug, Request $request): JsonResponse
+    public function show(string $slug, Request $request)
     {
         $language = $request->get('lang', 'en');
 
