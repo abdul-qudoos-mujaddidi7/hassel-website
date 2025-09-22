@@ -62,43 +62,35 @@
                         <!-- Differentiators: deeper content than Home -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                             <div class="flex items-start gap-3">
-                                <div
-                                    class="mt-1 w-2 h-2 rounded-full bg-green-600"
-                                ></div>
+                                <div class="mt-1 text-green-600">-</div>
                                 <p class="text-gray-700">
                                     Integrated model: finance + training +
                                     market access delivered together
                                 </p>
                             </div>
                             <div class="flex items-start gap-3">
-                                <div
-                                    class="mt-1 w-2 h-2 rounded-full bg-green-600"
-                                ></div>
+                                <div class="mt-1 text-green-600">-</div>
                                 <p class="text-gray-700">
                                     Climate‑smart and gender‑responsive program
                                     design
                                 </p>
                             </div>
                             <div class="flex items-start gap-3">
-                                <div
-                                    class="mt-1 w-2 h-2 rounded-full bg-green-600"
-                                ></div>
+                                <div class="mt-1 text-green-600">-</div>
                                 <p class="text-gray-700">
                                     Partnerships with local cooperatives and
                                     private buyers
                                 </p>
                             </div>
                             <div class="flex items-start gap-3">
-                                <div
-                                    class="mt-1 w-2 h-2 rounded-full bg-green-600"
-                                ></div>
+                                <div class="mt-1 text-green-600">-</div>
                                 <p class="text-gray-700">
                                     Strong field presence and continuous
                                     technical advisory
                                 </p>
                             </div>
                         </div>
-                        <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="flex flex-row gap-4">
                             <router-link to="/our-work" class="btn btn-primary"
                                 >Explore Our Work</router-link
                             >
@@ -417,7 +409,7 @@
                     Let\'s explore how we can strengthen agricultural
                     communities together.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <div class="flex flex-row gap-4 justify-center">
                     <router-link
                         to="/contact"
                         class="btn btn-cta text-lg px-8 py-4"
