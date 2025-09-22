@@ -14,6 +14,7 @@ class CommunityProgramResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
+            'featured_image' => $this->featured_image,
             'program_type' => $this->program_type,
             'program_type_display' => $this->program_type_display,
             'target_group' => $this->target_group,

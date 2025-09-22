@@ -29,6 +29,7 @@ class CommunityProgramRequest extends FormRequest
             'target_group' => 'required|in:women,youth,cooperatives,farmers,all',
             'partner_organizations' => 'nullable|json',
             'status' => 'required|in:draft,published,archived',
+            'featured_image' => 'nullable|string|max:255',
         ];
     }
 

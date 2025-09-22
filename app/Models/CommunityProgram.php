@@ -20,6 +20,7 @@ class CommunityProgram extends Model
         'location',
         'partner_organizations',
         'status',
+        'featured_image',
     ];
 
     protected $casts = [

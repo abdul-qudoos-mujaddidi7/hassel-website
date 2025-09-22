@@ -35,7 +35,7 @@ class AdminEnvironmentalProjectController extends Controller
         $projects = $query->orderBy('created_at', 'desc')
             ->paginate($request->get('per_page', 15));
 
-        return EnvironmentalProjectResource::collection($projects);
+        return response()->json($projects->through(fn($project) => new EnvironmentalProjectResource($project)));
     }
 
     public function store(EnvironmentalProjectRequest $request): JsonResponse

@@ -35,7 +35,7 @@ class AdminContactController extends Controller
         $contacts = $query->orderBy('created_at', 'desc')
             ->paginate($request->get('per_page', 15));
 
-        return ContactResource::collection($contacts);
+        return response()->json($contacts->through(fn($contact) => new ContactResource($contact)));
     }
 
     /**

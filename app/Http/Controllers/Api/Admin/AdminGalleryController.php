@@ -39,7 +39,7 @@ class AdminGalleryController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate($request->get('per_page', 15));
 
-        return GalleryResource::collection($galleries);
+        return response()->json($galleries->through(fn($gallery) => new GalleryResource($gallery)));
     }
 
     /**

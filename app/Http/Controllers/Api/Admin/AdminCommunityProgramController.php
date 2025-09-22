@@ -40,7 +40,7 @@ class AdminCommunityProgramController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate($request->get('per_page', 15));
 
-        return CommunityProgramResource::collection($programs);
+        return response()->json($programs->through(fn($program) => new CommunityProgramResource($program)));
     }
 
     public function store(CommunityProgramRequest $request): JsonResponse
