@@ -48,12 +48,12 @@
                     </div>
 
                     <div
-                        class="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp"
+                        class="flex flex-col gap-3 justify-center items-center animate-fadeInUp sm:flex-row sm:gap-4"
                         style="animation-delay: 0.4s"
                     >
                         <router-link
                             to="/training-programs"
-                            class="btn btn-cta text-lg px-8 py-4"
+                            class="btn btn-cta w-full sm:w-auto flex items-center justify-center text-base px-4 py-3 md:text-lg md:px-8 md:py-4"
                         >
                             Explore Our Programs
                             <svg
@@ -72,7 +72,7 @@
                         </router-link>
                         <router-link
                             to="/about"
-                            class="btn btn-secondary text-lg px-8 py-4"
+                            class="btn btn-secondary w-full sm:w-auto flex items-center justify-center text-base px-4 py-3 md:text-lg md:px-8 md:py-4"
                         >
                             Learn About Us
                         </router-link>
@@ -117,46 +117,74 @@
                     </p>
                 </div>
 
-                <!-- Animated Statistics -->
+                <!-- Animated Statistics (Beneficiaries Stats) -->
                 <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
                 >
+                    <!-- Beneficiaries (Total with Male/Female breakdown) -->
                     <div
-                        class="text-center p-6 bg-white rounded-professional-lg shadow-soft"
+                        class="p-6 bg-white rounded-professional-lg shadow-soft"
                     >
-                        <div
-                            class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4"
-                        >
-                            <svg
-                                class="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
+                        <div class="text-center">
+                            <div
+                                class="w-12 h-12 md:w-16 md:h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
                             >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 919.288 0M15 7a3 3 0 11-6 0 3 3 0 616 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                                />
-                            </svg>
+                                <svg
+                                    class="w-8 h-8 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
+                                    />
+                                </svg>
+                            </div>
+                            <div
+                                class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2"
+                                ref="totalBeneficiariesRef"
+                            >
+                                0
+                            </div>
+                            <div class="text-gray-600 font-medium mb-2 md:mb-4">
+                                Beneficiaries
+                            </div>
                         </div>
-                        <div
-                            class="text-3xl font-bold text-green-600 mb-2"
-                            ref="beneficiariesCount"
-                        >
-                            0
-                        </div>
-                        <div class="text-gray-600 font-medium">
-                            Active Beneficiaries
+                        <div class="hidden">
+                            <div class="text-center p-3 rounded-lg bg-green-50">
+                                <div class="text-sm text-gray-500 mb-1">
+                                    Male
+                                </div>
+                                <div
+                                    class="text-xl font-semibold text-emerald-700"
+                                    ref="maleBeneficiariesRef"
+                                >
+                                    0
+                                </div>
+                            </div>
+                            <div class="text-center p-3 rounded-lg bg-pink-50">
+                                <div class="text-sm text-gray-500 mb-1">
+                                    Female
+                                </div>
+                                <div
+                                    class="text-xl font-semibold text-pink-600"
+                                    ref="femaleBeneficiariesRef"
+                                >
+                                    0
+                                </div>
+                            </div>
                         </div>
                     </div>
 
+                    <!-- Programs Completed -->
                     <div
                         class="text-center p-6 bg-white rounded-professional-lg shadow-soft"
                     >
                         <div
-                            class="w-16 h-16 bg-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4"
+                            class="w-12 h-12 md:w-16 md:h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
                         >
                             <svg
                                 class="w-8 h-8 text-white"
@@ -168,26 +196,27 @@
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h3M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                    d="M9 12l2 2 4-4M7 7h10v10H7z"
                                 />
                             </svg>
                         </div>
                         <div
-                            class="text-3xl font-bold text-emerald-600 mb-2"
-                            ref="projectsCount"
+                            class="text-2xl md:text-3xl font-bold text-blue-600 mb-1 md:mb-2"
+                            ref="programsCompletedRef"
                         >
                             0
                         </div>
                         <div class="text-gray-600 font-medium">
-                            Active Projects
+                            Programs Completed
                         </div>
                     </div>
 
+                    <!-- Provinces Reached -->
                     <div
                         class="text-center p-6 bg-white rounded-professional-lg shadow-soft"
                     >
                         <div
-                            class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4"
+                            class="w-12 h-12 md:w-16 md:h-16 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
                         >
                             <svg
                                 class="w-8 h-8 text-white"
@@ -199,26 +228,27 @@
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                                    d="M12 2a10 10 0 100 20 10 10 0 000-20zm2 11l-2 2-2-2 2-2 2 2z"
                                 />
                             </svg>
                         </div>
                         <div
-                            class="text-3xl font-bold text-blue-600 mb-2"
-                            ref="trainingCount"
+                            class="text-2xl md:text-3xl font-bold text-orange-600 mb-1 md:mb-2"
+                            ref="provincesReachedRef"
                         >
                             0
                         </div>
                         <div class="text-gray-600 font-medium">
-                            Training Programs
+                            Provinces Reached
                         </div>
                     </div>
 
+                    <!-- Cooperatives Formed -->
                     <div
                         class="text-center p-6 bg-white rounded-professional-lg shadow-soft"
                     >
                         <div
-                            class="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-4"
+                            class="w-12 h-12 md:w-16 md:h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
                         >
                             <svg
                                 class="w-8 h-8 text-white"
@@ -230,24 +260,18 @@
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                />
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 616 0z"
+                                    d="M7 8h10M7 12h8m-8 4h6"
                                 />
                             </svg>
                         </div>
                         <div
-                            class="text-3xl font-bold text-orange-600 mb-2"
-                            ref="locationsCount"
+                            class="text-2xl md:text-3xl font-bold text-purple-600 mb-1 md:mb-2"
+                            ref="cooperativesFormedRef"
                         >
                             0
                         </div>
                         <div class="text-gray-600 font-medium">
-                            Service Locations
+                            Cooperatives Formed
                         </div>
                     </div>
                 </div>
@@ -435,7 +459,7 @@
                             class="flex transition-transform duration-500 ease-in-out"
                             :style="{
                                 transform: `translateX(-${
-                                    currentPillarSlide * (100 / 3)
+                                    currentPillarSlide * (100 / cardsPerView)
                                 }%)`,
                             }"
                         >
@@ -446,7 +470,8 @@
                                     ...businessPillars,
                                 ]"
                                 :key="`${pillar.id}-${Math.floor(index / 5)}`"
-                                class="w-1/3 flex-shrink-0 px-4"
+                                class="flex-shrink-0 px-4"
+                                :style="{ width: `${100 / cardsPerView}%` }"
                             >
                                 <div
                                     class="h-full p-8 rounded-professional-lg border border-gray-200 card-hover flex flex-col bg-white shadow-professional"
@@ -594,7 +619,7 @@
                     </div>
                     <div class="relative">
                         <img
-                            src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=600&h=400&fit=crop&crop=center&auto=format"
+                            src="https://media.istockphoto.com/id/1154958041/photo/taking-care-of-the-crop-aerial-view-of-a-tractor-fertilizing-a-cultivated-agricultural-field.jpg?s=2048x2048&w=is&k=20&c=H0a7ngBV9Bu8Oq9SMWBnLxluAOVD7_-hBra_zrNRzcg="
                             alt="Afghan farmers working in field"
                             class="w-full h-full rounded-professional-lg shadow-professional object-cover"
                             onload="this.style.opacity=1"
@@ -603,9 +628,6 @@
                                 transition: opacity 0.3s ease-in-out;
                             "
                         />
-                        <div
-                            class="absolute inset-0 bg-green-600 bg-opacity-10 rounded-professional-lg"
-                        ></div>
                     </div>
                 </div>
             </div>
@@ -759,74 +781,22 @@
                     v-else
                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                 >
-                    <div
+                    <router-link
                         v-for="(image, index) in galleryImages"
                         :key="index"
-                        class="relative group cursor-pointer rounded-professional-lg overflow-hidden card-hover bg-white shadow-professional h-full flex flex-col"
-                        @click="openLightbox(index)"
+                        :to="`/gallery/${image.gallery_slug || 'gallery'}`"
+                        class="relative group cursor-pointer"
                     >
-                        <div class="flex-shrink-0">
-                            <img
-                                :src="image.thumbnail || image.url"
-                                :alt="image.title"
-                                class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                            />
-                        </div>
-                        <div class="bg-white p-4 flex flex-col flex-grow">
-                            <h3
-                                class="text-lg font-semibold text-gray-900 mb-1 h-7 flex items-start line-clamp-1"
-                            >
-                                {{ image.title }}
-                            </h3>
-                            <div class="flex-grow mb-3">
-                                <p class="text-sm text-gray-600">
-                                    {{ image.category }}
-                                </p>
-                            </div>
-                            <div class="mt-auto">
-                                <button
-                                    @click.stop="openLightbox(index)"
-                                    class="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm transition-colors"
-                                >
-                                    <svg
-                                        class="w-4 h-4 mr-1"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                        />
-                                    </svg>
-                                    View Full Size
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lightbox Modal -->
-                <div
-                    v-if="lightboxOpen"
-                    @click="closeLightbox"
-                    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
-                >
-                    <div class="relative max-w-4xl max-h-full p-4">
                         <img
-                            :src="galleryImages[currentImageIndex]?.url"
-                            :alt="galleryImages[currentImageIndex]?.title"
-                            class="max-w-full max-h-full object-contain"
-                            @click.stop
+                            :src="image.thumbnail || image.url"
+                            :alt="image.title"
+                            class="w-full h-48 object-cover rounded-lg"
                         />
-                        <button
-                            @click="closeLightbox"
-                            class="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
+                        <div
+                            class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 rounded-lg flex items-center justify-center"
                         >
                             <svg
-                                class="w-8 h-8"
+                                class="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -835,11 +805,11 @@
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                                 />
                             </svg>
-                        </button>
-                    </div>
+                        </div>
+                    </router-link>
                 </div>
 
                 <div class="text-center mt-12">
@@ -1299,18 +1269,22 @@ const businessPillars = ref([
     },
 ]);
 
-// Template refs for animated counters
-const beneficiariesCount = ref(null);
-const projectsCount = ref(null);
-const trainingCount = ref(null);
-const locationsCount = ref(null);
+// Template refs for animated counters (beneficiaries_stats)
+const totalBeneficiariesRef = ref(null);
+const maleBeneficiariesRef = ref(null);
+const femaleBeneficiariesRef = ref(null);
+const programsCompletedRef = ref(null);
+const provincesReachedRef = ref(null);
+const cooperativesFormedRef = ref(null);
 
-// Statistics data
+// Statistics data aligned to beneficiaries_stats
 const stats = ref({
-    beneficiaries: 0,
-    projects: 0,
-    training: 0,
-    locations: 0,
+    total_beneficiaries: 0,
+    male_beneficiaries: 0,
+    female_beneficiaries: 0,
+    programs_completed: 0,
+    provinces_reached: 0,
+    cooperatives_formed: 0,
 });
 
 // News data
@@ -1320,8 +1294,6 @@ const newsLoading = ref(true);
 // Gallery data
 const galleryImages = ref([]);
 const galleryLoading = ref(true);
-const lightboxOpen = ref(false);
-const currentImageIndex = ref(0);
 
 // Business pillar counts
 const pillarCounts = ref({
@@ -1333,8 +1305,21 @@ const pillarCounts = ref({
 });
 const pillarLoading = ref(true);
 
-// Auto-slide timer
+// Auto-slide timers
 let slideInterval = null;
+let pillarSlideInterval = null;
+
+// Responsive cards per view for pillars
+const cardsPerView = ref(3);
+const updateCardsPerView = () => {
+    if (window.innerWidth < 768) {
+        cardsPerView.value = 1;
+    } else if (window.innerWidth < 1024) {
+        cardsPerView.value = 2;
+    } else {
+        cardsPerView.value = 3;
+    }
+};
 
 // Counter animation function
 const animateCounter = (element, targetValue, duration = 2000) => {
@@ -1370,34 +1355,94 @@ const stopAutoSlide = () => {
 
 // Business pillars slider functions (3 cards at a time: 123→234→345→451→512→123)
 const nextPillarSlide = () => {
-    currentPillarSlide.value = (currentPillarSlide.value + 1) % 5;
+    currentPillarSlide.value++;
+
+    // When we reach the end of first set, reset to beginning for seamless loop
+    if (currentPillarSlide.value >= 5) {
+        setTimeout(() => {
+            // Remove transition temporarily
+            const slider = document.querySelector(".flex.transition-transform");
+            if (slider) {
+                slider.style.transition = "none";
+                currentPillarSlide.value = 0;
+
+                // Re-enable transition after a brief moment
+                setTimeout(() => {
+                    slider.style.transition = "transform 500ms ease-in-out";
+                }, 50);
+            }
+        }, 500); // Wait for current transition to complete
+    }
 };
 
 const previousPillarSlide = () => {
-    currentPillarSlide.value =
-        currentPillarSlide.value === 0 ? 4 : currentPillarSlide.value - 1;
+    if (currentPillarSlide.value === 0) {
+        // Jump to the end position without animation
+        const slider = document.querySelector(".flex.transition-transform");
+        if (slider) {
+            slider.style.transition = "none";
+            currentPillarSlide.value = 4;
+
+            // Re-enable transition and move to previous
+            setTimeout(() => {
+                slider.style.transition = "transform 500ms ease-in-out";
+                currentPillarSlide.value--;
+            }, 50);
+        }
+    } else {
+        currentPillarSlide.value--;
+    }
+};
+
+// Auto-rotate pillar slider
+const startPillarAutoSlide = () => {
+    pillarSlideInterval = setInterval(() => {
+        nextPillarSlide();
+    }, 4000); // Change slide every 8 seconds (slower than hero)
+};
+
+const stopPillarAutoSlide = () => {
+    if (pillarSlideInterval) {
+        clearInterval(pillarSlideInterval);
+        pillarSlideInterval = null;
+    }
 };
 
 // Fetch statistics from API
 const fetchStatistics = async () => {
     try {
-        const response = await axios.get("/api/stats");
-        if (response.data) {
-            stats.value = {
-                beneficiaries: response.data.total_beneficiaries || 15420,
-                projects: response.data.active_projects || 127,
-                training: response.data.training_programs || 45,
-                locations: response.data.service_locations || 18,
-            };
-        }
-    } catch (error) {
-        console.log("Using fallback statistics data");
-        // Fallback data for demonstration
+        const response = await axios.get("/api/stats", { timeout: 5000 });
+        const rows = Array.isArray(response.data?.data)
+            ? response.data.data
+            : [];
+
+        const latest = {};
+        rows.forEach((row) => {
+            const key = row.stat_type;
+            const year = Number(row.year) || 0;
+            if (!key) return;
+            if (!latest[key] || year > latest[key].year) {
+                latest[key] = { value: Number(row.value) || 0, year };
+            }
+        });
+
         stats.value = {
-            beneficiaries: 15420,
-            projects: 127,
-            training: 45,
-            locations: 18,
+            total_beneficiaries: latest.total_beneficiaries?.value || 0,
+            male_beneficiaries: latest.male_beneficiaries?.value || 0,
+            female_beneficiaries: latest.female_beneficiaries?.value || 0,
+            programs_completed: latest.programs_completed?.value || 0,
+            provinces_reached: latest.provinces_reached?.value || 0,
+            cooperatives_formed: latest.cooperatives_formed?.value || 0,
+        };
+    } catch (error) {
+        console.log("Using fallback beneficiaries_stats data");
+        stats.value = {
+            total_beneficiaries: 2500,
+            male_beneficiaries: 1400,
+            female_beneficiaries: 1100,
+            programs_completed: 45,
+            provinces_reached: 12,
+            cooperatives_formed: 25,
         };
     }
 };
@@ -1486,6 +1531,7 @@ const fetchGalleryImages = async () => {
                             id: image.id,
                             title: image.title || gallery.title,
                             category: gallery.title,
+                            gallery_slug: gallery.slug,
                             url: `/storage/${image.image_path}`,
                             thumbnail: `/storage/${image.image_path}`,
                         });
@@ -1503,6 +1549,7 @@ const fetchGalleryImages = async () => {
                 id: 1,
                 title: "Training Program in Action",
                 category: "Capacity Building",
+                gallery_slug: "training-programs",
                 url: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=800&h=600&fit=crop&crop=center&auto=format",
                 thumbnail:
                     "https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=400&h=300&fit=crop&crop=center&auto=format",
@@ -1511,6 +1558,7 @@ const fetchGalleryImages = async () => {
                 id: 2,
                 title: "Modern Agricultural Techniques",
                 category: "Agri-Tech",
+                gallery_slug: "agri-tech-solutions",
                 url: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&h=600&fit=crop&crop=center&auto=format",
                 thumbnail:
                     "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop&crop=center&auto=format",
@@ -1519,6 +1567,7 @@ const fetchGalleryImages = async () => {
                 id: 3,
                 title: "Community Development Project",
                 category: "Community Programs",
+                gallery_slug: "community-programs",
                 url: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&crop=center&auto=format",
                 thumbnail:
                     "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&crop=center&auto=format",
@@ -1527,6 +1576,7 @@ const fetchGalleryImages = async () => {
                 id: 4,
                 title: "Market Access Initiative",
                 category: "Market Programs",
+                gallery_slug: "market-access",
                 url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&crop=center&auto=format",
                 thumbnail:
                     "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&crop=center&auto=format",
@@ -1535,6 +1585,7 @@ const fetchGalleryImages = async () => {
                 id: 5,
                 title: "Environmental Conservation",
                 category: "Environmental Projects",
+                gallery_slug: "environmental-projects",
                 url: "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&h=600&fit=crop&crop=center&auto=format",
                 thumbnail:
                     "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=400&h=300&fit=crop&crop=center&auto=format",
@@ -1543,6 +1594,7 @@ const fetchGalleryImages = async () => {
                 id: 6,
                 title: "Livestock Development",
                 category: "Animal Husbandry",
+                gallery_slug: "livestock-programs",
                 url: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&h=600&fit=crop&crop=center&auto=format",
                 thumbnail:
                     "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&h=300&fit=crop&crop=center&auto=format",
@@ -1617,12 +1669,29 @@ const initializeStats = () => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     animateCounter(
-                        beneficiariesCount.value,
-                        stats.value.beneficiaries
+                        totalBeneficiariesRef.value,
+                        stats.value.total_beneficiaries
                     );
-                    animateCounter(projectsCount.value, stats.value.projects);
-                    animateCounter(trainingCount.value, stats.value.training);
-                    animateCounter(locationsCount.value, stats.value.locations);
+                    animateCounter(
+                        maleBeneficiariesRef.value,
+                        stats.value.male_beneficiaries
+                    );
+                    animateCounter(
+                        femaleBeneficiariesRef.value,
+                        stats.value.female_beneficiaries
+                    );
+                    animateCounter(
+                        programsCompletedRef.value,
+                        stats.value.programs_completed
+                    );
+                    animateCounter(
+                        provincesReachedRef.value,
+                        stats.value.provinces_reached
+                    );
+                    animateCounter(
+                        cooperativesFormedRef.value,
+                        stats.value.cooperatives_formed
+                    );
 
                     observer.unobserve(entry.target);
                 }
@@ -1631,8 +1700,10 @@ const initializeStats = () => {
         { threshold: 0.5 }
     );
 
-    if (beneficiariesCount.value) {
-        observer.observe(beneficiariesCount.value.parentElement.parentElement);
+    if (totalBeneficiariesRef.value) {
+        observer.observe(
+            totalBeneficiariesRef.value.parentElement.parentElement
+        );
     }
 };
 
@@ -1647,23 +1718,20 @@ const formatDate = (dateString) => {
     });
 };
 
-// Lightbox functions
-const openLightbox = (index) => {
-    currentImageIndex.value = index;
-    lightboxOpen.value = true;
-    document.body.style.overflow = "hidden";
-};
-
-const closeLightbox = () => {
-    lightboxOpen.value = false;
-    document.body.style.overflow = "";
-};
+// Gallery functions removed - now using router links
 
 onMounted(async () => {
     console.log("🚀 HOME PAGE MOUNTED");
 
+    // Initialize responsive pillars per view and listen to resize
+    updateCardsPerView();
+    window.addEventListener("resize", updateCardsPerView);
+
     // Start hero slider
     startAutoSlide();
+
+    // Start pillar auto-slide
+    startPillarAutoSlide();
 
     // Fetch all dynamic content
     console.log("📡 FETCHING DYNAMIC CONTENT FROM APIs...");
@@ -1678,5 +1746,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
     stopAutoSlide();
+    stopPillarAutoSlide();
+    window.removeEventListener("resize", updateCardsPerView);
 });
 </script>
