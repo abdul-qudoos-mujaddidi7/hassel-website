@@ -4,204 +4,302 @@
         <section
             class="relative bg-gradient-to-br from-green-800 via-green-700 to-green-600 text-white overflow-hidden"
         >
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 bg-black opacity-20"></div>
-            <div class="absolute inset-0 opacity-5">
-                <div
-                    class="absolute inset-0"
-                    style="
-                        background-image: radial-gradient(
-                            circle at 1px 1px,
-                            white 1px,
-                            transparent 0
-                        );
-                        background-size: 20px 20px;
-                    "
-                ></div>
-            </div>
+            <img
+                :src="'/images/about/Hero.webp'"
+                alt="About hero"
+                class="absolute inset-0 w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-black/25"></div>
 
             <div
-                class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32"
+                class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-32"
             >
                 <div class="text-center">
                     <h1
-                        class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fadeInUp"
+                        class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fadeInUp transition-all duration-500"
                     >
-                        About <span class="gradient-text">Mount Agro</span>
+                        {{ "About Mount Agro Microfinance Institution" }}
                     </h1>
                     <p
-                        class="text-xl md:text-2xl text-green-100 mb-8 max-w-3xl mx-auto animate-fadeInUp"
-                        style="animation-delay: 0.2s"
+                        class="text-lg md:text-2xl text-green-100 mb-6 md:mb-8 max-w-4xl mx-auto animate-fadeInUp transition-all duration-500"
+                        style="animation-delay: 0.15s"
                     >
-                        Learn about our mission, history, and the people behind
-                        our professional solutions
+                        {{
+                            "Learn more about our mission, history, and the people advancing Afghanistan's agricultural communities."
+                        }}
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Who We Are Section -->
+        <!-- Who We Are Section (deeper narrative) -->
         <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-4">Who We Are</h2>
+                <div class="text-center mb-14 md:mb-16">
+                    <h2 class="heading-lg text-green-600 mb-4">Who We Are</h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        A leading technology solutions provider dedicated to
-                        transforming businesses through innovation
+                        {{
+                            whoWeAreIntro ||
+                            "Mount Agro Microfinance Institution (MAI) supports farmers, cooperatives, and rural entrepreneurs with inclusive finance, training, and market linkages."
+                        }}
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <div class="order-2 lg:order-1">
+                        <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                            {{
+                                whoWeAreBodyA ||
+                                "We combine microfinance solutions with technical assistance to unlock productivity, resilience, and incomes across Afghanistan's agri‑value chains. Through targeted programs and responsible finance, we help farmers adopt improved practices, access inputs, and connect to markets."
+                            }}
+                        </p>
+                        <p class="text-lg text-gray-600 leading-relaxed mb-8">
+                            {{
+                                whoWeAreBodyB ||
+                                "Our approach centers on community engagement, evidence‑based design, and partnerships with government, donors, and the private sector—ensuring impact at scale."
+                            }}
+                        </p>
+                        <!-- Differentiators: deeper content than Home -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="mt-1 w-2 h-2 rounded-full bg-green-600"
+                                ></div>
+                                <p class="text-gray-700">
+                                    Integrated model: finance + training +
+                                    market access delivered together
+                                </p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="mt-1 w-2 h-2 rounded-full bg-green-600"
+                                ></div>
+                                <p class="text-gray-700">
+                                    Climate‑smart and gender‑responsive program
+                                    design
+                                </p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="mt-1 w-2 h-2 rounded-full bg-green-600"
+                                ></div>
+                                <p class="text-gray-700">
+                                    Partnerships with local cooperatives and
+                                    private buyers
+                                </p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="mt-1 w-2 h-2 rounded-full bg-green-600"
+                                ></div>
+                                <p class="text-gray-700">
+                                    Strong field presence and continuous
+                                    technical advisory
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <router-link to="/our-work" class="btn btn-primary"
+                                >Explore Our Work</router-link
+                            >
+                            <router-link to="/contact" class="btn btn-secondary"
+                                >Contact Us</router-link
+                            >
+                        </div>
+                    </div>
+
+                    <div class="order-1 lg:order-2">
+                        <div class="grid grid-cols-2 gap-4">
+                            <img
+                                :src="'/images/about/who_we_are_1.avif'"
+                                alt="About hero"
+                                class="col-span-2 h-64 md:h-80 w-full object-cover rounded-professional-lg shadow-professional"
+                            />
+                            <img
+                                :src="'/images/about/who_we_are_2.avif'"
+                                alt="Training session"
+                                class="h-40 w-full object-cover rounded-professional-lg shadow-soft"
+                            />
+                            <img
+                                :src="'/images/about/who_we_are_3.avif'"
+                                alt="Market access"
+                                class="h-40 w-full object-cover rounded-professional-lg shadow-soft"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our History (expanded timeline) -->
+        <section class="section-padding bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-14 md:mb-16">
+                    <h2 class="heading-lg text-green-600 mb-4">Our History</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Key milestones in our journey serving Afghanistan\'s
+                        agricultural sector.
                     </p>
                 </div>
 
                 <div
-                    class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+                    class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8"
                 >
-                    <div>
-                        <p class="text-lg text-gray-600 leading-relaxed mb-6">
-                            Mount Agro is a leading technology solutions
-                            provider dedicated to advancing digital
-                            transformation across businesses. We serve
-                            entrepreneurs, enterprises, and communities through
-                            innovative, accessible technology solutions.
-                        </p>
-                        <p class="text-lg text-gray-600 leading-relaxed mb-8">
-                            Our commitment to sustainable growth and
-                            client-centered impact drives everything we do, from
-                            solution design to implementation across diverse
-                            industries.
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <router-link to="/our-work" class="btn btn-primary">
-                                View Our Work
-                            </router-link>
-                            <router-link
-                                to="/contact"
-                                class="btn btn-secondary"
-                            >
-                                Get In Touch
-                            </router-link>
+                    <div
+                        class="text-center p-8 rounded-professional-lg bg-white card-hover shadow-professional"
+                    >
+                        <div class="text-5xl font-bold gradient-text mb-2">
+                            2017
                         </div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                            Founded
+                        </h3>
+                        <p class="text-gray-600">
+                            MAI established with a mandate to expand financial
+                            inclusion for smallholder farmers.
+                        </p>
                     </div>
-                    <div class="relative">
-                        <div
-                            class="bg-gradient-to-br from-green-600 to-emerald-600 rounded-professional-lg p-8 text-white"
-                        >
-                            <h3 class="text-2xl font-bold mb-4">Our Mission</h3>
-                            <p class="text-green-100 mb-6">
-                                To deliver exceptional value through
-                                cutting-edge technology, expert guidance, and
-                                unwavering commitment to our clients' success.
-                            </p>
-                            <div class="space-y-4">
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-2 h-2 bg-white rounded-full mr-3"
-                                    ></div>
-                                    <span class="text-sm"
-                                        >Innovation-driven solutions</span
-                                    >
-                                </div>
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-2 h-2 bg-white rounded-full mr-3"
-                                    ></div>
-                                    <span class="text-sm"
-                                        >Client-focused approach</span
-                                    >
-                                </div>
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-2 h-2 bg-white rounded-full mr-3"
-                                    ></div>
-                                    <span class="text-sm"
-                                        >Sustainable growth</span
-                                    >
-                                </div>
-                            </div>
+                    <div
+                        class="text-center p-8 rounded-professional-lg bg-white card-hover shadow-professional"
+                    >
+                        <div class="text-5xl font-bold gradient-text mb-2">
+                            2020
                         </div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                            Capacity Building
+                        </h3>
+                        <p class="text-gray-600">
+                            Launched national training programs on climate‑smart
+                            agriculture and cooperative management.
+                        </p>
+                    </div>
+                    <div
+                        class="text-center p-8 rounded-professional-lg bg-white card-hover shadow-professional"
+                    >
+                        <div class="text-5xl font-bold gradient-text mb-2">
+                            2024
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                            Market Access
+                        </h3>
+                        <p class="text-gray-600">
+                            Scaled market linkage initiatives connecting
+                            producers to buyers and value chains.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Our History Section -->
-        <section class="section-padding bg-gradient-bg-organic">
+        <!-- Goals & Objectives -->
+        <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-4">Our History</h2>
+                <div class="text-center mb-14 md:mb-16">
+                    <h2 class="heading-lg text-green-600 mb-4">
+                        Goals & Objectives
+                    </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        From our founding to becoming a trusted partner in
-                        digital transformation, Mount Agro has grown alongside
-                        the businesses we serve.
+                        What we aim to achieve over the next three years.
                     </p>
                 </div>
 
-                <div class="max-w-5xl mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div
-                            class="text-center p-8 rounded-professional-lg bg-white card-hover shadow-professional"
-                        >
-                            <div class="text-5xl font-bold gradient-text mb-4">
-                                2013
-                            </div>
-                            <h3
-                                class="text-xl font-semibold mb-4 text-gray-800"
-                            >
-                                Foundation
-                            </h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                Mount Agro was established with a vision to
-                                serve businesses through innovative technology
-                                solutions and digital transformation.
-                            </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div
+                        class="p-8 rounded-professional-lg bg-gradient-to-br from-green-50 to-green-100 card-hover"
+                    >
+                        <h3 class="text-xl font-semibold mb-3 text-gray-900">
+                            Financial Inclusion
+                        </h3>
+                        <p class="text-gray-600">
+                            Expand access to affordable agri‑finance for
+                            smallholders and agri‑SMEs across 20+ provinces.
+                        </p>
+                    </div>
+                    <div
+                        class="p-8 rounded-professional-lg bg-gradient-to-br from-emerald-50 to-emerald-100 card-hover"
+                    >
+                        <h3 class="text-xl font-semibold mb-3 text-gray-900">
+                            Capacity & Resilience
+                        </h3>
+                        <p class="text-gray-600">
+                            Deliver training and advisory services that increase
+                            productivity and climate resilience.
+                        </p>
+                    </div>
+                    <div
+                        class="p-8 rounded-professional-lg bg-gradient-to-br from-yellow-50 to-yellow-100 card-hover"
+                    >
+                        <h3 class="text-xl font-semibold mb-3 text-gray-900">
+                            Market Linkages
+                        </h3>
+                        <p class="text-gray-600">
+                            Strengthen value chains and connect farmers with
+                            reliable buyers and inputs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Strategic Partnerships (profiles/logos) -->
+        <section class="section-padding bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-14 md:mb-16">
+                    <h2 class="heading-lg text-green-600 mb-4">
+                        Strategic Partnerships
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        We collaborate with donors and institutions to amplify
+                        impact.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                    <div
+                        class="bg-white p-6 rounded-lg shadow-soft text-center"
+                    >
+                        <div class="text-gray-800 font-semibold">
+                            World Bank
                         </div>
-                        <div
-                            class="text-center p-8 rounded-professional-lg bg-white card-hover shadow-professional"
-                        >
-                            <div class="text-5xl font-bold gradient-text mb-4">
-                                2018
-                            </div>
-                            <h3
-                                class="text-xl font-semibold mb-4 text-gray-800"
-                            >
-                                Expansion
-                            </h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                Extended services to enterprise clients and
-                                expanded our team with specialized expertise
-                                across multiple technology domains.
-                            </p>
+                        <div class="text-gray-500 text-sm">
+                            Agricultural grants
                         </div>
-                        <div
-                            class="text-center p-8 rounded-professional-lg bg-white card-hover shadow-professional"
-                        >
-                            <div class="text-5xl font-bold gradient-text mb-4">
-                                2024
-                            </div>
-                            <h3
-                                class="text-xl font-semibold mb-4 text-gray-800"
-                            >
-                                Growth
-                            </h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                Serving over 500+ clients across 10+ industries
-                                with comprehensive technology solutions and
-                                digital services.
-                            </p>
+                    </div>
+                    <div
+                        class="bg-white p-6 rounded-lg shadow-soft text-center"
+                    >
+                        <div class="text-gray-800 font-semibold">USAID</div>
+                        <div class="text-gray-500 text-sm">
+                            Technical assistance
+                        </div>
+                    </div>
+                    <div
+                        class="bg-white p-6 rounded-lg shadow-soft text-center"
+                    >
+                        <div class="text-gray-800 font-semibold">FAO</div>
+                        <div class="text-gray-500 text-sm">Program support</div>
+                    </div>
+                    <div
+                        class="bg-white p-6 rounded-lg shadow-soft text-center"
+                    >
+                        <div class="text-gray-800 font-semibold">EU</div>
+                        <div class="text-gray-500 text-sm">
+                            Development funding
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Leadership Team Section -->
+        <!-- Leadership Team (bios placeholders) -->
         <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-4">
+                <div class="text-center mb-14 md:mb-16">
+                    <h2 class="heading-lg text-green-600 mb-4">
                         Leadership Team
                     </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Meet the experienced professionals leading our mission
-                        to transform businesses through technology
+                        Meet the experienced professionals guiding our mission.
                     </p>
                 </div>
 
@@ -209,293 +307,127 @@
                     <div
                         class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-green-50 to-green-100 card-hover"
                     >
-                        <div
-                            class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center shadow-professional"
-                        >
-                            <svg
-                                class="w-16 h-16 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                        <img
+                            :src="'/images/about/CEO.avif'"
+                            alt="Mount Agro CEO"
+                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-gradient-to-br from-green-600 to-emerald-600"
+                        />
+
+                        <h3 class="text-lg font-semibold mb-1 text-gray-800">
                             CEO & Founder
                         </h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            Leading Mount Agro's strategic vision and operations
-                            across all technology domains
+                        <p class="text-gray-600 text-sm">
+                            Strategic leadership, partnerships, and
+                            organizational growth.
                         </p>
                     </div>
                     <div
                         class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-emerald-50 to-emerald-100 card-hover"
                     >
-                        <div
-                            class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-emerald-600 to-green-600 flex items-center justify-center shadow-professional"
-                        >
-                            <svg
-                                class="w-16 h-16 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-3 text-gray-800">
-                            CTO
+                        <img
+                            :src="'/images/about/Directorprograms.avif'"
+                            alt="Mount Agro CEO"
+                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-gradient-to-br from-green-600 to-emerald-600"
+                        />
+                        <h3 class="text-lg font-semibold mb-1 text-gray-800">
+                            Director, Programs
                         </h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            Overseeing technical strategy and innovation for
-                            maximum client impact
+                        <p class="text-gray-600 text-sm">
+                            Design and delivery of training, market, and
+                            community programs.
                         </p>
                     </div>
                     <div
                         class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-yellow-50 to-yellow-100 card-hover"
                     >
-                        <div
-                            class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center shadow-professional"
-                        >
-                            <svg
-                                class="w-16 h-16 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-3 text-gray-800">
-                            COO
+                        <img
+                            :src="'/images/about/directoreFinance.avif'"
+                            alt="Mount Agro CEO"
+                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-gradient-to-br from-green-600 to-emerald-600"
+                        />
+                        <h3 class="text-lg font-semibold mb-1 text-gray-800">
+                            Director, Finance
                         </h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            Managing operations and client success to ensure
-                            sustainable growth
+                        <p class="text-gray-600 text-sm">
+                            Financial stewardship and responsible microfinance
+                            operations.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Values Section -->
+        <!-- What We Do (detailed) -->
         <section
             class="section-padding bg-gradient-to-r from-green-600 to-emerald-600 text-white"
         >
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-lg mb-4">Our Core Values</h2>
+                <div class="text-center mb-14 md:mb-16">
+                    <h2 class="heading-lg mb-4">What We Do</h2>
                     <p class="text-xl text-green-100 max-w-3xl mx-auto">
-                        The principles that guide everything we do and shape our
-                        company culture
+                        Our integrated model blends finance, training, and
+                        market access.
                     </p>
                 </div>
 
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-                >
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="text-center">
                         <div
-                            class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6"
-                        >
-                            <svg
-                                class="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4">Integrity</h3>
+                            class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6"
+                        ></div>
+                        <h3 class="text-xl font-bold mb-3">Microfinance</h3>
                         <p class="text-green-100">
-                            We maintain the highest ethical standards in all our
-                            business practices
+                            Seasonal/crop loans, equipment financing, and MSME
+                            support designed for farmers and agri‑SMEs.
                         </p>
                     </div>
                     <div class="text-center">
                         <div
-                            class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6"
-                        >
-                            <svg
-                                class="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                                />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4">Innovation</h3>
+                            class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6"
+                        ></div>
+                        <h3 class="text-xl font-bold mb-3">
+                            Training & Advisory
+                        </h3>
                         <p class="text-green-100">
-                            We continuously push boundaries to deliver
-                            cutting-edge solutions
+                            Capacity building on climate‑smart practices,
+                            cooperative management, and entrepreneurship.
                         </p>
                     </div>
                     <div class="text-center">
                         <div
-                            class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6"
-                        >
-                            <svg
-                                class="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                                />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4">Excellence</h3>
+                            class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6"
+                        ></div>
+                        <h3 class="text-xl font-bold mb-3">Market Access</h3>
                         <p class="text-green-100">
-                            We strive for the highest quality in everything we
-                            deliver
+                            Linkages to buyers, inputs, and value chains that
+                            increase incomes and reduce post‑harvest losses.
                         </p>
-                    </div>
-                    <div class="text-center">
-                        <div
-                            class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6"
-                        >
-                            <svg
-                                class="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                                />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4">Collaboration</h3>
-                        <p class="text-green-100">
-                            We work together with clients and partners to
-                            achieve shared success
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats Section -->
-        <section class="section-padding bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-4">
-                        Our Impact in Numbers
-                    </h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Measurable results that demonstrate our commitment to
-                        client success
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                    <div class="text-center">
-                        <div
-                            class="text-4xl md:text-5xl font-bold gradient-text mb-2"
-                        >
-                            500+
-                        </div>
-                        <div class="text-gray-600">Projects Completed</div>
-                    </div>
-                    <div class="text-center">
-                        <div
-                            class="text-4xl md:text-5xl font-bold gradient-text mb-2"
-                        >
-                            98%
-                        </div>
-                        <div class="text-gray-600">Client Satisfaction</div>
-                    </div>
-                    <div class="text-center">
-                        <div
-                            class="text-4xl md:text-5xl font-bold gradient-text mb-2"
-                        >
-                            50+
-                        </div>
-                        <div class="text-gray-600">Team Members</div>
-                    </div>
-                    <div class="text-center">
-                        <div
-                            class="text-4xl md:text-5xl font-bold gradient-text mb-2"
-                        >
-                            10+
-                        </div>
-                        <div class="text-gray-600">Years Experience</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- CTA Section -->
-        <section
-            class="section-padding bg-gradient-to-r from-green-600 to-emerald-600 text-white"
-        >
+        <section class="section-padding bg-white">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="heading-lg mb-6">Ready to Work With Us?</h2>
-                <p class="text-xl text-green-100 mb-8">
-                    Let's discuss how we can help transform your business with
-                    our technology solutions.
+                <h2 class="heading-lg mb-6 text-green-600">
+                    Ready to Partner?
+                </h2>
+                <p class="text-xl text-gray-600 mb-8">
+                    Let\'s explore how we can strengthen agricultural
+                    communities together.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <router-link
                         to="/contact"
                         class="btn btn-cta text-lg px-8 py-4"
+                        >Contact Us</router-link
                     >
-                        Get In Touch
-                        <svg
-                            class="w-5 h-5 ml-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
-                        </svg>
-                    </router-link>
                     <router-link
                         to="/our-work"
-                        class="btn border-2 border-white text-white hover:bg-white hover:text-green-600 text-lg px-8 py-4"
+                        class="btn btn-secondary text-lg px-8 py-4"
+                        >View Our Work</router-link
                     >
-                        View Our Work
-                    </router-link>
                 </div>
             </div>
         </section>
@@ -503,5 +435,17 @@
 </template>
 
 <script setup>
-// No additional script needed for this component
+import { ref, onMounted } from "vue";
+import axios from "axios";
+
+const whoWeAreIntro = ref("");
+const whoWeAreBodyA = ref("");
+const whoWeAreBodyB = ref("");
+const mission = ref("");
+const vision = ref("");
+
+onMounted(async () => {
+    document.title = "About | Mount Agro Microfinance Institution";
+    await fetchAbout();
+});
 </script>

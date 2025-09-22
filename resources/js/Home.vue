@@ -1156,31 +1156,31 @@ const currentPillarSlide = ref(0);
 // Hero slider data - 5 images
 const heroSlides = ref([
     {
-        image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=1920&h=1080&fit=crop&crop=center&auto=format",
+        image: "/images/home/hero1.avif",
         title: "Empowering Agricultural Communities",
         description:
             "Building sustainable futures through innovative agricultural programs, training, and community development initiatives across Afghanistan.",
     },
     {
-        image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1920&h=1080&fit=crop&crop=center&auto=format",
+        image: "/images/home/hero2.avif",
         title: "Comprehensive Training Programs",
         description:
             "Providing farmers and agricultural professionals with cutting-edge knowledge, skills, and techniques for modern sustainable farming.",
     },
     {
-        image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&h=1080&fit=crop&crop=center&auto=format",
+        image: "/images/home/hero3.avif",
         title: "Agricultural Technology Solutions",
         description:
             "Integrating modern technology with traditional farming practices to boost productivity and ensure food security.",
     },
     {
-        image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=1080&fit=crop&crop=center&auto=format",
+        image: "/images/home/hero4.avif",
         title: "Community Development",
         description:
             "Strengthening rural communities through inclusive programs that promote social development and economic empowerment.",
     },
     {
-        image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1920&h=1080&fit=crop&crop=center&auto=format",
+        image: "/images/home/hero5.avif",
         title: "Environmental Conservation",
         description:
             "Promoting sustainable agricultural practices that protect our environment while ensuring productive and profitable farming.",
