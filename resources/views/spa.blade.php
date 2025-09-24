@@ -34,7 +34,7 @@
         <meta property="twitter:image" content="{{ asset('mountagro-logo.jpg') }}">
         
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        {{-- <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"> --}}
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('mountagro-logo.jpg') }}">
         
         <!-- Preconnect for performance -->

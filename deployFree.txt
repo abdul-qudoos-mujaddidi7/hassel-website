@@ -1,0 +1,67 @@
+Mount Agro – Free, no-deploy sharing guide (working via Cloudflare Tunnel)
+
+What we changed in code
+1) Vite dev server config (for optional HMR over a tunnel)
+   - File: vite.config.js
+   - Added server.host = "0.0.0.0" and dynamic HMR host via env var VITE_TUNNEL_HOST with wss:443.
+   - Allowed auto port fallback (strictPort: false) to avoid "Port 5173 in use".
+
+2) Forced HTTPS URL generation when behind a tunnel
+   - File: app/Providers/AppServiceProvider.php
+   - In boot(), when request has X-Forwarded-Proto=https, call URL::forceScheme('https').
+   - Purpose: Prevent mixed-content by ensuring asset(), url(), and @vite links use https.
+
+3) Blade template uses dynamic URLs (no hardcoded localhost/tunnel hosts)
+   - File: resources/views/spa.blade.php
+   - Uses asset('...') and url()->current() for images/meta; uses @vite([...]) in dev.
+   - We did NOT hardcode http://127.0.0.1 or tunnel domains in tags.
+
+What we changed in runtime/setup
+4) Disabled dev HMR when sharing publicly
+   - Removed file: public/hot (so Laravel serves built assets instead of Vite dev URLs).
+
+5) Built production assets
+   - Ran: npm run build
+   - Output: public/build/** with manifest.json and hashed CSS/JS.
+
+6) Served the correct web root (Laravel public directory)
+   - To avoid MIME/type errors and 404s, we served from the public folder, not the project root.
+   - Used PHP's built-in server for simplicity.
+
+7) Exposed the site with Cloudflare Tunnel (trycloudflare.com)
+   - Replaced unstable Localtunnel with Cloudflare quick tunnel.
+   - Tunnel targets our local server; visitors use the https URL Cloudflare prints.
+
+Exact commands (PowerShell)
+Terminal A – serve Laravel from the public directory (no Vite dev)
+  cd C:\xampp\htdocs\hassel-website-main
+  php -S 127.0.0.1:8080 -t public
+
+Terminal B – open a Cloudflare Tunnel to your local server
+  cloudflared tunnel --url http://127.0.0.1:8080
+  # copy the https://<random>.trycloudflare.com URL printed
+
+Optional: using Vite dev HMR over tunnel (only if you need hot reload)
+  # keep Apache/PHP serving the app (port 80/8080)
+  # set tunnel host for HMR so the browser connects via your public domain
+  $env:VITE_TUNNEL_HOST="<your-subdomain>.trycloudflare.com"
+  npm run dev
+  # NOTE: If you use dev HMR, do NOT delete public/hot. For our public share we used the production build instead.
+
+Cache/health commands
+  php artisan optimize:clear
+
+Why it works
+- Serving from public/ guarantees /build/assets/*.js|css resolve to real files (no SPA fallback).
+- URL::forceScheme('https') ensures Laravel generates https links behind the tunnel, avoiding mixed content.
+- Cloudflare Tunnel provides a stable https endpoint for your local server without deploying.
+
+Common issues and fixes
+- Mixed content (blocked http:// URLs): fixed by URL::forceScheme('https') and avoiding hardcoded http links.
+- MIME type "text/html" for module scripts: happens if requests for /build/* hit the SPA; fixed by serving public/ as docroot and removing public/hot when not using dev.
+- Port in use for Vite: we set strictPort:false or run vite with --port 5175.
+- Localtunnel 503/Unavailable: switch to Cloudflare Tunnel or ngrok.
+
+Alternative (Apache vhost)
+- Configure Apache VirtualHost DocumentRoot to C:/xampp/htdocs/hassel-website-main/public and tunnel that vhost’s port.
+
