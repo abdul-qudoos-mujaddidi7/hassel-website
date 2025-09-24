@@ -30,6 +30,8 @@ class CommunityProgramRequest extends FormRequest
             'partner_organizations' => 'nullable|json',
             'status' => 'required|in:draft,published,archived',
             'featured_image' => 'nullable|string|max:255',
+            'cover_image' => 'nullable|string|max:255',
+            'thumbnail_image' => 'nullable|string|max:255',
         ];
     }
 

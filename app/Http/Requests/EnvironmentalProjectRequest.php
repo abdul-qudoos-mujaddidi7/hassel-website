@@ -25,6 +25,8 @@ class EnvironmentalProjectRequest extends FormRequest
                 Rule::unique('environmental_projects', 'slug')->ignore($projectId)
             ],
             'description' => 'required|string',
+            'cover_image' => 'nullable|string|max:255',
+            'thumbnail_image' => 'nullable|string|max:255',
             'project_type' => 'required|in:reforestation,water_conservation,soil_health,climate_adaptation,renewable_energy',
             'impact_metrics' => 'nullable|json',
             'funding_source' => 'nullable|string|max:255',

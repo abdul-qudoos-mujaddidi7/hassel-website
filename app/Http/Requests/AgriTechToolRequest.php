@@ -25,6 +25,8 @@ class AgriTechToolRequest extends FormRequest
                 Rule::unique('agri_tech_tools', 'slug')->ignore($toolId)
             ],
             'description' => 'required|string',
+            'cover_image' => 'nullable|string|max:255',
+            'thumbnail_image' => 'nullable|string|max:255',
             'tool_type' => 'required|in:mobile_app,web_platform,hardware,software,sensor',
             'platform' => 'nullable|string|max:100',
             'version' => 'nullable|string|max:50',

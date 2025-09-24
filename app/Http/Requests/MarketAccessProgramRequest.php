@@ -25,6 +25,8 @@ class MarketAccessProgramRequest extends FormRequest
                 Rule::unique('market_access_programs', 'slug')->ignore($programId)
             ],
             'description' => 'required|string',
+            'cover_image' => 'nullable|string|max:255',
+            'thumbnail_image' => 'nullable|string|max:255',
             'program_type' => 'required|in:market_linkage,value_chain,export_support,cooperative_development',
             'target_crops' => 'nullable|json',
             'partner_organizations' => 'nullable|json',

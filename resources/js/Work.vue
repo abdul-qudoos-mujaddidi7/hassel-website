@@ -654,65 +654,154 @@
                     </p>
                 </div>
 
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                >
-                    <div
-                        v-for="item in featuredPrograms"
-                        :key="item.key"
-                        class="p-6 rounded-professional-lg border border-gray-200 card-hover bg-white"
+                <div class="relative overflow-visible">
+                    <button
+                        type="button"
+                        @click="scrollFeatured(-1)"
+                        class="hidden md:flex absolute left-0 -translate-x-1/2 top-1/2 -translate-y-1/2 z-20 items-center justify-center w-10 h-10 rounded-full bg-white/95 shadow ring-1 ring-black/5 hover:bg-white"
+                        aria-label="Previous"
                     >
-                        <div class="flex items-center justify-between mb-3">
-                            <span
-                                class="text-xs font-semibold px-2 py-1 rounded bg-green-50 text-green-700"
-                                >{{ item.type }}</span
-                            >
-                            <router-link
-                                :to="item.route"
-                                class="text-sm text-green-700 hover:underline"
-                                >View all</router-link
-                            >
-                        </div>
-                        <h3
-                            class="text-lg font-bold text-gray-900 mb-1 truncate"
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
                         >
-                            {{ item.title }}
-                        </h3>
-                        <p
-                            v-if="item.subtitle"
-                            class="text-sm text-gray-600 line-clamp-2 mb-3"
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 19l-7-7 7-7"
+                            />
+                        </svg>
+                    </button>
+                    <button
+                        type="button"
+                        @click="scrollFeatured(1)"
+                        class="hidden md:flex absolute right-0 translate-x-1/2 top-1/2 -translate-y-1/2 z-20 items-center justify-center w-10 h-10 rounded-full bg-white/95 shadow ring-1 ring-black/5 hover:bg-white"
+                        aria-label="Next"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
                         >
-                            {{ item.subtitle }}
-                        </p>
-                        <div class="flex flex-wrap gap-2 text-xs">
-                            <span
-                                v-if="item.status"
-                                class="px-2 py-1 rounded bg-emerald-50 text-emerald-700"
-                                >Status: {{ item.status }}</span
-                            >
-                            <span
-                                v-if="item.location"
-                                class="px-2 py-1 rounded bg-blue-50 text-blue-700"
-                                >{{ item.location }}</span
-                            >
-                            <span
-                                v-if="item.dateRange"
-                                class="px-2 py-1 rounded bg-yellow-50 text-yellow-700"
-                                >{{ item.dateRange }}</span
-                            >
-                        </div>
-                    </div>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"
+                            />
+                        </svg>
+                    </button>
 
-                    <!-- Loading / fallback cards -->
                     <div
-                        v-if="featuredLoading"
-                        class="p-6 rounded-professional-lg border border-gray-200 bg-white animate-pulse"
-                        v-for="n in 3"
-                        :key="'skeleton-' + n"
+                        ref="featuredTrack"
+                        class="flex gap-6 overflow-x-auto snap-x snap-mandatory snap-always scroll-smooth pb-2 px-2 md:px-3"
+                        style="
+                            scroll-snap-stop: always;
+                            scroll-padding-inline: 1rem;
+                        "
+                        @mouseenter="pauseAuto()"
+                        @mouseleave="resumeAuto()"
                     >
-                        <div class="h-4 w-24 bg-gray-200 rounded mb-4"></div>
-                        <div class="h-5 w-3/4 bg-gray-200 rounded mb-2"></div>
-                        <div class="h-4 w-2/3 bg-gray-100 rounded"></div>
+                        <!-- Start spacer to prevent first card peeking under arrows -->
+                        <div class="shrink-0 w-6 md:w-6 lg:w-8"></div>
+                        <div
+                            v-for="item in featuredPrograms"
+                            :key="item.key"
+                            class="min-w-[100%] sm:min-w-[60%] md:min-w-[340px] lg:min-w-[380px] snap-start rounded-professional-lg border border-gray-200 bg-white card-hover"
+                        >
+                            <div
+                                class="relative aspect-[16/9] overflow-hidden rounded-t-professional-lg bg-gray-100"
+                            >
+                                <img
+                                    v-if="item.image"
+                                    :src="item.image"
+                                    :alt="item.title"
+                                    class="w-full h-full object-cover"
+                                    loading="lazy"
+                                />
+                                <div
+                                    v-else
+                                    class="w-full h-full flex items-center justify-center text-gray-400 text-sm"
+                                >
+                                    No image
+                                </div>
+                                <span
+                                    class="absolute left-3 top-3 text-xs font-semibold px-2 py-1 rounded bg-green-50 text-green-700"
+                                    >{{ item.type }}</span
+                                >
+                            </div>
+                            <div class="p-5">
+                                <h3
+                                    class="text-base md:text-lg font-bold text-gray-900 mb-1 truncate"
+                                >
+                                    {{ item.title }}
+                                </h3>
+                                <p
+                                    v-if="item.subtitle"
+                                    class="text-sm text-gray-600 line-clamp-2 mb-3"
+                                >
+                                    {{ item.subtitle }}
+                                </p>
+                                <div class="flex flex-wrap gap-2 text-xs mb-3">
+                                    <span
+                                        v-if="item.status"
+                                        class="px-2 py-1 rounded bg-emerald-50 text-emerald-700"
+                                        >Status: {{ item.status }}</span
+                                    >
+                                    <span
+                                        v-if="item.location"
+                                        class="px-2 py-1 rounded bg-blue-50 text-blue-700"
+                                        >{{ item.location }}</span
+                                    >
+                                    <span
+                                        v-if="item.dateRange"
+                                        class="px-2 py-1 rounded bg-yellow-50 text-yellow-700"
+                                        >{{ item.dateRange }}</span
+                                    >
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <router-link
+                                        :to="item.route"
+                                        class="text-sm text-green-700 font-semibold hover:underline"
+                                        >View all</router-link
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End spacer to prevent last card from peeking -->
+                        <div class="shrink-0 w-6 md:w-6 lg:w-8"></div>
+
+                        <div
+                            v-if="featuredLoading"
+                            v-for="n in 3"
+                            :key="'sk-' + n"
+                            class="min-w-[280px] md:min-w-[340px] lg:min-w-[380px] snap-start rounded-professional-lg border border-gray-200 bg-white animate-pulse"
+                        >
+                            <div
+                                class="aspect-[16/9] bg-gray-200 rounded-t-professional-lg"
+                            ></div>
+                            <div class="p-5">
+                                <div
+                                    class="h-5 w-3/4 bg-gray-200 rounded mb-2"
+                                ></div>
+                                <div
+                                    class="h-4 w-2/3 bg-gray-100 rounded mb-3"
+                                ></div>
+                                <div class="flex gap-2">
+                                    <div
+                                        class="h-4 w-20 bg-gray-100 rounded"
+                                    ></div>
+                                    <div
+                                        class="h-4 w-16 bg-gray-100 rounded"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -807,6 +896,8 @@ import { onMounted, ref } from "vue";
 const featuredPrograms = ref([]);
 const featuredLoading = ref(true);
 const stats = ref({});
+const featuredTrack = ref(null);
+let autoTimer = null;
 
 async function safeFetchJson(url) {
     try {
@@ -838,68 +929,70 @@ onMounted(async () => {
         };
     }
 
-    // Load a small preview across pillars (best-effort)
-    const [tp, ma, cp] = await Promise.all([
-        safeFetchJson("/api/training-programs?limit=1"),
-        safeFetchJson("/api/market-access-programs?limit=1"),
-        safeFetchJson("/api/community-programs?limit=1"),
+    // Load a wider preview across pillars (best-effort)
+    const [tp, ma, cp, env, tools] = await Promise.all([
+        safeFetchJson("/api/training-programs?limit=5"),
+        safeFetchJson("/api/market-access-programs?limit=5"),
+        safeFetchJson("/api/community-programs?limit=5"),
+        safeFetchJson("/api/environmental-projects?limit=5"),
+        safeFetchJson("/api/agri-tech-tools?limit=5"),
     ]);
 
     const picked = [];
-    if (tp?.data?.length)
-        picked.push({
-            key: `tp-${tp.data[0].id}`,
-            type: "Training",
-            title: tp.data[0].title ?? tp.data[0].name ?? "Training Program",
-            subtitle:
-                tp.data[0].short_description ?? tp.data[0].description ?? "",
-            status: tp.data[0].status ?? tp.data[0].program_status,
-            location:
-                tp.data[0].location ??
-                tp.data[0].province ??
-                tp.data[0].district,
-            dateRange:
-                tp.data[0].start_date && tp.data[0].end_date
-                    ? `${tp.data[0].start_date} – ${tp.data[0].end_date}`
-                    : undefined,
-            route: "/training-programs",
-        });
-    if (ma?.data?.length)
-        picked.push({
-            key: `ma-${ma.data[0].id}`,
-            type: "Market Access",
-            title: ma.data[0].title ?? ma.data[0].name ?? "Market Program",
-            subtitle:
-                ma.data[0].short_description ?? ma.data[0].description ?? "",
-            status: ma.data[0].status ?? ma.data[0].program_status,
-            location:
-                ma.data[0].location ?? ma.data[0].region ?? ma.data[0].province,
-            dateRange:
-                ma.data[0].start_date && ma.data[0].end_date
-                    ? `${ma.data[0].start_date} – ${ma.data[0].end_date}`
-                    : undefined,
-            route: "/market-access",
-        });
-    if (cp?.data?.length)
-        picked.push({
-            key: `cp-${cp.data[0].id}`,
-            type: "Community",
-            title: cp.data[0].title ?? cp.data[0].name ?? "Community Program",
-            subtitle:
-                cp.data[0].short_description ?? cp.data[0].description ?? "",
-            status: cp.data[0].status ?? cp.data[0].program_status,
-            location:
-                cp.data[0].location ??
-                cp.data[0].district ??
-                cp.data[0].province,
-            dateRange:
-                cp.data[0].start_date && cp.data[0].end_date
-                    ? `${cp.data[0].start_date} – ${cp.data[0].end_date}`
-                    : undefined,
-            route: "/community",
-        });
+    const mapItem = (type, r, route) => ({
+        key: `${type}-${r.id}`,
+        type,
+        title: r.title ?? r.name ?? type,
+        subtitle: r.short_description ?? r.description ?? "",
+        status: r.status ?? r.program_status,
+        location: r.location ?? r.province ?? r.region ?? r.district,
+        dateRange:
+            r.start_date && r.end_date
+                ? `${r.start_date} – ${r.end_date}`
+                : undefined,
+        image: r.thumbnail_image ?? r.cover_image ?? r.featured_image ?? null,
+        route,
+    });
+
+    for (const r of tp?.data ?? [])
+        picked.push(mapItem("Training", r, "/training-programs"));
+    for (const r of ma?.data ?? [])
+        picked.push(mapItem("Market Access", r, "/market-access"));
+    for (const r of cp?.data ?? [])
+        picked.push(mapItem("Community", r, "/community"));
+    for (const r of env?.data ?? [])
+        picked.push(mapItem("Environment", r, "/environment"));
+    for (const r of tools?.data ?? [])
+        picked.push(mapItem("Agri‑Tech", r, "/agri-tech"));
 
     featuredPrograms.value = picked;
     featuredLoading.value = false;
+
+    // start auto slider
+    startAuto();
 });
+
+function scrollFeatured(dir) {
+    const el = featuredTrack.value;
+    if (!el) return;
+    const step = 380;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+}
+
+function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(() => scrollFeatured(1), 4000);
+}
+
+function stopAuto() {
+    if (autoTimer) clearInterval(autoTimer);
+    autoTimer = null;
+}
+
+function pauseAuto() {
+    stopAuto();
+}
+function resumeAuto() {
+    startAuto();
+}
 </script>

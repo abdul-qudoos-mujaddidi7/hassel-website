@@ -37,6 +37,8 @@ class TrainingProgramRequest extends FormRequest
                 Rule::unique('training_programs', 'slug')->ignore($programId)
             ],
             'description' => 'required|string',
+            'cover_image' => 'nullable|string|max:255',
+            'thumbnail_image' => 'nullable|string|max:255',
             'program_type' => 'required|in:basic,advanced,specialized,workshop,field_school',
             'duration' => 'required|string|max:100',
             'location' => 'required|string|max:255',
