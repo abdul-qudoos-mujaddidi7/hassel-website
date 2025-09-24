@@ -40,14 +40,23 @@ class TrainingProgramFactory extends Factory
             'title' => $title,
             'slug' => \Illuminate\Support\Str::slug($title . '-' . $this->faker->unique()->randomNumber(3)),
             'description' => $this->generateDescription($title),
+            'cover_image' => '/images/seed/covers/' . $this->faker->randomElement(['cover1.jpg', 'cover2.jpg', 'cover3.jpg']),
+            'thumbnail_image' => '/images/seed/thumbs/' . $this->faker->randomElement(['thumb1.jpg', 'thumb2.jpg', 'thumb3.jpg']),
             'program_type' => $this->faker->randomElement(['basic', 'advanced', 'specialized', 'workshop', 'field_school']),
             'duration' => $duration . ' days',
             'location' => $this->faker->randomElement([
-                'Kabul Training Center', 'Herat Agricultural Institute', 'Mazar Training Facility',
-                'Kandahar Field Station', 'Jalalabad Campus', 'Community Center - Bamyan'
+                'Kabul Training Center',
+                'Herat Agricultural Institute',
+                'Mazar Training Facility',
+                'Kandahar Field Station',
+                'Jalalabad Campus',
+                'Community Center - Bamyan'
             ]),
             'instructor' => $this->faker->name() . ', ' . $this->faker->randomElement([
-                'Agricultural Engineer', 'Farming Specialist', 'Extension Officer', 'Technical Expert'
+                'Agricultural Engineer',
+                'Farming Specialist',
+                'Extension Officer',
+                'Technical Expert'
             ]),
             'max_participants' => $this->faker->numberBetween(15, 50),
             'start_date' => $startDate,
@@ -63,8 +72,8 @@ class TrainingProgramFactory extends Factory
     private function generateDescription(string $title): string
     {
         return "This comprehensive {$title} is designed to equip participants with practical skills and knowledge essential for modern agriculture. " .
-               "The program combines theoretical learning with hands-on field experience, ensuring participants can immediately apply what they learn. " .
-               "Our expert instructors use interactive teaching methods and provide ongoing support throughout the training period.";
+            "The program combines theoretical learning with hands-on field experience, ensuring participants can immediately apply what they learn. " .
+            "Our expert instructors use interactive teaching methods and provide ongoing support throughout the training period.";
     }
 
     /**
@@ -116,7 +125,7 @@ class TrainingProgramFactory extends Factory
         $duration = $this->faker->numberBetween(3, 30);
         $endDate = (clone $startDate)->modify("+{$duration} days");
 
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'start_date' => $startDate,
             'end_date' => $endDate,
             'status' => 'published',
@@ -132,7 +141,7 @@ class TrainingProgramFactory extends Factory
         $duration = $this->faker->numberBetween(7, 30);
         $endDate = (clone $startDate)->modify("+{$duration} days");
 
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'start_date' => $startDate,
             'end_date' => $endDate,
             'status' => 'published',
@@ -148,7 +157,7 @@ class TrainingProgramFactory extends Factory
         $duration = $this->faker->numberBetween(3, 30);
         $startDate = (clone $endDate)->modify("-{$duration} days");
 
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'start_date' => $startDate,
             'end_date' => $endDate,
             'status' => 'published',

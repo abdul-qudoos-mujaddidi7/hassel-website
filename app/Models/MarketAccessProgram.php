@@ -15,6 +15,8 @@ class MarketAccessProgram extends Model
         'title',
         'slug',
         'description',
+        'cover_image',
+        'thumbnail_image',
         'program_type',
         'target_crops',
         'location',

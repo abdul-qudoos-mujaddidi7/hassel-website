@@ -14,6 +14,8 @@ class EnvironmentalProjectResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
+            'cover_image' => $this->cover_image ? asset($this->cover_image) : null,
+            'thumbnail_image' => $this->thumbnail_image ? asset($this->thumbnail_image) : null,
             'project_type' => $this->project_type,
             'project_type_display' => $this->project_type_display,
             'impact_metrics' => $this->impact_metrics_list,

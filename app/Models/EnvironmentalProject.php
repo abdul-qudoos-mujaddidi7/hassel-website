@@ -14,6 +14,8 @@ class EnvironmentalProject extends Model
         'title',
         'slug',
         'description',
+        'cover_image',
+        'thumbnail_image',
         'project_type',
         'impact_metrics',
         'location',

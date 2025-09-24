@@ -19,6 +19,8 @@ class TrainingProgramResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
+            'cover_image' => $this->cover_image ? asset($this->cover_image) : null,
+            'thumbnail_image' => $this->thumbnail_image ? asset($this->thumbnail_image) : null,
             'program_type' => $this->program_type,
             'program_type_display' => ucwords(str_replace('_', ' ', $this->program_type)),
             'duration' => $this->duration,

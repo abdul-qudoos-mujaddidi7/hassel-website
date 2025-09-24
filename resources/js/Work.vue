@@ -642,16 +642,15 @@
             </div>
         </section>
 
-        <!-- Project Showcase Section -->
+        <!-- Featured Programs (Dynamic preview) -->
         <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="heading-lg text-gray-900 mb-4">
-                        Featured Projects
+                        Featured Programs
                     </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        A showcase of our recent work and the impact we've
-                        created for our clients
+                        A quick look at ongoing initiatives across our pillars.
                     </p>
                 </div>
 
@@ -659,161 +658,62 @@
                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
                     <div
-                        class="relative group rounded-professional-lg overflow-hidden card-hover"
+                        v-for="item in featuredPrograms"
+                        :key="item.key"
+                        class="p-6 rounded-professional-lg border border-gray-200 card-hover bg-white"
                     >
-                        <div
-                            class="aspect-w-16 aspect-h-12 bg-gradient-to-br from-green-500 to-green-600"
-                        >
-                            <div
-                                class="flex items-center justify-center text-white"
+                        <div class="flex items-center justify-between mb-3">
+                            <span
+                                class="text-xs font-semibold px-2 py-1 rounded bg-green-50 text-green-700"
+                                >{{ item.type }}</span
                             >
-                                <div class="text-center">
-                                    <svg
-                                        class="w-16 h-16 mx-auto mb-4"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                        />
-                                    </svg>
-                                    <h3 class="text-xl font-bold">
-                                        E-Commerce Platform
-                                    </h3>
-                                </div>
-                            </div>
+                            <router-link
+                                :to="item.route"
+                                class="text-sm text-green-700 hover:underline"
+                                >View all</router-link
+                            >
                         </div>
-                        <div
-                            class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center"
+                        <h3
+                            class="text-lg font-bold text-gray-900 mb-1 truncate"
                         >
-                            <div
-                                class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            {{ item.title }}
+                        </h3>
+                        <p
+                            v-if="item.subtitle"
+                            class="text-sm text-gray-600 line-clamp-2 mb-3"
+                        >
+                            {{ item.subtitle }}
+                        </p>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            <span
+                                v-if="item.status"
+                                class="px-2 py-1 rounded bg-emerald-50 text-emerald-700"
+                                >Status: {{ item.status }}</span
                             >
-                                <h3 class="text-xl font-bold mb-2">
-                                    E-Commerce Platform
-                                </h3>
-                                <p class="text-sm">
-                                    Modern online store solution
-                                </p>
-                            </div>
+                            <span
+                                v-if="item.location"
+                                class="px-2 py-1 rounded bg-blue-50 text-blue-700"
+                                >{{ item.location }}</span
+                            >
+                            <span
+                                v-if="item.dateRange"
+                                class="px-2 py-1 rounded bg-yellow-50 text-yellow-700"
+                                >{{ item.dateRange }}</span
+                            >
                         </div>
                     </div>
 
+                    <!-- Loading / fallback cards -->
                     <div
-                        class="relative group rounded-professional-lg overflow-hidden card-hover"
+                        v-if="featuredLoading"
+                        class="p-6 rounded-professional-lg border border-gray-200 bg-white animate-pulse"
+                        v-for="n in 3"
+                        :key="'skeleton-' + n"
                     >
-                        <div
-                            class="aspect-w-16 aspect-h-12 bg-gradient-to-br from-emerald-500 to-emerald-600"
-                        >
-                            <div
-                                class="flex items-center justify-center text-white"
-                            >
-                                <div class="text-center">
-                                    <svg
-                                        class="w-16 h-16 mx-auto mb-4"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                                        />
-                                    </svg>
-                                    <h3 class="text-xl font-bold">
-                                        Analytics Dashboard
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center"
-                        >
-                            <div
-                                class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                <h3 class="text-xl font-bold mb-2">
-                                    Analytics Dashboard
-                                </h3>
-                                <p class="text-sm">
-                                    Real-time business intelligence
-                                </p>
-                            </div>
-                        </div>
+                        <div class="h-4 w-24 bg-gray-200 rounded mb-4"></div>
+                        <div class="h-5 w-3/4 bg-gray-200 rounded mb-2"></div>
+                        <div class="h-4 w-2/3 bg-gray-100 rounded"></div>
                     </div>
-
-                    <div
-                        class="relative group rounded-professional-lg overflow-hidden card-hover"
-                    >
-                        <div
-                            class="aspect-w-16 aspect-h-12 bg-gradient-to-br from-yellow-500 to-orange-500"
-                        >
-                            <div
-                                class="flex items-center justify-center text-white"
-                            >
-                                <div class="text-center">
-                                    <svg
-                                        class="w-16 h-16 mx-auto mb-4"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                                        />
-                                    </svg>
-                                    <h3 class="text-xl font-bold">
-                                        Mobile App
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center"
-                        >
-                            <div
-                                class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                <h3 class="text-xl font-bold mb-2">
-                                    Mobile App
-                                </h3>
-                                <p class="text-sm">
-                                    Cross-platform mobile solution
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center mt-12">
-                    <router-link
-                        to="/contact"
-                        class="btn btn-cta text-lg px-8 py-4"
-                    >
-                        Start Your Project
-                        <svg
-                            class="w-5 h-5 ml-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
-                        </svg>
-                    </router-link>
                 </div>
             </div>
         </section>
@@ -826,35 +726,34 @@
                 <div class="text-center mb-16">
                     <h2 class="heading-lg mb-4">Our Impact</h2>
                     <p class="text-xl text-green-100 max-w-3xl mx-auto">
-                        Measurable results that demonstrate our commitment to
-                        client success
+                        Measurable results from our beneficiaries and programs.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                     <div class="text-center">
                         <div class="text-4xl md:text-5xl font-bold mb-2">
-                            500+
+                            {{ stats.beneficiaries ?? "—" }}
                         </div>
-                        <div class="text-green-100">Projects Completed</div>
+                        <div class="text-green-100">Beneficiaries</div>
                     </div>
                     <div class="text-center">
                         <div class="text-4xl md:text-5xl font-bold mb-2">
-                            98%
+                            {{ stats.programs ?? "—" }}
                         </div>
-                        <div class="text-green-100">Client Satisfaction</div>
+                        <div class="text-green-100">Programs</div>
                     </div>
                     <div class="text-center">
                         <div class="text-4xl md:text-5xl font-bold mb-2">
-                            50+
+                            {{ stats.projects ?? "—" }}
                         </div>
-                        <div class="text-green-100">Team Members</div>
+                        <div class="text-green-100">Projects</div>
                     </div>
                     <div class="text-center">
                         <div class="text-4xl md:text-5xl font-bold mb-2">
-                            10+
+                            {{ stats.locations ?? "—" }}
                         </div>
-                        <div class="text-green-100">Years Experience</div>
+                        <div class="text-green-100">Locations</div>
                     </div>
                 </div>
             </div>
@@ -903,5 +802,104 @@
 </template>
 
 <script setup>
-// No additional script needed for this component
+import { onMounted, ref } from "vue";
+
+const featuredPrograms = ref([]);
+const featuredLoading = ref(true);
+const stats = ref({});
+
+async function safeFetchJson(url) {
+    try {
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        return await res.json();
+    } catch (e) {
+        return null;
+    }
+}
+
+onMounted(async () => {
+    // Load impact stats
+    const statsRes = await safeFetchJson("/api/stats");
+    if (statsRes) {
+        stats.value = {
+            beneficiaries:
+                statsRes.total_beneficiaries ??
+                statsRes.beneficiaries ??
+                statsRes.total ??
+                0,
+            programs: statsRes.total_programs ?? statsRes.programs ?? 0,
+            projects: statsRes.total_projects ?? statsRes.projects ?? 0,
+            locations:
+                statsRes.total_locations ??
+                statsRes.locations ??
+                statsRes.provinces ??
+                0,
+        };
+    }
+
+    // Load a small preview across pillars (best-effort)
+    const [tp, ma, cp] = await Promise.all([
+        safeFetchJson("/api/training-programs?limit=1"),
+        safeFetchJson("/api/market-access-programs?limit=1"),
+        safeFetchJson("/api/community-programs?limit=1"),
+    ]);
+
+    const picked = [];
+    if (tp?.data?.length)
+        picked.push({
+            key: `tp-${tp.data[0].id}`,
+            type: "Training",
+            title: tp.data[0].title ?? tp.data[0].name ?? "Training Program",
+            subtitle:
+                tp.data[0].short_description ?? tp.data[0].description ?? "",
+            status: tp.data[0].status ?? tp.data[0].program_status,
+            location:
+                tp.data[0].location ??
+                tp.data[0].province ??
+                tp.data[0].district,
+            dateRange:
+                tp.data[0].start_date && tp.data[0].end_date
+                    ? `${tp.data[0].start_date} – ${tp.data[0].end_date}`
+                    : undefined,
+            route: "/training-programs",
+        });
+    if (ma?.data?.length)
+        picked.push({
+            key: `ma-${ma.data[0].id}`,
+            type: "Market Access",
+            title: ma.data[0].title ?? ma.data[0].name ?? "Market Program",
+            subtitle:
+                ma.data[0].short_description ?? ma.data[0].description ?? "",
+            status: ma.data[0].status ?? ma.data[0].program_status,
+            location:
+                ma.data[0].location ?? ma.data[0].region ?? ma.data[0].province,
+            dateRange:
+                ma.data[0].start_date && ma.data[0].end_date
+                    ? `${ma.data[0].start_date} – ${ma.data[0].end_date}`
+                    : undefined,
+            route: "/market-access",
+        });
+    if (cp?.data?.length)
+        picked.push({
+            key: `cp-${cp.data[0].id}`,
+            type: "Community",
+            title: cp.data[0].title ?? cp.data[0].name ?? "Community Program",
+            subtitle:
+                cp.data[0].short_description ?? cp.data[0].description ?? "",
+            status: cp.data[0].status ?? cp.data[0].program_status,
+            location:
+                cp.data[0].location ??
+                cp.data[0].district ??
+                cp.data[0].province,
+            dateRange:
+                cp.data[0].start_date && cp.data[0].end_date
+                    ? `${cp.data[0].start_date} – ${cp.data[0].end_date}`
+                    : undefined,
+            route: "/community",
+        });
+
+    featuredPrograms.value = picked;
+    featuredLoading.value = false;
+});
 </script>

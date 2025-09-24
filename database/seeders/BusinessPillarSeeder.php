@@ -58,6 +58,8 @@ class BusinessPillarSeeder extends Seeder
             MarketAccessProgram::create(array_merge($program, [
                 'slug' => \Illuminate\Support\Str::slug($program['title']),
                 'target_crops' => json_encode(explode(',', $program['target_crops'])),
+                'cover_image' => '/images/seed/covers/cover' . rand(1, 3) . '.jpg',
+                'thumbnail_image' => '/images/seed/thumbs/thumb' . rand(1, 3) . '.jpg',
                 'created_at' => now()->subDays(rand(1, 365)),
             ]));
         }
@@ -91,6 +93,8 @@ class BusinessPillarSeeder extends Seeder
         foreach ($envProjects as $project) {
             EnvironmentalProject::create(array_merge($project, [
                 'slug' => \Illuminate\Support\Str::slug($project['title']),
+                'cover_image' => '/images/seed/covers/cover' . rand(1, 3) . '.jpg',
+                'thumbnail_image' => '/images/seed/thumbs/thumb' . rand(1, 3) . '.jpg',
                 'created_at' => now()->subDays(rand(1, 365)),
             ]));
         }
@@ -127,6 +131,8 @@ class BusinessPillarSeeder extends Seeder
         foreach ($communityPrograms as $program) {
             CommunityProgram::create(array_merge($program, [
                 'slug' => \Illuminate\Support\Str::slug($program['title']),
+                'cover_image' => '/images/seed/covers/cover' . rand(1, 3) . '.jpg',
+                'thumbnail_image' => '/images/seed/thumbs/thumb' . rand(1, 3) . '.jpg',
                 'created_at' => now()->subDays(rand(1, 365)),
             ]));
         }

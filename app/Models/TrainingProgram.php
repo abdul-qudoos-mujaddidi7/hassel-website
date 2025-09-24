@@ -17,6 +17,8 @@ class TrainingProgram extends Model
         'title',
         'slug',
         'description',
+        'cover_image',
+        'thumbnail_image',
         'program_type',
         'duration',
         'location',

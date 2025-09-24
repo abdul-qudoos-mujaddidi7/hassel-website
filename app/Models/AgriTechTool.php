@@ -14,6 +14,8 @@ class AgriTechTool extends Model
         'name',
         'slug',
         'description',
+        'cover_image',
+        'thumbnail_image',
         'tool_type',
         'features',
         'download_link',

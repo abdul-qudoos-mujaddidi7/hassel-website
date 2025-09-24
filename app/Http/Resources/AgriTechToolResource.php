@@ -14,6 +14,8 @@ class AgriTechToolResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'description' => $this->description,
+            'cover_image' => $this->cover_image ? asset($this->cover_image) : null,
+            'thumbnail_image' => $this->thumbnail_image ? asset($this->thumbnail_image) : null,
             'tool_type' => $this->tool_type,
             'tool_type_display' => $this->tool_type_display,
             'platform' => $this->platform,
