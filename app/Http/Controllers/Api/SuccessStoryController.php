@@ -17,11 +17,13 @@ class SuccessStoryController extends Controller
     {
         $language = $request->get('lang', 'en');
 
+        $limit = $request->get('limit', 12);
         $stories = SuccessStory::published()
             ->orderBy('published_at', 'desc')
-            ->paginate(12);
+            ->when($limit, fn($q) => $q->limit($limit))
+            ->get();
 
-        return SuccessStoryResource::collection($stories);
+        return response()->json(SuccessStoryResource::collection($stories));
     }
 
     /**

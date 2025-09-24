@@ -115,9 +115,7 @@
   - Graceful fallback to static cards if API unavailable
 - **Our Impact (Dynamic)**: Key stats from beneficiaries data (
   beneficiaries, programs, locations)
-- **Process Flow**: 5‑step timeline (Discover → Design → Deliver → Support → Improve)
 - **Client Testimonials (Dynamic)**: Selected success stories preview
-- **Cross‑Links**: Quick links to all 5 pillar pages
 
 ### 2.4 Business Pillars Pages (Backend-Aligned)
 

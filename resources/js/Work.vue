@@ -652,6 +652,25 @@
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                         A quick look at ongoing initiatives across our pillars.
                     </p>
+                    <!-- Filter Chips -->
+                    <div
+                        class="mt-6 flex flex-wrap items-center justify-center gap-2"
+                    >
+                        <button
+                            v-for="f in filters"
+                            :key="f"
+                            type="button"
+                            @click="activeFilter = f"
+                            class="px-3 py-1.5 rounded-full text-sm border transition-colors"
+                            :class="
+                                activeFilter === f
+                                    ? 'bg-green-600 text-white border-green-600'
+                                    : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'
+                            "
+                        >
+                            {{ f }}
+                        </button>
+                    </div>
                 </div>
 
                 <div class="relative overflow-visible">
@@ -709,7 +728,7 @@
                         <!-- Start spacer to prevent first card peeking under arrows -->
                         <div class="shrink-0 w-6 md:w-6 lg:w-8"></div>
                         <div
-                            v-for="item in featuredPrograms"
+                            v-for="item in filteredFeatured"
                             :key="item.key"
                             class="min-w-[100%] sm:min-w-[60%] md:min-w-[340px] lg:min-w-[380px] snap-start rounded-professional-lg border border-gray-200 bg-white card-hover"
                         >
@@ -807,6 +826,104 @@
             </div>
         </section>
 
+        <!-- Featured CTA Row -->
+        <section class="py-6 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div
+                    class="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center"
+                >
+                    <router-link
+                        to="/training-programs"
+                        class="btn btn-primary"
+                    >
+                        View all programs
+                    </router-link>
+                    <router-link to="/contact" class="btn btn-secondary">
+                        Contact program team
+                    </router-link>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="section-padding bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="heading-lg text-gray-900 mb-4">
+                        Success Stories
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Real stories from the farmers and communities we serve.
+                    </p>
+                </div>
+
+                <div class="relative">
+                    <div class="overflow-hidden">
+                        <div
+                            class="flex gap-6"
+                            :class="{ 'animate-pulse': testimonialsLoading }"
+                        >
+                            <article
+                                v-for="story in testimonials"
+                                :key="story.id"
+                                class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 bg-white rounded-professional-lg border border-gray-200 shadow-professional p-6"
+                            >
+                                <div class="flex items-center gap-4 mb-4">
+                                    <img
+                                        :src="story.avatar"
+                                        alt="avatar"
+                                        class="w-12 h-12 rounded-full object-cover"
+                                    />
+                                    <div>
+                                        <h3 class="font-semibold text-gray-900">
+                                            {{ story.author }}
+                                        </h3>
+                                        <div class="text-sm text-gray-500">
+                                            {{ story.location }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <p
+                                    class="text-gray-700 leading-relaxed mb-4 line-clamp-4"
+                                >
+                                    “{{ story.excerpt }}”
+                                </p>
+                                <router-link
+                                    :to="`/success-stories/${story.slug}`"
+                                    class="text-green-700 font-semibold hover:underline"
+                                    >Read full story</router-link
+                                >
+                            </article>
+
+                            <!-- Skeletons -->
+                            <article
+                                v-if="testimonialsLoading"
+                                v-for="n in 3"
+                                :key="'t-sk-' + n"
+                                class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 bg-white rounded-professional-lg border border-gray-200 p-6 animate-pulse"
+                            >
+                                <div
+                                    class="h-12 w-12 rounded-full bg-gray-200 mb-4"
+                                ></div>
+                                <div class="h-4 w-1/2 bg-gray-200 mb-2"></div>
+                                <div class="h-3 w-1/3 bg-gray-100 mb-4"></div>
+                                <div class="h-3 w-full bg-gray-100 mb-2"></div>
+                                <div class="h-3 w-5/6 bg-gray-100 mb-2"></div>
+                                <div class="h-3 w-2/3 bg-gray-100"></div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    v-if="testimonialsError"
+                    class="mt-6 text-center text-red-600"
+                >
+                    {{ testimonialsError }}
+                </div>
+            </div>
+        </section>
+
         <!-- Impact Stats Section -->
         <section
             class="section-padding bg-gradient-to-r from-green-600 to-emerald-600 text-white"
@@ -828,62 +945,22 @@
                     </div>
                     <div class="text-center">
                         <div class="text-4xl md:text-5xl font-bold mb-2">
-                            {{ stats.programs ?? "—" }}
-                        </div>
-                        <div class="text-green-100">Programs</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-4xl md:text-5xl font-bold mb-2">
                             {{ stats.projects ?? "—" }}
                         </div>
                         <div class="text-green-100">Projects</div>
                     </div>
                     <div class="text-center">
                         <div class="text-4xl md:text-5xl font-bold mb-2">
-                            {{ stats.locations ?? "—" }}
+                            {{ stats.team ?? "—" }}
                         </div>
-                        <div class="text-green-100">Locations</div>
+                        <div class="text-green-100">Team Members</div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="section-padding bg-white">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="heading-lg text-gray-900 mb-6">
-                    Ready to Transform Your Business?
-                </h2>
-                <p class="text-xl text-gray-600 mb-8">
-                    Let's discuss how we can help you achieve your goals with
-                    our technology solutions and expertise.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <router-link
-                        to="/contact"
-                        class="btn btn-cta text-lg px-8 py-4"
-                    >
-                        Start Your Project
-                        <svg
-                            class="w-5 h-5 ml-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
-                        </svg>
-                    </router-link>
-                    <router-link
-                        to="/about"
-                        class="btn btn-secondary text-lg px-8 py-4"
-                    >
-                        Learn More About Us
-                    </router-link>
+                    <div class="text-center">
+                        <div class="text-4xl md:text-5xl font-bold mb-2">
+                            {{ stats.partners ?? "—" }}
+                        </div>
+                        <div class="text-green-100">Partner Orgs</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -891,13 +968,18 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 
 const featuredPrograms = ref([]);
 const featuredLoading = ref(true);
 const stats = ref({});
 const featuredTrack = ref(null);
 let autoTimer = null;
+const filters = ref(["All"]);
+const activeFilter = ref("All");
+const testimonials = ref([]);
+const testimonialsLoading = ref(true);
+const testimonialsError = ref("");
 
 async function safeFetchJson(url) {
     try {
@@ -913,29 +995,53 @@ onMounted(async () => {
     // Load impact stats
     const statsRes = await safeFetchJson("/api/stats");
     if (statsRes) {
+        // Prefer summary block if provided by API
+        const s = statsRes.summary ?? {};
+
+        // Optional fallback: try to infer from historical if summary is missing
+        const hist = statsRes.historical ?? {};
+        const sumFromHist = (type) => {
+            try {
+                return Object.values(hist)
+                    .flat()
+                    .filter((x) => x.stat_type === type)
+                    .reduce((acc, x) => acc + (Number(x.value) || 0), 0);
+            } catch (_) {
+                return 0;
+            }
+        };
+
         stats.value = {
             beneficiaries:
-                statsRes.total_beneficiaries ??
-                statsRes.beneficiaries ??
-                statsRes.total ??
+                s.total_beneficiaries ??
+                sumFromHist("total_beneficiaries") ??
                 0,
-            programs: statsRes.total_programs ?? statsRes.programs ?? 0,
-            projects: statsRes.total_projects ?? statsRes.projects ?? 0,
-            locations:
-                statsRes.total_locations ??
-                statsRes.locations ??
-                statsRes.provinces ??
+            projects: s.active_projects ?? sumFromHist("active_projects") ?? 0,
+            team: s.team_members ?? sumFromHist("team_members") ?? 0,
+            partners:
+                s.partner_organizations ??
+                sumFromHist("partner_organizations") ??
                 0,
         };
     }
 
     // Load a wider preview across pillars (best-effort)
     const [tp, ma, cp, env, tools] = await Promise.all([
-        safeFetchJson("/api/training-programs?limit=5"),
-        safeFetchJson("/api/market-access-programs?limit=5"),
-        safeFetchJson("/api/community-programs?limit=5"),
-        safeFetchJson("/api/environmental-projects?limit=5"),
-        safeFetchJson("/api/agri-tech-tools?limit=5"),
+        safeFetchJson(
+            "/api/training-programs?limit=5&orderBy=published_at&direction=desc"
+        ),
+        safeFetchJson(
+            "/api/market-access-programs?limit=5&orderBy=published_at&direction=desc"
+        ),
+        safeFetchJson(
+            "/api/community-programs?limit=5&orderBy=published_at&direction=desc"
+        ),
+        safeFetchJson(
+            "/api/environmental-projects?limit=5&orderBy=published_at&direction=desc"
+        ),
+        safeFetchJson(
+            "/api/agri-tech-tools?limit=5&orderBy=published_at&direction=desc"
+        ),
     ]);
 
     const picked = [];
@@ -951,6 +1057,7 @@ onMounted(async () => {
                 ? `${r.start_date} – ${r.end_date}`
                 : undefined,
         image: r.thumbnail_image ?? r.cover_image ?? r.featured_image ?? null,
+        published_at: r.published_at ?? r.start_date ?? r.created_at ?? null,
         route,
     });
 
@@ -965,11 +1072,22 @@ onMounted(async () => {
     for (const r of tools?.data ?? [])
         picked.push(mapItem("Agri‑Tech", r, "/agri-tech"));
 
-    featuredPrograms.value = picked;
+    // client-side fallback: ensure newest first
+    featuredPrograms.value = picked.sort((a, b) => {
+        const da = a.published_at ? new Date(a.published_at) : new Date(0);
+        const db = b.published_at ? new Date(b.published_at) : new Date(0);
+        return db - da;
+    });
     featuredLoading.value = false;
 
     // start auto slider
     startAuto();
+
+    // load testimonials
+    fetchTestimonials();
+
+    // build dynamic filters from actual data
+    buildDynamicFilters();
 });
 
 function scrollFeatured(dir) {
@@ -994,5 +1112,70 @@ function pauseAuto() {
 }
 function resumeAuto() {
     startAuto();
+}
+
+async function fetchTestimonials() {
+    try {
+        testimonialsLoading.value = true;
+        testimonialsError.value = "";
+        const res = await fetch("/api/success-stories?limit=6");
+        if (!res.ok) throw new Error("Failed to load testimonials");
+        const data = await res.json();
+        const items = Array.isArray(data?.data)
+            ? data.data
+            : Array.isArray(data)
+            ? data
+            : [];
+        testimonials.value = items
+            .map((s) => ({
+                id: s.id,
+                slug: s.slug || String(s.id),
+                author: s.author || s.title || "Client",
+                location: s.location || s.region || "",
+                excerpt:
+                    s.excerpt ||
+                    s.summary ||
+                    (s.description ? String(s.description).slice(0, 160) : ""),
+                avatar: resolveImageSrc(
+                    s.thumbnail_image ||
+                        s.cover_image ||
+                        s.featured_image ||
+                        "/images/shared/avatar-placeholder.png"
+                ),
+                published_at: s.published_at || s.created_at || null,
+            }))
+            .sort((a, b) => {
+                const da = a.published_at
+                    ? new Date(a.published_at)
+                    : new Date(0);
+                const db = b.published_at
+                    ? new Date(b.published_at)
+                    : new Date(0);
+                return db - da;
+            });
+    } catch (e) {
+        testimonialsError.value = "Unable to load testimonials right now.";
+        testimonials.value = [];
+    } finally {
+        testimonialsLoading.value = false;
+    }
+}
+
+function resolveImageSrc(path) {
+    if (!path) return "";
+    const p = String(path).trim();
+    if (p.startsWith("http://") || p.startsWith("https://")) return p;
+    return `/storage/${p.replace(/^\/+/, "")}`;
+}
+
+const filteredFeatured = computed(() => {
+    if (activeFilter.value === "All") return featuredPrograms.value;
+    return featuredPrograms.value.filter((p) => p.type === activeFilter.value);
+});
+
+function buildDynamicFilters() {
+    // Extract unique types from featured programs
+    const types = [...new Set(featuredPrograms.value.map((p) => p.type))];
+    filters.value = ["All", ...types.sort()];
 }
 </script>

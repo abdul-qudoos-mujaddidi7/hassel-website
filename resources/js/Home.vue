@@ -1395,31 +1395,36 @@ const stopPillarAutoSlide = () => {
     }
 };
 
-// Fetch statistics from API
+// Fetch statistics from API (handles summary + historical shapes)
 const fetchStatistics = async () => {
     try {
         const response = await axios.get("/api/stats", { timeout: 5000 });
-        const rows = Array.isArray(response.data?.data)
-            ? response.data.data
-            : [];
+        const payload = response.data?.data ?? response.data ?? {};
 
-        const latest = {};
-        rows.forEach((row) => {
-            const key = row.stat_type;
-            const year = Number(row.year) || 0;
-            if (!key) return;
-            if (!latest[key] || year > latest[key].year) {
-                latest[key] = { value: Number(row.value) || 0, year };
+        const summary = payload.summary ?? {};
+        const historical = payload.historical ?? {};
+
+        const sumFromHist = (type) => {
+            try {
+                return Object.values(historical)
+                    .flat()
+                    .filter((x) => x.stat_type === type)
+                    .reduce((acc, x) => acc + (Number(x.value) || 0), 0);
+            } catch (_) {
+                return 0;
             }
-        });
+        };
 
         stats.value = {
-            total_beneficiaries: latest.total_beneficiaries?.value || 0,
-            male_beneficiaries: latest.male_beneficiaries?.value || 0,
-            female_beneficiaries: latest.female_beneficiaries?.value || 0,
-            programs_completed: latest.programs_completed?.value || 0,
-            provinces_reached: latest.provinces_reached?.value || 0,
-            cooperatives_formed: latest.cooperatives_formed?.value || 0,
+            total_beneficiaries:
+                Number(summary.total_beneficiaries) ||
+                sumFromHist("total_beneficiaries") ||
+                0,
+            male_beneficiaries: sumFromHist("male_beneficiaries") || 0,
+            female_beneficiaries: sumFromHist("female_beneficiaries") || 0,
+            programs_completed: sumFromHist("programs_completed") || 0,
+            provinces_reached: sumFromHist("provinces_reached") || 0,
+            cooperatives_formed: sumFromHist("cooperatives_formed") || 0,
         };
     } catch (error) {
         console.log("Using fallback beneficiaries_stats data");
@@ -1448,13 +1453,21 @@ const fetchLatestNews = async () => {
             timeout: 5000,
         });
 
-        if (response.data && response.data.data) {
-            latestNews.value = response.data.data.slice(0, 3);
-        } else if (Array.isArray(response.data)) {
-            latestNews.value = response.data.slice(0, 3);
-        } else {
-            throw new Error("Invalid response format");
-        }
+        const raw =
+            response.data && response.data.data
+                ? response.data.data
+                : Array.isArray(response.data)
+                ? response.data
+                : [];
+
+        // Client-side safeguard: sort newest-first by published_at/created_at
+        const sorted = raw.sort((a, b) => {
+            const da = new Date(a.published_at || a.created_at || 0);
+            const db = new Date(b.published_at || b.created_at || 0);
+            return db - da;
+        });
+
+        latestNews.value = sorted.slice(0, 3);
     } catch (error) {
         console.error("NEWS API ERROR:", error);
         // Fallback news data
@@ -1504,6 +1517,7 @@ const fetchGalleryImages = async () => {
     try {
         galleryLoading.value = true;
         const response = await axios.get("/api/galleries", {
+            params: { orderBy: "created_at", direction: "desc" },
             timeout: 5000,
         });
 
@@ -1511,9 +1525,22 @@ const fetchGalleryImages = async () => {
             const galleries = response.data.data;
             const images = [];
 
-            galleries.forEach((gallery) => {
+            // Ensure galleries newest-first as a safeguard
+            const sortedGalleries = [...galleries].sort((a, b) => {
+                const da = new Date(a.created_at || 0);
+                const db = new Date(b.created_at || 0);
+                return db - da;
+            });
+
+            sortedGalleries.forEach((gallery) => {
                 if (gallery.images && gallery.images.length > 0) {
-                    gallery.images.slice(0, 2).forEach((image) => {
+                    // Sort images newest-first too, then pick top 2
+                    const imgs = [...gallery.images].sort((a, b) => {
+                        const da = new Date(a.created_at || 0);
+                        const db = new Date(b.created_at || 0);
+                        return db - da;
+                    });
+                    imgs.slice(0, 2).forEach((image) => {
                         images.push({
                             id: image.id,
                             title: image.title || gallery.title,

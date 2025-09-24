@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
+// Eager-load Home for fastest first paint
 import Home from "./Home.vue";
-import About from "./About.vue";
-import Work from "./Work.vue";
-import Resources from "./Resources.vue";
-import Careers from "./Careers.vue";
-import Contact from "./Contact.vue";
+// Lazy-load all other routes to reduce initial bundle size
+const About = () => import("./About.vue");
+const Work = () => import("./Work.vue");
+const Resources = () => import("./Resources.vue");
+const Careers = () => import("./Careers.vue");
+const Contact = () => import("./Contact.vue");
 
 const router = createRouter({
     history: createWebHistory(),

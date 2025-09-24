@@ -22,6 +22,8 @@
                         v-for="item in menuItems"
                         :key="item.name"
                         :to="item.path"
+                        @mouseenter="prefetchChunk(item.path)"
+                        @focus="prefetchChunk(item.path)"
                         class="flex items-center text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 group"
                         :class="{
                             'text-green-600 bg-green-50':
@@ -138,6 +140,8 @@
                         :key="item.name"
                         :to="item.path"
                         @click="closeMobileMenu"
+                        @mouseenter="prefetchChunk(item.path)"
+                        @focus="prefetchChunk(item.path)"
                         class="flex items-center px-4 py-3 text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200 group"
                         :class="{
                             'text-green-600 bg-green-50':
@@ -304,6 +308,22 @@ const toggleMobileMenu = () => {
 
 const closeMobileMenu = () => {
     isMobileMenuOpen.value = false;
+};
+
+// Prefetch lazy route chunks on hover/focus for instant navigation
+const prefetchers = {
+    "/about": () => import("../About.vue"),
+    "/our-work": () => import("../Work.vue"),
+    "/resources": () => import("../Resources.vue"),
+    "/careers": () => import("../Careers.vue"),
+    "/contact": () => import("../Contact.vue"),
+};
+
+const prefetchChunk = (path) => {
+    const load = prefetchers[path];
+    if (typeof load === "function") {
+        load();
+    }
 };
 
 // Close mobile menu when route changes
