@@ -15,23 +15,48 @@ class TrainingProgramController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->get('per_page', 10);
-        $status = $request->get('status'); // e.g., 'upcoming', 'ongoing', 'completed'
-        $programType = $request->get('program_type');
+        $perPage = (int) $request->get('per_page', 10);
+        $status = $request->get('status'); // upcoming | ongoing | completed
+        $type = $request->get('type', $request->get('program_type'));
+        $location = $request->get('location');
+        $orderBy = $request->get('orderBy', 'created_at');
+        $direction = strtolower($request->get('direction', 'desc')) === 'asc' ? 'asc' : 'desc';
 
-        $query = TrainingProgram::published()->orderBy('start_date', 'desc');
+        $query = TrainingProgram::query();
 
-        if ($status === 'upcoming') {
-            $query->upcoming();
+        // Status filter using actual enum values
+        if ($status === 'published') {
+            $query->where('status', 'published');
+        } elseif ($status === 'upcoming') {
+            $query->where('start_date', '>', now())->where('status', 'published');
         } elseif ($status === 'ongoing') {
-            $query->ongoing();
+            $query->where('status', 'ongoing');
         } elseif ($status === 'completed') {
-            $query->completed();
+            $query->where('status', 'completed');
+        } elseif ($status === 'cancelled') {
+            $query->where('status', 'cancelled');
+        } else {
+            // Default: show only published programs
+            $query->where('status', 'published');
         }
 
-        if ($programType) {
-            $query->where('program_type', $programType);
+        // Type filter
+        if (!empty($type)) {
+            $query->where('program_type', $type);
         }
+
+        // Location filter (case-insensitive)
+        if (!empty($location)) {
+            $like = "%" . strtolower($location) . "%";
+            $query->whereRaw('LOWER(location) LIKE ?', [$like]);
+        }
+
+        // Sorting with whitelist fallback
+        $sortable = ['created_at', 'updated_at', 'start_date', 'end_date', 'title'];
+        if (!in_array($orderBy, $sortable, true)) {
+            $orderBy = 'created_at';
+        }
+        $query->orderBy($orderBy, $direction);
 
         $programs = $query->paginate($perPage);
 
@@ -41,13 +66,18 @@ class TrainingProgramController extends Controller
     /**
      * Get single training program details
      */
-    public function show(string $slug, Request $request): JsonResponse
+    public function show(string $slugOrId, Request $request): JsonResponse
     {
-        $program = TrainingProgram::published()->where('slug', $slug)->firstOrFail();
+        $program = TrainingProgram::published()
+            ->where('slug', $slugOrId)
+            ->orWhere(function ($q) use ($slugOrId) {
+                if (is_numeric($slugOrId)) {
+                    $q->where('id', (int) $slugOrId);
+                }
+            })
+            ->firstOrFail();
 
-        return response()->json([
-            'program' => new TrainingProgramResource($program)
-        ]);
+        return response()->json(new TrainingProgramResource($program));
     }
 
     /**
@@ -55,14 +85,16 @@ class TrainingProgramController extends Controller
      */
     public function types(): JsonResponse
     {
-        // This could be dynamic from a lookup table or config
-        $types = [
-            'basic',
-            'advanced',
-            'specialized',
-            'workshop',
-            'field_school'
-        ];
+        $types = TrainingProgram::where('status', 'published')
+            ->select('program_type')
+            ->distinct()
+            ->whereNotNull('program_type')
+            ->where('program_type', '!=', '')
+            ->pluck('program_type')
+            ->sort()
+            ->values()
+            ->toArray();
+
         return response()->json(['program_types' => $types]);
     }
 }

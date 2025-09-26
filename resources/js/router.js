@@ -7,6 +7,9 @@ const Work = () => import("./Work.vue");
 const Resources = () => import("./Resources.vue");
 const Careers = () => import("./Careers.vue");
 const Contact = () => import("./Contact.vue");
+// New: Training Programs (list + detail)
+const TrainingPrograms = () => import("./TrainingPrograms.vue");
+const TrainingProgramDetail = () => import("./TrainingProgramDetail.vue");
 
 const router = createRouter({
     history: createWebHistory(),
@@ -14,6 +17,11 @@ const router = createRouter({
         { path: "/", component: Home },
         { path: "/about", component: About },
         { path: "/our-work", component: Work },
+        { path: "/training-programs", component: TrainingPrograms },
+        {
+            path: "/training-programs/:idOrSlug",
+            component: TrainingProgramDetail,
+        },
         { path: "/resources", component: Resources },
         { path: "/careers", component: Careers },
         { path: "/contact", component: Contact },

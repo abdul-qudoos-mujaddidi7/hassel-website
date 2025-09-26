@@ -114,8 +114,8 @@ Route::prefix('contact')->name('api.contact.')->group(function () {
 // Training Programs
 Route::prefix('training-programs')->name('api.training-programs.')->group(function () {
   Route::get('/', [TrainingProgramController::class, 'index'])->name('index');
-  Route::get('/{slug}', [TrainingProgramController::class, 'show'])->name('show');
   Route::get('/types', [TrainingProgramController::class, 'types'])->name('types');
+  Route::get('/{slug}', [TrainingProgramController::class, 'show'])->name('show');
 });
 
 // Agri-Tech Tools
