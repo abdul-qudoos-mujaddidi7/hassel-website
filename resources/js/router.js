@@ -10,6 +10,15 @@ const Contact = () => import("./Contact.vue");
 // New: Training Programs (list + detail)
 const TrainingPrograms = () => import("./TrainingPrograms.vue");
 const TrainingProgramDetail = () => import("./TrainingProgramDetail.vue");
+const AgriTechTools = () => import("./AgriTechTools.vue");
+const AgriTechToolDetail = () => import("./AgriTechToolDetail.vue");
+const MarketAccessPrograms = () => import("./MarketAccessPrograms.vue");
+const MarketAccessProgramDetail = () =>
+    import("./MarketAccessProgramDetail.vue");
+const SmartFarming = () => import("./SmartFarming.vue");
+const SmartFarmingDetail = () => import("./SmartFarmingDetail.vue");
+const SeedSupply = () => import("./SeedSupply.vue");
+const SeedSupplyDetail = () => import("./SeedSupplyDetail.vue");
 
 const router = createRouter({
     history: createWebHistory(),
@@ -21,6 +30,26 @@ const router = createRouter({
         {
             path: "/training-programs/:idOrSlug",
             component: TrainingProgramDetail,
+        },
+        { path: "/agri-tech", component: AgriTechTools },
+        {
+            path: "/agri-tech/:idOrSlug",
+            component: AgriTechToolDetail,
+        },
+        { path: "/market-access", component: MarketAccessPrograms },
+        {
+            path: "/market-access/:idOrSlug",
+            component: MarketAccessProgramDetail,
+        },
+        { path: "/smart-farming", component: SmartFarming },
+        {
+            path: "/smart-farming/:idOrSlug",
+            component: SmartFarmingDetail,
+        },
+        { path: "/seed-supply", component: SeedSupply },
+        {
+            path: "/seed-supply/:idOrSlug",
+            component: SeedSupplyDetail,
         },
         { path: "/resources", component: Resources },
         { path: "/careers", component: Careers },
@@ -34,5 +63,24 @@ const router = createRouter({
         }
     },
 });
+
+// Map for prefetching dynamic imports
+export const routePrefetchMap = {
+    "/about": () => import("./About.vue"),
+    "/our-work": () => import("./Work.vue"),
+    "/resources": () => import("./Resources.vue"),
+    "/careers": () => import("./Careers.vue"),
+    "/contact": () => import("./Contact.vue"),
+    "/training-programs": () => import("./TrainingPrograms.vue"),
+    "/training-programs/:idOrSlug": () => import("./TrainingProgramDetail.vue"),
+    "/agri-tech": () => import("./AgriTechTools.vue"),
+    "/agri-tech/:idOrSlug": () => import("./AgriTechToolDetail.vue"),
+    "/market-access": () => import("./MarketAccessPrograms.vue"),
+    "/market-access/:idOrSlug": () => import("./MarketAccessProgramDetail.vue"),
+    "/smart-farming": () => import("./SmartFarming.vue"),
+    "/smart-farming/:idOrSlug": () => import("./SmartFarmingDetail.vue"),
+    "/seed-supply": () => import("./SeedSupply.vue"),
+    "/seed-supply/:idOrSlug": () => import("./SeedSupplyDetail.vue"),
+};
 
 export default router;

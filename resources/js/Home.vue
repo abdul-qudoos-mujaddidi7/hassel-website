@@ -406,7 +406,7 @@
                     <p
                         class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
                     >
-                        Five core pillars that drive our mission to transform
+                        Seven core pillars that drive our mission to transform
                         Afghanistan's agricultural landscape through
                         comprehensive support and innovative solutions.
                     </p>
@@ -1216,6 +1216,32 @@ const businessPillars = ref([
         countLabel: "Tools",
     },
     {
+        id: "smartfarming",
+        title: "Smart & Sustainable Farming",
+        icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
+        bgColor: "bg-teal-100",
+        textColor: "text-teal-600",
+        countColor: "text-teal-600",
+        description:
+            "Promote modern techniques like drip irrigation, greenhouse farming, and precision agriculture with climate-resilient crops.",
+        route: "/smart-farming",
+        countKey: "smartFarming",
+        countLabel: "Programs",
+    },
+    {
+        id: "seedSupply",
+        title: "Seed & Input Supply Chain",
+        icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8-4",
+        bgColor: "bg-orange-100",
+        textColor: "text-orange-600",
+        countColor: "text-orange-600",
+        description:
+            "Provide high-quality seeds, fertilizers, and eco-friendly pesticides with reliable distribution networks across provinces.",
+        route: "/seed-supply",
+        countKey: "seedSupply",
+        countLabel: "Products",
+    },
+    {
         id: "market",
         title: "Market Access Programs",
         icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6",
@@ -1286,6 +1312,8 @@ const galleryLoading = ref(true);
 const pillarCounts = ref({
     trainingPrograms: 0,
     agriTechTools: 0,
+    smartFarming: 0,
+    seedSupply: 0,
     marketAccess: 0,
     environmental: 0,
     community: 0,
@@ -1628,35 +1656,54 @@ const fetchPillarCounts = async () => {
     try {
         pillarLoading.value = true;
 
-        const [training, agriTech, marketAccess, environmental, community] =
-            await Promise.all([
-                axios.get("/api/training-programs", {
-                    params: { count_only: true },
-                    timeout: 5000,
-                }),
-                axios.get("/api/agri-tech-tools", {
-                    params: { count_only: true },
-                    timeout: 5000,
-                }),
-                axios.get("/api/market-access-programs", {
-                    params: { count_only: true },
-                    timeout: 5000,
-                }),
-                axios.get("/api/environmental-projects", {
-                    params: { count_only: true },
-                    timeout: 5000,
-                }),
-                axios.get("/api/community-programs", {
-                    params: { count_only: true },
-                    timeout: 5000,
-                }),
-            ]);
+        const [
+            training,
+            agriTech,
+            smartFarming,
+            seedSupply,
+            marketAccess,
+            environmental,
+            community,
+        ] = await Promise.all([
+            axios.get("/api/training-programs", {
+                params: { count_only: true },
+                timeout: 5000,
+            }),
+            axios.get("/api/agri-tech-tools", {
+                params: { count_only: true },
+                timeout: 5000,
+            }),
+            axios.get("/api/smart-farming-programs", {
+                params: { count_only: true },
+                timeout: 5000,
+            }),
+            axios.get("/api/seed-supply-programs", {
+                params: { count_only: true },
+                timeout: 5000,
+            }),
+            axios.get("/api/market-access-programs", {
+                params: { count_only: true },
+                timeout: 5000,
+            }),
+            axios.get("/api/environmental-projects", {
+                params: { count_only: true },
+                timeout: 5000,
+            }),
+            axios.get("/api/community-programs", {
+                params: { count_only: true },
+                timeout: 5000,
+            }),
+        ]);
 
         pillarCounts.value = {
             trainingPrograms:
                 training.data.total || training.data.data?.length || 18,
             agriTechTools:
                 agriTech.data.total || agriTech.data.data?.length || 8,
+            smartFarming:
+                smartFarming.data.total || smartFarming.data.data?.length || 6,
+            seedSupply:
+                seedSupply.data.total || seedSupply.data.data?.length || 6,
             marketAccess:
                 marketAccess.data.total || marketAccess.data.data?.length || 3,
             environmental:
@@ -1671,6 +1718,8 @@ const fetchPillarCounts = async () => {
         pillarCounts.value = {
             trainingPrograms: 18,
             agriTechTools: 8,
+            smartFarming: 6,
+            seedSupply: 6,
             marketAccess: 3,
             environmental: 3,
             community: 3,

@@ -57,6 +57,11 @@ class MarketAccessProgram extends Model
         return $query->whereJsonContains('target_crops', $crop);
     }
 
+    public function scopeByType($query, $type)
+    {
+        return $query->where('program_type', $type);
+    }
+
     // Accessors
     public function getIsPublishedAttribute(): bool
     {

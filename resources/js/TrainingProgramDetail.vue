@@ -148,47 +148,6 @@
                                 }}</span>
                             </div>
                         </div>
-
-                        <!-- CTA Buttons -->
-                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                            <router-link
-                                to="/contact"
-                                class="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                            >
-                                Register Now
-                                <svg
-                                    class="w-5 h-5 ml-2"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                    ></path>
-                                </svg>
-                            </router-link>
-                            <button
-                                class="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-300 text-sm sm:text-base"
-                            >
-                                <svg
-                                    class="w-5 h-5 mr-2"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                                    ></path>
-                                </svg>
-                                Save Program
-                            </button>
-                        </div>
                     </div>
 
                     <!-- Program stats card -->
@@ -571,16 +530,18 @@
 
                     <!-- Sidebar -->
                     <aside class="lg:col-span-1">
-                        <!-- Registration Card -->
+                        <!-- Program Info Card -->
+
+                        <!-- Contact Information -->
                         <div
-                            class="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-6 text-white mb-6 shadow-lg"
+                            class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 mb-6 border border-green-100"
                         >
-                            <div class="text-center mb-6">
+                            <div class="text-center">
                                 <div
-                                    class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4"
+                                    class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4"
                                 >
                                     <svg
-                                        class="w-8 h-8 text-white"
+                                        class="w-6 h-6 text-white"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -589,35 +550,24 @@
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
                                             stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                            d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                                         ></path>
                                     </svg>
                                 </div>
-                                <h3 class="text-xl font-bold mb-2">
-                                    Ready to Join?
+                                <h3
+                                    class="text-lg font-semibold text-gray-900 mb-2"
+                                >
+                                    Need More Information?
                                 </h3>
-                                <p class="text-green-100 mb-6">
-                                    Register for this program and start your
-                                    agricultural journey with us.
-                                </p>
-                            </div>
-
-                            <router-link
-                                to="/contact"
-                                class="block w-full bg-white text-green-600 font-semibold py-4 px-6 rounded-xl text-center hover:bg-gray-50 transition-colors mb-4"
-                            >
-                                Register Now
-                            </router-link>
-
-                            <div class="text-center">
-                                <p class="text-green-100 text-sm mb-2">
-                                    Have questions?
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Contact our team for program details and
+                                    enrollment information.
                                 </p>
                                 <router-link
                                     to="/contact"
-                                    class="text-white hover:text-green-200 text-sm underline"
+                                    class="inline-flex items-center px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors text-sm"
                                 >
-                                    Contact our team
+                                    Contact Us
                                 </router-link>
                             </div>
                         </div>
@@ -682,8 +632,6 @@ const heroImage = computed(() => {
         ? img
         : `/storage/${String(img).replace(/^\/+/, "")}`;
 });
-
-const registerRoute = computed(() => "/contact");
 
 onMounted(async () => {
     await fetchProgram();
