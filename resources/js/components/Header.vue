@@ -1,18 +1,15 @@
 <template>
     <header class="bg-white shadow-professional sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="flex justify-between items-center h-24">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
                     <router-link to="/" class="flex items-center">
                         <img
-                            :src="'/mountagro-logo.jpg'"
+                            :src="'/mountagro-logo.png'"
                             alt="Mount Agro Logo"
-                            class="w-16 h-16 rounded-lg object-contain"
+                            class="w-28 h-28 rounded-lg object-contain"
                         />
-                        <span class="ml-3 text-xl font-bold text-gray-900"
-                            >Mount Agro</span
-                        >
                     </router-link>
                 </div>
 
@@ -107,11 +104,8 @@
                         <img
                             :src="'/mountagro-logo.jpg'"
                             alt="Mount Agro Logo"
-                            class="w-10 h-10 rounded-lg object-contain"
+                            class="w-20 h-20 rounded-lg object-contain"
                         />
-                        <span class="ml-3 text-lg font-bold text-gray-900"
-                            >Mount Agro</span
-                        >
                     </div>
                     <button
                         @click="closeMobileMenu"

@@ -167,14 +167,16 @@
                             class="text-xl text-green-100 mb-8 leading-relaxed max-w-3xl mx-auto"
                         >
                             {{
-                                program.short_description ||
-                                program.description
+                                program.short_description || program.description
                             }}
                         </p>
 
                         <!-- Quick Stats -->
                         <div class="flex flex-wrap justify-center gap-6 mb-8">
-                            <div v-if="program.target_crops" class="text-center">
+                            <div
+                                v-if="program.target_crops"
+                                class="text-center"
+                            >
                                 <div class="text-3xl font-bold text-white">
                                     {{ getCropCount(program.target_crops) }}
                                 </div>
@@ -182,7 +184,10 @@
                                     Target Crops
                                 </div>
                             </div>
-                            <div v-if="program.sustainability_level" class="text-center">
+                            <div
+                                v-if="program.sustainability_level"
+                                class="text-center"
+                            >
                                 <div class="text-3xl font-bold text-white">
                                     {{ program.sustainability_level }}%
                                 </div>
@@ -233,11 +238,17 @@
                         <!-- Main Content Column -->
                         <div class="lg:col-span-2 space-y-8">
                             <!-- Program Overview -->
-                            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-                                <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            <div
+                                class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6"
+                            >
+                                <h2
+                                    class="text-2xl font-bold text-gray-900 mb-4"
+                                >
                                     Program Overview
                                 </h2>
-                                <div class="prose prose-lg max-w-none text-gray-600">
+                                <div
+                                    class="prose prose-lg max-w-none text-gray-600"
+                                >
                                     <p>
                                         {{
                                             program.description ||
@@ -248,13 +259,20 @@
                             </div>
 
                             <!-- Target Crops -->
-                            <div v-if="program.target_crops" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-                                <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            <div
+                                v-if="program.target_crops"
+                                class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6"
+                            >
+                                <h2
+                                    class="text-2xl font-bold text-gray-900 mb-4"
+                                >
                                     Target Crops
                                 </h2>
                                 <div class="flex flex-wrap gap-3">
                                     <span
-                                        v-for="crop in getCropList(program.target_crops)"
+                                        v-for="crop in getCropList(
+                                            program.target_crops
+                                        )"
                                         :key="crop"
                                         class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium"
                                     >
@@ -264,21 +282,35 @@
                             </div>
 
                             <!-- Implementation Guide -->
-                            <div v-if="program.implementation_guide" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-                                <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            <div
+                                v-if="program.implementation_guide"
+                                class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6"
+                            >
+                                <h2
+                                    class="text-2xl font-bold text-gray-900 mb-4"
+                                >
                                     Implementation Guide
                                 </h2>
-                                <div class="prose prose-lg max-w-none text-gray-600">
+                                <div
+                                    class="prose prose-lg max-w-none text-gray-600"
+                                >
                                     <p>{{ program.implementation_guide }}</p>
                                 </div>
                             </div>
 
                             <!-- Sustainability Impact -->
-                            <div v-if="program.sustainability_impact" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-                                <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            <div
+                                v-if="program.sustainability_impact"
+                                class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6"
+                            >
+                                <h2
+                                    class="text-2xl font-bold text-gray-900 mb-4"
+                                >
                                     Sustainability Impact
                                 </h2>
-                                <div class="prose prose-lg max-w-none text-gray-600">
+                                <div
+                                    class="prose prose-lg max-w-none text-gray-600"
+                                >
                                     <p>{{ program.sustainability_impact }}</p>
                                 </div>
                             </div>
@@ -287,32 +319,60 @@
                         <!-- Sidebar Column -->
                         <div class="space-y-6">
                             <!-- Quick Info Card -->
-                            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-                                <h3 class="text-lg font-bold text-gray-900 mb-4">
+                            <div
+                                class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6"
+                            >
+                                <h3
+                                    class="text-lg font-bold text-gray-900 mb-4"
+                                >
                                     Program Details
                                 </h3>
                                 <div class="space-y-4">
-                                    <div v-if="program.farming_type" class="flex items-center justify-between">
+                                    <div
+                                        v-if="program.farming_type"
+                                        class="flex items-center justify-between"
+                                    >
                                         <span class="text-gray-600">Type</span>
                                         <span class="text-gray-900 font-medium">
-                                            {{ formatFarmingType(program.farming_type) }}
+                                            {{
+                                                formatFarmingType(
+                                                    program.farming_type
+                                                )
+                                            }}
                                         </span>
                                     </div>
-                                    <div v-if="program.duration" class="flex items-center justify-between">
-                                        <span class="text-gray-600">Duration</span>
+                                    <div
+                                        v-if="program.duration"
+                                        class="flex items-center justify-between"
+                                    >
+                                        <span class="text-gray-600"
+                                            >Duration</span
+                                        >
                                         <span class="text-gray-900 font-medium">
                                             {{ program.duration }}
                                         </span>
                                     </div>
-                                    <div v-if="program.location" class="flex items-center justify-between">
-                                        <span class="text-gray-600">Location</span>
+                                    <div
+                                        v-if="program.location"
+                                        class="flex items-center justify-between"
+                                    >
+                                        <span class="text-gray-600"
+                                            >Location</span
+                                        >
                                         <span class="text-gray-900 font-medium">
                                             {{ program.location }}
                                         </span>
                                     </div>
-                                    <div v-if="program.sustainability_level" class="flex items-center justify-between">
-                                        <span class="text-gray-600">Sustainability</span>
-                                        <span class="text-green-600 font-medium">
+                                    <div
+                                        v-if="program.sustainability_level"
+                                        class="flex items-center justify-between"
+                                    >
+                                        <span class="text-gray-600"
+                                            >Sustainability</span
+                                        >
+                                        <span
+                                            class="text-green-600 font-medium"
+                                        >
                                             {{ program.sustainability_level }}%
                                         </span>
                                     </div>
@@ -329,7 +389,9 @@
                                     Need More Information?
                                 </h3>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Get detailed information about this sustainable farming program and how it can benefit your agricultural practices.
+                                    Get detailed information about this
+                                    sustainable farming program and how it can
+                                    benefit your agricultural practices.
                                 </p>
 
                                 <router-link
@@ -377,7 +439,9 @@
                                                 d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                                             ></path>
                                         </svg>
-                                        <span class="text-gray-600">info@mountagro.af</span>
+                                        <span class="text-gray-600"
+                                            >info@mountagro.af</span
+                                        >
                                     </div>
                                     <div class="flex items-center">
                                         <svg
@@ -393,7 +457,9 @@
                                                 d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                                             ></path>
                                         </svg>
-                                        <span class="text-gray-600">+93-70-123-4567</span>
+                                        <span class="text-gray-600"
+                                            >+93-70-123-4567</span
+                                        >
                                     </div>
                                 </div>
                             </div>
@@ -488,8 +554,10 @@ function formatProgram(rawProgram) {
     return {
         id: rawProgram.id,
         name: rawProgram.name || rawProgram.title || "Smart Farming Program",
-        description: rawProgram.description || rawProgram.short_description || "",
-        short_description: rawProgram.short_description || rawProgram.description || "",
+        description:
+            rawProgram.description || rawProgram.short_description || "",
+        short_description:
+            rawProgram.short_description || rawProgram.description || "",
         farming_type: rawProgram.farming_type || rawProgram.type,
         target_crops: rawProgram.target_crops,
         sustainability_level: rawProgram.sustainability_level,
@@ -497,7 +565,10 @@ function formatProgram(rawProgram) {
         sustainability_impact: rawProgram.sustainability_impact,
         duration: rawProgram.duration,
         location: rawProgram.location,
-        cover_image: rawProgram.cover_image || rawProgram.thumbnail_image || rawProgram.image,
+        cover_image:
+            rawProgram.cover_image ||
+            rawProgram.thumbnail_image ||
+            rawProgram.image,
         status: rawProgram.status || "published",
         slug: rawProgram.slug,
     };
@@ -533,7 +604,10 @@ function getCropList(crops) {
             const parsed = JSON.parse(crops);
             return Array.isArray(parsed) ? parsed : [crops];
         } catch {
-            return crops.split(",").map(c => c.trim()).filter(Boolean);
+            return crops
+                .split(",")
+                .map((c) => c.trim())
+                .filter(Boolean);
         }
     }
     if (Array.isArray(crops)) {
