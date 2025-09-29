@@ -289,7 +289,6 @@ const isMobileMenuOpen = ref(false);
 
 const menuItems = [
     { name: "Home", path: "/", icon: HomeIcon },
-    { name: "About", path: "/about", icon: AboutIcon },
     { name: "Our Work", path: "/our-work", icon: WorkIcon },
     { name: "Resources", path: "/resources", icon: ResourcesIcon },
     { name: "Careers", path: "/careers", icon: CareersIcon },
@@ -306,7 +305,6 @@ const closeMobileMenu = () => {
 
 // Prefetch lazy route chunks on hover/focus for instant navigation
 const prefetchers = {
-    "/about": () => import("../About.vue"),
     "/our-work": () => import("../Work.vue"),
     "/resources": () => import("../Resources.vue"),
     "/careers": () => import("../Careers.vue"),

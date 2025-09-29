@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 // Eager-load Home for fastest first paint
 import Home from "./Home.vue";
 // Lazy-load all other routes to reduce initial bundle size
-const About = () => import("./About.vue");
 const Work = () => import("./Work.vue");
 const Resources = () => import("./Resources.vue");
 const Careers = () => import("./Careers.vue");
@@ -24,7 +23,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         { path: "/", component: Home },
-        { path: "/about", component: About },
+        // About removed; content consolidated into Home
         { path: "/our-work", component: Work },
         { path: "/training-programs", component: TrainingPrograms },
         {
@@ -66,7 +65,6 @@ const router = createRouter({
 
 // Map for prefetching dynamic imports
 export const routePrefetchMap = {
-    "/about": () => import("./About.vue"),
     "/our-work": () => import("./Work.vue"),
     "/resources": () => import("./Resources.vue"),
     "/careers": () => import("./Careers.vue"),

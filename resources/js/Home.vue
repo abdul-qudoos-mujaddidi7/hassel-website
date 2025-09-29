@@ -70,12 +70,7 @@
                                 />
                             </svg>
                         </router-link>
-                        <router-link
-                            to="/about"
-                            class="btn btn-secondary w-full sm:w-auto flex items-center justify-center text-base px-4 py-3 md:text-lg md:px-8 md:py-4"
-                        >
-                            Learn About Us
-                        </router-link>
+                        <!-- About link removed; consolidated into Home -->
                     </div>
                 </div>
             </div>
@@ -99,7 +94,7 @@
             </div>
         </section>
 
-        <!-- Welcome Section with Animated Stats -->
+        <!-- Welcome Section -->
         <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
@@ -117,74 +112,109 @@
                     </p>
                 </div>
 
-                <!-- Animated Statistics (Beneficiaries Stats) -->
+                <!-- Stats moved to its own section below About Us -->
+            </div>
+        </section>
+
+        <!-- About Us Section (moved here) -->
+        <section class="section-padding bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+                >
+                    <div>
+                        <h2 class="heading-lg text-gray-900 mb-6">About Us</h2>
+                        <p class="text-xl text-gray-600 mb-6 leading-relaxed">
+                            Mount Agro Microfinance Institution is a leading
+                            financial services provider dedicated to
+                            transforming Afghanistan's agricultural sector
+                            through innovative microfinance solutions and
+                            comprehensive support programs.
+                        </p>
+                        <p class="text-gray-600 mb-8 leading-relaxed">
+                            Since our establishment, we have been committed to
+                            empowering farmers, agricultural entrepreneurs, and
+                            rural communities by providing accessible financial
+                            services, technical training, and market linkage
+                            opportunities.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6 mb-8">
+                            <div class="text-center">
+                                <div
+                                    class="text-3xl font-bold text-green-600 mb-2"
+                                >
+                                    15,000+
+                                </div>
+                                <div class="text-gray-600">Farmers Served</div>
+                            </div>
+                            <div class="text-center">
+                                <div
+                                    class="text-3xl font-bold text-green-600 mb-2"
+                                >
+                                    34
+                                </div>
+                                <div class="text-gray-600">
+                                    Provinces Covered
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <img
+                            :src="'/images/about/who_we_are_1.avif'"
+                            alt="Mount Agro field operations"
+                            class="w-full h-64 md:h-80 lg:h-96 rounded-professional-lg shadow-professional object-cover"
+                            loading="lazy"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Statistics Section (separate) -->
+        <section class="section-padding bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div
                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
                 >
-                    <!-- Beneficiaries (Total with Male/Female breakdown) -->
+                    <!-- Beneficiaries -->
                     <div
-                        class="p-6 bg-white rounded-professional-lg shadow-soft"
+                        class="p-6 bg-white rounded-professional-lg shadow-soft text-center"
                     >
-                        <div class="text-center">
-                            <div
-                                class="w-12 h-12 md:w-16 md:h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
+                        <div
+                            class="w-12 h-12 md:w-16 md:h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
+                        >
+                            <svg
+                                class="w-8 h-8 text-white"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
                             >
-                                <svg
-                                    class="w-8 h-8 text-white"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
-                                    />
-                                </svg>
-                            </div>
-                            <div
-                                class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2"
-                                ref="totalBeneficiariesRef"
-                            >
-                                0
-                            </div>
-                            <div class="text-gray-600 font-medium mb-2 md:mb-4">
-                                Beneficiaries
-                            </div>
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
+                            </svg>
                         </div>
-                        <div class="hidden">
-                            <div class="text-center p-3 rounded-lg bg-green-50">
-                                <div class="text-sm text-gray-500 mb-1">
-                                    Male
-                                </div>
-                                <div
-                                    class="text-xl font-semibold text-emerald-700"
-                                    ref="maleBeneficiariesRef"
-                                >
-                                    0
-                                </div>
-                            </div>
-                            <div class="text-center p-3 rounded-lg bg-pink-50">
-                                <div class="text-sm text-gray-500 mb-1">
-                                    Female
-                                </div>
-                                <div
-                                    class="text-xl font-semibold text-pink-600"
-                                    ref="femaleBeneficiariesRef"
-                                >
-                                    0
-                                </div>
-                            </div>
+                        <div
+                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2"
+                            ref="totalBeneficiariesRef"
+                        >
+                            0
+                        </div>
+                        <div class="text-gray-600 font-medium">
+                            Beneficiaries
                         </div>
                     </div>
 
                     <!-- Programs Completed -->
                     <div
-                        class="text-center p-6 bg-white rounded-professional-lg shadow-soft"
+                        class="p-6 bg-white rounded-professional-lg shadow-soft text-center"
                     >
                         <div
-                            class="w-12 h-12 md:w-16 md:h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
+                            class="w-12 h-12 md:w-16 md:h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
                         >
                             <svg
                                 class="w-8 h-8 text-white"
@@ -201,7 +231,7 @@
                             </svg>
                         </div>
                         <div
-                            class="text-2xl md:text-3xl font-bold text-blue-600 mb-1 md:mb-2"
+                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2"
                             ref="programsCompletedRef"
                         >
                             0
@@ -213,10 +243,10 @@
 
                     <!-- Provinces Reached -->
                     <div
-                        class="text-center p-6 bg-white rounded-professional-lg shadow-soft"
+                        class="p-6 bg-white rounded-professional-lg shadow-soft text-center"
                     >
                         <div
-                            class="w-12 h-12 md:w-16 md:h-16 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
+                            class="w-12 h-12 md:w-16 md:h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
                         >
                             <svg
                                 class="w-8 h-8 text-white"
@@ -233,7 +263,7 @@
                             </svg>
                         </div>
                         <div
-                            class="text-2xl md:text-3xl font-bold text-orange-600 mb-1 md:mb-2"
+                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2"
                             ref="provincesReachedRef"
                         >
                             0
@@ -245,10 +275,10 @@
 
                     <!-- Cooperatives Formed -->
                     <div
-                        class="text-center p-6 bg-white rounded-professional-lg shadow-soft"
+                        class="p-6 bg-white rounded-professional-lg shadow-soft text-center"
                     >
                         <div
-                            class="w-12 h-12 md:w-16 md:h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
+                            class="w-12 h-12 md:w-16 md:h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
                         >
                             <svg
                                 class="w-8 h-8 text-white"
@@ -265,7 +295,7 @@
                             </svg>
                         </div>
                         <div
-                            class="text-2xl md:text-3xl font-bold text-purple-600 mb-1 md:mb-2"
+                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2"
                             ref="cooperativesFormedRef"
                         >
                             0
@@ -417,7 +447,7 @@
                     <!-- Navigation Buttons -->
                     <button
                         @click="previousPillarSlide"
-                        class="hidden md:flex absolute left-2 lg:left-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 lg:w-12 lg:h-12 bg-white rounded-full shadow-lg items-center justify-center text-green-600 hover:text-green-700 hover:shadow-xl transition-all duration-300 border-2 border-green-100 hover:border-green-300"
+                        class="hidden md:flex absolute left-0 cursor-pointer top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 lg:w-12 lg:h-12 bg-white rounded-full shadow-lg items-center justify-center text-green-600 hover:text-green-700 hover:shadow-xl transition-all duration-300 border-2 border-green-100 hover:border-green-300"
                     >
                         <svg
                             class="w-5 h-5 lg:w-6 lg:h-6"
@@ -436,7 +466,7 @@
 
                     <button
                         @click="nextPillarSlide"
-                        class="hidden md:flex absolute right-2 lg:right-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 lg:w-12 lg:h-12 bg-white rounded-full shadow-lg items-center justify-center text-green-600 hover:text-green-700 hover:shadow-xl transition-all duration-300 border-2 border-green-100 hover:border-green-300"
+                        class="hidden md:flex cursor-pointer absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 lg:w-12 lg:h-12 bg-white rounded-full shadow-lg items-center justify-center text-green-600 hover:text-green-700 hover:shadow-xl transition-all duration-300 border-2 border-green-100 hover:border-green-300"
                     >
                         <svg
                             class="w-5 h-5 lg:w-6 lg:h-6"
@@ -511,7 +541,7 @@
                                     <!-- Count -->
                                     <div
                                         :class="[
-                                            'text-3xl font-bold mb-4 text-center h-12 flex items-center justify-center',
+                                            'text-2xl font-bold mb-4 text-center h-12 flex items-center justify-center',
                                             pillar.countColor,
                                         ]"
                                     >
@@ -564,70 +594,6 @@
                             ]"
                             :aria-label="`Go to slide ${index}`"
                         ></button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Who We Are Section -->
-        <section class="section-padding bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div
-                    class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-                >
-                    <div>
-                        <h2 class="heading-lg text-gray-900 mb-6">
-                            Who We Are
-                        </h2>
-                        <p class="text-xl text-gray-600 mb-6 leading-relaxed">
-                            Mount Agro Microfinance Institution is a leading
-                            financial services provider dedicated to
-                            transforming Afghanistan's agricultural sector
-                            through innovative microfinance solutions and
-                            comprehensive support programs.
-                        </p>
-                        <p class="text-gray-600 mb-8 leading-relaxed">
-                            Since our establishment, we have been committed to
-                            empowering farmers, agricultural entrepreneurs, and
-                            rural communities by providing accessible financial
-                            services, technical training, and market linkage
-                            opportunities.
-                        </p>
-                        <div class="grid grid-cols-2 gap-6 mb-8">
-                            <div class="text-center">
-                                <div
-                                    class="text-3xl font-bold text-green-600 mb-2"
-                                >
-                                    15,000+
-                                </div>
-                                <div class="text-gray-600">Farmers Served</div>
-                            </div>
-                            <div class="text-center">
-                                <div
-                                    class="text-3xl font-bold text-green-600 mb-2"
-                                >
-                                    34
-                                </div>
-                                <div class="text-gray-600">
-                                    Provinces Covered
-                                </div>
-                            </div>
-                        </div>
-                        <router-link to="/about" class="btn btn-primary"
-                            >Learn More About Us</router-link
-                        >
-                    </div>
-                    <div class="relative">
-                        <img
-                            src="https://media.istockphoto.com/id/1154958041/photo/taking-care-of-the-crop-aerial-view-of-a-tractor-fertilizing-a-cultivated-agricultural-field.jpg?s=2048x2048&w=is&k=20&c=H0a7ngBV9Bu8Oq9SMWBnLxluAOVD7_-hBra_zrNRzcg="
-                            alt="Afghan farmers working in field"
-                            class="w-full h-full rounded-professional-lg shadow-professional object-cover"
-                            onload="this.style.opacity=1"
-                            style="
-                                opacity: 0;
-                                transition: opacity 0.3s ease-in-out;
-                            "
-                        />
                     </div>
                 </div>
             </div>
@@ -811,287 +777,128 @@
         <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-6">
-                        Our Partners & Stakeholders
-                    </h2>
+                    <h2 class="heading-lg text-gray-900 mb-6">Our Partners</h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                         Working together with government institutions, NGOs, and
                         private sector partners to maximize our impact.
                     </p>
                 </div>
 
+                <!-- Icon badges for partners -->
                 <div
-                    class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center"
+                    class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 md:gap-8 items-center"
                 >
-                    <div
-                        class="flex items-center justify-center p-6 bg-white rounded-lg shadow-soft"
-                    >
+                    <div class="flex items-center justify-center">
                         <div
-                            class="text-lg font-bold text-gray-700 text-center"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            aria-label="Ministry of Agriculture"
                         >
-                            <div class="mb-1">Ministry of Agriculture</div>
-                            <div class="text-xs text-gray-500">
-                                Government Partner
-                            </div>
+                            MoA
                         </div>
                     </div>
-                    <div
-                        class="flex items-center justify-center p-6 bg-white rounded-lg shadow-soft"
-                    >
+                    <div class="flex items-center justify-center">
                         <div
-                            class="text-lg font-bold text-gray-700 text-center"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            aria-label="United Nations Development Programme"
                         >
-                            <div class="mb-1">UNDP</div>
-                            <div class="text-xs text-gray-500">
-                                Development Partner
-                            </div>
+                            UNDP
                         </div>
                     </div>
-                    <div
-                        class="flex items-center justify-center p-6 bg-white rounded-lg shadow-soft"
-                    >
+                    <div class="flex items-center justify-center">
                         <div
-                            class="text-lg font-bold text-gray-700 text-center"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            aria-label="Local Banks"
                         >
-                            <div class="mb-1">Local Banks</div>
-                            <div class="text-xs text-gray-500">
-                                Financial Partners
-                            </div>
+                            Banks
                         </div>
                     </div>
-                    <div
-                        class="flex items-center justify-center p-6 bg-white rounded-lg shadow-soft"
-                    >
+                    <div class="flex items-center justify-center">
                         <div
-                            class="text-lg font-bold text-gray-700 text-center"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            aria-label="Farmer Associations"
                         >
-                            <div class="mb-1">Farmer Associations</div>
-                            <div class="text-xs text-gray-500">
-                                Community Partners
-                            </div>
+                            FA
                         </div>
                     </div>
-                    <div
-                        class="flex items-center justify-center p-6 bg-white rounded-lg shadow-soft"
-                    >
+                    <div class="flex items-center justify-center">
                         <div
-                            class="text-lg font-bold text-gray-700 text-center"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            aria-label="Tech Companies"
                         >
-                            <div class="mb-1">Tech Companies</div>
-                            <div class="text-xs text-gray-500">
-                                Innovation Partners
-                            </div>
+                            Tech
                         </div>
                     </div>
-                    <div
-                        class="flex items-center justify-center p-6 bg-white rounded-lg shadow-soft"
-                    >
+                    <div class="flex items-center justify-center">
                         <div
-                            class="text-lg font-bold text-gray-700 text-center"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            aria-label="Research Institutes"
                         >
-                            <div class="mb-1">Research Institutes</div>
-                            <div class="text-xs text-gray-500">
-                                Academic Partners
-                            </div>
+                            RI
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Funding Partners Section -->
+        <!-- Leadership Team (moved from About) -->
         <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-6">
-                        Our Funding Partners & Donors
+                <div class="text-center mb-14 md:mb-16">
+                    <h2 class="heading-lg text-green-600 mb-4">
+                        Leadership Team
                     </h2>
-                    <p
-                        class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
-                    >
-                        We are grateful to our international donors and funding
-                        partners who support Afghanistan's agricultural
-                        development through microfinance and capacity building
-                        programs.
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Meet the experienced professionals guiding our mission.
                     </p>
                 </div>
 
-                <!-- Major Donors Row -->
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
-                >
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div
-                        class="bg-white p-8 rounded-professional-lg shadow-soft text-center card-hover"
+                        class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-green-50 to-green-100 card-hover"
                     >
-                        <div
-                            class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4"
-                        >
-                            <svg
-                                class="w-10 h-10 text-white"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                                />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">
-                            World Bank Group
+                        <img
+                            :src="'/images/about/CEO.avif'"
+                            alt="CEO"
+                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-gradient-to-br from-green-600 to-emerald-600"
+                        />
+                        <h3 class="text-lg font-semibold mb-1 text-gray-800">
+                            CEO & Founder
                         </h3>
                         <p class="text-gray-600 text-sm">
-                            International Development Association
+                            Strategic leadership, partnerships, and
+                            organizational growth.
                         </p>
-                        <div class="mt-4 text-green-600 font-medium">
-                            Major Grant Provider
-                        </div>
                     </div>
-
                     <div
-                        class="bg-white p-8 rounded-professional-lg shadow-soft text-center card-hover"
+                        class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-emerald-50 to-emerald-100 card-hover"
                     >
-                        <div
-                            class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4"
-                        >
-                            <svg
-                                class="w-10 h-10 text-white"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                                />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">
-                            USAID
+                        <img
+                            :src="'/images/about/Directorprograms.avif'"
+                            alt="Director Programs"
+                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-gradient-to-br from-green-600 to-emerald-600"
+                        />
+                        <h3 class="text-lg font-semibold mb-1 text-gray-800">
+                            Director, Programs
                         </h3>
                         <p class="text-gray-600 text-sm">
-                            United States Agency for International Development
+                            Design and delivery of training, market, and
+                            community programs.
                         </p>
-                        <div class="mt-4 text-green-600 font-medium">
-                            Technical Assistance
-                        </div>
                     </div>
-
                     <div
-                        class="bg-white p-8 rounded-professional-lg shadow-soft text-center card-hover"
+                        class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-yellow-50 to-yellow-100 card-hover"
                     >
-                        <div
-                            class="w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-4"
-                        >
-                            <svg
-                                class="w-10 h-10 text-white"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
-                                />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">
-                            FAO
+                        <img
+                            :src="'/images/about/directoreFinance.avif'"
+                            alt="Director Finance"
+                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-gradient-to-br from-green-600 to-emerald-600"
+                        />
+                        <h3 class="text-lg font-semibold mb-1 text-gray-800">
+                            Director, Finance
                         </h3>
                         <p class="text-gray-600 text-sm">
-                            Food and Agriculture Organization
-                        </p>
-                        <div class="mt-4 text-green-600 font-medium">
-                            Program Support
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Supporting Partners Row -->
-                <div
-                    class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"
-                >
-                    <div
-                        class="bg-white p-6 rounded-lg shadow-soft text-center"
-                    >
-                        <div class="text-lg font-bold text-gray-700 mb-1">
-                            EU
-                        </div>
-                        <div class="text-xs text-gray-500">European Union</div>
-                    </div>
-                    <div
-                        class="bg-white p-6 rounded-lg shadow-soft text-center"
-                    >
-                        <div class="text-lg font-bold text-gray-700 mb-1">
-                            GIZ
-                        </div>
-                        <div class="text-xs text-gray-500">
-                            German Development
-                        </div>
-                    </div>
-                    <div
-                        class="bg-white p-6 rounded-lg shadow-soft text-center"
-                    >
-                        <div class="text-lg font-bold text-gray-700 mb-1">
-                            JICA
-                        </div>
-                        <div class="text-xs text-gray-500">
-                            Japan International
-                        </div>
-                    </div>
-                    <div
-                        class="bg-white p-6 rounded-lg shadow-soft text-center"
-                    >
-                        <div class="text-lg font-bold text-gray-700 mb-1">
-                            DFID
-                        </div>
-                        <div class="text-xs text-gray-500">UK Development</div>
-                    </div>
-                    <div
-                        class="bg-white p-6 rounded-lg shadow-soft text-center"
-                    >
-                        <div class="text-lg font-bold text-gray-700 mb-1">
-                            CIDA
-                        </div>
-                        <div class="text-xs text-gray-500">Canadian Aid</div>
-                    </div>
-                    <div
-                        class="bg-white p-6 rounded-lg shadow-soft text-center"
-                    >
-                        <div class="text-lg font-bold text-gray-700 mb-1">
-                            ADB
-                        </div>
-                        <div class="text-xs text-gray-500">
-                            Asian Development
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Partnership Impact -->
-                <div class="mt-12 text-center">
-                    <div
-                        class="bg-green-50 border border-green-200 rounded-professional-lg p-8 max-w-4xl mx-auto"
-                    >
-                        <div class="flex items-center justify-center mb-4">
-                            <svg
-                                class="w-8 h-8 text-green-600 mr-3"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 919.288 0M15 7a3 3 0 11-6 0 3 3 0 616 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                                />
-                            </svg>
-                            <h3 class="text-xl font-bold text-green-800">
-                                Partnership Impact
-                            </h3>
-                        </div>
-                        <p class="text-green-700 leading-relaxed">
-                            Through strategic partnerships with international
-                            donors, we have successfully reached over
-                            <strong>15,000+ farmers</strong> and implemented
-                            <strong>120+ agricultural projects</strong>
-                            across Afghanistan, contributing to food security
-                            and rural economic development.
+                            Financial stewardship and responsible microfinance
+                            operations.
                         </p>
                     </div>
                 </div>
@@ -1131,12 +938,7 @@
                             />
                         </svg>
                     </router-link>
-                    <router-link
-                        to="/about"
-                        class="btn border-2 border-white text-white hover:bg-white hover:text-green-600 text-lg px-8 py-4"
-                    >
-                        Learn More About Us
-                    </router-link>
+                    <!-- About link removed; consolidated into Home -->
                 </div>
             </div>
         </section>

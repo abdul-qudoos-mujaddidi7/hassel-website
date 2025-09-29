@@ -550,12 +550,7 @@
                             />
                         </svg>
                     </router-link>
-                    <router-link
-                        to="/about"
-                        class="btn border-2 border-white text-white hover:bg-white hover:text-green-600 text-lg px-8 py-4"
-                    >
-                        Learn About Us
-                    </router-link>
+                    <!-- About link removed; consolidated into Home -->
                 </div>
             </div>
         </section>
