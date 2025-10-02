@@ -608,11 +608,11 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, watch, nextTick } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const idOrSlug = route.params.idOrSlug;
+const idOrSlug = ref(route.params.idOrSlug);
 const loading = ref(true);
 const program = ref(null);
 const related = ref([]);
@@ -638,16 +638,28 @@ onMounted(async () => {
     await fetchRelated();
 });
 
+// React to route changes without full page refresh
+watch(
+    () => route.params.idOrSlug,
+    async (val) => {
+        idOrSlug.value = val;
+        await fetchProgram();
+        await fetchRelated();
+        await nextTick();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+);
+
 async function fetchProgram() {
     loading.value = true;
     try {
         // try slug endpoint first, then id
-        let res = await fetch(`/api/training-programs/${idOrSlug}`);
+        let res = await fetch(`/api/training-programs/${idOrSlug.value}`);
         if (!res.ok) {
             // fallback: if slug route not supported, try by query
             res = await fetch(
                 `/api/training-programs?slug=${encodeURIComponent(
-                    idOrSlug
+                    idOrSlug.value
                 )}&limit=1`
             );
         }
@@ -690,7 +702,7 @@ async function fetchRelated() {
             ? data
             : [];
         related.value = list
-            .filter((x) => String(x.slug || x.id) !== String(idOrSlug))
+            .filter((x) => String(x.slug || x.id) !== String(idOrSlug.value))
             .slice(0, 3)
             .map((x) => ({
                 id: x.id,

@@ -74,6 +74,37 @@ CALL-TO-ACTION SECTION:
 - CTA button text: "Get Started" (or your preferred text)
 - Secondary CTA button text: "Learn More" (or your preferred text)
 
+3) Training Programs – Static Copy & Media
+
+TRAINING PROGRAMS LIST PAGE:
+- Hero background image (1920x1080+). If not provided we will use the generic our-work hero.
+- Hero title (default: "Training Programs").
+- Hero description (1–2 sentences). If not provided we keep the current generic copy.
+- Empty-state message text (default: "No programs found.").
+- Status labels (confirm if you prefer custom wording for Published/Ongoing/Completed).
+- Location badge style preference (we use brand cream + primary text by default).
+- Pagination: any custom label text for Prev/Next (defaults: "Prev", "Next").
+
+FILTERS (column-based):
+- Enable/disable filters you want visible to users. Current: Status, Location.
+- If you want additional filters later (e.g., Instructor, Start Date range), list them now for future.
+
+SEO (LIST PAGE):
+- Meta title
+- Meta description (150–160 chars)
+- Canonical URL (optional)
+
+TRAINING PROGRAM DETAIL PAGE:
+- Default hero background image to use when a program has no image.
+- Default copy for badges/labels if fields are missing (e.g., Duration: "TBD").
+- Section headings copy preferences (e.g., "Program Details", "Learning Objectives", "Course Syllabus", "Instructors", "Partners").
+- Related programs block title (default: "Related Programs").
+- Contact card texts: small heading and paragraph (defaults kept if not provided).
+
+SEO (DETAIL PAGE):
+- Meta title pattern (e.g., "{title} – Training Program – Mountagro")
+- Meta description fallback when program lacks a short description
+
 4) Static Contact Details (Header/Footer/Contact page)
 - Official email address to display (e.g., info@…)
 - Primary phone number to display (optional)
