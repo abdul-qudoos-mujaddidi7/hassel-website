@@ -164,7 +164,7 @@
                         </h1>
 
                         <p
-                            class="text-xl text-green-100 mb-8 leading-relaxed max-w-3xl mx-auto"
+                            class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                         >
                             {{
                                 program.short_description || program.description
@@ -472,7 +472,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch, nextTick } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -484,6 +484,16 @@ const program = ref(null);
 onMounted(() => {
     fetchProgramDetail();
 });
+
+// React to route changes so detail updates without refresh
+watch(
+    () => route.params.idOrSlug,
+    async () => {
+        await fetchProgramDetail();
+        await nextTick();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+);
 
 async function fetchProgramDetail() {
     loading.value = true;

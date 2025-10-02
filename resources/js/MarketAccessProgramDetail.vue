@@ -75,7 +75,7 @@
                         class="w-full h-full object-cover"
                     />
                     <div
-                        class="absolute inset-0 bg-gradient-to-br from-green-900/85 via-emerald-800/80 to-teal-900/85"
+                        class="absolute inset-0 bg-gradient-to-br from-green-900/85 via-green-800/80 to-emerald-900/85"
                     ></div>
                 </div>
 
@@ -87,7 +87,7 @@
                     class="absolute bottom-20 left-20 w-24 h-24 bg-green-400/20 rounded-full blur-lg"
                 ></div>
                 <div
-                    class="absolute top-1/2 left-1/4 w-16 h-16 bg-emerald-400/15 rounded-full blur-md"
+                    class="absolute top-1/2 left-1/4 w-16 h-16 bg-green-400/15 rounded-full blur-md"
                 ></div>
 
                 <div
@@ -158,7 +158,7 @@
                         </h1>
 
                         <p
-                            class="text-xl text-green-100 mb-8 leading-relaxed max-w-3xl mx-auto"
+                            class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                         >
                             {{
                                 program.short_description || program.description
@@ -207,7 +207,7 @@
                         <div class="flex justify-center">
                             <router-link
                                 to="/contact"
-                                class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-xl hover:from-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                                class="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-brand-primary text-white font-semibold rounded-xl hover:bg-brand-secondary transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base"
                             >
                                 <svg
                                     class="w-5 h-5 mr-3"
@@ -230,14 +230,14 @@
             </section>
 
             <!-- Main Content -->
-            <section class="py-16">
+            <section class="py-12 sm:py-16">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                         <!-- Main Content -->
-                        <div class="lg:col-span-2 space-y-8">
+                        <div class="lg:col-span-2 space-y-6 sm:space-y-8">
                             <!-- Program Overview -->
                             <div
-                                class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8"
+                                class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-8"
                             >
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-6"
@@ -316,10 +316,10 @@
                         </div>
 
                         <!-- Sidebar -->
-                        <div class="space-y-6">
+                        <div class="space-y-4 sm:space-y-6">
                             <!-- Quick Info Card -->
                             <div
-                                class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6"
+                                class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6"
                             >
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
@@ -372,7 +372,7 @@
                                 </p>
                                 <router-link
                                     to="/contact"
-                                    class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold py-3 px-4 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 text-center block"
+                                    class="w-full bg-brand-primary text-white font-semibold py-3 px-4 rounded-xl hover:bg-brand-secondary transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 text-center block"
                                 >
                                     <svg
                                         class="w-5 h-5 inline mr-2"
@@ -433,7 +433,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -444,6 +444,17 @@ const program = ref(null);
 onMounted(async () => {
     await fetchProgram();
 });
+
+// Watch for route changes to handle in-app navigation
+watch(
+    () => route.params.idOrSlug,
+    () => {
+        if (route.params.idOrSlug) {
+            fetchProgram();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    }
+);
 
 async function fetchProgram() {
     loading.value = true;

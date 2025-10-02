@@ -6,7 +6,7 @@
             <div class="absolute inset-0">
                 <img
                     :src="'/images/ourWork/ourworkhero.avif'"
-                    alt="Seed & Input Supply Chain"
+                    alt="Community Programs"
                     class="w-full h-full object-cover"
                 />
                 <div
@@ -48,7 +48,7 @@
                             ></path>
                         </svg>
                         <span class="text-white font-medium"
-                            >Seed & Input Supply Chain</span
+                            >Community Programs</span
                         >
                     </div>
                 </nav>
@@ -64,26 +64,24 @@
                             viewBox="0 0 20 20"
                         >
                             <path
-                                fill-rule="evenodd"
-                                d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm8 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V8z"
+                                d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"
                             ></path>
                         </svg>
-                        Quality Inputs
+                        Community Development
                     </div>
 
                     <h1
                         class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
                     >
-                        Seed & Input Supply Chain
+                        Community Programs
                     </h1>
 
                     <p
                         class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
-                        Access high-quality seeds, fertilizers, and eco-friendly
-                        inputs through our reliable distribution network.
-                        Building sustainable supply chains across provinces for
-                        better yields and farming success.
+                        Strengthen communities through targeted development
+                        initiatives, capacity building, and sustainable
+                        partnerships that create lasting positive impact.
                     </p>
 
                     <!-- Quick Stats -->
@@ -93,23 +91,23 @@
                                 {{ totalPrograms }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Supply Programs
+                                Active Programs
                             </div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-white">
-                                {{ uniqueInputs }}
+                                {{ uniqueTargetGroups }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Input Types
+                                Target Groups
                             </div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-white">
-                                {{ distributionCenters }}
+                                {{ partnerCount }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Distribution Centers
+                                Partner Organizations
                             </div>
                         </div>
                     </div>
@@ -117,7 +115,7 @@
                     <!-- Scroll Indicator -->
                     <div class="flex flex-col items-center">
                         <span class="text-green-200 text-sm mb-2"
-                            >Explore supply programs below</span
+                            >Explore programs below</span
                         >
                         <svg
                             class="w-6 h-6 text-green-300 animate-bounce"
@@ -138,11 +136,11 @@
         </section>
 
         <!-- Filters Section -->
-        <section class="py-8 bg-gray-50 border-b border-gray-100">
+        <section class="py-8 bg-white border-b border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-gray-900">
-                        Filter Supply Programs
+                        Filter Programs
                     </h2>
                     <button
                         @click="resetFilters"
@@ -168,44 +166,44 @@
                 <div
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
                 >
-                    <!-- Input Type Filter -->
+                    <!-- Program Type Filter -->
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Input Type</label
+                            >Program Type</label
                         >
                         <select
-                            v-model="filters.type"
+                            v-model="filters.program_type"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
                             <option value="">All Types</option>
                             <option
-                                v-for="type in typeOptions"
+                                v-for="type in programTypeOptions"
                                 :key="type"
                                 :value="type"
                             >
-                                {{ formatInputType(type) }}
+                                {{ formatProgramType(type) }}
                             </option>
                         </select>
                     </div>
 
-                    <!-- Target Crops Filter -->
+                    <!-- Target Group Filter -->
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Target Crops</label
+                            >Target Group</label
                         >
                         <select
-                            v-model="filters.crops"
+                            v-model="filters.target_group"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
-                            <option value="">All Crops</option>
+                            <option value="">All Groups</option>
                             <option
-                                v-for="crop in cropOptions"
-                                :key="crop"
-                                :value="crop"
+                                v-for="group in targetGroupOptions"
+                                :key="group"
+                                :value="group"
                             >
-                                {{ formatCrops(crop) }}
+                                {{ formatTargetGroup(group) }}
                             </option>
                         </select>
                     </div>
@@ -280,7 +278,7 @@
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                                 ></path>
                             </svg>
                         </div>
@@ -293,7 +291,7 @@
                         </p>
                         <button
                             @click="resetFilters"
-                            class="inline-flex items-center px-6 py-3 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors"
+                            class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
                         >
                             Clear Filters
                         </button>
@@ -318,7 +316,7 @@
                                 >
                                     <img
                                         :src="program.cover_image"
-                                        :alt="program.name"
+                                        :alt="program.title"
                                         class="w-full h-full object-cover rounded-lg"
                                     />
                                 </div>
@@ -333,14 +331,11 @@
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
                                             stroke-width="2"
-                                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                                         ></path>
                                     </svg>
                                     <p class="text-green-600 font-medium">
-                                        {{
-                                            program.input_type ||
-                                            "Supply Program"
-                                        }}
+                                        {{ program.program_type || "Program" }}
                                     </p>
                                 </div>
                             </div>
@@ -350,42 +345,47 @@
                                 <h3
                                     class="text-lg font-semibold text-gray-900 mb-2"
                                 >
-                                    {{ program.name }}
+                                    {{ program.title }}
                                 </h3>
                                 <p class="text-gray-600 text-sm line-clamp-2">
-                                    {{
-                                        program.short_description ||
-                                        program.description
-                                    }}
+                                    {{ program.description }}
                                 </p>
                             </div>
 
                             <!-- Program Meta -->
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span
-                                    v-if="program.input_type"
+                                    v-if="program.program_type"
                                     class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
                                 >
-                                    {{ formatInputType(program.input_type) }}
+                                    {{
+                                        formatProgramType(program.program_type)
+                                    }}
                                 </span>
                                 <span
-                                    v-if="program.target_crops"
+                                    v-if="program.target_group"
                                     class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
                                 >
-                                    {{ formatCrops(program.target_crops) }}
+                                    {{
+                                        formatTargetGroup(program.target_group)
+                                    }}
                                 </span>
                                 <span
-                                    v-if="program.availability"
+                                    v-if="program.partner_organizations"
                                     class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
                                 >
-                                    {{ program.availability }}
+                                    {{
+                                        formatPartners(
+                                            program.partner_organizations
+                                        )
+                                    }}
                                 </span>
                             </div>
 
                             <!-- Program Action -->
                             <div class="mt-4">
                                 <router-link
-                                    :to="`/seed-supply/${
+                                    :to="`/community-programs/${
                                         program.slug || program.id
                                     }`"
                                     class="w-full bg-brand-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-brand-secondary transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md block"
@@ -428,59 +428,49 @@ const programs = ref([]);
 const total = ref(0);
 
 const filters = ref({
-    type: "",
-    crops: "",
+    program_type: "",
+    target_group: "",
     search: "",
 });
 
-// Computed stats
-const totalPrograms = computed(() => programs.value.length);
-const uniqueInputs = computed(() => {
-    const inputs = programs.value
-        .map((program) => program.input_type)
-        .filter(Boolean);
-    return new Set(inputs).size;
-});
-const distributionCenters = computed(() => {
-    const locations = programs.value
-        .map((program) => program.distribution_centers)
-        .filter(Boolean);
-    const allLocations = locations.flatMap((location) => {
-        if (typeof location === "string") {
-            try {
-                return JSON.parse(location);
-            } catch {
-                return location.split(",").map((l) => l.trim());
-            }
-        }
-        return Array.isArray(location) ? location : [];
-    });
-    return new Set(allLocations).size;
-});
-
 // Dynamic filter options
-const typeOptions = computed(() => {
+const programTypeOptions = computed(() => {
     const types = programs.value
-        .map((program) => program.input_type)
+        .map((program) => program.program_type)
         .filter(Boolean);
     return [...new Set(types)];
 });
 
-const cropOptions = computed(() => {
-    const crops = programs.value
-        .map((program) => program.target_crops)
+const targetGroupOptions = computed(() => {
+    const groups = programs.value
+        .map((program) => program.target_group)
         .filter(Boolean);
-    const allCrops = crops.flatMap((crop) => {
-        if (typeof crop === "string") {
+    return [...new Set(groups)];
+});
+
+// Computed stats
+const totalPrograms = computed(() => programs.value.length);
+const uniqueTargetGroups = computed(() => {
+    const groups = programs.value
+        .map((program) => program.target_group)
+        .filter(Boolean);
+    return new Set(groups).size;
+});
+const partnerCount = computed(() => {
+    const partners = programs.value
+        .map((program) => program.partner_organizations)
+        .filter(Boolean);
+    const allPartners = partners.flatMap((partner) => {
+        if (typeof partner === "string") {
             try {
-                return JSON.parse(crop);
+                return JSON.parse(partner);
             } catch {
-                return crop.split(",").map((c) => c.trim());
+                return partner.split(",").map((p) => p.trim());
             }
         }
-        return Array.isArray(crop) ? crop : [];
+        return Array.isArray(partner) ? partner : [];
     });
-    return [...new Set(allCrops)];
+    return new Set(allPartners).size;
 });
 
 // Watch filters and fetch programs
@@ -500,18 +490,17 @@ async function fetchPrograms() {
     loading.value = true;
     try {
         const params = new URLSearchParams();
-        if (filters.value.type) params.set("input_type", filters.value.type);
-        if (filters.value.crops)
-            params.set("target_crops", filters.value.crops);
+        if (filters.value.program_type)
+            params.set("program_type", filters.value.program_type);
+        if (filters.value.target_group)
+            params.set("target_group", filters.value.target_group);
         if (filters.value.search) params.set("search", filters.value.search);
 
         console.log(
-            "Fetching seed supply programs with params:",
+            "Fetching community programs with params:",
             params.toString()
         );
-        const res = await fetch(
-            `/api/seed-supply-programs?${params.toString()}`
-        );
+        const res = await fetch(`/api/community-programs?${params.toString()}`);
         if (!res.ok) throw new Error("Failed to load programs");
 
         const data = await res.json();
@@ -523,16 +512,15 @@ async function fetchPrograms() {
 
         let mappedPrograms = list.map((program) => ({
             id: program.id,
-            name: program.name || program.title || "Seed Supply Program",
-            description: program.description || program.short_description || "",
-            short_description:
-                program.short_description || program.description || "",
-            input_type: program.input_type || program.type,
-            target_crops: program.target_crops,
-            availability: program.availability || "Available",
-            distribution_centers: program.distribution_centers,
+            title: program.title || program.name || "Community Program",
+            description: program.description || "",
+            program_type: program.program_type,
+            target_group: program.target_group,
+            partner_organizations: program.partner_organizations,
             cover_image:
-                program.cover_image || program.thumbnail_image || program.image,
+                program.cover_image ||
+                program.featured_image ||
+                program.thumbnail_image,
             status: program.status || "published",
             slug: program.slug,
         }));
@@ -542,32 +530,23 @@ async function fetchPrograms() {
             const searchTerm = filters.value.search.toLowerCase();
             mappedPrograms = mappedPrograms.filter(
                 (program) =>
-                    program.name.toLowerCase().includes(searchTerm) ||
+                    program.title.toLowerCase().includes(searchTerm) ||
                     program.description.toLowerCase().includes(searchTerm) ||
-                    program.short_description
-                        .toLowerCase()
-                        .includes(searchTerm) ||
-                    (program.input_type &&
-                        program.input_type.toLowerCase().includes(searchTerm))
+                    (program.program_type &&
+                        program.program_type
+                            .toLowerCase()
+                            .includes(searchTerm)) ||
+                    (program.target_group &&
+                        program.target_group.toLowerCase().includes(searchTerm))
             );
         }
 
         programs.value = mappedPrograms;
         total.value = programs.value.length;
 
-        // Debug: Log the first and last programs to see their data
-        console.log("First program:", programs.value[0]);
-        console.log("Last program:", programs.value[programs.value.length - 1]);
-        console.log(
-            "All program IDs and slugs:",
-            programs.value.map((p) => ({
-                id: p.id,
-                slug: p.slug,
-                name: p.name,
-            }))
-        );
+        console.log("Community programs loaded:", programs.value.length);
     } catch (error) {
-        console.error("Error fetching programs:", error);
+        console.error("Error fetching community programs:", error);
         programs.value = [];
         total.value = 0;
     } finally {
@@ -577,33 +556,44 @@ async function fetchPrograms() {
 
 function resetFilters() {
     filters.value = {
-        type: "",
-        crops: "",
+        program_type: "",
+        target_group: "",
         search: "",
     };
 }
 
-function formatInputType(type) {
-    return String(type)
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase());
+// Formatting functions
+function formatProgramType(type) {
+    if (!type) return "";
+    return type
+        .split("_")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
 }
 
-function formatCrops(crops) {
-    if (!crops) return "Various";
-    if (typeof crops === "string") {
+function formatTargetGroup(group) {
+    if (!group) return "";
+    return group
+        .split("_")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+}
+
+function formatPartners(partners) {
+    if (!partners) return "";
+    if (typeof partners === "string") {
         try {
-            const parsed = JSON.parse(crops);
+            const parsed = JSON.parse(partners);
             return Array.isArray(parsed)
-                ? parsed.slice(0, 2).join(", ")
-                : crops;
+                ? parsed.length + " Partners"
+                : "Partners";
         } catch {
-            return crops.split(",").slice(0, 2).join(", ");
+            return partners.split(",").length + " Partners";
         }
     }
-    if (Array.isArray(crops)) {
-        return crops.slice(0, 2).join(", ");
+    if (Array.isArray(partners)) {
+        return partners.length + " Partners";
     }
-    return "Various";
+    return "Partners";
 }
 </script>

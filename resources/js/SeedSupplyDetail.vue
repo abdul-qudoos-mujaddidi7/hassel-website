@@ -79,7 +79,7 @@
                         class="w-full h-full bg-gradient-to-br from-green-600 via-emerald-700 to-teal-800"
                     ></div>
                     <div
-                        class="absolute inset-0 bg-gradient-to-br from-green-900/85 via-emerald-800/80 to-teal-900/85"
+                        class="absolute inset-0 bg-gradient-to-br from-green-900/85 via-green-800/80 to-emerald-900/85"
                     ></div>
                 </div>
 
@@ -91,11 +91,11 @@
                     class="absolute bottom-20 left-20 w-24 h-24 bg-green-400/20 rounded-full blur-lg"
                 ></div>
                 <div
-                    class="absolute top-1/2 left-1/4 w-16 h-16 bg-emerald-400/15 rounded-full blur-md"
+                    class="absolute top-1/2 left-1/4 w-16 h-16 bg-green-400/15 rounded-full blur-md"
                 ></div>
 
                 <div
-                    class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24"
+                    class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20"
                 >
                     <!-- Breadcrumbs -->
                     <nav class="mb-8">
@@ -158,13 +158,13 @@
                         </div>
 
                         <h1
-                            class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
+                            class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight"
                         >
                             {{ program.name }}
                         </h1>
 
                         <p
-                            class="text-xl text-green-100 mb-8 leading-relaxed max-w-3xl mx-auto"
+                            class="text-lg sm:text-xl text-white mb-6 sm:mb-8 leading-relaxed max-w-3xl mx-auto px-4 sm:px-0"
                         >
                             {{
                                 program.short_description || program.description
@@ -172,15 +172,19 @@
                         </p>
 
                         <!-- Quick Stats -->
-                        <div class="flex flex-wrap justify-center gap-6 mb-8">
+                        <div
+                            class="flex flex-wrap justify-center gap-4 sm:gap-6 mb-6 sm:mb-8"
+                        >
                             <div
                                 v-if="program.quality_grade"
                                 class="text-center"
                             >
-                                <div class="text-3xl font-bold text-white">
+                                <div
+                                    class="text-2xl sm:text-3xl font-bold text-white"
+                                >
                                     {{ program.quality_grade }}
                                 </div>
-                                <div class="text-green-200 text-sm">
+                                <div class="text-green-200 text-xs sm:text-sm">
                                     Quality Grade
                                 </div>
                             </div>
@@ -188,28 +192,32 @@
                                 v-if="program.availability"
                                 class="text-center"
                             >
-                                <div class="text-3xl font-bold text-white">
+                                <div
+                                    class="text-2xl sm:text-3xl font-bold text-white"
+                                >
                                     {{ program.availability }}
                                 </div>
-                                <div class="text-green-200 text-sm">
+                                <div class="text-green-200 text-xs sm:text-sm">
                                     Availability
                                 </div>
                             </div>
                             <div v-if="program.price_range" class="text-center">
-                                <div class="text-3xl font-bold text-white">
+                                <div
+                                    class="text-2xl sm:text-3xl font-bold text-white"
+                                >
                                     {{ program.price_range }}
                                 </div>
-                                <div class="text-green-200 text-sm">
+                                <div class="text-green-200 text-xs sm:text-sm">
                                     Price Range
                                 </div>
                             </div>
                         </div>
 
                         <!-- Learn More Button -->
-                        <div class="flex justify-center">
+                        <div class="flex justify-center px-4 sm:px-0">
                             <router-link
                                 to="/contact"
-                                class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-xl hover:from-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                                class="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-brand-primary text-white font-semibold rounded-xl hover:bg-brand-secondary transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base"
                             >
                                 <svg
                                     class="w-5 h-5 mr-3"
@@ -232,14 +240,14 @@
             </section>
 
             <!-- Main Content -->
-            <section class="py-16 bg-white">
+            <section class="py-12 sm:py-16 bg-white">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                         <!-- Main Content Column -->
-                        <div class="lg:col-span-2 space-y-8">
+                        <div class="lg:col-span-2 space-y-6 sm:space-y-8">
                             <!-- Product Overview -->
                             <div
-                                class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6"
+                                class="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 sm:p-6"
                             >
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-4"
@@ -342,10 +350,10 @@
                         </div>
 
                         <!-- Sidebar Column -->
-                        <div class="space-y-6">
+                        <div class="space-y-4 sm:space-y-6">
                             <!-- Quick Info Card -->
                             <div
-                                class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6"
+                                class="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 sm:p-6"
                             >
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
@@ -417,7 +425,7 @@
 
                             <!-- Information Card -->
                             <div
-                                class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-200 p-6"
+                                class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-100 p-6 shadow-sm"
                             >
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-2"
@@ -432,7 +440,7 @@
 
                                 <router-link
                                     to="/contact"
-                                    class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold py-3 px-4 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-200 shadow-sm hover:shadow-md text-center block"
+                                    class="w-full bg-brand-primary text-white font-bold py-3 px-4 rounded-xl hover:bg-brand-secondary transition-all duration-200 shadow-sm hover:shadow-md text-center block"
                                 >
                                     <svg
                                         class="w-5 h-5 inline mr-2"
@@ -509,7 +517,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -521,6 +529,17 @@ const program = ref(null);
 onMounted(() => {
     fetchProgramDetail();
 });
+
+// Watch for route changes to handle in-app navigation
+watch(
+    () => route.params.idOrSlug,
+    () => {
+        if (route.params.idOrSlug) {
+            fetchProgramDetail();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    }
+);
 
 async function fetchProgramDetail() {
     loading.value = true;

@@ -18,6 +18,8 @@ const SmartFarming = () => import("./SmartFarming.vue");
 const SmartFarmingDetail = () => import("./SmartFarmingDetail.vue");
 const SeedSupply = () => import("./SeedSupply.vue");
 const SeedSupplyDetail = () => import("./SeedSupplyDetail.vue");
+const CommunityPrograms = () => import("./CommunityPrograms.vue");
+// const EnvironmentalProjects = () => import("./EnvironmentalProjects.vue");
 
 const router = createRouter({
     history: createWebHistory(),
@@ -50,6 +52,9 @@ const router = createRouter({
             path: "/seed-supply/:idOrSlug",
             component: SeedSupplyDetail,
         },
+        { path: "/community-programs", component: CommunityPrograms },
+        // { path: "/environmental-projects", component: EnvironmentalProjects },
+        { path: "/agri-tech-tools", component: AgriTechTools },
         { path: "/resources", component: Resources },
         { path: "/careers", component: Careers },
         { path: "/contact", component: Contact },
@@ -79,6 +84,9 @@ export const routePrefetchMap = {
     "/smart-farming/:idOrSlug": () => import("./SmartFarmingDetail.vue"),
     "/seed-supply": () => import("./SeedSupply.vue"),
     "/seed-supply/:idOrSlug": () => import("./SeedSupplyDetail.vue"),
+    "/community-programs": () => import("./CommunityPrograms.vue"),
+    // "/environmental-projects": () => import("./EnvironmentalProjects.vue"),
+    "/agri-tech-tools": () => import("./AgriTechTools.vue"),
 };
 
 export default router;

@@ -10,7 +10,7 @@
                     class="w-full h-full object-cover"
                 />
                 <div
-                    class="absolute inset-0 bg-gradient-to-br from-green-900/85 via-emerald-800/80 to-teal-900/85"
+                    class="absolute inset-0 bg-gradient-to-br from-green-900/85 via-green-800/80 to-emerald-900/85"
                 ></div>
             </div>
 
@@ -22,7 +22,7 @@
                 class="absolute bottom-20 left-20 w-24 h-24 bg-green-400/20 rounded-full blur-lg"
             ></div>
             <div
-                class="absolute top-1/2 left-1/4 w-16 h-16 bg-emerald-400/15 rounded-full blur-md"
+                class="absolute top-1/2 left-1/4 w-16 h-16 bg-green-400/15 rounded-full blur-md"
             ></div>
 
             <div
@@ -77,7 +77,7 @@
                     </h1>
 
                     <p
-                        class="text-xl text-green-100 mb-8 leading-relaxed max-w-3xl mx-auto"
+                        class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
                         Connect with markets, enhance value chains, and build
                         sustainable partnerships to maximize your agricultural
@@ -292,7 +292,7 @@
                         <div
                             v-for="program in programs"
                             :key="program.id"
-                            class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-shadow"
+                            class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-shadow flex flex-col"
                         >
                             <!-- Program Image -->
                             <div
@@ -329,7 +329,7 @@
                             </div>
 
                             <!-- Program Info -->
-                            <div class="mb-4">
+                            <div class="mb-4 flex-grow">
                                 <h3
                                     class="text-lg font-semibold text-gray-900 mb-2"
                                 >
@@ -347,7 +347,7 @@
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span
                                     v-if="program.program_type"
-                                    class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full"
+                                    class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
                                 >
                                     {{
                                         formatProgramType(program.program_type)
@@ -355,13 +355,13 @@
                                 </span>
                                 <span
                                     v-if="program.target_crops"
-                                    class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-medium rounded-full"
+                                    class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
                                 >
                                     {{ formatCrops(program.target_crops) }}
                                 </span>
                                 <span
                                     v-if="program.partner_organizations"
-                                    class="px-2 py-1 bg-teal-100 text-teal-800 text-xs font-medium rounded-full"
+                                    class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
                                 >
                                     {{
                                         formatPartners(
@@ -377,7 +377,7 @@
                                     :to="`/market-access/${
                                         program.slug || program.id
                                     }`"
-                                    class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold py-3 px-4 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md block"
+                                    class="w-full bg-brand-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-brand-secondary transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md block"
                                 >
                                     <svg
                                         class="w-4 h-4 inline mr-2"

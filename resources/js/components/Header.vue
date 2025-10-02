@@ -169,7 +169,7 @@
 
             <!-- Drawer -->
             <div
-                class="fixed top-0 right-0 h-full w-80 max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out"
+                class="fixed top-0 right-0 h-full w-80 max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out flex flex-col"
                 @click.stop
             >
                 <!-- Drawer Header -->
@@ -204,7 +204,7 @@
                 </div>
 
                 <!-- Drawer Navigation -->
-                <nav class="px-6 py-4 space-y-2">
+                <nav class="px-6 py-4 space-y-2 flex-1 overflow-y-auto">
                     <router-link
                         v-for="item in menuItems"
                         :key="item.name"
@@ -278,7 +278,7 @@
 
                 <!-- Drawer Footer -->
                 <div
-                    class="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-200 bg-gray-50"
+                    class="p-6 border-t border-gray-200 bg-gray-50 flex-shrink-0"
                 >
                     <div class="text-center">
                         <p class="text-sm text-gray-600">

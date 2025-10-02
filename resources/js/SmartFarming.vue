@@ -78,7 +78,7 @@
                     </h1>
 
                     <p
-                        class="text-xl text-green-100 mb-8 leading-relaxed max-w-3xl mx-auto"
+                        class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
                         Embrace modern farming techniques, climate-resilient
                         practices, and sustainable agriculture to maximize
@@ -132,236 +132,6 @@
                                 d="M19 14l-7 7m0 0l-7-7m7 7V3"
                             ></path>
                         </svg>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Key Techniques Section -->
-        <section class="py-16 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">
-                        Modern Farming Techniques
-                    </h2>
-                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                        Discover innovative approaches to farming that increase
-                        productivity while maintaining environmental
-                        sustainability.
-                    </p>
-                </div>
-
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                >
-                    <!-- Drip Irrigation -->
-                    <div
-                        class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100"
-                    >
-                        <div
-                            class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                class="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                                ></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            Drip Irrigation
-                        </h3>
-                        <p class="text-gray-600 mb-4">
-                            Precision water delivery systems that reduce water
-                            usage by up to 50% while improving crop yields.
-                        </p>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Water conservation</li>
-                            <li>• Reduced soil erosion</li>
-                            <li>• Improved nutrient delivery</li>
-                        </ul>
-                    </div>
-
-                    <!-- Greenhouse Farming -->
-                    <div
-                        class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100"
-                    >
-                        <div
-                            class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                class="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                                ></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            Greenhouse Farming
-                        </h3>
-                        <p class="text-gray-600 mb-4">
-                            Controlled environment agriculture for year-round
-                            production and protection from harsh weather.
-                        </p>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Year-round production</li>
-                            <li>• Pest and disease control</li>
-                            <li>• Climate protection</li>
-                        </ul>
-                    </div>
-
-                    <!-- Precision Agriculture -->
-                    <div
-                        class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100"
-                    >
-                        <div
-                            class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                class="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                                ></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            Precision Agriculture
-                        </h3>
-                        <p class="text-gray-600 mb-4">
-                            Data-driven farming using GPS, sensors, and
-                            analytics for optimized resource management.
-                        </p>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• GPS-guided equipment</li>
-                            <li>• Soil and crop monitoring</li>
-                            <li>• Variable rate application</li>
-                        </ul>
-                    </div>
-
-                    <!-- Organic Practices -->
-                    <div
-                        class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100"
-                    >
-                        <div
-                            class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                class="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                                ></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            Organic Practices
-                        </h3>
-                        <p class="text-gray-600 mb-4">
-                            Chemical-free farming methods that promote soil
-                            health and environmental sustainability.
-                        </p>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Natural pest control</li>
-                            <li>• Compost and green manure</li>
-                            <li>• Crop rotation</li>
-                        </ul>
-                    </div>
-
-                    <!-- Climate-Resilient Crops -->
-                    <div
-                        class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100"
-                    >
-                        <div
-                            class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                class="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                                ></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            Climate-Resilient Crops
-                        </h3>
-                        <p class="text-gray-600 mb-4">
-                            Drought, heat, and flood-tolerant crop varieties
-                            adapted to changing climate conditions.
-                        </p>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Drought tolerance</li>
-                            <li>• Heat resistance</li>
-                            <li>• Flood adaptation</li>
-                        </ul>
-                    </div>
-
-                    <!-- Soil Health Management -->
-                    <div
-                        class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100"
-                    >
-                        <div
-                            class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                class="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                ></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            Soil Health Management
-                        </h3>
-                        <p class="text-gray-600 mb-4">
-                            Comprehensive soil testing, nutrient management, and
-                            erosion prevention strategies.
-                        </p>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Soil testing and analysis</li>
-                            <li>• Nutrient management</li>
-                            <li>• Erosion prevention</li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -555,7 +325,7 @@
                         <div
                             v-for="program in programs"
                             :key="program.id"
-                            class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-shadow"
+                            class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-shadow flex flex-col"
                         >
                             <!-- Program Image -->
                             <div
@@ -595,7 +365,7 @@
                             </div>
 
                             <!-- Program Info -->
-                            <div class="mb-4">
+                            <div class="mb-4 flex-grow">
                                 <h3
                                     class="text-lg font-semibold text-gray-900 mb-2"
                                 >
@@ -613,7 +383,7 @@
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span
                                     v-if="program.farming_type"
-                                    class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full"
+                                    class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
                                 >
                                     {{
                                         formatFarmingType(program.farming_type)
@@ -621,13 +391,13 @@
                                 </span>
                                 <span
                                     v-if="program.target_crops"
-                                    class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full"
+                                    class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
                                 >
                                     {{ formatCrops(program.target_crops) }}
                                 </span>
                                 <span
                                     v-if="program.sustainability_level"
-                                    class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-medium rounded-full"
+                                    class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
                                 >
                                     {{ program.sustainability_level }}%
                                     Sustainable
@@ -640,7 +410,7 @@
                                     :to="`/smart-farming/${
                                         program.slug || program.id
                                     }`"
-                                    class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold py-3 px-4 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md block"
+                                    class="w-full bg-brand-primary text-white font-semibold py-3 px-4 rounded-lg hover:opacity-90 transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md block"
                                 >
                                     <svg
                                         class="w-4 h-4 inline mr-2"
