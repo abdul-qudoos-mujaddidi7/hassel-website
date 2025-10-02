@@ -127,7 +127,7 @@
                             </h1>
 
                             <p
-                                class="text-lg text-gray-600 mb-6 leading-relaxed"
+                                class="text-lg text-gray-700 mb-6 leading-relaxed"
                             >
                                 {{ tool.short_description || tool.description }}
                             </p>
@@ -248,7 +248,7 @@
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                         <!-- Tool Information -->
                         <div
-                            class="lg:col-span-2 bg-white rounded-2xl shadow-lg border border-gray-100 p-4 sm:p-6"
+                            class="lg:col-span-2 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-100 p-4 sm:p-6 shadow-sm"
                         >
                             <h3
                                 class="text-lg sm:text-xl font-bold text-gray-900 mb-4"
@@ -307,7 +307,7 @@
 
                         <!-- Download Card -->
                         <div
-                            class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-200 p-4 sm:p-6"
+                            class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-100 p-4 sm:p-6 shadow-sm"
                         >
                             <h3
                                 class="text-lg sm:text-xl font-bold text-gray-900 mb-2"
@@ -544,7 +544,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
@@ -559,6 +559,17 @@ onMounted(() => {
     fetchToolDetail();
     fetchRelatedTools();
 });
+
+// React to route changes so detail updates without refresh
+watch(
+    () => route.params.idOrSlug,
+    async () => {
+        await fetchToolDetail();
+        await fetchRelatedTools();
+        await nextTick();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+);
 
 async function fetchToolDetail() {
     loading.value = true;

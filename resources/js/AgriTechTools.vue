@@ -22,7 +22,7 @@
                 class="absolute bottom-20 left-20 w-24 h-24 bg-green-400/20 rounded-full blur-lg"
             ></div>
             <div
-                class="absolute top-1/2 left-1/4 w-16 h-16 bg-blue-400/15 rounded-full blur-md"
+                class="absolute top-1/2 left-1/4 w-16 h-16 bg-green-400/15 rounded-full blur-md"
             ></div>
 
             <div
@@ -77,7 +77,7 @@
                     </h1>
 
                     <p
-                        class="text-xl text-green-100 mb-8 leading-relaxed max-w-3xl mx-auto"
+                        class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
                         Discover innovative agricultural technology solutions
                         designed to enhance farming practices, increase
@@ -370,7 +370,7 @@
                                 </span>
                                 <span
                                     v-if="tool.platform"
-                                    class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full"
+                                    class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
                                 >
                                     {{ tool.platform }}
                                 </span>
@@ -385,8 +385,8 @@
                             <!-- Tool Actions -->
                             <div class="flex gap-2">
                                 <router-link
-                                    :to="`/agri-tech/${tool.id}`"
-                                    class="flex-1 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-sm text-center"
+                                    :to="`/agri-tech/${tool.slug || tool.id}`"
+                                    class="flex-1 bg-brand-primary text-white font-semibold py-2 px-4 rounded-lg hover:opacity-90 transition-colors text-sm text-center"
                                 >
                                     <svg
                                         class="w-4 h-4 inline mr-2"
