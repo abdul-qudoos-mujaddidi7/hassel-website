@@ -7,42 +7,80 @@ Please provide ONLY the items below. Anything not listed here will be managed dy
 - Favicon: 32x32 PNG (we’ll generate other sizes)
 - Social links (URLs): LinkedIn, Facebook, X/Twitter, YouTube (optional)
 
-2) Global Hero/Background Images
-- Home hero slider backgrounds: 5 images (landscape, 1920x1080 or larger)
-  For each slide: Title (max 6 words) + Short tagline (1 sentence)
-- Optional: Unique hero background for each pillar detail page (if different from default)
 
-3) Home Page – Static Copy & Media
-- “About Us” section:
-  - Heading (e.g., About Us)
-  - 2 short paragraphs (40–70 words each)
-  - 1 feature image for the section (landscape, 1600x900+)
-- “Our Partners” section:
-  - If you prefer logos instead of icon badges: partner logos (SVG/PNG, monochrome preferred)
+2) Home Page – Static Copy & Media
 
-4) Seven Business Pillars – Card Content (Home)
-Provide the following for each pillar:
-- Title (confirm as final)
-- Short subtitle (max 8 words)
-- Description (25–40 words, plain language)
-- Icon preference (choose: book, device/tech, heart/impact, seed/input, chart/market, leaf/environment, community/people) or send your own simple SVG
+HERO SECTION (5-Slide Carousel):
+For each of the 5 slides, provide:
+- Hero background image: High-quality landscape image (1920x1080+)
+- Slide title: Main headline (max 6 words, e.g., "Empowering Agricultural Communities")
+- Slide description: 1-2 sentences describing the specific focus of that slide (max 120 characters)
 
-Pillars list (for reference):
-- Training Programs
-- Agri-Tech Tools
-- Smart & Sustainable Farming
-- Seed & Input Supply Chain
-- Market Access Programs
-- Environmental Projects
-- Community Programs
+Suggested slide themes (you can customize):
+1. Slide 1: Main mission/overview
+2. Slide 2: Training programs focus
+3. Slide 3: Technology/innovation focus
+4. Slide 4: Community development focus
+5. Slide 5: Environmental/sustainability focus
 
-5) Static Contact Details (Header/Footer/Contact page)
+CTA buttons (same for all slides):
+- Primary CTA: "Contact Us" (or your preferred text)
+- Secondary CTA: "Learn More" (or your preferred text)
+
+ABOUT US SECTION:
+- Section heading: "About Us"
+- First paragraph: 40-70 words about your organization
+- Second paragraph: 40-70 words about your mission/impact
+- Feature image: 1 high-quality image (1600x900+) showing your work/team
+
+OUR FOUNDATION SECTION (Vision/Mission/Values):
+- Vision statement: 1-2 sentences
+- Mission statement: 1-2 sentences  
+- Values statement: 1-2 sentences
+- (Icons will be auto-generated, but you can specify if you want custom ones)
+
+BUSINESS PILLARS SECTION:
+- Section heading: "Our Business Pillars"
+- For each of the 7 pillars, provide:
+  - Title (confirm these are correct):
+    * Training Programs
+    * Agri-Tech Tools
+    * Smart & Sustainable Farming
+    * Seed & Input Supply Chain
+    * Market Access Programs
+    * Environmental Projects
+    * Community Programs
+  - Short description: 25-40 words per pillar
+  - icon for each pillar
+  - high-quality image (1600x900+) for each pillar detail page hero section 
+
+LEADERSHIP TEAM SECTION:
+- Section heading: "Leadership Team"
+- Subtitle: "Meet the experienced professionals guiding our mission"
+- For each team member (3 people):
+  - Name and title
+  - Brief description of their role (1-2 sentences)
+  - Professional headshot photo (square format, 400x400+ recommended)
+
+OUR PARTNERS SECTION:
+- Section heading: "Our Partners"
+- Subtitle: "Working together with government institutions, NGOs, and international organizations"
+- Partner logos: SVG/PNG format, monochrome preferred
+- Partner names (if you want text instead of just logos)
+
+CALL-TO-ACTION SECTION:
+- Main headline: "Ready to Transform Agricultural Communities?"
+- Description paragraph: 2-3 sentences about joining your mission
+- CTA button text: "Get Started" (or your preferred text)
+- Secondary CTA button text: "Learn More" (or your preferred text)
+
+4) Static Contact Details (Header/Footer/Contact page)
 - Official email address to display (e.g., info@…)
 - Primary phone number to display (optional)
 - Office address (optional; city/country is enough if full address not ready)
 - Business hours (optional)
 
-6) Footer – Static Text
+5) Footer – Static Text
 - Short company one-liner (20–30 words) for footer description
 
 Notes

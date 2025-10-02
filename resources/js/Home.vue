@@ -98,7 +98,7 @@
         <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-6">
+                    <h2 class="heading-lg text-green-600 mb-6">
                         Welcome to Mount Agro
                     </h2>
                     <p
@@ -120,12 +120,12 @@
         <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
-                    <h2 class="heading-lg text-gray-900 mb-6">About Us</h2>
+                    <h2 class="heading-lg text-green-600 mb-16">About Us</h2>
                 </div>
                 <div
                     class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
                 >
-                    <div class="space-y-6">
+                    <div class="self-start">
                         <p class="text-xl text-gray-600 leading-relaxed">
                             Mount Agro Microfinance Institution is a leading
                             financial services provider dedicated to
@@ -141,7 +141,7 @@
                             opportunities.
                         </p>
                     </div>
-                    <div class="relative">
+                    <div class="space-y-6">
                         <img
                             :src="'/images/about/who_we_are_1.avif'"
                             alt="Mount Agro field operations"
@@ -294,7 +294,7 @@
         <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-10 md:mb-12">
-                    <h2 class="heading-lg text-gray-900 mb-4">
+                    <h2 class="heading-lg text-green-600 mb-4">
                         Our Foundation
                     </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -413,7 +413,7 @@
         <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-6">
+                    <h2 class="heading-lg text-green-600 mb-6">
                         Our Business Pillars
                     </h2>
                     <p
@@ -588,7 +588,7 @@
         <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-6">
+                    <h2 class="heading-lg text-green-600 mb-6">
                         Latest News & Updates
                     </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -703,7 +703,7 @@
         <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-6">Our Partners</h2>
+                    <h2 class="heading-lg text-green-600 mb-6">Our Partners</h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                         Working together with government institutions, NGOs, and
                         private sector partners to maximize our impact.
@@ -767,9 +767,9 @@
         </section>
 
         <!-- Leadership Team (moved from About) -->
-        <section class="section-padding bg-white">
+        <section class="pt-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-14 md:mb-16">
+                <div class="text-center mb-8">
                     <h2 class="heading-lg text-green-600 mb-4">
                         Leadership Team
                     </h2>
@@ -785,44 +785,50 @@
                         <img
                             :src="'/images/about/CEO.avif'"
                             alt="CEO"
-                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-gradient-to-br from-green-600 to-emerald-600"
+                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-brand-primary"
                         />
-                        <h3 class="text-lg font-semibold mb-1 text-gray-800">
+                        <h3
+                            class="text-lg font-semibold mb-1 text-brand-primary"
+                        >
                             CEO & Founder
                         </h3>
-                        <p class="text-gray-600 text-sm">
+                        <p class="text-brand-secondary text-sm">
                             Strategic leadership, partnerships, and
                             organizational growth.
                         </p>
                     </div>
                     <div
-                        class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-emerald-50 to-emerald-100 card-hover"
+                        class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-green-50 to-green-100 card-hover"
                     >
                         <img
                             :src="'/images/about/Directorprograms.avif'"
                             alt="Director Programs"
-                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-gradient-to-br from-green-600 to-emerald-600"
+                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-brand-primary"
                         />
-                        <h3 class="text-lg font-semibold mb-1 text-gray-800">
+                        <h3
+                            class="text-lg font-semibold mb-1 text-brand-primary"
+                        >
                             Director, Programs
                         </h3>
-                        <p class="text-gray-600 text-sm">
+                        <p class="text-brand-secondary text-sm">
                             Design and delivery of training, market, and
                             community programs.
                         </p>
                     </div>
                     <div
-                        class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-yellow-50 to-yellow-100 card-hover"
+                        class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-green-50 to-green-100 card-hover"
                     >
                         <img
                             :src="'/images/about/directoreFinance.avif'"
                             alt="Director Finance"
-                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-gradient-to-br from-green-600 to-emerald-600"
+                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-brand-primary"
                         />
-                        <h3 class="text-lg font-semibold mb-1 text-gray-800">
+                        <h3
+                            class="text-lg font-semibold mb-1 text-brand-primary"
+                        >
                             Director, Finance
                         </h3>
-                        <p class="text-gray-600 text-sm">
+                        <p class="text-brand-secondary text-sm">
                             Financial stewardship and responsible microfinance
                             operations.
                         </p>
@@ -835,15 +841,17 @@
         <section
             class="section-padding bg-gradient-to-r from-green-600 to-emerald-600 text-white"
         >
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="heading-lg mb-6">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="heading-lg mb-6 text-green-600">
                     Ready to Transform Agricultural Communities?
                 </h2>
-                <p class="text-xl text-green-100 mb-8">
-                    Join us in our mission to empower farmers and strengthen
-                    Afghanistan's agricultural sector through innovative
-                    microfinance solutions.
-                </p>
+                <div class="max-w-3xl mx-auto">
+                    <p class="text-xl text-green-100 mb-8">
+                        Join us in our mission to empower farmers and strengthen
+                        Afghanistan's agricultural sector through innovative
+                        microfinance solutions.
+                    </p>
+                </div>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <router-link
                         to="/contact"
