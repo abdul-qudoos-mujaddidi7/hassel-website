@@ -77,7 +77,7 @@
                     </h1>
 
                     <p
-                        class="text-xl text-green-100 mb-8 leading-relaxed max-w-3xl mx-auto"
+                        class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
                         Explore our comprehensive training and capacity building
                         initiatives across Afghanistan. Develop essential skills
@@ -310,12 +310,12 @@
                                 <div class="flex flex-wrap gap-2 text-xs mb-3">
                                     <span
                                         v-if="p.location"
-                                        class="px-2 py-1 rounded bg-blue-50 text-blue-700"
+                                        class="px-2 py-1 rounded bg-brand-cream text-brand-primary"
                                         >{{ p.location }}</span
                                     >
                                     <span
                                         v-if="p.dateRange"
-                                        class="px-2 py-1 rounded bg-yellow-50 text-yellow-700"
+                                        class="px-2 py-1 rounded bg-brand-cream text-brand-primary"
                                         >{{ p.dateRange }}</span
                                     >
                                 </div>
@@ -333,6 +333,8 @@
                             :disabled="page <= 1 || loading"
                             @click="prevPage"
                             class="px-3 py-2 border rounded-md disabled:opacity-50"
+                            @mousedown.prevent
+                            @keydown.prevent.stop
                         >
                             Prev
                         </button>
@@ -343,6 +345,8 @@
                             :disabled="page >= totalPages || loading"
                             @click="nextPage"
                             class="px-3 py-2 border rounded-md disabled:opacity-50"
+                            @mousedown.prevent
+                            @keydown.prevent.stop
                         >
                             Next
                         </button>

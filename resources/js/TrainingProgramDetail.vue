@@ -91,7 +91,7 @@
 
                         <p
                             v-if="program?.short_description"
-                            class="text-lg sm:text-xl text-green-100 mb-6 sm:mb-8 leading-relaxed"
+                            class="text-lg sm:text-xl text-white mb-6 sm:mb-8 leading-relaxed"
                         >
                             {{ program.short_description }}
                         </p>

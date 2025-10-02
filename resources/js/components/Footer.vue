@@ -63,20 +63,6 @@
                         </li>
                         <li>
                             <router-link
-                                to="/about"
-                                class="text-brand-cream hover:text-white transition-colors"
-                                >About</router-link
-                            >
-                        </li>
-                        <li>
-                            <router-link
-                                to="/our-work"
-                                class="text-brand-cream hover:text-white transition-colors"
-                                >Our Work</router-link
-                            >
-                        </li>
-                        <li>
-                            <router-link
                                 to="/resources"
                                 class="text-brand-cream hover:text-white transition-colors"
                                 >Resources</router-link
@@ -94,6 +80,62 @@
                                 to="/contact"
                                 class="text-brand-cream hover:text-white transition-colors"
                                 >Contact</router-link
+                            >
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Programs Column -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Programs</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <router-link
+                                to="/training-programs"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Training Programs</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/agri-tech-tools"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Agri-Tech Tools</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/smart-farming"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Smart & Sustainable Farming</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/seed-supply"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Seed & Input Supply Chain</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/market-access-programs"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Market Access Programs</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/environmental-projects"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Environmental Projects</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/community-programs"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Community Programs</router-link
                             >
                         </li>
                     </ul>
