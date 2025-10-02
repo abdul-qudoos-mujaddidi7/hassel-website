@@ -48,16 +48,16 @@
                     </div>
 
                     <div
-                        class="flex flex-col gap-3 justify-center items-center animate-fadeInUp sm:flex-row sm:gap-4"
+                        class="flex flex-col gap-2 justify-center items-center animate-fadeInUp sm:flex-row sm:gap-4"
                         style="animation-delay: 0.4s"
                     >
                         <router-link
-                            to="/training-programs"
+                            to="/contact"
                             class="btn btn-cta w-full sm:w-auto flex items-center justify-center text-base px-4 py-3 md:text-lg md:px-8 md:py-4"
                         >
-                            Explore Our Programs
+                            Contact Us
                             <svg
-                                class="w-5 h-5 ml-2"
+                                class="w-5 h-5"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -99,7 +99,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="heading-lg text-gray-900 mb-6">
-                        Welcome to Mount Agro Microfinance Institution
+                        Welcome to Mount Agro
                     </h2>
                     <p
                         class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
@@ -119,45 +119,27 @@
         <!-- About Us Section (moved here) -->
         <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-8">
+                    <h2 class="heading-lg text-gray-900 mb-6">About Us</h2>
+                </div>
                 <div
                     class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
                 >
-                    <div>
-                        <h2 class="heading-lg text-gray-900 mb-6">About Us</h2>
-                        <p class="text-xl text-gray-600 mb-6 leading-relaxed">
+                    <div class="space-y-6">
+                        <p class="text-xl text-gray-600 leading-relaxed">
                             Mount Agro Microfinance Institution is a leading
                             financial services provider dedicated to
                             transforming Afghanistan's agricultural sector
                             through innovative microfinance solutions and
                             comprehensive support programs.
                         </p>
-                        <p class="text-gray-600 mb-8 leading-relaxed">
+                        <p class="text-lg text-gray-600 leading-relaxed">
                             Since our establishment, we have been committed to
                             empowering farmers, agricultural entrepreneurs, and
                             rural communities by providing accessible financial
                             services, technical training, and market linkage
                             opportunities.
                         </p>
-                        <div class="grid grid-cols-2 gap-6 mb-8">
-                            <div class="text-center">
-                                <div
-                                    class="text-3xl font-bold text-green-600 mb-2"
-                                >
-                                    15,000+
-                                </div>
-                                <div class="text-gray-600">Farmers Served</div>
-                            </div>
-                            <div class="text-center">
-                                <div
-                                    class="text-3xl font-bold text-green-600 mb-2"
-                                >
-                                    34
-                                </div>
-                                <div class="text-gray-600">
-                                    Provinces Covered
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="relative">
                         <img
@@ -311,7 +293,7 @@
         <!-- Vision / Mission / Values Section -->
         <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
+                <div class="text-center mb-10 md:mb-12">
                     <h2 class="heading-lg text-gray-900 mb-4">
                         Our Foundation
                     </h2>
@@ -320,13 +302,14 @@
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Vision -->
+                <!-- Three Cards Side by Side -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    <!-- Vision Card -->
                     <div
-                        class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-green-50 to-green-100 card-hover"
+                        class="bg-white rounded-professional-lg border border-gray-200 shadow-professional p-6 lg:p-8 text-center card-hover"
                     >
                         <div
-                            class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6"
+                            class="w-16 h-16 rounded-full bg-brand-primary flex items-center justify-center mb-6 mx-auto"
                         >
                             <svg
                                 class="w-8 h-8 text-white"
@@ -351,7 +334,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">
                             Vision
                         </h3>
-                        <p class="text-gray-600">
+                        <p class="text-gray-700 leading-relaxed">
                             To be the leading microfinance institution
                             empowering Afghanistan's agricultural communities
                             through innovative financial solutions and
@@ -359,12 +342,12 @@
                         </p>
                     </div>
 
-                    <!-- Mission -->
+                    <!-- Mission Card -->
                     <div
-                        class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-emerald-50 to-emerald-100 card-hover"
+                        class="bg-white rounded-professional-lg border border-gray-200 shadow-professional p-6 lg:p-8 text-center card-hover"
                     >
                         <div
-                            class="w-16 h-16 bg-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6"
+                            class="w-16 h-16 rounded-full bg-brand-primary flex items-center justify-center mb-6 mx-auto"
                         >
                             <svg
                                 class="w-8 h-8 text-white"
@@ -383,7 +366,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">
                             Mission
                         </h3>
-                        <p class="text-gray-600">
+                        <p class="text-gray-700 leading-relaxed">
                             We provide accessible microfinance services,
                             agricultural training, and technical support to help
                             farmers increase productivity, improve livelihoods,
@@ -391,12 +374,12 @@
                         </p>
                     </div>
 
-                    <!-- Values -->
+                    <!-- Values Card -->
                     <div
-                        class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-blue-50 to-blue-100 card-hover"
+                        class="bg-white rounded-professional-lg border border-gray-200 shadow-professional p-6 lg:p-8 text-center card-hover"
                     >
                         <div
-                            class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6"
+                            class="w-16 h-16 rounded-full bg-brand-primary flex items-center justify-center mb-6 mx-auto"
                         >
                             <svg
                                 class="w-8 h-8 text-white"
@@ -415,7 +398,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">
                             Values
                         </h3>
-                        <p class="text-gray-600">
+                        <p class="text-gray-700 leading-relaxed">
                             Integrity, transparency, community focus, and
                             sustainable development guide our commitment to
                             serving Afghanistan's agricultural sector with
@@ -493,13 +476,15 @@
                                 }%)`,
                             }"
                         >
-                            <!-- Show cards in sequence: 1-2-3-4-5-1-2-3-4-5 for seamless loop -->
+                            <!-- Show cards in sequence: 1-2-3-4-5-6-7-1-2-3-4-5-6-7 for seamless loop -->
                             <div
                                 v-for="(pillar, index) in [
                                     ...businessPillars,
                                     ...businessPillars,
                                 ]"
-                                :key="`${pillar.id}-${Math.floor(index / 5)}`"
+                                :key="`${pillar.id}-${Math.floor(
+                                    index / businessPillars.length
+                                )}`"
                                 class="flex-shrink-0 px-4"
                                 :style="{ width: `${100 / cardsPerView}%` }"
                             >
@@ -583,9 +568,9 @@
                     <!-- Slide Indicators -->
                     <div class="flex justify-center mt-8 space-x-3">
                         <button
-                            v-for="index in 5"
+                            v-for="index in totalSlides"
                             :key="index"
-                            @click="currentPillarSlide = index - 1"
+                            @click="goToPillarSlide(index - 1)"
                             :class="[
                                 'w-3 h-3 rounded-full transition-all duration-300',
                                 currentPillarSlide === index - 1
@@ -683,7 +668,7 @@
                             </div>
                             <div class="mt-auto">
                                 <router-link
-                                    :to="`/news/${article.slug}`"
+                                    to="/resources"
                                     class="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
                                 >
                                     Read More
@@ -707,67 +692,8 @@
                 </div>
 
                 <div class="text-center mt-12">
-                    <router-link to="/news" class="btn btn-primary"
+                    <router-link to="/resources" class="btn btn-primary"
                         >View All News</router-link
-                    >
-                </div>
-            </div>
-        </section>
-
-        <!-- Photo Gallery Section -->
-        <section class="section-padding bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-6">
-                        Our Impact in Pictures
-                    </h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Witness the transformation of Afghanistan's agricultural
-                        communities through our comprehensive programs and
-                        initiatives.
-                    </p>
-                </div>
-
-                <!-- Loading State -->
-                <div
-                    v-if="galleryLoading"
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                >
-                    <div v-for="i in 6" :key="i" class="animate-pulse">
-                        <div class="bg-gray-300 h-64 rounded-lg mb-4"></div>
-                        <div class="bg-white p-4 rounded-b-lg">
-                            <div class="h-4 bg-gray-300 rounded mb-2"></div>
-                            <div class="h-3 bg-gray-300 rounded w-2/3"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gallery Images -->
-                <div
-                    v-else
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                >
-                    <router-link
-                        v-for="(image, index) in galleryImages"
-                        :key="index"
-                        :to="`/gallery/${image.gallery_slug || 'gallery'}`"
-                        class="relative group cursor-pointer"
-                    >
-                        <img
-                            :src="resolveImageSrc(image.thumbnail || image.url)"
-                            @error="
-                                $event.target.src =
-                                    'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400&h=300&fit=crop&crop=center&auto=format'
-                            "
-                            :alt="image.title"
-                            class="w-full h-48 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-                        />
-                    </router-link>
-                </div>
-
-                <div class="text-center mt-12">
-                    <router-link to="/gallery" class="btn btn-primary"
-                        >View Full Gallery</router-link
                     >
                 </div>
             </div>
@@ -946,14 +872,40 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import axios from "axios";
 
 // Hero slider state
 const currentSlide = ref(0);
 
-// Business pillars slider state (3 cards at a time: 123→234→345→451→512→123)
+// Business pillars slider state
 const currentPillarSlide = ref(0);
+
+// Window width for responsive behavior
+const windowWidth = ref(
+    typeof window !== "undefined" ? window.innerWidth : 768
+);
+
+// Update window width on resize
+const updateWindowWidth = () => {
+    windowWidth.value = window.innerWidth;
+};
+
+// Calculate total slides based on screen size
+const totalSlides = computed(() => {
+    // Safety check for businessPillars
+    if (!businessPillars.value || businessPillars.value.length === 0) {
+        return 1; // Default to 1 slide if no data
+    }
+
+    // Mobile: 1 card at a time, 7 slides
+    // Desktop: 3 cards at a time, 5 slides (7-3+1=5)
+    return windowWidth.value < 768
+        ? businessPillars.value.length
+        : businessPillars.value.length - 2;
+});
+
+// Foundation tabs state (Vision / Mission / Values)
 
 // Hero slider data - 5 images
 const heroSlides = ref([
@@ -1008,9 +960,9 @@ const businessPillars = ref([
         id: "agritech",
         title: "Agri-Tech Tools",
         icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
-        bgColor: "bg-emerald-100",
-        textColor: "text-emerald-600",
-        countColor: "text-emerald-600",
+        bgColor: "bg-green-100",
+        textColor: "text-green-600",
+        countColor: "text-green-600",
         description:
             "Modern agricultural technologies and digital solutions to enhance farming productivity and efficiency.",
         route: "/agri-tech",
@@ -1021,9 +973,9 @@ const businessPillars = ref([
         id: "smartfarming",
         title: "Smart & Sustainable Farming",
         icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
-        bgColor: "bg-teal-100",
-        textColor: "text-teal-600",
-        countColor: "text-teal-600",
+        bgColor: "bg-green-100",
+        textColor: "text-green-600",
+        countColor: "text-green-600",
         description:
             "Promote modern techniques like drip irrigation, greenhouse farming, and precision agriculture with climate-resilient crops.",
         route: "/smart-farming",
@@ -1034,9 +986,9 @@ const businessPillars = ref([
         id: "seedSupply",
         title: "Seed & Input Supply Chain",
         icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8-4",
-        bgColor: "bg-orange-100",
-        textColor: "text-orange-600",
-        countColor: "text-orange-600",
+        bgColor: "bg-green-100",
+        textColor: "text-green-600",
+        countColor: "text-green-600",
         description:
             "Provide high-quality seeds, fertilizers, and eco-friendly pesticides with reliable distribution networks across provinces.",
         route: "/seed-supply",
@@ -1047,9 +999,9 @@ const businessPillars = ref([
         id: "market",
         title: "Market Access Programs",
         icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6",
-        bgColor: "bg-yellow-100",
-        textColor: "text-yellow-600",
-        countColor: "text-yellow-600",
+        bgColor: "bg-green-100",
+        textColor: "text-green-600",
+        countColor: "text-green-600",
         description:
             "Connecting farmers and agricultural producers to profitable markets and value chains for sustainable income growth.",
         route: "/market-access",
@@ -1060,9 +1012,9 @@ const businessPillars = ref([
         id: "environmental",
         title: "Environmental Projects",
         icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
-        bgColor: "bg-blue-100",
-        textColor: "text-blue-600",
-        countColor: "text-blue-600",
+        bgColor: "bg-green-100",
+        textColor: "text-green-600",
+        countColor: "text-green-600",
         description:
             "Sustainable environmental initiatives promoting conservation, climate resilience, and eco-friendly agricultural practices.",
         route: "/environmental-projects",
@@ -1073,9 +1025,9 @@ const businessPillars = ref([
         id: "community",
         title: "Community Programs",
         icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 919.288 0M15 7a3 3 0 11-6 0 3 3 0 616 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
-        bgColor: "bg-purple-100",
-        textColor: "text-purple-600",
-        countColor: "text-purple-600",
+        bgColor: "bg-green-100",
+        textColor: "text-green-600",
+        countColor: "text-green-600",
         description:
             "Comprehensive community development initiatives focusing on rural empowerment, social inclusion, and livelihood improvement.",
         route: "/community-programs",
@@ -1105,10 +1057,6 @@ const stats = ref({
 // News data
 const latestNews = ref([]);
 const newsLoading = ref(true);
-
-// Gallery data
-const galleryImages = ref([]);
-const galleryLoading = ref(true);
 
 // Business pillar counts
 const pillarCounts = ref({
@@ -1170,45 +1118,55 @@ const stopAutoSlide = () => {
     }
 };
 
-// Business pillars slider functions (3 cards at a time: 123→234→345→451→512→123)
+// Business pillars slider functions with smooth infinite scroll
 const nextPillarSlide = () => {
+    if (totalSlides.value <= 0) return; // Safety check
+
     currentPillarSlide.value++;
 
-    // When we reach the end of first set, reset to beginning for seamless loop
-    if (currentPillarSlide.value >= 5) {
-        setTimeout(() => {
-            // Remove transition temporarily
-            const slider = document.querySelector(".flex.transition-transform");
-            if (slider) {
-                slider.style.transition = "none";
-                currentPillarSlide.value = 0;
+    // When we reach the end, reset to beginning without animation
+    if (currentPillarSlide.value >= totalSlides.value) {
+        // Immediately reset to beginning without transition
+        const slider = document.querySelector(".flex.transition-transform");
+        if (slider) {
+            slider.style.transition = "none";
+            currentPillarSlide.value = 0;
 
-                // Re-enable transition after a brief moment
-                setTimeout(() => {
-                    slider.style.transition = "transform 500ms ease-in-out";
-                }, 50);
-            }
-        }, 500); // Wait for current transition to complete
+            // Force a reflow
+            slider.offsetHeight;
+
+            // Re-enable transition for next movement
+            slider.style.transition = "transform 500ms ease-in-out";
+        }
     }
 };
 
 const previousPillarSlide = () => {
+    if (totalSlides.value <= 0) return; // Safety check
+
     if (currentPillarSlide.value === 0) {
         // Jump to the end position without animation
         const slider = document.querySelector(".flex.transition-transform");
         if (slider) {
             slider.style.transition = "none";
-            currentPillarSlide.value = 4;
+            currentPillarSlide.value = totalSlides.value - 1;
 
-            // Re-enable transition and move to previous
-            setTimeout(() => {
-                slider.style.transition = "transform 500ms ease-in-out";
-                currentPillarSlide.value--;
-            }, 50);
+            // Force a reflow
+            slider.offsetHeight;
+
+            // Re-enable transition
+            slider.style.transition = "transform 500ms ease-in-out";
         }
     } else {
         currentPillarSlide.value--;
     }
+};
+
+// Go to specific slide
+const goToPillarSlide = (index) => {
+    if (totalSlides.value <= 0) return; // Safety check
+    if (index < 0 || index >= totalSlides.value) return; // Bounds check
+    currentPillarSlide.value = index;
 };
 
 // Auto-rotate pillar slider
@@ -1339,117 +1297,6 @@ const fetchLatestNews = async () => {
         ];
     } finally {
         newsLoading.value = false;
-    }
-};
-
-// Fetch gallery images
-const fetchGalleryImages = async () => {
-    try {
-        galleryLoading.value = true;
-        const response = await axios.get("/api/galleries", {
-            params: { orderBy: "created_at", direction: "desc" },
-            timeout: 5000,
-        });
-
-        if (response.data && response.data.data) {
-            const galleries = response.data.data;
-            const images = [];
-
-            // Ensure galleries newest-first as a safeguard
-            const sortedGalleries = [...galleries].sort((a, b) => {
-                const da = new Date(a.created_at || 0);
-                const db = new Date(b.created_at || 0);
-                return db - da;
-            });
-
-            sortedGalleries.forEach((gallery) => {
-                if (gallery.images && gallery.images.length > 0) {
-                    // Sort images newest-first too, then pick top 2
-                    const imgs = [...gallery.images].sort((a, b) => {
-                        const da = new Date(a.created_at || 0);
-                        const db = new Date(b.created_at || 0);
-                        return db - da;
-                    });
-                    imgs.slice(0, 2).forEach((image) => {
-                        images.push({
-                            id: image.id,
-                            title: image.title || gallery.title,
-                            category: gallery.title,
-                            gallery_slug: gallery.slug,
-                            url: resolveImageSrc(
-                                image.image_path || image.url || image.path
-                            ),
-                            thumbnail: resolveImageSrc(
-                                image.image_path || image.url || image.path
-                            ),
-                        });
-                    });
-                }
-            });
-
-            galleryImages.value = images.slice(0, 6);
-        }
-    } catch (error) {
-        console.error("GALLERY API ERROR:", error);
-        // Fallback gallery images
-        galleryImages.value = [
-            {
-                id: 1,
-                title: "Training Program in Action",
-                category: "Capacity Building",
-                gallery_slug: "training-programs",
-                url: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=800&h=600&fit=crop&crop=center&auto=format",
-                thumbnail:
-                    "https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=400&h=300&fit=crop&crop=center&auto=format",
-            },
-            {
-                id: 2,
-                title: "Modern Agricultural Techniques",
-                category: "Agri-Tech",
-                gallery_slug: "agri-tech-solutions",
-                url: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&h=600&fit=crop&crop=center&auto=format",
-                thumbnail:
-                    "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop&crop=center&auto=format",
-            },
-            {
-                id: 3,
-                title: "Community Development Project",
-                category: "Community Programs",
-                gallery_slug: "community-programs",
-                url: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&crop=center&auto=format",
-                thumbnail:
-                    "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&crop=center&auto=format",
-            },
-            {
-                id: 4,
-                title: "Market Access Initiative",
-                category: "Market Programs",
-                gallery_slug: "market-access",
-                url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&crop=center&auto=format",
-                thumbnail:
-                    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&crop=center&auto=format",
-            },
-            {
-                id: 5,
-                title: "Environmental Conservation",
-                category: "Environmental Projects",
-                gallery_slug: "environmental-projects",
-                url: "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&h=600&fit=crop&crop=center&auto=format",
-                thumbnail:
-                    "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=400&h=300&fit=crop&crop=center&auto=format",
-            },
-            {
-                id: 6,
-                title: "Livestock Development",
-                category: "Animal Husbandry",
-                gallery_slug: "livestock-programs",
-                url: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&h=600&fit=crop&crop=center&auto=format",
-                thumbnail:
-                    "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&h=300&fit=crop&crop=center&auto=format",
-            },
-        ];
-    } finally {
-        galleryLoading.value = false;
     }
 };
 
@@ -1587,14 +1434,6 @@ const formatDate = (dateString) => {
     });
 };
 
-// Resolve image path helper
-const resolveImageSrc = (path) => {
-    if (!path) return "";
-    const p = String(path).trim();
-    if (p.startsWith("http://") || p.startsWith("https://")) return p;
-    return `/storage/${p.replace(/^\/+/, "")}`;
-};
-
 // Gallery functions removed - now using router links
 
 onMounted(async () => {
@@ -1603,6 +1442,7 @@ onMounted(async () => {
     // Initialize responsive pillars per view and listen to resize
     updateCardsPerView();
     window.addEventListener("resize", updateCardsPerView);
+    window.addEventListener("resize", updateWindowWidth);
 
     // Start hero slider
     startAutoSlide();
@@ -1614,7 +1454,6 @@ onMounted(async () => {
     console.log("📡 FETCHING DYNAMIC CONTENT FROM APIs...");
     await fetchStatistics();
     fetchLatestNews();
-    fetchGalleryImages();
     fetchPillarCounts();
 
     // Initialize stats animation after data is loaded
@@ -1625,5 +1464,6 @@ onUnmounted(() => {
     stopAutoSlide();
     stopPillarAutoSlide();
     window.removeEventListener("resize", updateCardsPerView);
+    window.removeEventListener("resize", updateWindowWidth);
 });
 </script>

@@ -213,22 +213,20 @@ body {
     box-shadow: 0 6px 20px -6px rgb(0 0 0 / 0.12);
 }
 
+/* Additional brand color variants based on your specified colors */
 :root {
-    /* Fresh Organic Color Palette */
-    --brand-primary: #16a34a; /* Vibrant Green */
-    --brand-secondary: #22c55e; /* Fresh Green */
-    --brand-accent: #f59e0b; /* Warm Orange Accent */
-    --brand-light: #f0fdf4; /* Light Green Background */
-    --brand-dark: #14532d; /* Deep Forest Green */
-    --brand-gray: #6b7280; /* Neutral Gray */
-    --brand-white: #ffffff; /* Pure White */
-    --brand-beige: #fef7ed; /* Warm Beige */
-    --brand-light-gray: #f9fafb; /* Light Gray Background */
-    --brand-success: #16a34a; /* Success Green */
-    --brand-warning: #f59e0b; /* Warning Orange */
-    --brand-error: #dc2626; /* Error Red */
-    --brand-info: #0ea5e9; /* Info Blue */
-    --brand-yellow: #eab308; /* Call-to-Action Yellow */
+    /* Color variants derived from your brand palette */
+    --brand-light: #f0fdf4; /* Light green background */
+    --brand-dark: #0f2a1a; /* Darker variant of primary */
+    --brand-gray: #6b7280; /* Neutral gray */
+    --brand-white: #ffffff; /* Pure white */
+    --brand-beige: #fef7ed; /* Warm beige */
+    --brand-light-gray: #f9fafb; /* Light gray background */
+    --brand-success: #134124; /* Success uses primary */
+    --brand-warning: #eaaa03; /* Warning uses accent */
+    --brand-error: #dc2626; /* Error red */
+    --brand-info: #0ea5e9; /* Info blue */
+    --brand-yellow: #eaaa03; /* Yellow uses accent color */
 }
 
 html {
