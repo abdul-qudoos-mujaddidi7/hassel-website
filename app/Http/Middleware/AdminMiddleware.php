@@ -50,9 +50,9 @@ class AdminMiddleware
             return $user->hasRole('admin') || $user->hasRole('super-admin');
         }
 
-        // Method 2: Check for admin flag in users table
-        if (isset($user->is_admin)) {
-            return $user->is_admin;
+        // Method 2: Check for admin helper on the model
+        if (method_exists($user, 'isAdmin')) {
+            return $user->isAdmin();
         }
 
         // Method 3: Check for admin email domains (temporary solution)
