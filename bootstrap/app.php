@@ -19,8 +19,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'language' => \App\Http\Middleware\LanguageMiddleware::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
-            'admin.web' => \App\Http\Middleware\AdminWebMiddleware::class,
-            'admin.api' => \App\Http\Middleware\AdminApiMiddleware::class,
         ]);
 
         // Apply language middleware to API routes

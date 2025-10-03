@@ -67,7 +67,7 @@
         </div>
         
         <div class="footer">
-            <p>Please review this registration in the admin panel and update the status accordingly.</p>
+            <p>Please review this registration and update the status accordingly.</p>
             <p>Reply directly to {{ $registration->email }} to contact the participant.</p>
         </div>
     </div>
