@@ -57,7 +57,10 @@ const router = createRouter({
             component: SeedSupplyDetail,
         },
         { path: "/community-programs", component: CommunityPrograms },
-        { path: "/community-programs/:id", component: CommunityProgramDetail },
+        {
+            path: "/community-programs/:idOrSlug",
+            component: CommunityProgramDetail,
+        },
         // { path: "/environmental-projects", component: EnvironmentalProjects },
         { path: "/agri-tech-tools", component: AgriTechTools },
         { path: "/resources", component: Resources },
@@ -94,7 +97,8 @@ export const routePrefetchMap = {
     "/seed-supply": () => import("./SeedSupply.vue"),
     "/seed-supply/:idOrSlug": () => import("./SeedSupplyDetail.vue"),
     "/community-programs": () => import("./CommunityPrograms.vue"),
-    "/community-programs/:id": () => import("./CommunityProgramDetail.vue"),
+    "/community-programs/:idOrSlug": () =>
+        import("./CommunityProgramDetail.vue"),
     // "/environmental-projects": () => import("./EnvironmentalProjects.vue"),
     "/agri-tech-tools": () => import("./AgriTechTools.vue"),
 };
