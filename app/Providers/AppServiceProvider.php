@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Relation::enforceMorphMap([
+            'user' => \App\Models\User::class,
             'training_program' => TrainingProgram::class,
             'market_access_program' => MarketAccessProgram::class,
             'community_program' => CommunityProgram::class,

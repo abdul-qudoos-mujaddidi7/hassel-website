@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +61,8 @@ use App\Http\Controllers\Api\Admin\AdminProgramRegistrationController;
 // =============================================================================
 
 // Home & General
+Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/', [HomeController::class, 'index'])->name('api.home');
 Route::get('/about', [HomeController::class, 'about'])->name('api.about');
 Route::get('/stats', [HomeController::class, 'stats'])->name('api.stats');
