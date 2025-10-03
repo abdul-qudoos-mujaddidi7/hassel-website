@@ -1,5 +1,5 @@
 <template>
-    <footer class="bg-gray-900 text-white">
+    <footer class="bg-brand-primary text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Company Info -->
@@ -12,14 +12,14 @@
                         />
                         <span class="ml-3 text-xl font-bold">Mount Agro</span>
                     </div>
-                    <p class="text-gray-300 mb-4 max-w-md">
+                    <p class="text-brand-cream mb-4 max-w-md">
                         Professional solutions for modern challenges. We build
                         tomorrow's technology today.
                     </p>
                     <div class="flex space-x-4">
                         <a
                             href="#"
-                            class="text-gray-400 hover:text-white transition-colors"
+                            class="text-brand-cream hover:text-white transition-colors"
                         >
                             <span class="sr-only">LinkedIn</span>
                             <svg
@@ -34,7 +34,7 @@
                         </a>
                         <a
                             href="#"
-                            class="text-gray-400 hover:text-white transition-colors"
+                            class="text-brand-cream hover:text-white transition-colors"
                         >
                             <span class="sr-only">Twitter</span>
                             <svg
@@ -57,43 +57,85 @@
                         <li>
                             <router-link
                                 to="/"
-                                class="text-gray-300 hover:text-white transition-colors"
+                                class="text-brand-cream hover:text-white transition-colors"
                                 >Home</router-link
                             >
                         </li>
                         <li>
                             <router-link
-                                to="/about"
-                                class="text-gray-300 hover:text-white transition-colors"
-                                >About</router-link
-                            >
-                        </li>
-                        <li>
-                            <router-link
-                                to="/our-work"
-                                class="text-gray-300 hover:text-white transition-colors"
-                                >Our Work</router-link
-                            >
-                        </li>
-                        <li>
-                            <router-link
                                 to="/resources"
-                                class="text-gray-300 hover:text-white transition-colors"
+                                class="text-brand-cream hover:text-white transition-colors"
                                 >Resources</router-link
                             >
                         </li>
                         <li>
                             <router-link
                                 to="/careers"
-                                class="text-gray-300 hover:text-white transition-colors"
+                                class="text-brand-cream hover:text-white transition-colors"
                                 >Careers</router-link
                             >
                         </li>
                         <li>
                             <router-link
                                 to="/contact"
-                                class="text-gray-300 hover:text-white transition-colors"
+                                class="text-brand-cream hover:text-white transition-colors"
                                 >Contact</router-link
+                            >
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Programs Column -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Programs</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <router-link
+                                to="/training-programs"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Training Programs</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/agri-tech-tools"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Agri-Tech Tools</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/smart-farming"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Smart & Sustainable Farming</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/seed-supply"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Seed & Input Supply Chain</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/market-access-programs"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Market Access Programs</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/environmental-projects"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Environmental Projects</router-link
+                            >
+                        </li>
+                        <li>
+                            <router-link
+                                to="/community-programs"
+                                class="text-brand-cream hover:text-white transition-colors"
+                                >Community Programs</router-link
                             >
                         </li>
                     </ul>
@@ -102,7 +144,7 @@
                 <!-- Contact Info -->
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Contact</h3>
-                    <div class="space-y-2 text-gray-300">
+                    <div class="space-y-2 text-brand-cream">
                         <p>123 Business Street</p>
                         <p>City, State 12345</p>
                         <p>Phone: (555) 123-4567</p>
@@ -111,22 +153,22 @@
                 </div>
             </div>
 
-            <div class="border-t border-gray-800 mt-8 pt-8">
+            <div class="border-t border-brand-secondary mt-8 pt-8">
                 <div
                     class="flex flex-col md:flex-row justify-between items-center"
                 >
-                    <p class="text-gray-400 text-sm">
+                    <p class="text-brand-cream text-sm">
                         © {{ currentYear }} Mount Agro. All rights reserved.
                     </p>
                     <div class="flex space-x-6 mt-4 md:mt-0">
                         <a
                             href="#"
-                            class="text-gray-400 hover:text-white text-sm transition-colors"
+                            class="text-brand-cream hover:text-white text-sm transition-colors"
                             >Privacy Policy</a
                         >
                         <a
                             href="#"
-                            class="text-gray-400 hover:text-white text-sm transition-colors"
+                            class="text-brand-cream hover:text-white text-sm transition-colors"
                             >Terms of Service</a
                         >
                     </div>

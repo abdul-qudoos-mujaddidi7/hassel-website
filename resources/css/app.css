@@ -11,22 +11,222 @@
         "Noto Color Emoji";
 }
 
+/* #375F1F
+#134124
+#FBF5DF
+#EAAA03
+ */
+
+/* Brand color system */
 :root {
-    /* Fresh Organic Color Palette */
-    --brand-primary: #16a34a; /* Vibrant Green */
-    --brand-secondary: #22c55e; /* Fresh Green */
-    --brand-accent: #f59e0b; /* Warm Orange Accent */
-    --brand-light: #f0fdf4; /* Light Green Background */
-    --brand-dark: #14532d; /* Deep Forest Green */
-    --brand-gray: #6b7280; /* Neutral Gray */
-    --brand-white: #ffffff; /* Pure White */
-    --brand-beige: #fef7ed; /* Warm Beige */
-    --brand-light-gray: #f9fafb; /* Light Gray Background */
-    --brand-success: #16a34a; /* Success Green */
-    --brand-warning: #f59e0b; /* Warning Orange */
-    --brand-error: #dc2626; /* Error Red */
-    --brand-info: #0ea5e9; /* Info Blue */
-    --brand-yellow: #eab308; /* Call-to-Action Yellow */
+    --brand-secondary: #375f1f; /* olive green */
+    --brand-primary: #134124; /* deep green */
+    --brand-cream: #fbf5df; /* light cream */
+    --brand-accent: #eaaa03; /* golden accent */
+}
+
+/* Global base overrides */
+body {
+    color: #111827;
+}
+.shadow-professional {
+    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1),
+        0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+.rounded-professional-lg {
+    border-radius: 1rem;
+}
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 30px -12px rgb(0 0 0 / 0.15);
+}
+
+/* Buttons (brand) */
+.btn {
+    border-radius: 0.75rem;
+    font-weight: 600;
+}
+.btn-primary {
+    background: var(--brand-primary);
+    color: #fff;
+}
+.btn-primary:hover {
+    filter: brightness(1.05);
+}
+.btn-secondary {
+    background: var(--brand-secondary);
+    color: #fff;
+}
+.btn-secondary:hover {
+    filter: brightness(1.05);
+}
+.btn-cta {
+    background-image: linear-gradient(
+        90deg,
+        var(--brand-secondary),
+        var(--brand-primary)
+    );
+    color: #fff;
+}
+.btn-cta:hover {
+    filter: brightness(1.05);
+}
+
+/* Brand backgrounds and text helpers */
+.bg-brand-primary {
+    background-color: var(--brand-primary);
+}
+.bg-brand-secondary {
+    background-color: var(--brand-secondary);
+}
+.bg-brand-accent {
+    background-color: var(--brand-accent);
+}
+.bg-brand-cream {
+    background-color: var(--brand-cream);
+}
+.text-brand-primary {
+    color: var(--brand-primary);
+}
+.text-brand-secondary {
+    color: var(--brand-secondary);
+}
+.text-brand-accent {
+    color: var(--brand-accent);
+}
+
+/* Tailwind utility overrides to force brand palette app-wide */
+/* Background colors */
+.bg-green-600,
+.bg-emerald-600,
+.bg-blue-600,
+.bg-orange-600,
+.bg-purple-600 {
+    background-color: var(--brand-primary) !important;
+}
+.bg-green-700,
+.bg-emerald-700 {
+    background-color: var(--brand-secondary) !important;
+}
+.bg-green-50,
+.bg-emerald-50,
+.bg-blue-50,
+.bg-orange-50,
+.bg-yellow-50,
+.bg-purple-50 {
+    background-color: var(--brand-cream) !important;
+}
+
+/* Text colors */
+.text-green-600,
+.text-emerald-600,
+.text-blue-600,
+.text-orange-600,
+.text-yellow-600,
+.text-purple-600 {
+    color: var(--brand-primary) !important;
+}
+.text-green-800,
+.text-emerald-800 {
+    color: var(--brand-secondary) !important;
+}
+.text-green-100,
+.text-emerald-100,
+.text-blue-100,
+.text-orange-100,
+.text-yellow-100,
+.text-purple-100 {
+    color: #2b2b2b !important;
+    opacity: 0.8;
+}
+
+/* Border colors */
+.border-green-200,
+.border-emerald-200,
+.border-blue-200,
+.border-orange-200,
+.border-yellow-200,
+.border-purple-200 {
+    border-color: var(--brand-cream) !important;
+}
+.border-green-600,
+.border-emerald-600 {
+    border-color: var(--brand-primary) !important;
+}
+
+/* Gradients: Tailwind uses CSS vars --tw-gradient-from/to/via */
+.from-green-800,
+.from-green-700,
+.from-green-600,
+.from-emerald-600,
+.from-blue-600,
+.from-purple-600,
+.from-orange-600 {
+    --tw-gradient-from: var(--brand-secondary) var(--tw-gradient-from-position);
+    --tw-gradient-to: color-mix(in srgb, var(--brand-secondary) 0%, transparent)
+        var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.via-green-700,
+.via-green-600,
+.via-emerald-600,
+.via-blue-600,
+.via-purple-600,
+.via-orange-600 {
+    --tw-gradient-stops: var(--tw-gradient-from),
+        var(--brand-primary) var(--tw-gradient-via-position),
+        var(--tw-gradient-to);
+}
+.to-green-600,
+.to-emerald-600,
+.to-blue-600,
+.to-purple-600,
+.to-orange-600 {
+    --tw-gradient-to: var(--brand-primary) var(--tw-gradient-to-position);
+}
+
+/* Accent usage: map yellows/oranges to brand accent */
+.text-yellow-600,
+.text-amber-600,
+.text-orange-600 {
+    color: var(--brand-accent) !important;
+}
+.bg-yellow-100,
+.bg-amber-100,
+.bg-orange-100 {
+    background-color: color-mix(
+        in srgb,
+        var(--brand-accent) 20%,
+        white
+    ) !important;
+}
+.bg-yellow-50,
+.bg-amber-50 {
+    background-color: var(--brand-cream) !important;
+}
+
+/* Cream backgrounds in soft cards */
+.shadow-soft {
+    box-shadow: 0 6px 20px -6px rgb(0 0 0 / 0.12);
+}
+
+/* Additional brand color variants based on your specified colors */
+:root {
+    /* Color variants derived from your brand palette */
+    --brand-light: #f0fdf4; /* Light green background */
+    --brand-dark: #0f2a1a; /* Darker variant of primary */
+    --brand-gray: #6b7280; /* Neutral gray */
+    --brand-white: #ffffff; /* Pure white */
+    --brand-beige: #fef7ed; /* Warm beige */
+    --brand-light-gray: #f9fafb; /* Light gray background */
+    --brand-success: #134124; /* Success uses primary */
+    --brand-warning: #eaaa03; /* Warning uses accent */
+    --brand-error: #dc2626; /* Error red */
+    --brand-info: #0ea5e9; /* Info blue */
+    --brand-yellow: #eaaa03; /* Yellow uses accent color */
 }
 
 html {

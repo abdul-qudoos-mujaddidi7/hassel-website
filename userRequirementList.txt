@@ -1,0 +1,280 @@
+MOUNT AGRO WEBSITE – CUSTOMER CONTENT CHECKLIST (STATIC ITEMS ONLY)
+
+Please provide ONLY the items below. Anything not listed here will be managed dynamically from your dashboard after launch (e.g., news, stats, programs, jobs, gallery, publications, RFQs/RFPs).
+
+1) Brand & Icons
+- Logo files: PNG (transparent) + JPG (solid bg) in high resolution
+- Favicon: 32x32 PNG (we’ll generate other sizes)
+- Social links (URLs): LinkedIn, Facebook, X/Twitter, YouTube (optional)
+
+
+2) Home Page – Static Copy & Media
+
+HERO SECTION (5-Slide Carousel):
+For each of the 5 slides, provide:
+- Hero background image: High-quality landscape image (1920x1080+)
+- Slide title: Main headline (max 6 words, e.g., "Empowering Agricultural Communities")
+- Slide description: 1-2 sentences describing the specific focus of that slide (max 120 characters)
+
+Suggested slide themes (you can customize):
+1. Slide 1: Main mission/overview
+2. Slide 2: Training programs focus
+3. Slide 3: Technology/innovation focus
+4. Slide 4: Community development focus
+5. Slide 5: Environmental/sustainability focus
+
+CTA buttons (same for all slides):
+- Primary CTA: "Contact Us" (or your preferred text)
+- Secondary CTA: "Learn More" (or your preferred text)
+
+ABOUT US SECTION:
+- Section heading: "About Us"
+- First paragraph: 40-70 words about your organization
+- Second paragraph: 40-70 words about your mission/impact
+- Feature image: 1 high-quality image (1600x900+) showing your work/team
+
+OUR FOUNDATION SECTION (Vision/Mission/Values):
+- Vision statement: 1-2 sentences
+- Mission statement: 1-2 sentences  
+- Values statement: 1-2 sentences
+- (Icons will be auto-generated, but you can specify if you want custom ones)
+
+BUSINESS PILLARS SECTION:
+- Section heading: "Our Business Pillars"
+- For each of the 7 pillars, provide:
+  - Title (confirm these are correct):
+    * Training Programs
+    * Agri-Tech Tools
+    * Smart & Sustainable Farming
+    * Seed & Input Supply Chain
+    * Market Access Programs
+    * Environmental Projects
+    * Community Programs
+  - Short description: 25-40 words per pillar
+  - icon for each pillar
+  - high-quality image (1600x900+) for each pillar detail page hero section 
+
+LEADERSHIP TEAM SECTION:
+- Section heading: "Leadership Team"
+- Subtitle: "Meet the experienced professionals guiding our mission"
+- For each team member (3 people):
+  - Name and title
+  - Brief description of their role (1-2 sentences)
+  - Professional headshot photo (square format, 400x400+ recommended)
+
+OUR PARTNERS SECTION:
+- Section heading: "Our Partners"
+- Subtitle: "Working together with government institutions, NGOs, and international organizations"
+- Partner logos: SVG/PNG format, monochrome preferred
+- Partner names (if you want text instead of just logos)
+
+CALL-TO-ACTION SECTION:
+- Main headline: "Ready to Transform Agricultural Communities?"
+- Description paragraph: 2-3 sentences about joining your mission
+- CTA button text: "Get Started" (or your preferred text)
+- Secondary CTA button text: "Learn More" (or your preferred text)
+
+3) Training Programs – Static Copy & Media
+
+TRAINING PROGRAMS LIST PAGE:
+- Hero background image (1920x1080+). If not provided we will use the generic our-work hero.
+- Hero title (default: "Training Programs").
+- Hero description (1–2 sentences). If not provided we keep the current generic copy.
+- Empty-state message text (default: "No programs found.").
+- Status labels (confirm if you prefer custom wording for Published/Ongoing/Completed).
+- Location badge style preference (we use brand cream + primary text by default).
+- Pagination: any custom label text for Prev/Next (defaults: "Prev", "Next").
+
+FILTERS (column-based):
+- Enable/disable filters you want visible to users. Current: Status, Location.
+- If you want additional filters later (e.g., Instructor, Start Date range), list them now for future.
+
+SEO (LIST PAGE):
+- Meta title
+- Meta description (150–160 chars)
+- Canonical URL (optional)
+
+TRAINING PROGRAM DETAIL PAGE:
+- Default hero background image to use when a program has no image.
+- Default copy for badges/labels if fields are missing (e.g., Duration: "TBD").
+- Section headings copy preferences (e.g., "Program Details", "Learning Objectives", "Course Syllabus", "Instructors", "Partners").
+- Related programs block title (default: "Related Programs").
+- Contact card texts: small heading and paragraph (defaults kept if not provided).
+
+SEO (DETAIL PAGE):
+- Meta title pattern (e.g., "{title} – Training Program – Mountagro")
+- Meta description fallback when program lacks a short description
+
+4) Agri-Tech Tools – Static Copy & Media
+
+AGRI-TECH TOOLS LIST PAGE:
+- Hero background image (1920x1080+). If not provided we will use the generic our-work hero.
+- Hero title (default: "Agri-Tech Tools").
+- Hero description (1–2 sentences). If not provided we keep the current generic copy.
+- Empty-state message text (default: "No tools found.").
+- Filter labels (confirm if you prefer custom wording for Tool Type/Platform/Search).
+- Badge style preferences (we use brand cream + primary text by default).
+- Quick stats labels (confirm: "Available Tools", "Platforms", "Free Access").
+
+FILTERS (column-based):
+- Enable/disable filters you want visible to users. Current: Tool Type, Platform, Search.
+- If you want additional filters later (e.g., Developer, Version range), list them now for future.
+
+SEO (LIST PAGE):
+- Meta title
+- Meta description (150–160 chars)
+- Canonical URL (optional)
+
+AGRI-TECH TOOL DETAIL PAGE:
+- Default hero background image to use when a tool has no image.
+- Default copy for badges/labels if fields are missing (e.g., Version: "N/A").
+- Section headings copy preferences (e.g., "Tool Information", "Key Features", "How to Use", "Technical Specifications", "Related Tools").
+- Download card texts: heading and description (defaults kept if not provided).
+- "Coming Soon" state text and icon preference.
+- Related tools block title (default: "Related Tools").
+
+SEO (DETAIL PAGE):
+- Meta title pattern (e.g., "{name} – Agri-Tech Tool – Mountagro")
+- Meta description fallback when tool lacks a short description
+
+5) Smart & Sustainable Farming – Static Copy & Media
+
+SMART FARMING LIST PAGE:
+- Hero background image (1920x1080+). If not provided we will use the generic our-work hero.
+- Hero title (default: "Smart & Sustainable Farming").
+- Hero description (1–2 sentences). If not provided we keep the current generic copy.
+- Empty-state message text (default: "No programs found.").
+- Filter labels (confirm if you prefer custom wording for Farming Type/Target Crops/Search).
+- Badge style preferences (we use brand cream + primary text by default).
+- Quick stats labels (confirm: "Active Programs", "Farming Techniques", "Climate-Resilient Crops").
+
+FILTERS (column-based):
+- Enable/disable filters you want visible to users. Current: Farming Type, Target Crops, Search.
+- If you want additional filters later (e.g., Location, Duration range), list them now for future.
+
+SEO (LIST PAGE):
+- Meta title
+- Meta description (150–160 chars)
+- Canonical URL (optional)
+
+SMART FARMING DETAIL PAGE:
+- Default hero background image to use when a program has no image.
+- Default copy for badges/labels if fields are missing (e.g., Duration: "TBD").
+- Section headings copy preferences (e.g., "Program Overview", "Target Crops", "Implementation Guide", "Sustainability Impact", "Program Details").
+- Contact card texts: heading and description (defaults kept if not provided).
+- Related programs block title (default: "Related Programs").
+
+SEO (DETAIL PAGE):
+- Meta title pattern (e.g., "{name} – Smart Farming Program – Mountagro")
+- Meta description fallback when program lacks a short description
+
+COMPLETED FEATURES:
+✅ Hero section with white text for better readability
+✅ Brand-consistent colors throughout (green theme)
+✅ Fixed related program links with in-app navigation
+✅ Smooth content updates without page refresh
+✅ Removed hardcoded "Modern Farming Techniques" cards
+✅ Consistent card structure with proper alignment
+✅ Standardized badge colors (brand cream + primary text)
+✅ "View Details" button visibility and consistency
+✅ Responsive design for all screen sizes
+
+6) Seed & Input Supply Chain – Static Copy & Media
+
+SEED SUPPLY LIST PAGE:
+- Hero background image (1920x1080+). If not provided we will use the generic our-work hero.
+- Hero title (default: "Seed & Input Supply Chain").
+- Hero description (1–2 sentences). If not provided we keep the current generic copy.
+- Empty-state message text (default: "No programs found.").
+- Filter labels (confirm if you prefer custom wording for Input Type/Target Crops/Search).
+- Badge style preferences (we use brand cream + primary text by default).
+- Quick stats labels (confirm: "Supply Programs", "Input Types", "Distribution Centers").
+
+FILTERS (column-based):
+- Enable/disable filters you want visible to users. Current: Input Type, Target Crops, Search.
+- If you want additional filters later (e.g., Availability, Price Range), list them now for future.
+
+SEO (LIST PAGE):
+- Meta title
+- Meta description (150–160 chars)
+- Canonical URL (optional)
+
+SEED SUPPLY DETAIL PAGE:
+- Default hero background image to use when a program has no image.
+- Default copy for badges/labels if fields are missing (e.g., Quality Grade: "N/A").
+- Section headings copy preferences (e.g., "Product Overview", "Target Crops", "Technical Specifications", "Usage Instructions", "Distribution Centers").
+- Contact card texts: heading and description (defaults kept if not provided).
+- Related programs block title (default: "Related Programs").
+
+SEO (DETAIL PAGE):
+- Meta title pattern (e.g., "{name} – Supply Program – Mountagro")
+- Meta description fallback when program lacks a short description
+
+COMPLETED FEATURES:
+✅ Hero section with white text for better readability
+✅ Brand-consistent colors throughout (green theme)
+✅ Fixed related program links with in-app navigation
+✅ Smooth content updates without page refresh
+✅ Consistent card structure with proper alignment
+✅ Standardized badge colors (brand cream + primary text)
+✅ "View Details" button visibility and consistency
+✅ Dynamic filter options based on actual data
+✅ Responsive design for all screen sizes
+
+7) Market Access Programs – Static Copy & Media
+
+MARKET ACCESS LIST PAGE:
+- Hero background image (1920x1080+). If not provided we will use the generic our-work hero.
+- Hero title (default: "Market Access Programs").
+- Hero description (1–2 sentences). If not provided we keep the current generic copy.
+- Empty-state message text (default: "No programs found.").
+- Filter labels (confirm if you prefer custom wording for Program Type/Search).
+- Badge style preferences (we use brand cream + primary text by default).
+- Quick stats labels (confirm: "Active Programs", "Crop Types", "Partner Organizations").
+
+FILTERS (column-based):
+- Enable/disable filters you want visible to users. Current: Program Type, Search.
+- If you want additional filters later (e.g., Location, Partner Organization), list them now for future.
+
+SEO (LIST PAGE):
+- Meta title
+- Meta description (150–160 chars)
+- Canonical URL (optional)
+
+MARKET ACCESS DETAIL PAGE:
+- Default hero background image to use when a program has no image.
+- Default copy for badges/labels if fields are missing (e.g., Location: "TBD").
+- Section headings copy preferences (e.g., "Program Overview", "Target Crops", "Partner Organizations").
+- Contact card texts: heading and description (defaults kept if not provided).
+- Related programs block title (default: "Related Programs").
+
+SEO (DETAIL PAGE):
+- Meta title pattern (e.g., "{name} – Market Access Program – Mountagro")
+- Meta description fallback when program lacks a short description
+
+COMPLETED FEATURES:
+✅ Hero section with white text for better readability
+✅ Brand-consistent colors throughout (green theme)
+✅ Fixed related program links with in-app navigation
+✅ Smooth content updates without page refresh
+✅ Consistent card structure with proper alignment
+✅ Standardized badge colors (brand cream + primary text)
+✅ "View Details" button visibility and consistency
+✅ Dynamic filter options based on actual data
+✅ Mobile responsiveness for all screen sizes
+✅ Responsive design for all sections
+
+8) Static Contact Details (Header/Footer/Contact page)
+- Official email address to display (e.g., info@…)
+- Primary phone number to display (optional)
+- Office address (optional; city/country is enough if full address not ready)
+- Business hours (optional)
+
+7) Footer – Static Text
+- Short company one-liner (20–30 words) for footer description
+
+Notes
+- Do NOT send dynamic items (beneficiary counts, news articles, success stories, jobs, gallery, publications, RFQs/RFPs). You’ll add those later from the dashboard.
+- Preferred formats: Images as AVIF/WEBP/PNG/JPG (largest available); Logos ideally SVG.
+- If any item is not ready, we’ll use clean placeholders and update later.
+

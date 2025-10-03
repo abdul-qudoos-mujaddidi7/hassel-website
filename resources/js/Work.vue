@@ -56,7 +56,7 @@
                         Our Work Areas
                     </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Extended overview of the five pillars that drive our
+                        Extended overview of the seven pillars that drive our
                         programs and impact.
                     </p>
                 </div>
@@ -386,6 +386,77 @@
                         >
                     </div>
 
+                    <!-- Smart & Sustainable Farming -->
+                    <div
+                        class="p-8 rounded-professional-lg border border-gray-200 card-hover"
+                    >
+                        <div
+                            class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-6"
+                        >
+                            <svg
+                                class="w-6 h-6 text-teal-600"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            Smart & Sustainable Farming
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Modern techniques like drip irrigation, greenhouse
+                            farming, and precision agriculture with
+                            climate-resilient crops.
+                        </p>
+                        <router-link
+                            to="/smart-farming"
+                            class="text-green-700 font-semibold"
+                            >Explore →</router-link
+                        >
+                    </div>
+
+                    <!-- Seed & Input Supply Chain -->
+                    <div
+                        class="p-8 rounded-professional-lg border border-gray-200 card-hover"
+                    >
+                        <div
+                            class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-6"
+                        >
+                            <svg
+                                class="w-6 h-6 text-orange-600"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8-4"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            Seed & Input Supply Chain
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            High-quality seeds, fertilizers, and eco-friendly
+                            pesticides with reliable distribution networks.
+                        </p>
+                        <router-link
+                            to="/seed-supply"
+                            class="text-green-700 font-semibold"
+                            >Explore →</router-link
+                        >
+                    </div>
+
                     <!-- Community Programs -->
                     <div
                         class="p-8 rounded-professional-lg border border-gray-200 card-hover"
@@ -420,9 +491,6 @@
                             >Explore →</router-link
                         >
                     </div>
-
-                    <!-- Placeholder to balance 3-column grid on large screens -->
-                    <div class="hidden lg:block"></div>
                 </div>
 
                 <div
@@ -650,7 +718,7 @@
                         Featured Programs
                     </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        A quick look at ongoing initiatives across our pillars.
+                        A quick look at ongoing initiatives across our company.
                     </p>
                     <!-- Filter Chips -->
                     <div
@@ -1026,23 +1094,30 @@ onMounted(async () => {
     }
 
     // Load a wider preview across pillars (best-effort)
-    const [tp, ma, cp, env, tools] = await Promise.all([
-        safeFetchJson(
-            "/api/training-programs?limit=5&orderBy=published_at&direction=desc"
-        ),
-        safeFetchJson(
-            "/api/market-access-programs?limit=5&orderBy=published_at&direction=desc"
-        ),
-        safeFetchJson(
-            "/api/community-programs?limit=5&orderBy=published_at&direction=desc"
-        ),
-        safeFetchJson(
-            "/api/environmental-projects?limit=5&orderBy=published_at&direction=desc"
-        ),
-        safeFetchJson(
-            "/api/agri-tech-tools?limit=5&orderBy=published_at&direction=desc"
-        ),
-    ]);
+    const [tp, ma, cp, env, tools, smartFarming, seedSupply] =
+        await Promise.all([
+            safeFetchJson(
+                "/api/training-programs?limit=5&orderBy=published_at&direction=desc"
+            ),
+            safeFetchJson(
+                "/api/market-access-programs?limit=5&orderBy=published_at&direction=desc"
+            ),
+            safeFetchJson(
+                "/api/community-programs?limit=5&orderBy=published_at&direction=desc"
+            ),
+            safeFetchJson(
+                "/api/environmental-projects?limit=5&orderBy=published_at&direction=desc"
+            ),
+            safeFetchJson(
+                "/api/agri-tech-tools?limit=5&orderBy=published_at&direction=desc"
+            ),
+            safeFetchJson(
+                "/api/smart-farming-programs?limit=5&orderBy=published_at&direction=desc"
+            ),
+            safeFetchJson(
+                "/api/seed-supply-programs?limit=5&orderBy=published_at&direction=desc"
+            ),
+        ]);
 
     const picked = [];
     const mapItem = (type, r, route) => ({
@@ -1071,6 +1146,10 @@ onMounted(async () => {
         picked.push(mapItem("Environment", r, "/environment"));
     for (const r of tools?.data ?? [])
         picked.push(mapItem("Agri‑Tech", r, "/agri-tech"));
+    for (const r of smartFarming?.data ?? [])
+        picked.push(mapItem("Smart Farming", r, "/smart-farming"));
+    for (const r of seedSupply?.data ?? [])
+        picked.push(mapItem("Seed Supply", r, "/seed-supply"));
 
     // client-side fallback: ensure newest first
     featuredPrograms.value = picked.sort((a, b) => {

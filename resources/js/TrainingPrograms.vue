@@ -77,7 +77,7 @@
                     </h1>
 
                     <p
-                        class="text-xl text-green-100 mb-8 leading-relaxed max-w-3xl mx-auto"
+                        class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
                         Explore our comprehensive training and capacity building
                         initiatives across Afghanistan. Develop essential skills
@@ -137,7 +137,7 @@
                 </div>
 
                 <div
-                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
                 >
                     <!-- Status Filter -->
                     <div class="relative">
@@ -151,32 +151,8 @@
                         >
                             <option value="">All Statuses</option>
                             <option value="published">Published</option>
-                            <option value="upcoming">Upcoming</option>
                             <option value="ongoing">Ongoing</option>
                             <option value="completed">Completed</option>
-                            <option value="cancelled">Cancelled</option>
-                        </select>
-                    </div>
-
-                    <!-- Type Filter -->
-                    <div class="relative">
-                        <label
-                            class="block text-sm font-medium text-gray-700 mb-2"
-                            >Program Type</label
-                        >
-                        <select
-                            v-model="filters.type"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                            :disabled="typeOptionsLoading"
-                        >
-                            <option value="">All Types</option>
-                            <option
-                                v-for="t in typeOptions"
-                                :key="t"
-                                :value="t"
-                            >
-                                {{ prettyType(t) }}
-                            </option>
                         </select>
                     </div>
 
@@ -215,22 +191,6 @@
                         </div>
                     </div>
 
-                    <!-- Sort Filter -->
-                    <div class="relative">
-                        <label
-                            class="block text-sm font-medium text-gray-700 mb-2"
-                            >Sort By</label
-                        >
-                        <select
-                            v-model="sortUi"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                        >
-                            <option value="recent">Most recent</option>
-                            <option value="upcoming">Starting soon</option>
-                            <option value="az">A–Z</option>
-                        </select>
-                    </div>
-
                     <!-- Results Count -->
                     <div class="flex items-end">
                         <div
@@ -246,7 +206,7 @@
         </section>
 
         <!-- Programs Section -->
-        <section class="py-12 bg-gray-50">
+        <section class="py-12 bg-gray-50" ref="programsTopRef">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div
                     v-if="loading"
@@ -310,12 +270,12 @@
                                 <div class="flex flex-wrap gap-2 text-xs mb-3">
                                     <span
                                         v-if="p.location"
-                                        class="px-2 py-1 rounded bg-blue-50 text-blue-700"
+                                        class="px-2 py-1 rounded bg-brand-cream text-brand-primary"
                                         >{{ p.location }}</span
                                     >
                                     <span
                                         v-if="p.dateRange"
-                                        class="px-2 py-1 rounded bg-yellow-50 text-yellow-700"
+                                        class="px-2 py-1 rounded bg-brand-cream text-brand-primary"
                                         >{{ p.dateRange }}</span
                                     >
                                 </div>
@@ -331,8 +291,10 @@
                     <div class="flex items-center justify-center gap-2 mt-8">
                         <button
                             :disabled="page <= 1 || loading"
-                            @click="prevPage"
+                            @click="onPrevClick"
                             class="px-3 py-2 border rounded-md disabled:opacity-50"
+                            @mousedown.prevent
+                            @keydown.prevent.stop
                         >
                             Prev
                         </button>
@@ -341,8 +303,10 @@
                         >
                         <button
                             :disabled="page >= totalPages || loading"
-                            @click="nextPage"
+                            @click="onNextClick"
                             class="px-3 py-2 border rounded-md disabled:opacity-50"
+                            @mousedown.prevent
+                            @keydown.prevent.stop
                         >
                             Next
                         </button>
@@ -354,28 +318,32 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, computed, nextTick } from "vue";
 
 const loading = ref(true);
 const items = ref([]);
 const page = ref(1);
 const perPage = ref(9);
+const programsTopRef = ref(null);
+
+async function scrollToTopSmooth() {
+    await nextTick();
+    const root = programsTopRef.value;
+    if (root && typeof root.scrollIntoView === "function") {
+        root.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+}
 const total = ref(0);
 const sortUi = ref("recent");
 
-const filters = ref({ status: "", type: "", location: "" });
+const filters = ref({ status: "", location: "" });
 
-// Dynamic type options from API
-const typeOptions = ref([]);
-const typeOptionsLoading = ref(false);
-function prettyType(t) {
-    return String(t)
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase());
-}
+// Column-based filters: no dynamic dropdowns to avoid huge lists
 
 function resetFilters() {
-    filters.value = { status: "", type: "", location: "" };
+    filters.value = { status: "", location: "" };
 }
 
 const totalPages = computed(() =>
@@ -392,10 +360,7 @@ watch(
     { deep: true }
 );
 
-watch(sortUi, () => {
-    page.value = 1;
-    fetchPrograms();
-});
+// sort removed from UI; keep default 'recent'
 
 watch(page, () => {
     fetchPrograms();
@@ -403,7 +368,6 @@ watch(page, () => {
 
 onMounted(() => {
     fetchPrograms();
-    fetchTypeOptions();
 });
 
 function buildQuery() {
@@ -421,8 +385,8 @@ function buildQuery() {
         params.set("direction", "asc");
     }
     if (filters.value.status) params.set("status", filters.value.status);
-    if (filters.value.type) params.set("type", filters.value.type);
     if (filters.value.location) params.set("location", filters.value.location);
+    // Enforce status on client too in case backend ignores it
     return params.toString();
 }
 
@@ -456,18 +420,13 @@ async function fetchPrograms() {
             image:
                 r.thumbnail_image || r.cover_image || r.featured_image || null,
             created_at: r.created_at || r.start_date,
+            start_date: r.start_date || null,
         }));
-        // Client-side fallback sort matching UI
+        // Client-side fallback sort matching UI + enforce status filter if provided
         if (sortUi.value === "recent") {
             items.value = mapped.sort(
                 (a, b) =>
                     new Date(b.created_at || 0) - new Date(a.created_at || 0)
-            );
-        } else if (sortUi.value === "upcoming") {
-            items.value = mapped.sort(
-                (a, b) =>
-                    new Date(a.start_date || a.created_at || 0) -
-                    new Date(b.start_date || b.created_at || 0)
             );
         } else if (sortUi.value === "az") {
             items.value = mapped.sort((a, b) =>
@@ -475,6 +434,13 @@ async function fetchPrograms() {
             );
         } else {
             items.value = mapped;
+        }
+        if (filters.value.status) {
+            items.value = items.value.filter(
+                (x) =>
+                    String(x.status || "").toLowerCase() ===
+                    String(filters.value.status).toLowerCase()
+            );
         }
         // Basic pagination derive if meta present
         if (data?.meta?.total) {
@@ -492,27 +458,7 @@ async function fetchPrograms() {
     }
 }
 
-async function fetchTypeOptions() {
-    try {
-        typeOptionsLoading.value = true;
-        const res = await fetch("/api/training-programs/types");
-        if (!res.ok) {
-            console.error("Types API failed:", res.status);
-            return;
-        }
-        const data = await res.json();
-        console.log("Types API response:", data); // Debug log
-        const arr = Array.isArray(data?.program_types)
-            ? data.program_types
-            : Array.isArray(data)
-            ? data
-            : [];
-        typeOptions.value = arr;
-        console.log("Type options set:", arr); // Debug log
-    } finally {
-        typeOptionsLoading.value = false;
-    }
-}
+// removed dynamic type options fetch to keep filters column-based
 
 function prevPage() {
     if (page.value > 1) {
@@ -523,5 +469,14 @@ function nextPage() {
     if (page.value < totalPages.value) {
         page.value += 1;
     }
+}
+
+async function onPrevClick() {
+    prevPage();
+    await scrollToTopSmooth();
+}
+async function onNextClick() {
+    nextPage();
+    await scrollToTopSmooth();
 }
 </script>

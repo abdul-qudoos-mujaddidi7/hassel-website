@@ -18,6 +18,8 @@ use App\Http\Controllers\Api\AgriTechToolController;
 use App\Http\Controllers\Api\MarketAccessProgramController;
 use App\Http\Controllers\Api\EnvironmentalProjectController;
 use App\Http\Controllers\Api\CommunityProgramController;
+use App\Http\Controllers\Api\SmartFarmingProgramController;
+use App\Http\Controllers\Api\SeedSupplyProgramController;
 use App\Http\Controllers\Api\ProgramRegistrationController;
 
 // Import admin controllers
@@ -36,6 +38,8 @@ use App\Http\Controllers\Api\Admin\AdminAgriTechToolController;
 use App\Http\Controllers\Api\Admin\AdminMarketAccessProgramController;
 use App\Http\Controllers\Api\Admin\AdminEnvironmentalProjectController;
 use App\Http\Controllers\Api\Admin\AdminCommunityProgramController;
+use App\Http\Controllers\Api\Admin\AdminSmartFarmingProgramController;
+use App\Http\Controllers\Api\Admin\AdminSeedSupplyProgramController;
 use App\Http\Controllers\Api\Admin\AdminProgramRegistrationController;
 
 /*
@@ -132,8 +136,8 @@ Route::prefix('agri-tech-tools')->name('api.agri-tech-tools.')->group(function (
 // Market Access Programs
 Route::prefix('market-access-programs')->name('api.market-access-programs.')->group(function () {
   Route::get('/', [MarketAccessProgramController::class, 'index'])->name('index');
-  Route::get('/{slug}', [MarketAccessProgramController::class, 'show'])->name('show');
   Route::get('/types', [MarketAccessProgramController::class, 'types'])->name('types');
+  Route::get('/{slug}', [MarketAccessProgramController::class, 'show'])->name('show');
 });
 
 // Environmental Projects
@@ -149,6 +153,23 @@ Route::prefix('community-programs')->name('api.community-programs.')->group(func
   Route::get('/{slug}', [CommunityProgramController::class, 'show'])->name('show');
   Route::get('/types', [CommunityProgramController::class, 'types'])->name('types');
   Route::get('/target-groups', [CommunityProgramController::class, 'targetGroups'])->name('target-groups');
+});
+
+// Smart & Sustainable Farming Programs
+Route::prefix('smart-farming-programs')->name('api.smart-farming-programs.')->group(function () {
+  Route::get('/', [SmartFarmingProgramController::class, 'index'])->name('index');
+  Route::get('/{slug}', [SmartFarmingProgramController::class, 'show'])->name('show');
+  Route::get('/types', [SmartFarmingProgramController::class, 'types'])->name('types');
+  Route::get('/crops', [SmartFarmingProgramController::class, 'crops'])->name('crops');
+});
+
+// Seed & Input Supply Programs
+Route::prefix('seed-supply-programs')->name('api.seed-supply-programs.')->group(function () {
+  Route::get('/', [SeedSupplyProgramController::class, 'index'])->name('index');
+  Route::get('/{slug}', [SeedSupplyProgramController::class, 'show'])->name('show');
+  Route::get('/types', [SeedSupplyProgramController::class, 'types'])->name('types');
+  Route::get('/crops', [SeedSupplyProgramController::class, 'crops'])->name('crops');
+  Route::get('/availability', [SeedSupplyProgramController::class, 'availability'])->name('availability');
 });
 
 // Program Registration
@@ -220,6 +241,14 @@ Route::prefix('admin')->name('api.admin.')->middleware(['admin'])->group(functio
   Route::apiResource('market-access-programs', AdminMarketAccessProgramController::class);
   Route::apiResource('environmental-projects', AdminEnvironmentalProjectController::class);
   Route::apiResource('community-programs', AdminCommunityProgramController::class);
+  Route::apiResource('smart-farming-programs', AdminSmartFarmingProgramController::class);
+  Route::get('smart-farming-programs-stats', [AdminSmartFarmingProgramController::class, 'stats'])->name('smart-farming-programs.stats');
+  Route::post('smart-farming-programs/bulk-status', [AdminSmartFarmingProgramController::class, 'bulkUpdateStatus'])->name('smart-farming-programs.bulk-status');
+
+  Route::apiResource('seed-supply-programs', AdminSeedSupplyProgramController::class);
+  Route::get('seed-supply-programs-stats', [AdminSeedSupplyProgramController::class, 'stats'])->name('seed-supply-programs.stats');
+  Route::post('seed-supply-programs/bulk-status', [AdminSeedSupplyProgramController::class, 'bulkUpdateStatus'])->name('seed-supply-programs.bulk-status');
+  Route::post('seed-supply-programs/bulk-availability', [AdminSeedSupplyProgramController::class, 'bulkUpdateAvailability'])->name('seed-supply-programs.bulk-availability');
 
   // Program Registration Management
   Route::prefix('program-registrations')->name('program-registrations.')->group(function () {

@@ -1,23 +1,21 @@
 <template>
     <header class="bg-white shadow-professional sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="flex justify-between items-center h-24">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
                     <router-link to="/" class="flex items-center">
                         <img
-                            :src="'/mountagro-logo.jpg'"
+                            :src="'/mountagro-logo.png'"
                             alt="Mount Agro Logo"
-                            class="w-16 h-16 rounded-lg object-contain"
+                            class="w-28 h-28 rounded-lg object-contain"
                         />
-                        <span class="ml-3 text-xl font-bold text-gray-900"
-                            >Mount Agro</span
-                        >
                     </router-link>
                 </div>
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-6">
+                    <!-- Static items -->
                     <router-link
                         v-for="item in menuItems"
                         :key="item.name"
@@ -36,6 +34,81 @@
                         />
                         <span>{{ item.name }}</span>
                     </router-link>
+
+                    <!-- Programs dropdown (click to open and stays open) -->
+                    <div class="relative" ref="programsMenuRef">
+                        <button
+                            type="button"
+                            @click="isProgramsOpen = !isProgramsOpen"
+                            @keydown.escape="isProgramsOpen = false"
+                            :aria-expanded="isProgramsOpen"
+                            class="flex items-center text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 cursor-pointer"
+                        >
+                            <span>Programs</span>
+                            <svg
+                                class="w-4 h-4 ml-1"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 9l-7 7-7-7"
+                                />
+                            </svg>
+                        </button>
+                        <div
+                            v-show="isProgramsOpen"
+                            class="absolute left-0 mt-2 w-72 rounded-lg bg-white shadow-lg ring-1 ring-black/5 z-50"
+                        >
+                            <div class="py-2">
+                                <router-link
+                                    to="/training-programs"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
+                                    @click="isProgramsOpen = false"
+                                    >Training Programs</router-link
+                                >
+                                <router-link
+                                    to="/agri-tech"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
+                                    @click="isProgramsOpen = false"
+                                    >Agri Tech Tools</router-link
+                                >
+                                <router-link
+                                    to="/smart-farming"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
+                                    @click="isProgramsOpen = false"
+                                    >Smart & Sustainable Farming</router-link
+                                >
+                                <router-link
+                                    to="/seed-supply"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
+                                    @click="isProgramsOpen = false"
+                                    >Seed & Input Supply Chain</router-link
+                                >
+                                <router-link
+                                    to="/market-access"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
+                                    @click="isProgramsOpen = false"
+                                    >Market Access Programs</router-link
+                                >
+                                <router-link
+                                    to="/environmental-projects"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
+                                    @click="isProgramsOpen = false"
+                                    >Environmental Projects</router-link
+                                >
+                                <router-link
+                                    to="/community-programs"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
+                                    @click="isProgramsOpen = false"
+                                    >Community Programs</router-link
+                                >
+                            </div>
+                        </div>
+                    </div>
                 </nav>
 
                 <!-- Mobile menu button -->
@@ -96,7 +169,7 @@
 
             <!-- Drawer -->
             <div
-                class="fixed top-0 right-0 h-full w-80 max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out"
+                class="fixed top-0 right-0 h-full w-80 max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out flex flex-col"
                 @click.stop
             >
                 <!-- Drawer Header -->
@@ -107,11 +180,8 @@
                         <img
                             :src="'/mountagro-logo.jpg'"
                             alt="Mount Agro Logo"
-                            class="w-10 h-10 rounded-lg object-contain"
+                            class="w-20 h-20 rounded-lg object-contain"
                         />
-                        <span class="ml-3 text-lg font-bold text-gray-900"
-                            >Mount Agro</span
-                        >
                     </div>
                     <button
                         @click="closeMobileMenu"
@@ -134,7 +204,7 @@
                 </div>
 
                 <!-- Drawer Navigation -->
-                <nav class="px-6 py-4 space-y-2">
+                <nav class="px-6 py-4 space-y-2 flex-1 overflow-y-auto">
                     <router-link
                         v-for="item in menuItems"
                         :key="item.name"
@@ -151,11 +221,64 @@
                         <component :is="item.icon" class="w-5 h-5 mr-3" />
                         <span class="font-medium">{{ item.name }}</span>
                     </router-link>
+
+                    <!-- Programs expandable -->
+                    <details class="px-2">
+                        <summary
+                            class="px-4 py-3 cursor-pointer text-gray-700 hover:text-green-600 rounded-lg"
+                        >
+                            Programs
+                        </summary>
+                        <div class="pl-4 py-2 space-y-1">
+                            <router-link
+                                to="/training-programs"
+                                class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
+                                @click="closeMobileMenu"
+                                >Training Programs</router-link
+                            >
+                            <router-link
+                                to="/agri-tech-tools"
+                                class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
+                                @click="closeMobileMenu"
+                                >Agri-Tech Tools</router-link
+                            >
+                            <router-link
+                                to="/smart-farming"
+                                class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
+                                @click="closeMobileMenu"
+                                >Smart & Sustainable Farming</router-link
+                            >
+                            <router-link
+                                to="/seed-supply"
+                                class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
+                                @click="closeMobileMenu"
+                                >Seed & Input Supply Chain</router-link
+                            >
+                            <router-link
+                                to="/market-access"
+                                class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
+                                @click="closeMobileMenu"
+                                >Market Access Programs</router-link
+                            >
+                            <router-link
+                                to="/environmental-projects"
+                                class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
+                                @click="closeMobileMenu"
+                                >Environmental Projects</router-link
+                            >
+                            <router-link
+                                to="/community-programs"
+                                class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
+                                @click="closeMobileMenu"
+                                >Community Programs</router-link
+                            >
+                        </div>
+                    </details>
                 </nav>
 
                 <!-- Drawer Footer -->
                 <div
-                    class="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-200 bg-gray-50"
+                    class="p-6 border-t border-gray-200 bg-gray-50 flex-shrink-0"
                 >
                     <div class="text-center">
                         <p class="text-sm text-gray-600">
@@ -172,7 +295,7 @@
 </template>
 
 <script setup>
-import { ref, watch, h } from "vue";
+import { ref, watch, h, onMounted, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 
 // Icons (you can replace these with your preferred icon library)
@@ -292,11 +415,11 @@ const ContactIcon = () =>
 
 const route = useRoute();
 const isMobileMenuOpen = ref(false);
+const isProgramsOpen = ref(false);
+const programsMenuRef = ref(null);
 
 const menuItems = [
     { name: "Home", path: "/", icon: HomeIcon },
-    { name: "About", path: "/about", icon: AboutIcon },
-    { name: "Our Work", path: "/our-work", icon: WorkIcon },
     { name: "Resources", path: "/resources", icon: ResourcesIcon },
     { name: "Careers", path: "/careers", icon: CareersIcon },
     { name: "Contact", path: "/contact", icon: ContactIcon },
@@ -312,8 +435,6 @@ const closeMobileMenu = () => {
 
 // Prefetch lazy route chunks on hover/focus for instant navigation
 const prefetchers = {
-    "/about": () => import("../About.vue"),
-    "/our-work": () => import("../Work.vue"),
     "/resources": () => import("../Resources.vue"),
     "/careers": () => import("../Careers.vue"),
     "/contact": () => import("../Contact.vue"),
@@ -333,4 +454,21 @@ watch(
         closeMobileMenu();
     }
 );
+
+// Close Programs when clicking outside
+const handleClickOutside = (event) => {
+    if (!isProgramsOpen.value) return;
+    const root = programsMenuRef.value;
+    if (root && !root.contains(event.target)) {
+        isProgramsOpen.value = false;
+    }
+};
+
+onMounted(() => {
+    document.addEventListener("click", handleClickOutside, true);
+});
+
+onUnmounted(() => {
+    document.removeEventListener("click", handleClickOutside, true);
+});
 </script>
