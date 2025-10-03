@@ -34,7 +34,7 @@ class AdminProgramRegistrationController extends Controller
             ->orderBy('registration_date', 'desc')
             ->paginate($request->get('per_page', 15));
 
-        return ProgramRegistrationResource::collection($registrations);
+        return response()->json(ProgramRegistrationResource::collection($registrations));
     }
 
     public function show(ProgramRegistration $programRegistration): JsonResponse
