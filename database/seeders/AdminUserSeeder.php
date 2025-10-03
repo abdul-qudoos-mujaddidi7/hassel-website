@@ -50,6 +50,11 @@ class AdminUserSeeder extends Seeder
                 'email' => 'mohammad.karimi@mountagro.af',
                 'role' => 'editor',
             ],
+            [
+                'name' => 'Jawad',
+                'email' => 'jawad@gmail.con',
+                'role' => 'admin',
+            ],
         ];
 
         foreach ($adminUsers as $userData) {
@@ -66,5 +71,6 @@ class AdminUserSeeder extends Seeder
         $this->command->info('Admin users created successfully!');
         $this->command->line('Main Admin: zakiullahsafi00@gmail.com / safi@123');
         $this->command->line('Editor: editor@mountagro.af / editor123456');
+        $this->command->line('Admin: jawad@gmail.con / password123');
     }
 }

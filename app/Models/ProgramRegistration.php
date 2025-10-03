@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\CommunityProgram;
+use App\Models\MarketAccessProgram;
+use App\Models\TrainingProgram;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
