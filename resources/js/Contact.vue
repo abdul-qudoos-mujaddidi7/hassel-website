@@ -1,27 +1,20 @@
 <template>
     <div class="min-h-screen">
         <!-- Hero Section -->
-        <section
-            class="relative bg-gradient-to-br from-green-800 via-green-700 to-green-600 text-white overflow-hidden"
-        >
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 bg-black opacity-20"></div>
-            <div class="absolute inset-0 opacity-5">
-                <div
-                    class="absolute inset-0"
-                    style="
-                        background-image: radial-gradient(
-                            circle at 1px 1px,
-                            white 1px,
-                            transparent 0
-                        );
-                        background-size: 20px 20px;
-                    "
-                ></div>
+        <section class="relative text-white overflow-hidden">
+            <!-- Background Image -->
+            <div class="absolute inset-0">
+                <img
+                    :src="'/images/about/contact-hero.avif'"
+                    alt="Contact Us"
+                    class="w-full h-full object-cover"
+                />
             </div>
+            <!-- Overlay -->
+            <div class="absolute inset-0 bg-black/60"></div>
 
             <div
-                class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32"
+                class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-40"
             >
                 <div class="text-center">
                     <h1
@@ -36,12 +29,27 @@
                         Get in touch with our team. We're here to help and
                         answer any questions you may have.
                     </p>
+                    <div
+                        class="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp"
+                        style="animation-delay: 0.35s"
+                    >
+                        <a
+                            href="#contact-form"
+                            class="btn btn-secondary px-8 py-4 text-lg"
+                            >Send Message</a
+                        >
+                        <a
+                            href="tel:+93701234567"
+                            class="btn btn-cta px-8 py-4 text-lg"
+                            >Call Now</a
+                        >
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Contact Information & Form Section -->
-        <section class="section-padding bg-white">
+        <section id="contact-form" class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     <!-- Contact Information -->
@@ -190,10 +198,13 @@
                             >
                                 Follow Us
                             </h3>
-                            <div class="flex gap-4">
+                            <div class="flex flex-wrap gap-4">
+                                <!-- Facebook -->
                                 <a
-                                    href="#"
-                                    class="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform"
+                                    href="https://facebook.com/mountagro"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 hover:shadow-lg"
                                 >
                                     <svg
                                         class="w-6 h-6"
@@ -201,13 +212,17 @@
                                         viewBox="0 0 24 24"
                                     >
                                         <path
-                                            d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+                                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
                                         />
                                     </svg>
                                 </a>
+
+                                <!-- Twitter -->
                                 <a
-                                    href="#"
-                                    class="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform"
+                                    href="https://twitter.com/mountagro"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="w-12 h-12 bg-gradient-to-br from-sky-400 to-sky-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 hover:shadow-lg"
                                 >
                                     <svg
                                         class="w-6 h-6"
@@ -215,13 +230,17 @@
                                         viewBox="0 0 24 24"
                                     >
                                         <path
-                                            d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"
+                                            d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
                                         />
                                     </svg>
                                 </a>
+
+                                <!-- LinkedIn -->
                                 <a
-                                    href="#"
-                                    class="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform"
+                                    href="https://linkedin.com/company/mountagro"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="w-12 h-12 bg-gradient-to-br from-blue-700 to-blue-800 rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 hover:shadow-lg"
                                 >
                                     <svg
                                         class="w-6 h-6"
@@ -233,9 +252,13 @@
                                         />
                                     </svg>
                                 </a>
+
+                                <!-- Instagram -->
                                 <a
-                                    href="#"
-                                    class="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform"
+                                    href="https://instagram.com/mountagro"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 hover:shadow-lg"
                                 >
                                     <svg
                                         class="w-6 h-6"
@@ -244,6 +267,42 @@
                                     >
                                         <path
                                             d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"
+                                        />
+                                    </svg>
+                                </a>
+
+                                <!-- YouTube -->
+                                <a
+                                    href="https://youtube.com/@mountagro"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="w-12 h-12 bg-gradient-to-br from-red-600 to-red-700 rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 hover:shadow-lg"
+                                >
+                                    <svg
+                                        class="w-6 h-6"
+                                        fill="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                                        />
+                                    </svg>
+                                </a>
+
+                                <!-- WhatsApp -->
+                                <a
+                                    href="https://wa.me/93701234567"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 hover:shadow-lg"
+                                >
+                                    <svg
+                                        class="w-6 h-6"
+                                        fill="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"
                                         />
                                     </svg>
                                 </a>
@@ -256,7 +315,7 @@
                         <h2 class="heading-lg text-gray-900 mb-8">
                             Send us a Message
                         </h2>
-                        <form @submit.prevent="submitForm" class="space-y-6">
+                        <form @submit.prevent="submitForm" class="space-y-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label
@@ -330,23 +389,107 @@
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                                 >
                                     <option value="">Select a subject</option>
-                                    <option value="general">
+                                    <option value="job_application">
+                                        Job Application
+                                    </option>
+                                    <option value="general_inquiry">
                                         General Inquiry
                                     </option>
-                                    <option value="project">
+                                    <option value="project_discussion">
                                         Project Discussion
                                     </option>
-                                    <option value="support">
+                                    <option value="technical_support">
                                         Technical Support
                                     </option>
                                     <option value="partnership">
                                         Partnership
                                     </option>
-                                    <option value="career">
-                                        Career Opportunity
+                                    <option value="media_inquiry">
+                                        Media Inquiry
                                     </option>
                                     <option value="other">Other</option>
                                 </select>
+                            </div>
+
+                            <!-- Job Application Specific Fields -->
+                            <div
+                                v-if="form.subject === 'job_application'"
+                                class="space-y-4 p-3 bg-green-50 rounded-lg border border-green-200"
+                            >
+                                <h3
+                                    class="text-base font-semibold text-green-800"
+                                >
+                                    Job Application Details
+                                </h3>
+
+                                <div>
+                                    <label
+                                        for="job_title"
+                                        class="block text-sm font-medium text-gray-700 mb-2"
+                                    >
+                                        Job Title *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="job_title"
+                                        v-model="form.job_title"
+                                        required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
+                                        placeholder="e.g., Software Developer"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label
+                                        for="location"
+                                        class="block text-sm font-medium text-gray-700 mb-2"
+                                    >
+                                        Your Location
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="location"
+                                        v-model="form.location"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
+                                        placeholder="e.g., Kabul, Afghanistan"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label
+                                        for="cover_letter"
+                                        class="block text-sm font-medium text-gray-700 mb-2"
+                                    >
+                                        Cover Letter *
+                                    </label>
+                                    <textarea
+                                        id="cover_letter"
+                                        v-model="form.cover_letter"
+                                        required
+                                        rows="3"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
+                                        placeholder="Tell us why you're interested in this position and what makes you a good fit..."
+                                    ></textarea>
+                                </div>
+
+                                <div>
+                                    <label
+                                        for="cv_file"
+                                        class="block text-sm font-medium text-gray-700 mb-1"
+                                    >
+                                        CV/Resume Upload
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="cv_file"
+                                        @change="handleFileUpload"
+                                        accept=".pdf,.doc,.docx"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors text-sm"
+                                    />
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        PDF, DOC, DOCX (Max 5MB)
+                                    </p>
+                                </div>
                             </div>
 
                             <div>
@@ -359,9 +502,13 @@
                                     id="message"
                                     v-model="form.message"
                                     required
-                                    rows="5"
+                                    rows="3"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                                    placeholder="Please describe your inquiry in detail..."
+                                    :placeholder="
+                                        form.subject === 'job_application'
+                                            ? 'Please provide any additional information about your application...'
+                                            : 'Please describe your inquiry in detail...'
+                                    "
                                 ></textarea>
                             </div>
 
@@ -558,7 +705,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const isSubmitting = ref(false);
 const showSuccess = ref(false);
@@ -570,26 +717,100 @@ const form = ref({
     phone: "",
     subject: "",
     message: "",
+    job_title: "",
+    job_id: "",
+    location: "",
+    cover_letter: "",
+    cv_file: null,
 });
+
+// Handle URL parameters for job applications
+onMounted(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const subject = urlParams.get("subject");
+    const jobTitle = urlParams.get("job_title");
+    const jobId = urlParams.get("job_id");
+
+    if (subject === "job_application") {
+        form.value.subject = "job_application";
+        if (jobTitle) form.value.job_title = decodeURIComponent(jobTitle);
+        if (jobId) form.value.job_id = jobId;
+    }
+});
+
+// Handle file upload
+const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        // Check file size (5MB limit)
+        if (file.size > 5 * 1024 * 1024) {
+            alert("File size must be less than 5MB");
+            return;
+        }
+        form.value.cv_file = file;
+    }
+};
 
 const submitForm = async () => {
     isSubmitting.value = true;
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+        // Create form data
+        const formData = new FormData();
+        formData.append(
+            "name",
+            `${form.value.firstName} ${form.value.lastName}`
+        );
+        formData.append("email", form.value.email);
+        formData.append("phone", form.value.phone);
+        formData.append("subject", form.value.subject);
+        formData.append("message", form.value.message);
 
-    isSubmitting.value = false;
-    showSuccess.value = true;
+        // Add job application fields if applicable
+        if (form.value.subject === "job_application") {
+            formData.append("job_title", form.value.job_title);
+            formData.append("job_id", form.value.job_id);
+            formData.append("location", form.value.location);
+            formData.append("cover_letter", form.value.cover_letter);
 
-    // Reset form
-    form.value = {
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-    };
+            if (form.value.cv_file) {
+                formData.append("cv_file", form.value.cv_file);
+            }
+        }
+
+        // Submit to API
+        const response = await fetch("/api/contact", {
+            method: "POST",
+            body: formData,
+        });
+
+        if (response.ok) {
+            showSuccess.value = true;
+            // Reset form
+            form.value = {
+                firstName: "",
+                lastName: "",
+                email: "",
+                phone: "",
+                subject: "",
+                message: "",
+                job_title: "",
+                job_id: "",
+                location: "",
+                cover_letter: "",
+                cv_file: null,
+            };
+        } else {
+            throw new Error("Submission failed");
+        }
+    } catch (error) {
+        console.error("Error submitting form:", error);
+        alert(
+            "Sorry, there was an error submitting your form. Please try again."
+        );
+    } finally {
+        isSubmitting.value = false;
+    }
 
     // Hide success message after 5 seconds
     setTimeout(() => {

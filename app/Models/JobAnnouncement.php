@@ -20,12 +20,12 @@ class JobAnnouncement extends Model
         'salary_range',
         'deadline',
         'status',
-        'published_at',
+        'opened_at',
     ];
 
     protected $casts = [
         'deadline' => 'date',
-        'published_at' => 'datetime',
+        'opened_at' => 'datetime',
     ];
 
     // Relationships
@@ -35,15 +35,14 @@ class JobAnnouncement extends Model
     }
 
     // Scopes
-    public function scopePublished($query)
-    {
-        return $query->where('status', 'published');
-    }
-
     public function scopeOpen($query)
     {
-        return $query->where('deadline', '>=', Carbon::today())
-            ->where('status', 'published');
+        return $query->where('status', 'open');
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'open');
     }
 
     public function scopeClosed($query)
@@ -55,7 +54,7 @@ class JobAnnouncement extends Model
     // Accessors
     public function getIsOpenAttribute(): bool
     {
-        return $this->deadline >= Carbon::today() && $this->status === 'published';
+        return $this->status === 'open' && $this->deadline >= Carbon::today();
     }
 
     public function getIsExpiredAttribute(): bool

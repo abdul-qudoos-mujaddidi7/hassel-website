@@ -18,7 +18,7 @@ class JobController extends Controller
         $status = $request->get('status', 'open'); // open, closed, all
         $location = $request->get('location'); // filter by location
 
-        $query = JobAnnouncement::published();
+        $query = JobAnnouncement::open();
 
         // Apply status filter
         switch ($status) {
@@ -29,7 +29,7 @@ class JobController extends Controller
                 $query->closed();
                 break;
             default:
-                // Show all published jobs
+                // Show all open jobs
                 break;
         }
 
@@ -40,7 +40,7 @@ class JobController extends Controller
 
         $jobs = $query->orderBy('deadline', 'asc')->paginate(12);
 
-        return JobResource::collection($jobs);
+        return response()->json(JobResource::collection($jobs));
     }
 
     /**
@@ -49,7 +49,7 @@ class JobController extends Controller
     public function show(string $slug, Request $request): JsonResponse
     {
         $job = JobAnnouncement::where('slug', $slug)
-            ->where('status', 'published')
+            ->where('status', 'open')
             ->firstOrFail();
 
         // Get related jobs (same location or similar)
