@@ -9,6 +9,9 @@ const Contact = () => import("./Contact.vue");
 // New: Training Programs (list + detail)
 const TrainingPrograms = () => import("./TrainingPrograms.vue");
 const TrainingProgramDetail = () => import("./TrainingProgramDetail.vue");
+// Admin routes
+const AdminLogin = () => import("./admin/LoginApp.vue");
+const AdminDashboard = () => import("./admin/AdminApp.vue");
 const AgriTechTools = () => import("./AgriTechTools.vue");
 const AgriTechToolDetail = () => import("./AgriTechToolDetail.vue");
 const MarketAccessPrograms = () => import("./MarketAccessPrograms.vue");
@@ -60,6 +63,10 @@ const router = createRouter({
         { path: "/resources", component: Resources },
         { path: "/careers", component: Careers },
         { path: "/contact", component: Contact },
+        // Admin routes
+        { path: "/admin/login", component: AdminLogin },
+        { path: "/admin", component: AdminDashboard },
+        { path: "/admin/*", component: AdminDashboard },
     ],
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {

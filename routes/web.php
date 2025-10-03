@@ -38,7 +38,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
   });
 
-  Route::middleware('admin.web')->group(function () {
+  Route::middleware('admin.api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/me', [AuthController::class, 'currentUser'])->name('me');
     Route::get('/', function () {

@@ -1,16 +1,49 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        // Find user by email
+        $user = User::where('email', $request->email)->first();
+
+        // Check if user exists and password matches
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'Invalid credentials',
+            ], 401);
+        }
+
+        // Create token (Laravel Sanctum)
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Login successful',
+            'token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user,
+            'role' => $user->role ?? 'admin',
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Logout successful']);
+    }
+
     public function showLoginForm()
     {
         return view('admin.auth.login');
@@ -18,74 +51,11 @@ class AuthController extends Controller
 
     public function currentUser(Request $request)
     {
-        $user = $request->user();
-
-        if (!$user) {
-            return response()->json(null, 200);
-        }
-
         return response()->json([
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'role' => $user->role,
-            'status' => $user->status,
+            'data' => [
+                'user' => $request->user(),
+                'role' => $request->user()->role ?? null,
+            ]
         ]);
-    }
-
-    public function login(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string'],
-        ]);
-
-        $throttleKey = strtolower($request->input('email')) . '|' . $request->ip();
-
-        if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
-            throw ValidationException::withMessages([
-                'email' => __('Too many login attempts. Please try again in :seconds seconds.', [
-                    'seconds' => RateLimiter::availableIn($throttleKey),
-                ]),
-            ]);
-        }
-
-        if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
-            RateLimiter::hit($throttleKey);
-
-            throw ValidationException::withMessages([
-                'email' => __('The provided credentials do not match our records.'),
-            ]);
-        }
-
-        RateLimiter::clear($throttleKey);
-
-        if (!Auth::user()->isAdmin()) {
-            Auth::logout();
-
-            throw ValidationException::withMessages([
-                'email' => __('You do not have admin access.'),
-            ]);
-        }
-
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('admin.dashboard'))
-            ->with('status', 'Welcome back!');
-    }
-
-    public function logout(Request $request): RedirectResponse
-    {
-        Auth::logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        if ($request->expectsJson()) {
-            return response()->json(null, 204);
-        }
-
-        return redirect()->route('admin.login')->with('status', 'You have been signed out.');
     }
 }
-
