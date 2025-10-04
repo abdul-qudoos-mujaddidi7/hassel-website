@@ -50,3 +50,4 @@ $badgeClasses = $palette[$trend] ?? $palette['neutral'];
 
 
 
+
