@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,26 +20,7 @@ use App\Http\Controllers\Api\CommunityProgramController;
 use App\Http\Controllers\Api\SmartFarmingProgramController;
 use App\Http\Controllers\Api\SeedSupplyProgramController;
 use App\Http\Controllers\Api\ProgramRegistrationController;
-
-// Import admin controllers
-use App\Http\Controllers\Api\Admin\AdminController;
-use App\Http\Controllers\Api\Admin\AdminNewsController;
-use App\Http\Controllers\Api\Admin\AdminPublicationController;
-use App\Http\Controllers\Api\Admin\AdminSuccessStoryController;
-use App\Http\Controllers\Api\Admin\AdminRfpRfqController;
-use App\Http\Controllers\Api\Admin\AdminGalleryController;
-use App\Http\Controllers\Api\Admin\AdminJobController;
-use App\Http\Controllers\Api\Admin\AdminContactController;
-use App\Http\Controllers\Api\Admin\AdminStatsController;
-use App\Http\Controllers\Api\Admin\AdminTranslationController;
-use App\Http\Controllers\Api\Admin\AdminTrainingProgramController;
-use App\Http\Controllers\Api\Admin\AdminAgriTechToolController;
-use App\Http\Controllers\Api\Admin\AdminMarketAccessProgramController;
-use App\Http\Controllers\Api\Admin\AdminEnvironmentalProjectController;
-use App\Http\Controllers\Api\Admin\AdminCommunityProgramController;
-use App\Http\Controllers\Api\Admin\AdminSmartFarmingProgramController;
-use App\Http\Controllers\Api\Admin\AdminSeedSupplyProgramController;
-use App\Http\Controllers\Api\Admin\AdminProgramRegistrationController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,8 +45,6 @@ use App\Http\Controllers\Api\Admin\AdminProgramRegistrationController;
 // =============================================================================
 
 // Home & General
-Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/', [HomeController::class, 'index'])->name('api.home');
 Route::get('/about', [HomeController::class, 'about'])->name('api.about');
 Route::get('/stats', [HomeController::class, 'stats'])->name('api.stats');
@@ -183,85 +161,34 @@ Route::prefix('program-registration')->name('api.program-registration.')->group(
   Route::get('/user-registrations', [ProgramRegistrationController::class, 'userRegistrations'])->name('user-registrations');
 });
 
-// =============================================================================
-// ADMIN API ROUTES (Protected by auth middleware)
-// =============================================================================
-
-Route::prefix('admin')->name('api.admin.')->middleware(['admin'])->group(function () {
-
-  // Dashboard
-  Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-  Route::get('/health', [AdminController::class, 'health'])->name('health');
-
-  // Core Content Admin Routes
-  Route::apiResource('news', AdminNewsController::class);
-  Route::post('news/bulk-status', [AdminNewsController::class, 'bulkUpdateStatus'])->name('news.bulk-status');
-  Route::get('news-stats', [AdminNewsController::class, 'stats'])->name('news.stats');
-
-  Route::apiResource('publications', AdminPublicationController::class);
-  Route::get('publications-stats', [AdminPublicationController::class, 'stats'])->name('publications.stats');
-
-  Route::apiResource('success-stories', AdminSuccessStoryController::class);
-  Route::apiResource('rfps-rfqs', AdminRfpRfqController::class);
-
-  Route::apiResource('galleries', AdminGalleryController::class);
-  Route::post('galleries/{gallery}/images', [AdminGalleryController::class, 'addImages'])->name('galleries.add-images');
-  Route::delete('galleries/{gallery}/images/{image}', [AdminGalleryController::class, 'removeImage'])->name('galleries.remove-image');
-
-  Route::apiResource('jobs', AdminJobController::class);
-
-  // Contact Management
-  Route::prefix('contacts')->name('contacts.')->group(function () {
-    Route::get('/', [AdminContactController::class, 'index'])->name('index');
-    Route::get('/{contact}', [AdminContactController::class, 'show'])->name('show');
-    Route::delete('/{contact}', [AdminContactController::class, 'destroy'])->name('destroy');
-    Route::post('/bulk-delete', [AdminContactController::class, 'bulkDelete'])->name('bulk-delete');
-    Route::get('/export', [AdminContactController::class, 'export'])->name('export');
-    Route::get('/stats', [AdminContactController::class, 'stats'])->name('stats');
-  });
-
-  // Statistics Management
-  Route::apiResource('stats', AdminStatsController::class);
-  Route::get('stats-summary', [AdminStatsController::class, 'summary'])->name('stats.summary');
-
-  // Translation Management
-  Route::prefix('translations')->name('translations.')->group(function () {
-    Route::get('/', [AdminTranslationController::class, 'index'])->name('index');
-    Route::post('/', [AdminTranslationController::class, 'store'])->name('store');
-    Route::get('/{translation}', [AdminTranslationController::class, 'show'])->name('show');
-    Route::put('/{translation}', [AdminTranslationController::class, 'update'])->name('update');
-    Route::delete('/{translation}', [AdminTranslationController::class, 'destroy'])->name('destroy');
-    Route::get('/for-model', [AdminTranslationController::class, 'forModel'])->name('for-model');
-    Route::post('/bulk', [AdminTranslationController::class, 'bulkStore'])->name('bulk');
-    Route::get('/stats', [AdminTranslationController::class, 'stats'])->name('stats');
-  });
-
-  // Business Pillar Admin Routes
-  Route::apiResource('training-programs', AdminTrainingProgramController::class);
-  Route::get('training-programs/{trainingProgram}/registrations', [AdminTrainingProgramController::class, 'registrations'])->name('training-programs.registrations');
-  Route::get('training-programs-stats', [AdminTrainingProgramController::class, 'stats'])->name('training-programs.stats');
-
-  Route::apiResource('agri-tech-tools', AdminAgriTechToolController::class);
-  Route::apiResource('market-access-programs', AdminMarketAccessProgramController::class);
-  Route::apiResource('environmental-projects', AdminEnvironmentalProjectController::class);
-  Route::apiResource('community-programs', AdminCommunityProgramController::class);
-  Route::apiResource('smart-farming-programs', AdminSmartFarmingProgramController::class);
-  Route::get('smart-farming-programs-stats', [AdminSmartFarmingProgramController::class, 'stats'])->name('smart-farming-programs.stats');
-  Route::post('smart-farming-programs/bulk-status', [AdminSmartFarmingProgramController::class, 'bulkUpdateStatus'])->name('smart-farming-programs.bulk-status');
-
-  Route::apiResource('seed-supply-programs', AdminSeedSupplyProgramController::class);
-  Route::get('seed-supply-programs-stats', [AdminSeedSupplyProgramController::class, 'stats'])->name('seed-supply-programs.stats');
-  Route::post('seed-supply-programs/bulk-status', [AdminSeedSupplyProgramController::class, 'bulkUpdateStatus'])->name('seed-supply-programs.bulk-status');
-  Route::post('seed-supply-programs/bulk-availability', [AdminSeedSupplyProgramController::class, 'bulkUpdateAvailability'])->name('seed-supply-programs.bulk-availability');
-
-  // Program Registration Management
-  Route::prefix('program-registrations')->name('program-registrations.')->group(function () {
-    Route::get('/', [AdminProgramRegistrationController::class, 'index'])->name('index');
-    Route::get('/{programRegistration}', [AdminProgramRegistrationController::class, 'show'])->name('show');
-    Route::put('/{programRegistration}/status', [AdminProgramRegistrationController::class, 'updateStatus'])->name('update-status');
-    Route::delete('/{programRegistration}', [AdminProgramRegistrationController::class, 'destroy'])->name('destroy');
-    Route::post('/bulk-status', [AdminProgramRegistrationController::class, 'bulkUpdateStatus'])->name('bulk-status');
-    Route::get('/export', [AdminProgramRegistrationController::class, 'export'])->name('export');
-    Route::get('/stats', [AdminProgramRegistrationController::class, 'stats'])->name('stats');
-  });
+/*
+|--------------------------------------------------------------------------
+| Admin API Routes
+|--------------------------------------------------------------------------
+| Protected admin routes for content management
+*/
+// Admin Authentication Routes (public)
+Route::prefix('admin')->name('api.admin.')->group(function () {
+    Route::post('login', [App\Http\Controllers\Api\Admin\AuthController::class, 'login'])->name('login');
+    Route::post('logout', [App\Http\Controllers\Api\Admin\AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
 });
+
+// Protected Admin Routes
+Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->name('api.admin.')->group(function () {
+    // Dashboard
+    Route::get('/dashboard/stats', [App\Http\Controllers\Api\Admin\DashboardController::class, 'stats'])->name('dashboard.stats');
+    
+    // Content Management
+    Route::apiResource('news', App\Http\Controllers\Api\Admin\NewsController::class);
+    Route::apiResource('programs', App\Http\Controllers\Api\Admin\ProgramsController::class);
+    Route::apiResource('training-programs', App\Http\Controllers\Api\Admin\TrainingProgramsController::class);
+    Route::apiResource('agri-tech-tools', App\Http\Controllers\Api\Admin\AgriTechToolsController::class);
+    Route::apiResource('market-access-programs', App\Http\Controllers\Api\Admin\MarketAccessProgramsController::class);
+    Route::apiResource('smart-farming-programs', App\Http\Controllers\Api\Admin\SmartFarmingProgramsController::class);
+    Route::apiResource('seed-supply-programs', App\Http\Controllers\Api\Admin\SeedSupplyProgramsController::class);
+    Route::apiResource('community-programs', App\Http\Controllers\Api\Admin\CommunityProgramsController::class);
+    Route::apiResource('beneficiaries-stats', App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class);
+    Route::get('beneficiaries-stats-summary', [App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class, 'summary'])->name('beneficiaries-stats.summary');
+
+});
+

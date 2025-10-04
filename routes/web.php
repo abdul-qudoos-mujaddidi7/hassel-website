@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,24 +29,17 @@ Route::get('/health', function () {
   ]);
 })->name('health');
 
-// Admin authentication & dashboard routes
-Route::prefix('admin')->name('admin.')->group(function () {
-  Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-  });
 
-  Route::middleware('admin.api')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/me', [AuthController::class, 'currentUser'])->name('me');
-    Route::get('/', function () {
-      return view('admin.app');
-    })->name('index');
-    Route::get('/{view?}', function () {
-      return view('admin.app');
-    })->where('view', '.*');
-  });
-});
+/*
+|--------------------------------------------------------------------------
+| Admin Panel Routes
+|--------------------------------------------------------------------------
+| Admin panel entry points - all admin routes serve the admin.blade.php
+*/
+
+Route::get('/admin/{any?}', function () {
+  return view('admin');
+})->where('any', '.*')->name('admin');
 
 /*
 |--------------------------------------------------------------------------

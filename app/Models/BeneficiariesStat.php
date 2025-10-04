@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\StatType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -18,6 +19,7 @@ class BeneficiariesStat extends Model
     ];
 
     protected $casts = [
+        'stat_type' => StatType::class,
         'value' => 'integer',
         'year' => 'integer',
     ];
@@ -57,7 +59,7 @@ class BeneficiariesStat extends Model
 
     public function getStatTypeDisplayAttribute(): string
     {
-        return ucwords(str_replace('_', ' ', $this->stat_type));
+        return $this->stat_type->label();
     }
 
     // Helper Methods

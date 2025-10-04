@@ -12,13 +12,19 @@ export default createVuetify({
         themes: {
             light: {
                 colors: {
-                    primary: '#1976d2',
-                    secondary: '#424242',
-                    accent: '#82B1FF',
-                    error: '#FF5252',
+                    primary: '#059669', // Professional vibrant green
+                    secondary: '#047857', // Darker green
+                    accent: '#10B981', // Lighter green accent
+                    error: '#F44336',
                     info: '#2196F3',
                     success: '#4CAF50',
-                    warning: '#FFC107',
+                    warning: '#FF9800',
+                    // Custom colors for admin table styling
+                    tableRowBg: "#F0F9F6", // Very light green-tinted background for table rows
+                    background: "#FFFFFF", // White background
+                    lightSectionBg: "#F0F9F6", // Light green-tinted section bg
+                    primaryOld: '#059669', // Professional vibrant green for buttons
+                    tealColor: '#047857', // Darker green for icons
                 },
             },
         },

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
-import axios from "axios";
+import axios from "../../axios.js";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
@@ -20,8 +20,8 @@ export const useAuthRepository = defineStore("authRepository", {
             this.error = null;
 
             try {
-                // 1. Login request (use API route)
-                const response = await axios.post("/api/login", credentials);
+                // 1. Login request (use admin API route)
+                const response = await axios.post("login", credentials);
 
                 const { user, token, role } = response.data;
 
@@ -45,9 +45,8 @@ export const useAuthRepository = defineStore("authRepository", {
                 });
 
                 setTimeout(() => {
-                    // Redirect to admin panel with token in URL (temporary)
-                    const token = sessionStorage.getItem("token");
-                    window.location.replace(`/admin?token=${token}`);
+                    // Redirect to admin panel
+                    window.location.replace("/admin");
                 }, 1000);
             } catch (error) {
                 toast.error("Login failed! Please check your credentials.", {
@@ -66,7 +65,7 @@ export const useAuthRepository = defineStore("authRepository", {
         async logout() {
             this.error = null;
             try {
-                await axios.post("/api/logout");
+                await axios.post("logout");
 
                 // Clear storage
                 sessionStorage.clear();
@@ -80,8 +79,8 @@ export const useAuthRepository = defineStore("authRepository", {
                 });
 
                 setTimeout(() => {
-                    // Redirect to login page
-                    window.location.href = "/admin/login";
+                    // Redirect to admin login
+                    window.location.href = "/admin";
                 }, 500);
             } catch (error) {
                 toast.error("Logout failed! Please try again.", {
@@ -100,8 +99,15 @@ export const useAuthRepository = defineStore("authRepository", {
         loadFromSession() {
             const storedUser = sessionStorage.getItem("user");
             const storedRole = sessionStorage.getItem("role");
+            const storedToken = sessionStorage.getItem("token");
 
-            if (storedUser) Object.assign(this.user, JSON.parse(storedUser));
+            if (storedUser && storedToken) {
+                Object.assign(this.user, JSON.parse(storedUser));
+                this.isAuthenticated = true;
+                
+                // Set token for axios
+                axios.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
+            }
             if (storedRole) this.role = JSON.parse(storedRole);
         }
     },
