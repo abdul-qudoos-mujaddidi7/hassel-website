@@ -488,43 +488,47 @@ function handleDrawerState(isOpen) {
 .v-list-item {
     color: white !important;
     transition: all 0.3s ease;
+    margin: 0 !important; /* Remove default margin */
+    padding: 12px 16px !important; /* Consistent padding */
 }
 
 .v-list-item:hover {
     background-color: rgba(
-        5,
-        150,
-        105,
-        0.2
-    ) !important; /* Professional green with opacity */
-    color: #10b981 !important; /* Light green text */
+        55,
+        95,
+        31,
+        0.3
+    ) !important; /* Brand olive green with opacity */
+    color: #fbf5df !important; /* Brand cream text */
     border-radius: 12px;
-    margin: 3px 12px;
+    margin: 0 !important; /* Remove margin to prevent collapse */
+    padding: 12px 16px !important; /* Add padding instead of margin */
     transform: none; /* Remove the left movement */
-    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3); /* Add subtle shadow instead */
+    box-shadow: 0 2px 8px rgba(55, 95, 31, 0.4); /* Brand olive green shadow */
 }
 
 .v-list-item.v-list-item--active {
     background: linear-gradient(
         135deg,
-        #059669,
-        #10b981
-    ) !important; /* Professional green gradient */
-    color: white !important; /* White text */
+        #eaaa03,
+        #fbf5df
+    ) !important; /* Brand golden gradient */
+    color: #134124 !important; /* Deep green text */
     font-weight: 700;
     border-radius: 12px;
-    margin: 3px 12px;
-    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.5);
-    border-left: 4px solid #a7f3d0;
+    margin: 0 !important; /* Remove margin to prevent collapse */
+    padding: 12px 16px !important; /* Add padding instead of margin */
+    box-shadow: 0 4px 12px rgba(234, 170, 3, 0.4);
+    border-left: 4px solid #fbf5df;
 }
 
 .v-list-item.v-list-item--active .v-icon {
-    color: white !important; /* White icon for active */
+    color: #134124 !important; /* Deep green icon for active */
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
 }
 
 .v-list-item:hover .v-icon {
-    color: #10b981 !important; /* Professional green icon on hover */
+    color: #fbf5df !important; /* Brand cream icon on hover */
 }
 
 .v-list-item .v-icon {
@@ -546,15 +550,15 @@ function handleDrawerState(isOpen) {
 
 .user-profile-card:hover {
     background-color: rgba(
-        5,
-        150,
-        105,
-        0.2
-    ) !important; /* Professional green with opacity */
-    color: #10b981 !important; /* Professional green text */
+        55,
+        95,
+        31,
+        0.3
+    ) !important; /* Brand olive green with opacity */
+    color: #fbf5df !important; /* Brand cream text */
     border-radius: 12px;
     transform: translateY(-2px); /* Keep subtle vertical lift for profile */
-    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4); /* Enhanced shadow for profile */
+    box-shadow: 0 4px 12px rgba(55, 95, 31, 0.4); /* Brand olive green shadow */
 }
 
 /* Ensure the sidebar container uses flexbox for proper positioning */
@@ -564,15 +568,10 @@ function handleDrawerState(isOpen) {
     height: 100vh !important;
     min-height: 100vh !important;
     max-height: 100vh !important;
-    background: linear-gradient(
-        180deg,
-        #034e3f 0%,
-        #047857 50%,
-        #059669 100%
-    ); /* Professional green gradient */
+    background: #134124; /* Single brand color - no gradient */
     overflow: hidden;
     color: white;
-    box-shadow: 3px 0 15px rgba(5, 150, 105, 0.2);
+    box-shadow: 3px 0 15px rgba(19, 65, 36, 0.3);
     position: relative;
 }
 

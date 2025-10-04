@@ -12,19 +12,30 @@ export default createVuetify({
         themes: {
             light: {
                 colors: {
-                    primary: "#134124", // Professional vibrant green
-                    secondary: "#375f1f", // Darker green
-                    accent: "#10B981", // Lighter green accent
-                    error: "#F44336",
-                    info: "#2196F3",
-                    success: "#4CAF50",
-                    warning: "#FF9800",
-                    // Custom colors for admin table styling
-                    tableRowBg: "#F0F9F6", // Very light green-tinted background for table rows
-                    background: "#FFFFFF", // White background
-                    lightSectionBg: "#F0F9F6", // Light green-tinted section bg
-                    primaryOld: "#059669", // Professional vibrant green for buttons
-                    tealColor: "#047857", // Darker green for icons
+                    // Brand colors from app.css
+                    primary: "#134124", // Deep green - main brand color
+                    secondary: "#375f1f", // Olive green - secondary brand color
+                    accent: "#eaaa03", // Golden accent - brand accent color
+                    cream: "#fbf5df", // Light cream - brand cream color
+
+                    // Standard colors
+                    error: "#dc2626", // Red for errors
+                    info: "#3b82f6", // Blue for info
+                    success: "#059669", // Green for success
+                    warning: "#f59e0b", // Amber for warnings
+
+                    // Admin panel specific colors
+                    background: "#ffffff", // White background
+                    surface: "#f8fafc", // Light gray surface
+                    surfaceVariant: "#f1f5f9", // Lighter gray for variants
+
+                    // Table and component colors
+                    tableHeader: "#134124", // Deep green for table headers
+                    tableRow: "#f8fafc", // Light background for table rows
+                    tableRowHover: "#f0f9f6", // Light green tint for hover
+                    sidebar: "#134124", // Deep green for sidebar
+                    sidebarHover: "#375f1f", // Olive green for sidebar hover
+                    sidebarActive: "#eaaa03", // Golden accent for active items
                 },
             },
         },
@@ -33,9 +44,20 @@ export default createVuetify({
         VTextField: {
             variant: "outlined",
             density: "compact",
+            color: "primary",
         },
         VBtn: {
             style: "text-transform: none;",
+            color: "primary",
+        },
+        VCard: {
+            color: "surface",
+        },
+        VDataTable: {
+            color: "primary",
+        },
+        VChip: {
+            color: "primary",
         },
     },
 });
