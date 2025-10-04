@@ -80,7 +80,7 @@ export const useAuthRepository = defineStore("authRepository", {
 
                 setTimeout(() => {
                     // Redirect to admin login
-                    window.location.href = "/admin";
+                    window.location.href = "/admin/login";
                 }, 500);
             } catch (error) {
                 toast.error("Logout failed! Please try again.", {

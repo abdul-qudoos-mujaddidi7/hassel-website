@@ -118,7 +118,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import { useAuthRepository } from '../../stores/Auth.js';
+
 const { t, locale } = useI18n();
+const authStore = useAuthRepository();
 
 const props = defineProps({
     pageTitle: { type: String, default: "" },
@@ -148,9 +151,13 @@ const changeLanguage = (lang) => {
     isRtl.value = lang !== "en";
 };
 
-const handleLogout = () => {
+const handleLogout = async () => {
     console.log(t("logging_out_message"));
-    AuthRepository.logout();
+    try {
+        await authStore.logout();
+    } catch (error) {
+        console.error('Logout error:', error);
+    }
 };
 </script>
 

@@ -221,21 +221,44 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { useAuthRepository } from '../../stores/Auth.js';
 
+const authStore = useAuthRepository();
+
+// Load user data from session when component mounts
+onMounted(() => {
+    authStore.loadFromSession();
+});
 const logo = "https://via.placeholder.com/150"; // replace with your logo
 
 const dialog = ref(false);
 const activeMenu = ref(null);
 
-const user = ref({
-    name: "Admin User",
-    email: "admin@example.com",
-    photo: "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?semt=ais_hybrid&w=740"
+// Use actual user data from auth store
+const user = computed(() => {
+    if (authStore.user && authStore.user.name) {
+        return {
+            name: authStore.user.name,
+            email: authStore.user.email,
+            photo: authStore.user.photo || "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?semt=ais_hybrid&w=740"
+        };
+    }
+    // Fallback for when user data isn't loaded yet
+    return {
+        name: "Admin User",
+        email: "admin@example.com",
+        photo: "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?semt=ais_hybrid&w=740"
+    };
 });
 
-const logout = () => {
-    console.log("Logging out...");
+const logout = async () => {
+    try {
+        await authStore.logout();
+        dialog.value = false; // Close the dialog
+    } catch (error) {
+        console.error('Logout error:', error);
+    }
 };
 
 const toggleMenu = (menu) => {
