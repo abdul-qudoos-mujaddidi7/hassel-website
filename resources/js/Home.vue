@@ -842,9 +842,7 @@
         </section>
 
         <!-- Closing CTA Section -->
-        <section
-            class="section-padding bg-gradient-to-r from-green-600 to-emerald-600 text-white"
-        >
+        <section class="section-padding text-white">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="heading-lg mb-6 text-green-600">
                     Ready to Transform Agricultural Communities?

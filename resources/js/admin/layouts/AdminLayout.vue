@@ -1,5 +1,5 @@
 <template>
-    <v-layout class="rounded rounded-md">
+    <v-layout class="admin-layout">
         <v-navigation-drawer
             v-model="drawer"
             :rail="rail"
@@ -11,12 +11,11 @@
             <sidebar :dir="isRtl ? 'rtl' : 'ltr'" />
         </v-navigation-drawer>
 
-        <v-main class="d-flex flex-col" style="min-height: 300px">
+        <v-main class="d-flex flex-col">
             <v-card
                 variant="flat"
-                
                 :style="vCardStyle"
-                class="min-h-screen d-flex flex-col m-4 ml-4 py-4 px-4 rounded-xl"
+                class="main-content-card"
             >
                 <router-view></router-view>
             </v-card>
@@ -28,8 +27,8 @@
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
-import Sidebar from '../components/Sidebar.vue'
-import Header from '../components/Header.vue'
+import Sidebar from "../components/Sidebar.vue";
+import Header from "../components/Header.vue";
 
 const route = useRoute();
 const { locale } = useI18n();
@@ -56,17 +55,39 @@ const vCardStyle = computed(() => {
 </script>
 
 <style scoped>
-/* Apply #555 background to the main layout */
-
-/* Ensure the main content area has #555 background */
-.v-main {
-    background-color: rgb(248,248,248) !important;
+/* Admin Layout - Full Height */
+.admin-layout {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
     overflow: hidden;
 }
 
-/* Apply #555 to the content card */
-.v-card {
+/* Navigation Drawer - Full Height */
+.sideBar {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+}
+
+/* Main Content Area */
+.v-main {
+    background-color: rgb(248, 248, 248) !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
     overflow: hidden;
+}
+
+/* Main Content Card */
+.main-content-card {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    overflow-y: auto;
+    padding: 1rem;
 }
 
 /* Hide all scrollbars */

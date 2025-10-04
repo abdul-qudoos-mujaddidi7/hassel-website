@@ -5,11 +5,7 @@
             <router-link to="/admin/dashboard" class="logo-link">
                 <div class="logo-container">
                     <v-avatar size="60" class="logo-avatar">
-                        <img
-                            :src="logo"
-                            alt="Logo"
-                            class="logo-image"
-                        />
+                        <img :src="logo" alt="Logo" class="logo-image" />
                     </v-avatar>
                 </div>
             </router-link>
@@ -39,7 +35,11 @@
             </v-list-item>
             <transition name="slide-fade">
                 <v-list v-show="activeMenu === 'lead'" class="pl-4">
-                    <router-link v-for="item in leadItems" :key="item.to" :to="item.to">
+                    <router-link
+                        v-for="item in leadItems"
+                        :key="item.to"
+                        :to="item.to"
+                    >
                         <v-list-item
                             :title="item.title"
                             :prepend-icon="item.icon"
@@ -106,7 +106,11 @@
             </v-list-item>
             <transition name="slide-fade">
                 <v-list v-if="activeMenu === 'expense'" class="pl-4">
-                    <router-link v-for="item in navItems" :key="item.to" :to="item.to">
+                    <router-link
+                        v-for="item in navItems"
+                        :key="item.to"
+                        :to="item.to"
+                    >
                         <v-list-item
                             :title="item.title"
                             :prepend-icon="item.icon"
@@ -129,7 +133,11 @@
             </v-list-item>
             <transition name="slide-fade">
                 <v-list v-if="activeMenu === 'people'" class="pl-4">
-                    <router-link v-for="item in peopleItems" :key="item.to" :to="item.to">
+                    <router-link
+                        v-for="item in peopleItems"
+                        :key="item.to"
+                        :to="item.to"
+                    >
                         <v-list-item
                             :title="item.title"
                             :prepend-icon="item.icon"
@@ -152,7 +160,11 @@
             </v-list-item>
             <transition name="slide-fade">
                 <v-list v-if="activeMenu === 'reports'" class="pl-4">
-                    <router-link v-for="item in reportItems" :key="item.to" :to="item.to">
+                    <router-link
+                        v-for="item in reportItems"
+                        :key="item.to"
+                        :to="item.to"
+                    >
                         <v-list-item
                             :title="item.title"
                             :prepend-icon="item.icon"
@@ -175,7 +187,11 @@
             </v-list-item>
             <transition name="slide-fade">
                 <v-list v-if="activeMenu === 'setting'" class="pl-4">
-                    <router-link v-for="item in settingItems" :key="item.to" :to="item.to">
+                    <router-link
+                        v-for="item in settingItems"
+                        :key="item.to"
+                        :to="item.to"
+                    >
                         <v-list-item
                             :title="item.title"
                             :prepend-icon="item.icon"
@@ -212,7 +228,9 @@
                         <p class="text-gray-500">{{ user.email }}</p>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="error" block @click="logout">Log Out</v-btn>
+                        <v-btn color="error" block @click="logout"
+                            >Log Out</v-btn
+                        >
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -231,7 +249,7 @@ const activeMenu = ref(null);
 const user = ref({
     name: "Admin User",
     email: "admin@example.com",
-    photo: "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?semt=ais_hybrid&w=740"
+    photo: "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?semt=ais_hybrid&w=740",
 });
 
 const logout = () => {
@@ -243,42 +261,162 @@ const toggleMenu = (menu) => {
 };
 
 const navItems = [
-    { to: "/admin/expense", title: "All Expenses", icon: "mdi mdi-circle-medium", value: "AllExpenses" },
-    { to: "/admin/billExpense", title: "Bill Expense", icon: "mdi mdi-circle-medium", value: "billExpense" },
-    { to: "/admin/expenseProducts", title: "Products", icon: "mdi mdi-circle-medium", value: "expense product" },
-    { to: "/admin/expenseCat", title: "Categories", icon: "mdi mdi-circle-medium", value: "categories" }
+    {
+        to: "/admin/expense",
+        title: "All Expenses",
+        icon: "mdi mdi-circle-medium",
+        value: "AllExpenses",
+    },
+    {
+        to: "/admin/billExpense",
+        title: "Bill Expense",
+        icon: "mdi mdi-circle-medium",
+        value: "billExpense",
+    },
+    {
+        to: "/admin/expenseProducts",
+        title: "Products",
+        icon: "mdi mdi-circle-medium",
+        value: "expense product",
+    },
+    {
+        to: "/admin/expenseCat",
+        title: "Categories",
+        icon: "mdi mdi-circle-medium",
+        value: "categories",
+    },
 ];
 
 const peopleItems = [
-    { to: "/admin/employee", title: "Employee", icon: "mdi mdi-circle-medium", value: "employee" },
-    { to: "/admin/patients", title: "Patients", icon: "mdi mdi-circle-medium", value: "patients" },
-    { to: "/admin/owners", title: "Owners", icon: "mdi mdi-circle-medium", value: "owners" },
-    { to: "/admin/supplier", title: "Supplier", icon: "mdi mdi-circle-medium", value: "supplier" },
-    { to: "/admin/customer", title: "Customer", icon: "mdi mdi-circle-medium", value: "customer" },
-    { to: "/admin/doctors", title: "Doctors", icon: "mdi mdi-circle-medium", value: "doctors" },
-    { to: "/admin/user", title: "User", icon: "mdi mdi-circle-medium", value: "user" }
+    {
+        to: "/admin/employee",
+        title: "Employee",
+        icon: "mdi mdi-circle-medium",
+        value: "employee",
+    },
+    {
+        to: "/admin/patients",
+        title: "Patients",
+        icon: "mdi mdi-circle-medium",
+        value: "patients",
+    },
+    {
+        to: "/admin/owners",
+        title: "Owners",
+        icon: "mdi mdi-circle-medium",
+        value: "owners",
+    },
+    {
+        to: "/admin/supplier",
+        title: "Supplier",
+        icon: "mdi mdi-circle-medium",
+        value: "supplier",
+    },
+    {
+        to: "/admin/customer",
+        title: "Customer",
+        icon: "mdi mdi-circle-medium",
+        value: "customer",
+    },
+    {
+        to: "/admin/doctors",
+        title: "Doctors",
+        icon: "mdi mdi-circle-medium",
+        value: "doctors",
+    },
+    {
+        to: "/admin/user",
+        title: "User",
+        icon: "mdi mdi-circle-medium",
+        value: "user",
+    },
 ];
 
 const leadItems = [
-    { to: "/admin/lead", title: "Leads", icon: "mdi mdi-circle-medium", value: "lead" },
-    { to: "/admin/leadCategory", title: "Lead Category", icon: "mdi mdi-circle-medium", value: "leadCategory" },
-    { to: "/admin/leadStage", title: "Lead Stage", icon: "mdi mdi-circle-medium", value: "leadStage" }
+    {
+        to: "/admin/lead",
+        title: "Leads",
+        icon: "mdi mdi-circle-medium",
+        value: "lead",
+    },
+    {
+        to: "/admin/leadCategory",
+        title: "Lead Category",
+        icon: "mdi mdi-circle-medium",
+        value: "leadCategory",
+    },
+    {
+        to: "/admin/leadStage",
+        title: "Lead Stage",
+        icon: "mdi mdi-circle-medium",
+        value: "leadStage",
+    },
 ];
 
 const settingItems = [
-    { to: "/admin/systemSetting", title: "System Settings", icon: "mdi mdi-circle-medium", value: "system" },
-    { to: "/admin/moneyAcc", title: "Money Account", icon: "mdi mdi-circle-medium", value: "moneyAcc" },
-    { to: "/admin/rolePermissions", title: "Role & Permissions", icon: "mdi mdi-circle-medium", value: "roles" },
-    { to: "/admin/service", title: "Service", icon: "mdi mdi-circle-medium", value: "service" },
-    { to: "/admin/dental-types", title: "Dental Types", icon: "mdi mdi-circle-medium", value: "Dental" }
+    {
+        to: "/admin/systemSetting",
+        title: "System Settings",
+        icon: "mdi mdi-circle-medium",
+        value: "system",
+    },
+    {
+        to: "/admin/moneyAcc",
+        title: "Money Account",
+        icon: "mdi mdi-circle-medium",
+        value: "moneyAcc",
+    },
+    {
+        to: "/admin/rolePermissions",
+        title: "Role & Permissions",
+        icon: "mdi mdi-circle-medium",
+        value: "roles",
+    },
+    {
+        to: "/admin/service",
+        title: "Service",
+        icon: "mdi mdi-circle-medium",
+        value: "service",
+    },
+    {
+        to: "/admin/dental-types",
+        title: "Dental Types",
+        icon: "mdi mdi-circle-medium",
+        value: "Dental",
+    },
 ];
 
 const reportItems = [
-    { to: "/admin/profitLoss", title: "Profit & Loss", icon: "mdi mdi-circle-medium", value: "profit" },
-    { to: "/admin/patientsReport", title: "Patients Report", icon: "mdi mdi-circle-medium", value: "patientsReport" },
-    { to: "/admin/categoryReport", title: "Expense Category", icon: "mdi mdi-circle-medium", value: "catReport" },
-    { to: "/admin/productReport", title: "Expense Product", icon: "mdi mdi-circle-medium", value: "expenseProReport" },
-    { to: "/admin/serviceReport", title: "Service Report", icon: "mdi mdi-circle-medium", value: "serviceReport" }
+    {
+        to: "/admin/profitLoss",
+        title: "Profit & Loss",
+        icon: "mdi mdi-circle-medium",
+        value: "profit",
+    },
+    {
+        to: "/admin/patientsReport",
+        title: "Patients Report",
+        icon: "mdi mdi-circle-medium",
+        value: "patientsReport",
+    },
+    {
+        to: "/admin/categoryReport",
+        title: "Expense Category",
+        icon: "mdi mdi-circle-medium",
+        value: "catReport",
+    },
+    {
+        to: "/admin/productReport",
+        title: "Expense Product",
+        icon: "mdi mdi-circle-medium",
+        value: "expenseProReport",
+    },
+    {
+        to: "/admin/serviceReport",
+        title: "Service Report",
+        icon: "mdi mdi-circle-medium",
+        value: "serviceReport",
+    },
 ];
 
 function handleDrawerState(isOpen) {
@@ -287,8 +425,7 @@ function handleDrawerState(isOpen) {
 </script>
 
 <style scoped>
-
-    /* Hide scrollbar across all browsers */
+/* Hide scrollbar across all browsers */
 /* .child {
     font-size: 14px;
     transition: color 0.3s;
@@ -354,21 +491,31 @@ function handleDrawerState(isOpen) {
 }
 
 .v-list-item:hover {
-    background-color: rgba(5, 150, 105, 0.2) !important; /* Professional green with opacity */
-    color: #10B981 !important; /* Light green text */
+    background-color: rgba(
+        5,
+        150,
+        105,
+        0.2
+    ) !important; /* Professional green with opacity */
+    color: #10b981 !important; /* Light green text */
     border-radius: 12px;
     margin: 3px 12px;
-    transform: translateX(4px);
+    transform: none; /* Remove the left movement */
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3); /* Add subtle shadow instead */
 }
 
 .v-list-item.v-list-item--active {
-    background: linear-gradient(135deg, #059669, #10B981) !important; /* Professional green gradient */
+    background: linear-gradient(
+        135deg,
+        #059669,
+        #10b981
+    ) !important; /* Professional green gradient */
     color: white !important; /* White text */
     font-weight: 700;
     border-radius: 12px;
     margin: 3px 12px;
     box-shadow: 0 4px 12px rgba(5, 150, 105, 0.5);
-    border-left: 4px solid #A7F3D0;
+    border-left: 4px solid #a7f3d0;
 }
 
 .v-list-item.v-list-item--active .v-icon {
@@ -377,7 +524,7 @@ function handleDrawerState(isOpen) {
 }
 
 .v-list-item:hover .v-icon {
-    color: #10B981 !important; /* Professional green icon on hover */
+    color: #10b981 !important; /* Professional green icon on hover */
 }
 
 .v-list-item .v-icon {
@@ -385,7 +532,6 @@ function handleDrawerState(isOpen) {
 }
 
 /* Profile Section Styling - Positioned at the very end */
-
 
 .user-profile-item {
     padding: 8px 0;
@@ -399,23 +545,35 @@ function handleDrawerState(isOpen) {
 }
 
 .user-profile-card:hover {
-    background-color: rgba(5, 150, 105, 0.2) !important; /* Professional green with opacity */
-    color: #10B981 !important; /* Professional green text */
+    background-color: rgba(
+        5,
+        150,
+        105,
+        0.2
+    ) !important; /* Professional green with opacity */
+    color: #10b981 !important; /* Professional green text */
     border-radius: 12px;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(5, 150, 105, 0.3);
+    transform: translateY(-2px); /* Keep subtle vertical lift for profile */
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4); /* Enhanced shadow for profile */
 }
 
 /* Ensure the sidebar container uses flexbox for proper positioning */
 .sidebar-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    max-height: 100vh;
-    background: linear-gradient(180deg, #034E3F 0%, #047857 50%, #059669 100%); /* Professional green gradient */
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    background: linear-gradient(
+        180deg,
+        #034e3f 0%,
+        #047857 50%,
+        #059669 100%
+    ); /* Professional green gradient */
     overflow: hidden;
     color: white;
     box-shadow: 3px 0 15px rgba(5, 150, 105, 0.2);
+    position: relative;
 }
 
 /* Navigation section should take available space */
@@ -424,8 +582,6 @@ function handleDrawerState(isOpen) {
     overflow-y: auto;
     padding: 16px 0;
 }
-
-
 
 .logo-link {
     display: block;
@@ -459,13 +615,10 @@ function handleDrawerState(isOpen) {
     border-radius: 50%;
 }
 
-
-
 .logo-title {
     font-size: 18px;
     font-weight: 600;
     color: #333;
     text-align: center;
 }
-
 </style>
