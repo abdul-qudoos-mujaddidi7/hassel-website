@@ -114,6 +114,10 @@ Route::prefix('contact')->name('api.contact.')->group(function () {
   Route::get('/info', [ContactController::class, 'info'])->name('info');
 });
 
+// Translations
+Route::get('/translations/{language}', [App\Http\Controllers\Api\TranslationController::class, 'getTranslations'])->name('translations.get');
+Route::post('/translations', [App\Http\Controllers\Api\TranslationController::class, 'setTranslation'])->name('translations.set');
+
 // =============================================================================
 // BUSINESS PILLAR ROUTES
 // =============================================================================

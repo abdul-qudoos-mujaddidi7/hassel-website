@@ -208,22 +208,12 @@
         <!-- Programs Section -->
         <section class="py-12 bg-gray-50" ref="programsTopRef">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div
+                <SkeletonLoader
                     v-if="loading"
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                >
-                    <div
-                        v-for="n in 6"
-                        :key="'sk-' + n"
-                        class="border rounded-professional-lg p-4 animate-pulse"
-                    >
-                        <div
-                            class="aspect-[16/9] bg-gray-200 rounded-md mb-3"
-                        ></div>
-                        <div class="h-5 bg-gray-200 w-3/4 mb-2"></div>
-                        <div class="h-4 bg-gray-100 w-2/3"></div>
-                    </div>
-                </div>
+                    type="card"
+                    :count="6"
+                    container-class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                />
 
                 <div v-else>
                     <div
@@ -319,6 +309,7 @@
 
 <script setup>
 import { onMounted, ref, watch, computed, nextTick } from "vue";
+import SkeletonLoader from "./components/SkeletonLoader.vue";
 
 const loading = ref(true);
 const items = ref([]);

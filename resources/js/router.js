@@ -26,6 +26,8 @@ const CommunityProgramDetail = () => import("./CommunityProgramDetail.vue");
 const EnvironmentalProjects = () => import("./EnvironmentalProjects.vue");
 const EnvironmentalProjectDetail = () =>
     import("./EnvironmentalProjectDetail.vue");
+const NewsDetail = () => import("./NewsDetail.vue");
+const NotFound = () => import("./NotFound.vue");
 
 const router = createRouter({
     history: createWebHistory(),
@@ -76,6 +78,10 @@ const router = createRouter({
         { path: "/admin/login", component: AdminLogin },
         { path: "/admin", component: AdminDashboard },
         { path: "/admin/*", component: AdminDashboard },
+        // News detail route
+        { path: "/news/:slug", component: NewsDetail, name: "news-detail" },
+        // 404 catch-all route
+        { path: "/:pathMatch(.*)*", component: NotFound },
     ],
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {

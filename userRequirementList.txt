@@ -4,8 +4,20 @@ Please provide ONLY the items below. Anything not listed here will be managed dy
 
 1) Brand & Icons
 - Logo files: PNG (transparent) + JPG (solid bg) in high resolution
-- Favicon: 32x32 PNG (we’ll generate other sizes)
+- Favicon: 32x32 PNG (we'll generate other sizes)
 - Social links (URLs): LinkedIn, Facebook, X/Twitter, YouTube (optional)
+
+CURRENT WEBSITE BRAND COLORS:
+- Brand Primary: #134124 (deep green)
+- Brand Secondary: #375f1f (olive green)
+- Brand Cream: #fbf5df (light cream)
+- Brand Accent: #eaaa03 (golden accent)
+- Brand Light: #f0fdf4 (light green background)
+- Brand Dark: #0f2a1a (darker variant of primary)
+- Brand Gray: #6b7280 (neutral gray)
+- Brand White: #ffffff (pure white)
+- Brand Beige: #fef7ed (warm beige)
+- Brand Light Gray: #f9fafb (light gray background)
 
 
 2) Home Page – Static Copy & Media
@@ -150,13 +162,80 @@ COMMUNITY PROGRAMS LIST PAGE:
 - Empty-state message text (default: "No programs found.").
 
 
-8) Static Contact Details (Header/Footer/Contact page)
+8) Resources Page – Static Copy & Media
+
+RESOURCES PAGE:
+- Hero background image (1920x1080+). If not provided we will use the generic our-work hero.
+- Hero title (default: "Resources & Media").
+- Hero description (1–2 sentences about accessing publications, insights, and media resources).
+- Tab navigation labels (confirm these are correct):
+  * News
+  * Publications  
+  * Success Stories
+  * RFPs/RFQs
+- Empty-state messages for each tab:
+  * News: "No news articles found."
+  * Publications: "No publications found."
+  * Success Stories: "No success stories found."
+  * RFPs/RFQs: "No RFPs or RFQs found."
+- Section headings for each tab:
+  * "Latest News"
+  * "Publications"
+  * "Success Stories"
+  * "RFPs & RFQs"
+9) Careers Page – Static Copy & Media
+
+CAREERS PAGE:
+- Hero background image (1920x1080+). If not provided we will use the generic our-work hero.
+- Hero title (default: "Careers at Mount Agro").
+- Hero description (1–2 sentences about joining the mission).
+- Hero badge text (default: "Building Afghanistan's Future").
+- Empty-state message text (default: "No job openings available at the moment").
+
+10) Contact Page – Static Copy & Media
+
+CONTACT PAGE:
+- Hero background image (1920x1080+). If not provided we will use the generic our-work hero.
+- Hero title (default: "Contact Us").
+- Hero description (1–2 sentences about getting in touch).
+- Primary CTA button text (default: "Send Message").
+- Secondary CTA button text (default: "Call Now").
+- Contact Information Section:
+  - Section title (default: "Get in Touch").
+  - Head Office details:
+    - Office name (default: "Head Office").
+    - Full address (street, city, state, country, postal code).
+    - Phone numbers (primary and secondary if applicable).
+    - Email addresses (info@ and support@ or your preferred emails).
+  - Business Hours:
+    - Operating hours for each day of the week.
+    - Special hours or holiday schedules if applicable.
+- Social Media Links:
+  - Facebook URL
+  - Twitter/X URL  
+  - LinkedIn URL
+  - Instagram URL
+  - YouTube URL
+  - WhatsApp number (with country code)
+- Regional Offices Section:
+  - Section title (default: "Our Offices").
+  - Section description (1–2 sentences about visiting locations).
+  - For each office location:
+    - City name
+    - Full address
+    - Phone number
+- CTA Section:
+  - Main headline (default: "Ready to Get Started?").
+  - Description paragraph (2–3 sentences about transforming business).
+  - CTA button text (default: "View Our Work").
+
+11) Static Contact Details (Header/Footer/Contact page)
 - Official email address to display (e.g., info@…)
 - Primary phone number to display (optional)
 - Office address (optional; city/country is enough if full address not ready)
 - Business hours (optional)
 
-7) Footer – Static Text
+12) Footer – Static Text
 - Short company one-liner (20–30 words) for footer description
 
 Notes

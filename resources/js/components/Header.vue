@@ -44,7 +44,7 @@
                             :aria-expanded="isProgramsOpen"
                             class="flex items-center text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 cursor-pointer"
                         >
-                            <span>Programs</span>
+                            <span>{{ t("nav.programs") }}</span>
                             <svg
                                 class="w-4 h-4 ml-1"
                                 fill="none"
@@ -68,48 +68,53 @@
                                     to="/training-programs"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
                                     @click="isProgramsOpen = false"
-                                    >Training Programs</router-link
+                                    >{{ t("nav.training") }}</router-link
                                 >
                                 <router-link
                                     to="/agri-tech"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
                                     @click="isProgramsOpen = false"
-                                    >Agri Tech Tools</router-link
+                                    >{{ t("nav.agri_tech") }}</router-link
                                 >
                                 <router-link
                                     to="/smart-farming"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
                                     @click="isProgramsOpen = false"
-                                    >Smart & Sustainable Farming</router-link
+                                    >{{ t("nav.smart_farming") }}</router-link
                                 >
                                 <router-link
                                     to="/seed-supply"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
                                     @click="isProgramsOpen = false"
-                                    >Seed & Input Supply Chain</router-link
+                                    >{{ t("nav.seed_supply") }}</router-link
                                 >
                                 <router-link
                                     to="/market-access"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
                                     @click="isProgramsOpen = false"
-                                    >Market Access Programs</router-link
+                                    >{{ t("nav.market_access") }}</router-link
                                 >
                                 <router-link
                                     to="/environmental-projects"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
                                     @click="isProgramsOpen = false"
-                                    >Environmental Projects</router-link
+                                    >{{ t("nav.environmental") }}</router-link
                                 >
                                 <router-link
                                     to="/community-programs"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700"
                                     @click="isProgramsOpen = false"
-                                    >Community Programs</router-link
+                                    >{{ t("nav.community") }}</router-link
                                 >
                             </div>
                         </div>
                     </div>
                 </nav>
+
+                <!-- Language Switcher -->
+                <div class="hidden md:block">
+                    <LanguageSwitcher />
+                </div>
 
                 <!-- Mobile menu button -->
                 <div class="md:hidden">
@@ -227,50 +232,50 @@
                         <summary
                             class="px-4 py-3 cursor-pointer text-gray-700 hover:text-green-600 rounded-lg"
                         >
-                            Programs
+                            {{ t("nav.programs") }}
                         </summary>
                         <div class="pl-4 py-2 space-y-1">
                             <router-link
                                 to="/training-programs"
                                 class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
                                 @click="closeMobileMenu"
-                                >Training Programs</router-link
+                                >{{ t("nav.training") }}</router-link
                             >
                             <router-link
                                 to="/agri-tech-tools"
                                 class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
                                 @click="closeMobileMenu"
-                                >Agri-Tech Tools</router-link
+                                >{{ t("nav.agri_tech") }}</router-link
                             >
                             <router-link
                                 to="/smart-farming"
                                 class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
                                 @click="closeMobileMenu"
-                                >Smart & Sustainable Farming</router-link
+                                >{{ t("nav.smart_farming") }}</router-link
                             >
                             <router-link
                                 to="/seed-supply"
                                 class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
                                 @click="closeMobileMenu"
-                                >Seed & Input Supply Chain</router-link
+                                >{{ t("nav.seed_supply") }}</router-link
                             >
                             <router-link
                                 to="/market-access"
                                 class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
                                 @click="closeMobileMenu"
-                                >Market Access Programs</router-link
+                                >{{ t("nav.market_access") }}</router-link
                             >
                             <router-link
                                 to="/environmental-projects"
                                 class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
                                 @click="closeMobileMenu"
-                                >Environmental Projects</router-link
+                                >{{ t("nav.environmental") }}</router-link
                             >
                             <router-link
                                 to="/community-programs"
                                 class="block px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md"
                                 @click="closeMobileMenu"
-                                >Community Programs</router-link
+                                >{{ t("nav.community") }}</router-link
                             >
                         </div>
                     </details>
@@ -295,8 +300,12 @@
 </template>
 
 <script setup>
-import { ref, watch, h, onMounted, onUnmounted } from "vue";
+import { ref, watch, h, onMounted, onUnmounted, computed } from "vue";
 import { useRoute } from "vue-router";
+import LanguageSwitcher from "./LanguageSwitcher.vue";
+import { useI18n } from "../composables/useI18n.js";
+
+const { t } = useI18n();
 
 // Icons (you can replace these with your preferred icon library)
 const HomeIcon = () =>
@@ -418,12 +427,12 @@ const isMobileMenuOpen = ref(false);
 const isProgramsOpen = ref(false);
 const programsMenuRef = ref(null);
 
-const menuItems = [
-    { name: "Home", path: "/", icon: HomeIcon },
-    { name: "Resources", path: "/resources", icon: ResourcesIcon },
-    { name: "Careers", path: "/careers", icon: CareersIcon },
-    { name: "Contact", path: "/contact", icon: ContactIcon },
-];
+const menuItems = computed(() => [
+    { name: t("nav.home"), path: "/", icon: HomeIcon },
+    { name: t("nav.resources"), path: "/resources", icon: ResourcesIcon },
+    { name: t("nav.careers"), path: "/careers", icon: CareersIcon },
+    { name: t("nav.contact"), path: "/contact", icon: ContactIcon },
+]);
 
 const toggleMobileMenu = () => {
     isMobileMenuOpen.value = !isMobileMenuOpen.value;

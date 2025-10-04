@@ -21,15 +21,13 @@
                     <h1
                         class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fadeInUp"
                     >
-                        Careers at
-                        <span class="text-green-400">Mount Agro</span>
+                        {{ t("careers.hero.title") }}
                     </h1>
                     <p
                         class="text-xl md:text-2xl text-gray-100 mb-8 max-w-3xl mx-auto animate-fadeInUp"
                         style="animation-delay: 0.2s"
                     >
-                        Join our mission to empower communities through
-                        innovation and sustainable development.
+                        {{ t("careers.hero.subtitle") }}
                     </p>
                     <div class="animate-fadeInUp" style="animation-delay: 0.4s">
                         <div
@@ -108,38 +106,22 @@
                                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                             ></path>
                         </svg>
-                        {{ loading ? "Loading..." : "Refresh Jobs" }}
+                        {{
+                            loading
+                                ? t("common.loading")
+                                : t("careers.refresh_jobs")
+                        }}
                     </button>
                 </div>
 
                 <!-- Loading State -->
-                <div v-if="loading" class="text-center py-12">
-                    <div
-                        class="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full"
-                    >
-                        <svg
-                            class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-600"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                        >
-                            <circle
-                                class="opacity-25"
-                                cx="12"
-                                cy="12"
-                                r="10"
-                                stroke="currentColor"
-                                stroke-width="4"
-                            ></circle>
-                            <path
-                                class="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            ></path>
-                        </svg>
-                        Loading job openings...
-                    </div>
-                </div>
+                <LoadingSpinner
+                    v-if="loading"
+                    type="inline"
+                    size="large"
+                    :message="t('loading.jobs')"
+                    container-class="py-12"
+                />
 
                 <!-- Error State -->
                 <div v-else-if="error" class="text-center py-12">
@@ -181,7 +163,7 @@
                                 d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"
                             ></path>
                         </svg>
-                        No job openings available at the moment
+                        {{ t("careers.no_jobs") }}
                     </div>
                 </div>
 
@@ -242,8 +224,8 @@
                                         </svg>
                                         {{
                                             job.status === "open" && job.is_open
-                                                ? "Open"
-                                                : "Closed"
+                                                ? t("careers.status.open")
+                                                : t("careers.status.closed")
                                         }}
                                     </span>
                                     <span class="flex items-center gap-1">
@@ -260,7 +242,7 @@
                                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                                             />
                                         </svg>
-                                        Deadline
+                                        {{ t("careers.deadline") }}
                                         {{
                                             job.deadline_formatted ||
                                             job.deadline ||
@@ -279,7 +261,7 @@
                                     )}&job_id=${job.id}`"
                                     class="btn btn-primary"
                                 >
-                                    Apply for this Position
+                                    {{ t("careers.apply_position") }}
                                 </a>
                             </div>
                         </div>
@@ -311,6 +293,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import LoadingSpinner from "./components/LoadingSpinner.vue";
+import { useI18n } from "./composables/useI18n.js";
+
+const { t } = useI18n();
 
 const jobs = ref([]);
 const loading = ref(false);

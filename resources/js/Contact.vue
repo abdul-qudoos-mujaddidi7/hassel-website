@@ -20,14 +20,13 @@
                     <h1
                         class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fadeInUp"
                     >
-                        Contact <span class="gradient-text">Us</span>
+                        {{ t("contact.hero.title") }}
                     </h1>
                     <p
                         class="text-xl md:text-2xl text-green-100 mb-8 max-w-3xl mx-auto animate-fadeInUp"
                         style="animation-delay: 0.2s"
                     >
-                        Get in touch with our team. We're here to help and
-                        answer any questions you may have.
+                        {{ t("contact.hero.subtitle") }}
                     </p>
                     <div
                         class="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp"
@@ -36,12 +35,12 @@
                         <a
                             href="#contact-form"
                             class="btn btn-secondary px-8 py-4 text-lg"
-                            >Send Message</a
+                            >{{ t("contact.hero.send_message") }}</a
                         >
                         <a
                             href="tel:+93701234567"
                             class="btn btn-cta px-8 py-4 text-lg"
-                            >Call Now</a
+                            >{{ t("contact.hero.call_now") }}</a
                         >
                     </div>
                 </div>
@@ -517,37 +516,28 @@
                                 :disabled="isSubmitting"
                                 class="w-full btn btn-primary py-4 text-lg"
                             >
-                                <svg
-                                    v-if="!isSubmitting"
-                                    class="w-5 h-5 mr-2"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                                    />
-                                </svg>
-                                <svg
-                                    v-else
-                                    class="w-5 h-5 mr-2 animate-spin"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                                    />
-                                </svg>
-                                {{
-                                    isSubmitting ? "Sending..." : "Send Message"
-                                }}
+                                <LoadingSpinner
+                                    v-if="isSubmitting"
+                                    type="button"
+                                    size="small"
+                                    message="Sending..."
+                                />
+                                <template v-else>
+                                    <svg
+                                        class="w-5 h-5 mr-2"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                        />
+                                    </svg>
+                                    Send Message
+                                </template>
                             </button>
                         </form>
 
@@ -706,6 +696,10 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import LoadingSpinner from "./components/LoadingSpinner.vue";
+import { useI18n } from "./composables/useI18n.js";
+
+const { t } = useI18n();
 
 const isSubmitting = ref(false);
 const showSuccess = ref(false);

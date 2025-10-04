@@ -434,18 +434,7 @@ html {
     box-shadow: 0 8px 25px rgba(22, 163, 74, 0.4);
     transform: translateY(-2px);
 }
-.btn-secondary {
-    background: transparent;
-    color: var(--brand-secondary);
-    border: 2px solid var(--brand-secondary);
-    position: relative;
-}
-.btn-secondary:hover {
-    background: var(--brand-secondary);
-    color: var(--brand-white);
-    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
-    transform: translateY(-2px);
-}
+
 .btn-accent {
     background: var(--brand-accent);
     color: var(--brand-white);
@@ -564,4 +553,19 @@ html {
 
 .rounded-professional-lg {
     border-radius: 1.5rem;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }

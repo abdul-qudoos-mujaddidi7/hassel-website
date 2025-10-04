@@ -120,7 +120,9 @@
         <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
-                    <h2 class="heading-lg text-green-600 mb-16">About Us</h2>
+                    <h2 class="heading-lg text-green-600 mb-16">
+                        {{ t("home.about.title") }}
+                    </h2>
                 </div>
                 <div
                     class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
@@ -533,7 +535,7 @@
                                         <span
                                             v-if="pillarLoading"
                                             class="animate-pulse"
-                                            >Loading...</span
+                                            >{{ t("common.loading") }}</span
                                         >
                                         <span v-else
                                             >{{
@@ -668,7 +670,7 @@
                             </div>
                             <div class="mt-auto">
                                 <router-link
-                                    to="/resources"
+                                    :to="`/news/${article.slug || article.id}`"
                                     class="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
                                 >
                                     Read More
@@ -692,9 +694,9 @@
                 </div>
 
                 <div class="text-center mt-12">
-                    <router-link to="/resources" class="btn btn-primary"
-                        >View All News</router-link
-                    >
+                    <router-link to="/resources" class="btn btn-primary">{{
+                        t("home.news.view_all")
+                    }}</router-link>
                 </div>
             </div>
         </section>
@@ -703,7 +705,9 @@
         <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="heading-lg text-green-600 mb-6">Our Partners</h2>
+                    <h2 class="heading-lg text-green-600 mb-6">
+                        {{ t("home.partners.title") }}
+                    </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                         Working together with government institutions, NGOs, and
                         private sector partners to maximize our impact.
@@ -882,6 +886,9 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import axios from "axios";
+import { useI18n } from "./composables/useI18n.js";
+
+const { t } = useI18n();
 
 // Hero slider state
 const currentSlide = ref(0);
@@ -916,131 +923,119 @@ const totalSlides = computed(() => {
 // Foundation tabs state (Vision / Mission / Values)
 
 // Hero slider data - 5 images
-const heroSlides = ref([
+const heroSlides = computed(() => [
     {
         image: "/images/home/hero1.avif",
-        title: "Empowering Agricultural Communities",
-        description:
-            "Building sustainable futures through innovative agricultural programs, training, and community development initiatives across Afghanistan.",
+        title: t("home.hero.title"),
+        description: t("home.hero.subtitle"),
     },
     {
         image: "/images/home/hero2.avif",
-        title: "Comprehensive Training Programs",
-        description:
-            "Providing farmers and agricultural professionals with cutting-edge knowledge, skills, and techniques for modern sustainable farming.",
+        title: t("home.hero2.title"),
+        description: t("home.hero2.subtitle"),
     },
     {
         image: "/images/home/hero3.avif",
-        title: "Agricultural Technology Solutions",
-        description:
-            "Integrating modern technology with traditional farming practices to boost productivity and ensure food security.",
+        title: t("home.hero3.title"),
+        description: t("home.hero3.subtitle"),
     },
     {
         image: "/images/home/hero4.avif",
-        title: "Community Development",
-        description:
-            "Strengthening rural communities through inclusive programs that promote social development and economic empowerment.",
+        title: t("home.hero4.title"),
+        description: t("home.hero4.subtitle"),
     },
     {
         image: "/images/home/hero5.avif",
-        title: "Environmental Conservation",
-        description:
-            "Promoting sustainable agricultural practices that protect our environment while ensuring productive and profitable farming.",
+        title: t("home.hero5.title"),
+        description: t("home.hero5.subtitle"),
     },
 ]);
 
 // Business pillars data
-const businessPillars = ref([
+const businessPillars = computed(() => [
     {
         id: "training",
-        title: "Training Programs",
+        title: t("home.pillars.training.title"),
         icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
         bgColor: "bg-green-100",
         textColor: "text-green-600",
         countColor: "text-green-600",
-        description:
-            "Comprehensive agricultural education and capacity building programs for farmers, cooperatives, and agricultural professionals.",
+        description: t("home.pillars.training.description"),
         route: "/training-programs",
         countKey: "trainingPrograms",
-        countLabel: "Programs",
+        countLabel: t("home.pillars.training.countLabel"),
     },
     {
         id: "agritech",
-        title: "Agri Tech Tools",
+        title: t("home.pillars.agritech.title"),
         icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
         bgColor: "bg-green-100",
         textColor: "text-green-600",
         countColor: "text-green-600",
-        description:
-            "Modern agricultural technologies and digital solutions to enhance farming productivity and efficiency.",
+        description: t("home.pillars.agritech.description"),
         route: "/agri-tech",
         countKey: "agriTechTools",
-        countLabel: "Tools",
+        countLabel: t("home.pillars.agritech.countLabel"),
     },
     {
         id: "smartfarming",
-        title: "Smart & Sustainable Farming",
+        title: t("home.pillars.smartfarming.title"),
         icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
         bgColor: "bg-green-100",
         textColor: "text-green-600",
         countColor: "text-green-600",
-        description:
-            "Promote modern techniques like drip irrigation, greenhouse farming, and precision agriculture with climate-resilient crops.",
+        description: t("home.pillars.smartfarming.description"),
         route: "/smart-farming",
         countKey: "smartFarming",
-        countLabel: "Programs",
+        countLabel: t("home.pillars.smartfarming.countLabel"),
     },
     {
         id: "seedSupply",
-        title: "Seed & Input Supply Chain",
+        title: t("home.pillars.seedSupply.title"),
         icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8-4",
         bgColor: "bg-green-100",
         textColor: "text-green-600",
         countColor: "text-green-600",
-        description:
-            "Provide high-quality seeds, fertilizers, and eco-friendly pesticides with reliable distribution networks across provinces.",
+        description: t("home.pillars.seedSupply.description"),
         route: "/seed-supply",
         countKey: "seedSupply",
-        countLabel: "Products",
+        countLabel: t("home.pillars.seedSupply.countLabel"),
     },
     {
         id: "market",
-        title: "Market Access Programs",
+        title: t("home.pillars.market.title"),
         icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6",
         bgColor: "bg-green-100",
         textColor: "text-green-600",
         countColor: "text-green-600",
-        description:
-            "Connecting farmers and agricultural producers to profitable markets and value chains for sustainable income growth.",
+        description: t("home.pillars.market.description"),
         route: "/market-access",
         countKey: "marketAccess",
-        countLabel: "Programs",
+        countLabel: t("home.pillars.market.countLabel"),
     },
     {
         id: "environmental",
-        title: "Environmental Projects",
+        title: t("home.pillars.environmental.title"),
         icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
         bgColor: "bg-green-100",
         textColor: "text-green-600",
         countColor: "text-green-600",
-        description:
-            "Sustainable environmental initiatives promoting conservation, climate resilience, and eco-friendly agricultural practices.",
+        description: t("home.pillars.environmental.description"),
         route: "/environmental-projects",
         countKey: "environmental",
-        countLabel: "Projects",
+        countLabel: t("home.pillars.environmental.countLabel"),
     },
     {
         id: "community",
-        title: "Community Programs",
+        title: t("home.pillars.community.title"),
         icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 919.288 0M15 7a3 3 0 11-6 0 3 3 0 616 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
         bgColor: "bg-green-100",
         textColor: "text-green-600",
         countColor: "text-green-600",
-        description:
-            "Comprehensive community development initiatives focusing on rural empowerment, social inclusion, and livelihood improvement.",
+        description: t("home.pillars.community.description"),
         route: "/community-programs",
         countKey: "community",
-        countLabel: "Programs",
+        countLabel: t("home.pillars.community.countLabel"),
     },
 ]);
 
