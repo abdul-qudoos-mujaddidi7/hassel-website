@@ -16,10 +16,11 @@ class NewsController extends Controller
     public function index(Request $request)
     {
         $language = $request->get('lang', 'en');
+        $perPage = $request->get('per_page', 9);
 
         $news = News::published()
             ->orderBy('published_at', 'desc')
-            ->paginate(12);
+            ->paginate($perPage);
 
         return NewsResource::collection($news);
     }

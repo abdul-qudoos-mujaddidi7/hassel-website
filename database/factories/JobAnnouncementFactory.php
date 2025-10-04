@@ -53,8 +53,8 @@ class JobAnnouncementFactory extends Factory
       ]),
       'salary_range' => $this->generateSalaryRange(),
       'deadline' => $this->faker->dateTimeBetween('now', '+2 months'),
-      'status' => $this->faker->randomElement(['published', 'draft']),
-      'published_at' => $this->faker->optional(0.8)->dateTimeBetween('-1 month', 'now'),
+      'status' => $this->faker->randomElement(['open', 'draft', 'close']),
+      'opened_at' => $this->faker->optional(0.8)->dateTimeBetween('-1 month', 'now'),
       'created_at' => $this->faker->dateTimeBetween('-2 months', 'now'),
     ];
   }
@@ -111,8 +111,8 @@ class JobAnnouncementFactory extends Factory
   {
     return $this->state(fn(array $attributes) => [
       'deadline' => $this->faker->dateTimeBetween('now', '+2 months'),
-      'status' => 'published',
-      'published_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
+      'status' => 'open',
+      'opened_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
     ]);
   }
 
@@ -123,8 +123,8 @@ class JobAnnouncementFactory extends Factory
   {
     return $this->state(fn(array $attributes) => [
       'deadline' => $this->faker->dateTimeBetween('-2 months', 'now'),
-      'status' => 'published',
-      'published_at' => $this->faker->dateTimeBetween('-3 months', '-1 month'),
+      'status' => 'closed',
+      'opened_at' => $this->faker->dateTimeBetween('-3 months', '-1 month'),
     ]);
   }
 
@@ -157,7 +157,7 @@ class JobAnnouncementFactory extends Factory
   {
     return $this->state(fn(array $attributes) => [
       'status' => 'draft',
-      'published_at' => null,
+      'opened_at' => null,
     ]);
   }
 }

@@ -20,39 +20,38 @@ class ContactFactory extends Factory
   public function definition(): array
   {
     $subjects = [
-      'Training Program Inquiry',
-      'Technical Support Request',
-      'Partnership Opportunity',
-      'Grant Application Question',
-      'Program Registration Help',
-      'Research Collaboration',
-      'Equipment Purchase Inquiry',
-      'Consultation Request',
-      'General Information',
-      'Feedback and Suggestions',
+      'job_application',
+      'technical_support',
+      'partnership',
+      'project_discussion',
+      'general_inquiry',
+      'media_inquiry',
+      'other',
     ];
 
     $subject = $this->faker->randomElement($subjects);
 
-        return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->safeEmail(),
-            'phone' => $this->faker->optional(0.7)->numerify('+93 7# ### ####'),
-            'subject' => $subject,
-            'message' => $this->generateMessage($subject),
-            'status' => $this->faker->randomElement(['new', 'read', 'replied', 'archived']),
-            'created_at' => $this->faker->dateTimeBetween('-6 months', 'now'),
-        ];
+    return [
+      'name' => $this->faker->name(),
+      'email' => $this->faker->safeEmail(),
+      'phone' => $this->faker->optional(0.7)->numerify('+93 7# ### ####'),
+      'subject' => $subject,
+      'message' => $this->generateMessage($subject),
+      'status' => $this->faker->randomElement(['new', 'read', 'replied', 'archived']),
+      'created_at' => $this->faker->dateTimeBetween('-6 months', 'now'),
+    ];
   }
 
   private function generateMessage(string $subject): string
   {
     $messages = [
-      'Training Program Inquiry' => 'I am interested in participating in your agricultural training programs. Could you please provide more information about upcoming sessions and registration requirements?',
-      'Technical Support Request' => 'I need assistance with implementing the farming techniques learned in your training program. Could someone from your technical team help me?',
-      'Partnership Opportunity' => 'Our organization works in rural development and we would like to explore potential collaboration opportunities with Mount Agro Institution.',
-      'Grant Application Question' => 'I would like to apply for grants or funding opportunities for my agricultural project. Can you guide me through the application process?',
-      'Program Registration Help' => 'I am having difficulty registering for your training program online. Could you please assist me with the registration process?',
+      'job_application' => 'I am interested in applying for a position at Mount Agro Institution. Please find my application details and CV attached.',
+      'technical_support' => 'I need assistance with implementing the farming techniques learned in your training program. Could someone from your technical team help me?',
+      'partnership' => 'Our organization works in rural development and we would like to explore potential collaboration opportunities with Mount Agro Institution.',
+      'project_discussion' => 'I would like to discuss a potential agricultural project collaboration. Could we schedule a meeting to explore opportunities?',
+      'general_inquiry' => 'I have a general question about your programs and services. Could you please provide more information?',
+      'media_inquiry' => 'I am a journalist and would like to feature your organization in an upcoming article. Could you provide some background information?',
+      'other' => 'I have a specific inquiry that doesn\'t fit into the other categories. Please let me know how I can get assistance.',
     ];
 
     return $messages[$subject] ?? $this->faker->paragraph(3);

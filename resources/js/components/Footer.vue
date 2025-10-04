@@ -119,7 +119,7 @@
                         </li>
                         <li>
                             <router-link
-                                to="/market-access-programs"
+                                to="/market-access"
                                 class="text-brand-cream hover:text-white transition-colors"
                                 >Market Access Programs</router-link
                             >

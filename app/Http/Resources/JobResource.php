@@ -30,7 +30,7 @@ class JobResource extends JsonResource
             // Translations
             'translations' => $this->when(
                 $request->get('include_translations'),
-                TranslationResource::collection($this->whenLoaded('translations'))
+                $this->whenLoaded('translations')
             ),
         ];
     }

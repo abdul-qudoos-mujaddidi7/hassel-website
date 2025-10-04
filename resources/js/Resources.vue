@@ -70,33 +70,203 @@
                     <h2 class="heading-lg text-gray-900 text-center mb-8">
                         Latest News
                     </h2>
-                    <div
-                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                    >
-                        <article
-                            v-for="article in news"
-                            :key="article.id"
-                            class="rounded-professional-lg overflow-hidden card-hover bg-white shadow-professional"
+
+                    <!-- News Articles Container - Always maintain height -->
+                    <div class="space-y-8 relative min-h-[600px]">
+                        <!-- Debug Info -->
+                        <div class="bg-yellow-100 p-2 mb-4 text-xs">
+                            <p>Loading: {{ newsLoading }}</p>
+                            <p>News Count: {{ news.length }}</p>
+                            <p>Total Pages: {{ newsPagination.totalPages }}</p>
+                        </div>
+
+                        <!-- Loading State - Show skeleton when no news or loading -->
+                        <div
+                            v-if="newsLoading && news.length === 0"
+                            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
                         >
-                            <div class="p-6">
-                                <div class="text-xs text-gray-500 mb-2">
-                                    {{ article.date }}
-                                </div>
-                                <h3
-                                    class="font-semibold text-lg mb-3 text-gray-900"
-                                >
-                                    {{ article.title }}
-                                </h3>
-                                <p class="text-gray-600 text-sm mb-4">
-                                    {{ article.excerpt }}
-                                </p>
-                                <a
-                                    href="#"
-                                    class="text-sm gradient-text hover:underline"
-                                    >Read more →</a
-                                >
+                            <div v-for="i in 6" :key="i" class="animate-pulse">
+                                <div
+                                    class="bg-gray-300 h-48 rounded-lg mb-4"
+                                ></div>
+                                <div class="h-4 bg-gray-300 rounded mb-2"></div>
+                                <div
+                                    class="h-4 bg-gray-300 rounded w-3/4 mb-2"
+                                ></div>
+                                <div
+                                    class="h-3 bg-gray-300 rounded w-1/2"
+                                ></div>
                             </div>
-                        </article>
+                        </div>
+
+                        <!-- News Grid with Loading Overlay -->
+                        <div
+                            v-else-if="news.length > 0"
+                            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 relative"
+                        >
+                            <!-- Loading overlay for pagination -->
+                            <div
+                                v-if="newsLoading"
+                                class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-10 rounded-lg"
+                            >
+                                <div
+                                    class="flex items-center space-x-2 text-green-600"
+                                >
+                                    <div
+                                        class="animate-spin rounded-full h-6 w-6 border-b-2 border-green-600"
+                                    ></div>
+                                    <span class="font-medium">Loading...</span>
+                                </div>
+                            </div>
+                            <article
+                                v-for="article in news"
+                                :key="article.id"
+                                class="bg-white rounded-professional-lg overflow-hidden shadow-professional card-hover h-full flex flex-col"
+                            >
+                                <div class="flex-shrink-0">
+                                    <img
+                                        :src="
+                                            article.featured_image ||
+                                            'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=400&h=200&fit=crop&crop=center&auto=format'
+                                        "
+                                        :alt="article.title"
+                                        class="w-full h-48 object-cover"
+                                    />
+                                </div>
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <div
+                                        class="flex items-center text-sm text-gray-500 mb-3"
+                                    >
+                                        <svg
+                                            class="w-4 h-4 mr-1"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                            />
+                                        </svg>
+                                        {{ formatDate(article.published_at) }}
+                                    </div>
+                                    <h3
+                                        class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 h-14 flex items-start"
+                                    >
+                                        {{ article.title }}
+                                    </h3>
+                                    <div class="flex-grow mb-4">
+                                        <p
+                                            class="text-gray-600 line-clamp-3 leading-relaxed"
+                                        >
+                                            {{
+                                                article.excerpt ||
+                                                article.content?.substring(
+                                                    0,
+                                                    150
+                                                ) + "..."
+                                            }}
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto">
+                                        <router-link
+                                            :to="`/news/${
+                                                article.slug || article.id
+                                            }`"
+                                            class="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
+                                        >
+                                            Read More
+                                            <svg
+                                                class="w-4 h-4 ml-1"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M9 5l7 7-7 7"
+                                                />
+                                            </svg>
+                                        </router-link>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div
+                            v-if="newsPagination.totalPages > 1"
+                            class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-2 mt-8"
+                        >
+                            <button
+                                @click="
+                                    goToNewsPage(newsPagination.currentPage - 1)
+                                "
+                                :disabled="
+                                    newsPagination.currentPage === 1 ||
+                                    newsLoading
+                                "
+                                class="px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:scale-105 active:scale-95 min-w-[80px]"
+                            >
+                                Previous
+                            </button>
+
+                            <div class="flex space-x-1">
+                                <button
+                                    v-for="page in visiblePages"
+                                    :key="page"
+                                    @click="goToNewsPage(page)"
+                                    :disabled="newsLoading"
+                                    :class="[
+                                        'px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95 min-w-[40px]',
+                                        page === newsPagination.currentPage
+                                            ? 'bg-green-600 text-white shadow-md'
+                                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50',
+                                    ]"
+                                >
+                                    {{ page }}
+                                </button>
+                            </div>
+
+                            <button
+                                @click="
+                                    goToNewsPage(newsPagination.currentPage + 1)
+                                "
+                                :disabled="
+                                    newsPagination.currentPage ===
+                                        newsPagination.totalPages || newsLoading
+                                "
+                                class="px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:scale-105 active:scale-95 min-w-[80px]"
+                            >
+                                Next
+                            </button>
+                        </div>
+
+                        <!-- Empty State -->
+                        <div v-else class="text-center py-12">
+                            <div
+                                class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-full"
+                            >
+                                <svg
+                                    class="w-5 h-5 mr-2"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                </svg>
+                                No news articles found.
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -105,61 +275,24 @@
                     <h2 class="heading-lg text-gray-900 text-center mb-8">
                         Publications
                     </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="text-center py-12">
                         <div
-                            v-for="pub in publications"
-                            :key="pub.id"
-                            class="rounded-professional-lg p-6 card-hover bg-white shadow-professional"
+                            class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-full"
                         >
-                            <div class="flex items-start gap-4">
-                                <div class="text-3xl gradient-text">
-                                    <svg
-                                        class="w-8 h-8"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                                        />
-                                    </svg>
-                                </div>
-                                <div class="flex-1">
-                                    <h3
-                                        class="font-semibold text-lg mb-2 text-gray-900"
-                                    >
-                                        {{ pub.title }}
-                                    </h3>
-                                    <p class="text-gray-600 text-sm mb-3">
-                                        {{ pub.description }}
-                                    </p>
-                                    <div
-                                        class="flex items-center gap-4 text-sm text-gray-500"
-                                    >
-                                        <span>{{ pub.date }}</span>
-                                        <span>{{ pub.size }}</span>
-                                    </div>
-                                </div>
-                                <button class="btn btn-secondary text-sm">
-                                    <svg
-                                        class="w-4 h-4 mr-1"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                                        />
-                                    </svg>
-                                    Download
-                                </button>
-                            </div>
+                            <svg
+                                class="w-5 h-5 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                            No publications found.
                         </div>
                     </div>
                 </div>
@@ -169,37 +302,24 @@
                     <h2 class="heading-lg text-gray-900 text-center mb-8">
                         Success Stories
                     </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="text-center py-12">
                         <div
-                            v-for="story in successStories"
-                            :key="story.id"
-                            class="rounded-professional-lg overflow-hidden card-hover bg-white shadow-professional"
+                            class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-full"
                         >
-                            <img
-                                :src="story.image"
-                                :alt="story.title"
-                                class="w-full h-48 object-cover"
-                            />
-                            <div class="p-6">
-                                <h3
-                                    class="font-semibold text-lg mb-3 text-gray-900"
-                                >
-                                    {{ story.title }}
-                                </h3>
-                                <p class="text-gray-600 text-sm mb-4">
-                                    {{ story.excerpt }}
-                                </p>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-xs text-gray-500">{{
-                                        story.location
-                                    }}</span>
-                                    <a
-                                        href="#"
-                                        class="text-sm gradient-text hover:underline"
-                                        >Read full story →</a
-                                    >
-                                </div>
-                            </div>
+                            <svg
+                                class="w-5 h-5 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                            No success stories found.
                         </div>
                     </div>
                 </div>
@@ -209,48 +329,24 @@
                     <h2 class="heading-lg text-gray-900 text-center mb-8">
                         RFPs & RFQs
                     </h2>
-                    <div class="space-y-4">
+                    <div class="text-center py-12">
                         <div
-                            v-for="rfp in rfps"
-                            :key="rfp.id"
-                            class="rounded-professional-lg p-6 card-hover bg-white shadow-professional"
+                            class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-full"
                         >
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <h3
-                                        class="font-semibold text-lg mb-2 text-gray-900"
-                                    >
-                                        {{ rfp.title }}
-                                    </h3>
-                                    <p class="text-gray-600 text-sm mb-2">
-                                        {{ rfp.description }}
-                                    </p>
-                                    <div
-                                        class="flex items-center gap-4 text-sm text-gray-500"
-                                    >
-                                        <span
-                                            >Deadline: {{ rfp.deadline }}</span
-                                        >
-                                        <span>Type: {{ rfp.type }}</span>
-                                    </div>
-                                </div>
-                                <button class="btn btn-secondary">
-                                    <svg
-                                        class="w-4 h-4 mr-2"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                                        />
-                                    </svg>
-                                    Download
-                                </button>
-                            </div>
+                            <svg
+                                class="w-5 h-5 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                            No RFPs or RFQs found.
                         </div>
                     </div>
                 </div>
@@ -260,17 +356,24 @@
                     <h2 class="heading-lg text-gray-900 text-center mb-8">
                         Photo Gallery
                     </h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center py-12">
                         <div
-                            v-for="(image, index) in gallery"
-                            :key="index"
-                            class="overflow-hidden rounded-professional-lg card-hover border border-gray-200"
+                            class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-full"
                         >
-                            <img
-                                :src="image"
-                                alt="Gallery image"
-                                class="w-full h-40 object-cover hover:scale-105 transition-transform"
-                            />
+                            <svg
+                                class="w-5 h-5 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                            No photos found.
                         </div>
                     </div>
                 </div>
@@ -320,9 +423,229 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
+import axios from "axios";
 
 const activeTab = ref("news");
+
+// News data and pagination
+const news = ref([]);
+const newsLoading = ref(false);
+const newsPagination = ref({
+    currentPage: 1,
+    totalPages: 1,
+    totalItems: 0,
+    perPage: 6,
+});
+
+// Computed property for visible pagination pages
+const visiblePages = computed(() => {
+    const current = newsPagination.value.currentPage;
+    const total = newsPagination.value.totalPages;
+    const pages = [];
+
+    // Show up to 5 page numbers
+    const start = Math.max(1, current - 2);
+    const end = Math.min(total, start + 4);
+
+    for (let i = start; i <= end; i++) {
+        pages.push(i);
+    }
+
+    return pages;
+});
+
+// Fetch news with pagination
+const fetchNews = async (page = 1) => {
+    try {
+        newsLoading.value = true;
+        const response = await axios.get("/api/news", {
+            params: {
+                page: page,
+                per_page: newsPagination.value.perPage,
+            },
+        });
+
+        const data = response.data;
+
+        // Check if we got data
+        if (!data) {
+            console.error("No data received from API");
+            return;
+        }
+
+        if (data.data) {
+            news.value = data.data;
+            newsPagination.value = {
+                currentPage: data.meta?.current_page || page,
+                totalPages: data.meta?.last_page || 1,
+                totalItems: data.meta?.total || 0,
+                perPage: data.meta?.per_page || 6,
+            };
+        } else if (Array.isArray(data)) {
+            news.value = data;
+            newsPagination.value = {
+                currentPage: 1,
+                totalPages: 1,
+                totalItems: data.length,
+                perPage: 6,
+            };
+        }
+    } catch (error) {
+        console.error("Error fetching news:", error);
+        console.error("Error details:", error.response?.data || error.message);
+        console.error("Error status:", error.response?.status);
+
+        // Fallback news data
+        news.value = [
+            {
+                id: 1,
+                title: "New Training Program Launched in Herat Province",
+                excerpt:
+                    "Mount Agro launches comprehensive agricultural training program reaching 500 farmers in Herat, focusing on modern irrigation techniques and crop diversification.",
+                content:
+                    "Mount Agro has successfully launched a new comprehensive agricultural training program in Herat Province, reaching over 500 farmers across the region. The program focuses on modern irrigation techniques, crop diversification, and sustainable farming practices. This initiative is part of our ongoing commitment to empower Afghanistan's agricultural communities through innovative solutions and comprehensive support programs.",
+                featured_image:
+                    "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=250&fit=crop&crop=center&auto=format",
+                published_at: new Date().toISOString(),
+                slug: "new-training-program-launch",
+            },
+            {
+                id: 2,
+                title: "AgriTech Mobile App Reaches 10,000 Users",
+                excerpt:
+                    "Our innovative mobile application providing weather forecasts, market prices, and agricultural advice has successfully reached 10,000 active users across Afghanistan.",
+                content:
+                    "Our innovative mobile application has reached a significant milestone with 10,000 active users across Afghanistan. The app provides farmers with real-time weather forecasts, market prices, and expert agricultural advice, helping them make informed decisions about their farming activities. This digital solution is transforming how farmers access information and manage their agricultural operations.",
+                featured_image:
+                    "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop&crop=center&auto=format",
+                published_at: new Date(
+                    Date.now() - 7 * 24 * 60 * 60 * 1000
+                ).toISOString(),
+                slug: "agritech-app-milestone",
+            },
+            {
+                id: 3,
+                title: "Women's Cooperative Program Shows Remarkable Success",
+                excerpt:
+                    "Our women's agricultural cooperative program has empowered over 200 women farmers, increasing their income by an average of 40% through collective farming and marketing initiatives.",
+                content:
+                    "Our women's agricultural cooperative program has achieved remarkable success, empowering over 200 women farmers across Afghanistan. Through collective farming and marketing initiatives, participants have seen an average income increase of 40%. This program demonstrates our commitment to gender equality and women's empowerment in the agricultural sector.",
+                featured_image:
+                    "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=250&fit=crop&crop=center&auto=format",
+                published_at: new Date(
+                    Date.now() - 14 * 24 * 60 * 60 * 1000
+                ).toISOString(),
+                slug: "womens-cooperative-success",
+            },
+            {
+                id: 4,
+                title: "Environmental Conservation Project Launched",
+                excerpt:
+                    "New environmental conservation project focuses on sustainable farming practices and climate resilience across multiple provinces.",
+                content:
+                    "We have launched a comprehensive environmental conservation project that focuses on promoting sustainable farming practices and building climate resilience across multiple provinces. This initiative includes training on soil conservation, water management, and climate-smart agriculture techniques.",
+                featured_image:
+                    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=250&fit=crop&crop=center&auto=format",
+                published_at: new Date(
+                    Date.now() - 21 * 24 * 60 * 60 * 1000
+                ).toISOString(),
+                slug: "environmental-conservation-project",
+            },
+            {
+                id: 5,
+                title: "Market Access Program Expands to New Regions",
+                excerpt:
+                    "Our market access program has expanded to three new regions, connecting farmers with profitable markets and value chains.",
+                content:
+                    "Our market access program has successfully expanded to three new regions, providing farmers with direct connections to profitable markets and value chains. This expansion has resulted in increased income opportunities for over 1,000 farmers and improved market access for agricultural products.",
+                featured_image:
+                    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&crop=center&auto=format",
+                published_at: new Date(
+                    Date.now() - 28 * 24 * 60 * 60 * 1000
+                ).toISOString(),
+                slug: "market-access-expansion",
+            },
+            {
+                id: 6,
+                title: "Smart Farming Technology Implementation",
+                excerpt:
+                    "Implementation of smart farming technology has increased crop yields by 25% in pilot regions.",
+                content:
+                    "The implementation of smart farming technology in pilot regions has shown remarkable results, with crop yields increasing by an average of 25%. This technology includes precision irrigation systems, soil monitoring sensors, and automated farming equipment that helps farmers optimize their agricultural practices.",
+                featured_image:
+                    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=250&fit=crop&crop=center&auto=format",
+                published_at: new Date(
+                    Date.now() - 35 * 24 * 60 * 60 * 1000
+                ).toISOString(),
+                slug: "smart-farming-technology",
+            },
+            {
+                id: 7,
+                title: "Community Development Initiative Success",
+                excerpt:
+                    "Community development initiative has established 15 new farmer cooperatives across the country.",
+                content:
+                    "Our community development initiative has successfully established 15 new farmer cooperatives across the country, bringing together over 2,000 farmers in collective farming and marketing efforts. These cooperatives have improved access to resources, reduced costs, and increased market bargaining power for participating farmers.",
+                featured_image:
+                    "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=250&fit=crop&crop=center&auto=format",
+                published_at: new Date(
+                    Date.now() - 42 * 24 * 60 * 60 * 1000
+                ).toISOString(),
+                slug: "community-development-success",
+            },
+            {
+                id: 8,
+                title: "Seed Supply Chain Strengthened",
+                excerpt:
+                    "Strengthened seed supply chain now provides high-quality seeds to over 5,000 farmers.",
+                content:
+                    "Our seed supply chain has been significantly strengthened, now providing high-quality, certified seeds to over 5,000 farmers across Afghanistan. This improved supply chain ensures farmers have access to the best seeds for their specific growing conditions and climate requirements.",
+                featured_image:
+                    "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=250&fit=crop&crop=center&auto=format",
+                published_at: new Date(
+                    Date.now() - 49 * 24 * 60 * 60 * 1000
+                ).toISOString(),
+                slug: "seed-supply-chain-strengthened",
+            },
+        ];
+        newsPagination.value = {
+            currentPage: 1,
+            totalPages: 1,
+            totalItems: news.value.length,
+            perPage: 6,
+        };
+    } finally {
+        newsLoading.value = false;
+    }
+};
+
+// Go to specific news page
+const goToNewsPage = (page) => {
+    if (
+        page >= 1 &&
+        page <= newsPagination.value.totalPages &&
+        !newsLoading.value
+    ) {
+        fetchNews(page);
+    }
+};
+
+// Format date utility
+const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+};
+
+// Initialize news when component mounts
+onMounted(() => {
+    fetchNews(1);
+});
 
 const tabs = [
     { id: "news", name: "News", icon: "NewsIcon" },
@@ -428,95 +751,5 @@ const GalleryIcon = () =>
         ]
     );
 
-const news = [
-    {
-        id: 1,
-        title: "New Technology Solutions Launch",
-        excerpt:
-            "A comprehensive suite of technology solutions designed to accelerate business growth and digital transformation.",
-        date: "June 15, 2024",
-    },
-    {
-        id: 2,
-        title: "Mount Agro Expands to New Markets",
-        excerpt:
-            "Services now available in three additional regions with specialized local support teams.",
-        date: "May 28, 2024",
-    },
-    {
-        id: 3,
-        title: "Partnership with Global Tech Leaders",
-        excerpt:
-            "Strategic partnerships bringing cutting-edge technology solutions to our clients.",
-        date: "April 10, 2024",
-    },
-];
-
-const publications = [
-    {
-        id: 1,
-        title: "Annual Report 2023",
-        description:
-            "Comprehensive overview of Mount Agro's activities and impact in 2023",
-        date: "March 2024",
-        size: "2.5 MB",
-    },
-    {
-        id: 2,
-        title: "Technology Strategy Guide",
-        description:
-            "Best practices for technology adoption and digital transformation",
-        date: "February 2024",
-        size: "1.8 MB",
-    },
-];
-
-const successStories = [
-    {
-        id: 1,
-        title: "From Startup to Scale-up",
-        excerpt:
-            "How Mount Agro helped TechCorp scale their platform to serve 100,000+ users.",
-        location: "San Francisco, CA",
-        image: "https://images.unsplash.com/photo-1625246335525-4d50c8507f68?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-        id: 2,
-        title: "Digital Transformation Success",
-        excerpt:
-            "Stories of businesses that transformed their operations through our technology solutions.",
-        location: "New York, NY",
-        image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80",
-    },
-];
-
-const rfps = [
-    {
-        id: 1,
-        title: "Cloud Infrastructure RFP",
-        description:
-            "Request for proposals for upgrading cloud infrastructure and security systems",
-        deadline: "March 15, 2024",
-        type: "RFP",
-    },
-    {
-        id: 2,
-        title: "Development Services RFQ",
-        description:
-            "Request for quotations for custom software development and integration services",
-        deadline: "March 20, 2024",
-        type: "RFQ",
-    },
-];
-
-const gallery = [
-    "https://images.unsplash.com/photo-1625246335525-4d50c8507f68?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1581094288338-231b058b38b8?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1620228885847-9eab2a1adddc?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1532619187608-e5375cab36aa?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80",
-];
+// Static data arrays removed - using dynamic API data instead
 </script>

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->string('salary_range')->nullable();
             $table->date('deadline');
-            $table->enum('status', ['draft', 'published', 'closed', 'archived'])->default('draft');
-            $table->timestamp('published_at')->nullable();
+            $table->enum('status', ['draft', 'open', 'closed', 'archived'])->default('draft');
+            $table->timestamp('opened_at')->nullable();
             $table->timestamps();
         });
     }

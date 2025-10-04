@@ -153,18 +153,26 @@ const changeLanguage = (lang) => {
 
 const handleLogout = async () => {
     console.log(t("logging_out_message"));
+<<<<<<< HEAD
     try {
         await authStore.logout();
     } catch (error) {
         console.error('Logout error:', error);
     }
+=======
+    authRepository.logout();
+>>>>>>> 0b00e997f8d8e7204874bedeb6ea2a0ea89ebbf8
 };
 </script>
 
 <style scoped>
 .icon {
     border-radius: 8px !important;
-    background: linear-gradient(135deg, #059669, #10B981) !important; /* Professional green gradient */
+    background: linear-gradient(
+        135deg,
+        #059669,
+        #10b981
+    ) !important; /* Professional green gradient */
     box-shadow: 0 3px 6px rgba(5, 150, 105, 0.3);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
@@ -176,7 +184,11 @@ const handleLogout = async () => {
 }
 
 .icon:hover {
-    background: linear-gradient(135deg, #047857, #059669) !important; /* Darker green gradient on hover */
+    background: linear-gradient(
+        135deg,
+        #047857,
+        #059669
+    ) !important; /* Darker green gradient on hover */
     box-shadow: 0 6px 12px rgba(5, 150, 105, 0.4);
     transform: translateY(-2px) scale(1.05);
 }
