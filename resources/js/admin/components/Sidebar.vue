@@ -354,21 +354,21 @@ function handleDrawerState(isOpen) {
 }
 
 .v-list-item:hover {
-    background-color: rgba(255, 165, 0, 0.2) !important; /* Professional orange with opacity */
-    color: #FFA500 !important; /* Light orange text */
+    background-color: rgba(5, 150, 105, 0.2) !important; /* Professional green with opacity */
+    color: #10B981 !important; /* Light green text */
     border-radius: 12px;
     margin: 3px 12px;
     transform: translateX(4px);
 }
 
 .v-list-item.v-list-item--active {
-    background: linear-gradient(135deg, #FFA500, #FFB84D) !important; /* Professional orange gradient */
+    background: linear-gradient(135deg, #059669, #10B981) !important; /* Professional green gradient */
     color: white !important; /* White text */
     font-weight: 700;
     border-radius: 12px;
     margin: 3px 12px;
-    box-shadow: 0 4px 12px rgba(255, 140, 0, 0.5);
-    border-left: 4px solid #FFCC80;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.5);
+    border-left: 4px solid #A7F3D0;
 }
 
 .v-list-item.v-list-item--active .v-icon {
@@ -377,7 +377,7 @@ function handleDrawerState(isOpen) {
 }
 
 .v-list-item:hover .v-icon {
-    color: #FFA500 !important; /* Professional orange icon on hover */
+    color: #10B981 !important; /* Professional green icon on hover */
 }
 
 .v-list-item .v-icon {
@@ -399,11 +399,11 @@ function handleDrawerState(isOpen) {
 }
 
 .user-profile-card:hover {
-    background-color: rgba(255, 165, 0, 0.2) !important; /* Professional orange with opacity */
-    color: #FFA500 !important; /* Professional orange text */
+    background-color: rgba(5, 150, 105, 0.2) !important; /* Professional green with opacity */
+    color: #10B981 !important; /* Professional green text */
     border-radius: 12px;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(255, 140, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(5, 150, 105, 0.3);
 }
 
 /* Ensure the sidebar container uses flexbox for proper positioning */
@@ -412,10 +412,10 @@ function handleDrawerState(isOpen) {
     flex-direction: column;
     height: 100vh;
     max-height: 100vh;
-    background: linear-gradient(180deg, #CC5500 0%, #E67300 50%, #FF8C00 100%); /* Professional orange gradient */
+    background: linear-gradient(180deg, #034E3F 0%, #047857 50%, #059669 100%); /* Professional green gradient */
     overflow: hidden;
     color: white;
-    box-shadow: 3px 0 15px rgba(255, 140, 0, 0.2);
+    box-shadow: 3px 0 15px rgba(5, 150, 105, 0.2);
 }
 
 /* Navigation section should take available space */

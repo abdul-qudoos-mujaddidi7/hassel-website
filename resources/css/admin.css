@@ -5,56 +5,56 @@
 /* Admin Panel Custom Styles */
 .admin-layout {
     @apply min-h-screen;
-    background-color: #FFF5E6; /* Light orange-tinted background */
+    background-color: #F0F9F6; /* Light green-tinted background */
 }
 
-/* Professional Orange Color Utilities for Admin */
+/* Professional Green Color Utilities for Admin */
 .bg-professional-primary {
-    background-color: #FF8C00 !important; /* Professional vibrant orange */
+    background-color: #059669 !important; /* Professional vibrant green */
 }
 
 .bg-professional-secondary {
-    background-color: #E67300 !important; /* Darker orange */
+    background-color: #047857 !important; /* Darker green */
 }
 
 .bg-professional-accent {
-    background-color: #FFA500 !important; /* Lighter orange accent */
+    background-color: #10B981 !important; /* Lighter green accent */
 }
 
 .bg-professional-light {
-    background-color: #FFF5E6 !important; /* Light orange-tinted background */
+    background-color: #F0F9F6 !important; /* Light green-tinted background */
 }
 
 .bg-professional-dark {
-    background-color: #CC5500 !important; /* Dark orange */
+    background-color: #034E3F !important; /* Dark green */
 }
 
 .text-professional-primary {
-    color: #FF8C00 !important; /* Professional vibrant orange */
+    color: #059669 !important; /* Professional vibrant green */
 }
 
 .text-professional-secondary {
-    color: #E67300 !important; /* Darker orange */
+    color: #047857 !important; /* Darker green */
 }
 
 .text-professional-accent {
-    color: #FFA500 !important; /* Lighter orange accent */
+    color: #10B981 !important; /* Lighter green accent */
 }
 
 .text-professional-dark {
-    color: #CC5500 !important; /* Dark orange */
+    color: #034E3F !important; /* Dark green */
 }
 
 .border-professional-primary {
-    border-color: #FF8C00 !important; /* Professional vibrant orange */
+    border-color: #059669 !important; /* Professional vibrant green */
 }
 
 .border-professional-secondary {
-    border-color: #E67300 !important; /* Darker orange */
+    border-color: #047857 !important; /* Darker green */
 }
 
 .border-professional-light {
-    border-color: #FFD4A3 !important; /* Light orange border */
+    border-color: #A7F3D0 !important; /* Light green border */
 }
 
 .admin-sidebar {
@@ -115,34 +115,34 @@
 }
 
 .action-btn-primary {
-    background-color: #FF8C00; /* Professional vibrant orange */
+    background-color: #059669; /* Professional vibrant green */
     color: white;
-    box-shadow: 0 2px 4px rgba(255, 140, 0, 0.3);
+    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3);
     border: none;
     font-weight: 600;
 }
 
 .action-btn-primary:hover {
-    background-color: #E67300; /* Darker orange */
+    background-color: #047857; /* Darker green */
     @apply focus:outline-none focus:ring-2;
-    focus-ring-color: #FF8C00;
-    box-shadow: 0 4px 12px rgba(255, 140, 0, 0.4);
+    focus-ring-color: #059669;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
     transform: translateY(-1px);
 }
 
 .action-btn-secondary {
-    background-color: #E67300; /* Darker orange */
+    background-color: #047857; /* Darker green */
     color: white;
-    box-shadow: 0 2px 4px rgba(230, 115, 0, 0.3);
+    box-shadow: 0 2px 4px rgba(4, 120, 87, 0.3);
     border: none;
     font-weight: 600;
 }
 
 .action-btn-secondary:hover {
-    background-color: #CC5500; /* Even darker orange */
+    background-color: #034E3F; /* Even darker green */
     @apply focus:outline-none focus:ring-2;
-    focus-ring-color: #E67300;
-    box-shadow: 0 4px 12px rgba(230, 115, 0, 0.4);
+    focus-ring-color: #047857;
+    box-shadow: 0 4px 12px rgba(4, 120, 87, 0.4);
     transform: translateY(-1px);
 }
 
@@ -167,15 +167,30 @@
 }
 
 .form-input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2;
+}
+
+.form-input:focus {
+    --tw-ring-color: #059669;
+    border-color: #059669;
 }
 
 .form-textarea {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y;
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 resize-y;
+}
+
+.form-textarea:focus {
+    --tw-ring-color: #059669;
+    border-color: #059669;
 }
 
 .form-select {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2;
+}
+
+.form-select:focus {
+    --tw-ring-color: #059669;
+    border-color: #059669;
 }
 
 /* Table styles */
@@ -214,7 +229,7 @@ div.v-data-table-footer {
 /* Override Vuetify table styles with higher specificity */
 .v-application .v-data-table .v-data-table__wrapper table tbody tr {
     background-color: transparent !important;
-    border-left: 4px solid #f4d03f !important;
+    border-left: 4px solid #059669 !important;
     border-bottom: 4px solid rgb(var(--v-theme-background)) !important;
     border-width: 4px !important;
     border-top: none !important;
@@ -227,7 +242,7 @@ div.v-data-table-footer {
 
 .v-table > :nth-child(1) > :nth-child(1) > :nth-child(1) > tr {
       background-color: rgb(var(--v-theme-tableRowBg));
-    border-left: 4px solid #f4d03f;
+    border-left: 4px solid #059669;
       border-bottom: 4px solid rgb(var(--v-theme-background));
 
     border-width: 4px;
@@ -238,7 +253,7 @@ div.v-data-table-footer {
 /* Additional table row styling with higher specificity */
 .v-application .v-data-table .v-data-table__tr {
     border-bottom: 4px solid rgb(var(--v-theme-background)) !important;
-    border-left: 4px solid #f4d03f !important;
+    border-left: 4px solid #059669 !important;
     border-right: none !important;
     border-width: 4px !important;
     background-color: transparent !important;
@@ -246,7 +261,7 @@ div.v-data-table-footer {
 
 .v-data-table__tr {
     border-bottom: 4px solid rgb(var(--v-theme-background));
-    border-left: 4px solid #f4d03f !important;
+    border-left: 4px solid #059669 !important;
     border-right: none;
     border-width: 4px;
     
@@ -254,7 +269,7 @@ div.v-data-table-footer {
 /* RTL support with higher specificity */
 [dir="rtl"] .v-application .v-data-table .v-data-table__tr {
     border-bottom: 4px solid #ffff !important;
-    border-right: 4px solid #f4d03f !important;
+    border-right: 4px solid #059669 !important;
     border-left: none !important;
     border-width: 4px !important;
     background-color: transparent !important;
@@ -262,13 +277,13 @@ div.v-data-table-footer {
 
 [dir="rtl"] .v-data-table__tr {
     border-bottom: 4px solid #ffff;
-    border-right: 4px solid #f4d03f !important;
+    border-right: 4px solid #059669 !important;
     border-left: none !important;
     border-width: 4px;
 }
 [dir="rtl"].v-table > :nth-child(1) > :nth-child(1) > :nth-child(1) > tr {
      background-color: rgb(var(--v-theme-tableRowBg));
-    border-right: 4px solid #f4d03f !important;
+    border-right: 4px solid #059669 !important;
     border-left: none;
     border-bottom: 4px solid #ffff;
     border-width: 4px;
@@ -310,7 +325,7 @@ div.v-data-table-footer {
 }
 
 .styleBTN {
-    border: 1px solid #00893f;
+    border: 1px solid #059669;
     display: flex;
     flex-wrap: nowrap;
 }

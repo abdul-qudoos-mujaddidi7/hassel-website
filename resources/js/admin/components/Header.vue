@@ -157,8 +157,8 @@ const handleLogout = () => {
 <style scoped>
 .icon {
     border-radius: 8px !important;
-    background: linear-gradient(135deg, #FF8C00, #FFA500) !important; /* Professional orange gradient */
-    box-shadow: 0 3px 6px rgba(255, 140, 0, 0.3);
+    background: linear-gradient(135deg, #059669, #10B981) !important; /* Professional green gradient */
+    box-shadow: 0 3px 6px rgba(5, 150, 105, 0.3);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
 }
@@ -169,8 +169,8 @@ const handleLogout = () => {
 }
 
 .icon:hover {
-    background: linear-gradient(135deg, #E67300, #FF8C00) !important; /* Darker orange gradient on hover */
-    box-shadow: 0 6px 12px rgba(255, 140, 0, 0.4);
+    background: linear-gradient(135deg, #047857, #059669) !important; /* Darker green gradient on hover */
+    box-shadow: 0 6px 12px rgba(5, 150, 105, 0.4);
     transform: translateY(-2px) scale(1.05);
 }
 

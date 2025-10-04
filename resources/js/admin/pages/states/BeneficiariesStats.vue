@@ -239,7 +239,7 @@ const getStatTypeColor = (statType) => {
         'programs_completed': 'warning',
         'provinces_reached': 'purple',
         'cooperatives_formed': 'teal',
-        'projects': 'orange',
+        'projects': 'green',
         'staff': 'indigo',
         'partners': 'cyan'
     };

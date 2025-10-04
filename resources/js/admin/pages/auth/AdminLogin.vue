@@ -5,9 +5,9 @@
     
     <!-- Decorative Shapes -->
     <div class="absolute inset-0 overflow-hidden">
-      <div class="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-br from-orange-400 to-pink-500 rounded-3xl transform rotate-12 opacity-80"></div>
+      <div class="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-br from-green-400 to-emerald-500 rounded-3xl transform rotate-12 opacity-80"></div>
       <div class="absolute top-1/4 -right-16 w-32 h-32 bg-gradient-to-br from-pink-400 to-purple-500 rounded-2xl transform -rotate-12 opacity-70"></div>
-      <div class="absolute bottom-1/4 left-1/4 w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl transform rotate-45 opacity-60"></div>
+      <div class="absolute bottom-1/4 left-1/4 w-24 h-24 bg-gradient-to-br from-green-300 to-green-500 rounded-xl transform rotate-45 opacity-60"></div>
       <div class="absolute bottom-10 right-1/4 w-36 h-36 bg-gradient-to-br from-purple-400 to-pink-500 rounded-3xl transform -rotate-6 opacity-50"></div>
     </div>
 
@@ -20,11 +20,11 @@
           
           <!-- Decorative shapes overlay -->
           <div class="absolute inset-0">
-            <div class="absolute top-8 left-8 w-24 h-24 bg-gradient-to-br from-orange-400 to-pink-500 rounded-2xl transform rotate-12 opacity-90"></div>
+            <div class="absolute top-8 left-8 w-24 h-24 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl transform rotate-12 opacity-90"></div>
             <div class="absolute top-32 right-6 w-20 h-20 bg-gradient-to-br from-pink-400 to-purple-500 rounded-xl transform -rotate-12 opacity-80"></div>
-            <div class="absolute bottom-24 left-6 w-28 h-28 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl transform rotate-45 opacity-70"></div>
+            <div class="absolute bottom-24 left-6 w-28 h-28 bg-gradient-to-br from-green-300 to-green-500 rounded-2xl transform rotate-45 opacity-70"></div>
             <div class="absolute bottom-32 right-8 w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-lg transform -rotate-6 opacity-60"></div>
-            <div class="absolute top-48 left-1/4 w-12 h-12 bg-gradient-to-br from-orange-300 to-pink-400 rounded-lg transform rotate-30 opacity-50"></div>
+            <div class="absolute top-48 left-1/4 w-12 h-12 bg-gradient-to-br from-green-300 to-emerald-400 rounded-lg transform rotate-30 opacity-50"></div>
           </div>
           
           <!-- Content -->
