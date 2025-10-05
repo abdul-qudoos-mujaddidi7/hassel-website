@@ -19,7 +19,7 @@ class NewsResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'excerpt' => $this->excerpt,
-            'content' => $this->when($request->routeIs('*.show'), $this->content),
+            'content' => $this->when($request->routeIs('api.news.show'), $this->content),
             'featured_image' => $this->featured_image,
             'featured_image_url' => $this->featured_image ? asset('storage/' . $this->featured_image) : null,
             'status' => $this->status,
