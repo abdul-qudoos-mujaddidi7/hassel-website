@@ -393,33 +393,8 @@ const fetchArticle = async () => {
         console.error("Error fetching article:", err);
         error.value = "Failed to load article";
 
-        // Fallback article data
-        article.value = {
-            id: 1,
-            title: "New Training Program Launched in Herat Province",
-            excerpt:
-                "Mount Agro launches comprehensive agricultural training program reaching 500 farmers in Herat, focusing on modern irrigation techniques and crop diversification.",
-            content: `Mount Agro has successfully launched a new comprehensive agricultural training program in Herat Province, reaching over 500 farmers across the region. The program focuses on modern irrigation techniques, crop diversification, and sustainable farming practices.
-
-This initiative is part of our ongoing commitment to empower Afghanistan's agricultural communities through innovative solutions and comprehensive support programs. The training covers:
-
-• Modern irrigation systems and water management
-• Crop diversification strategies
-• Sustainable farming practices
-• Market access and value chain development
-• Climate-smart agriculture techniques
-
-The program has already shown promising results, with participating farmers reporting increased crop yields and improved farming efficiency. This success demonstrates the importance of providing farmers with the knowledge and tools they need to thrive in today's agricultural landscape.
-
-We are committed to expanding this program to other provinces across Afghanistan, ensuring that more farmers have access to these valuable training opportunities.`,
-            featured_image:
-                "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1200&h=400&fit=crop&crop=center&auto=format",
-            published_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-            slug: "new-training-program-launch",
-            author: "Mount Agro Editorial Team",
-            tags: ["Training", "Agriculture", "Herat Province", "Development"],
-        };
+        // No fallback data - show error state
+        article.value = null;
 
         // Fetch related articles
         await fetchRelatedArticles();
@@ -449,33 +424,8 @@ const fetchRelatedArticles = async () => {
         }
     } catch (err) {
         console.error("Error fetching related articles:", err);
-        // Fallback related articles
-        relatedArticles.value = [
-            {
-                id: 2,
-                title: "AgriTech Mobile App Reaches 10,000 Users",
-                excerpt:
-                    "Our innovative mobile application providing weather forecasts, market prices, and agricultural advice has successfully reached 10,000 active users across Afghanistan.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=200&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 7 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "agritech-app-milestone",
-            },
-            {
-                id: 3,
-                title: "Women's Cooperative Program Shows Remarkable Success",
-                excerpt:
-                    "Our women's agricultural cooperative program has empowered over 200 women farmers, increasing their income by an average of 40% through collective farming and marketing initiatives.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=200&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 14 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "womens-cooperative-success",
-            },
-        ];
+        // No fallback data - show empty state
+        relatedArticles.value = [];
     }
 };
 

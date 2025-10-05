@@ -63,6 +63,7 @@ const router = createRouter({
         },
         { path: "/agri-tech-tools", component: AgriTechTools },
         { path: "/resources", component: Resources },
+        { path: "/news/:slug", component: NewsDetail, name: "news-detail" },
         { path: "/careers", component: Careers },
         { path: "/contact", component: Contact },
     ],

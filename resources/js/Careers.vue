@@ -71,18 +71,18 @@
                         @click="fetchJobs"
                         :disabled="loading"
                         class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                        <svg
+                        >
+                            <svg
                             v-if="!loading"
                             class="w-4 h-4 mr-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                             ></path>
                         </svg>
@@ -105,14 +105,14 @@
                                 fill="currentColor"
                                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                             ></path>
-                        </svg>
+                            </svg>
                         {{
                             loading
                                 ? t("common.loading")
                                 : t("careers.refresh_jobs")
                         }}
                     </button>
-                </div>
+                        </div>
 
                 <!-- Loading State -->
                 <LoadingSpinner
@@ -127,20 +127,20 @@
                 <div v-else-if="error" class="text-center py-12">
                     <div
                         class="inline-flex items-center px-4 py-2 bg-red-100 text-red-800 rounded-full"
-                    >
-                        <svg
-                            class="w-5 h-5 mr-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
                         >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
+                            <svg
+                            class="w-5 h-5 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
                                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                             ></path>
-                        </svg>
+                            </svg>
                         {{ error }}
                     </div>
                 </div>
@@ -164,7 +164,7 @@
                             ></path>
                         </svg>
                         {{ t("careers.no_jobs") }}
-                    </div>
+            </div>
                 </div>
 
                 <!-- Jobs List -->
