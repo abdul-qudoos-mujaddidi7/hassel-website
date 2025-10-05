@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class PublicationRequest extends FormRequest
 {
@@ -12,7 +12,7 @@ class PublicationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // TODO: Implement proper authorization when auth is added
+        return true;
     }
 
     /**
@@ -22,48 +22,41 @@ class PublicationRequest extends FormRequest
      */
     public function rules(): array
     {
-        $publicationId = $this->route('publication')?->id;
-        $isUpdate = $this->isMethod('PUT') || $this->isMethod('PATCH');
-
-        return [
+        $rules = [
             'title' => 'required|string|max:255',
-            'slug' => [
-                'nullable',
-                'string',
-                'max:255',
-                Rule::unique('publications', 'slug')->ignore($publicationId)
-            ],
-            'description' => 'required|string|max:1000',
-            'file_path' => $isUpdate
-                ? 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:10240'
-                : 'required|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:10240',
-            'file_type' => 'required|in:report,manual,guideline,policy,research,other',
+            'slug' => 'nullable|string|max:255|unique:publications,slug',
+            'description' => 'required|string',
+            'file_path' => 'nullable|string|max:500',
+            'file_type' => 'nullable|string|max:50',
             'status' => 'required|in:draft,published,archived',
             'published_at' => 'nullable|date',
         ];
+
+        // For update requests, make fields sometimes required
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules['slug'] = 'nullable|string|max:255|unique:publications,slug,' . $this->route('publication');
+            $rules['title'] = 'sometimes|required|string|max:255';
+            $rules['description'] = 'sometimes|required|string';
+            $rules['status'] = 'sometimes|required|in:draft,published,archived';
+        }
+
+        return $rules;
     }
 
     /**
-     * Get custom error messages for validator errors.
+     * Get custom messages for validator errors.
      *
      * @return array<string, string>
      */
     public function messages(): array
     {
         return [
-            'title.required' => 'The publication title is required.',
-            'title.max' => 'The publication title cannot exceed 255 characters.',
-            'slug.unique' => 'This slug is already taken. Please choose a different one.',
-            'description.required' => 'A description is required for the publication.',
-            'description.max' => 'The description cannot exceed 1000 characters.',
-            'file_path.required' => 'A file is required for new publications.',
-            'file_path.file' => 'The uploaded file must be a valid file.',
-            'file_path.mimes' => 'The file must be a PDF, DOC, DOCX, XLS, XLSX, PPT, or PPTX file.',
-            'file_path.max' => 'The file cannot be larger than 10MB.',
-            'file_type.required' => 'Please select a file type for the publication.',
-            'file_type.in' => 'The file type must be report, manual, guideline, policy, research, or other.',
-            'status.required' => 'Please select a status for the publication.',
-            'status.in' => 'The status must be either draft, published, or archived.',
+            'title.required' => 'The title is required.',
+            'title.max' => 'The title may not be greater than 255 characters.',
+            'slug.unique' => 'The slug has already been taken.',
+            'description.required' => 'The description is required.',
+            'status.required' => 'The status is required.',
+            'status.in' => 'The selected status is invalid.',
             'published_at.date' => 'The published date must be a valid date.',
         ];
     }
@@ -76,8 +69,12 @@ class PublicationRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'file_path' => 'publication file',
+            'title' => 'title',
+            'slug' => 'slug',
+            'description' => 'description',
+            'file_path' => 'file path',
             'file_type' => 'file type',
+            'status' => 'status',
             'published_at' => 'published date',
         ];
     }
@@ -87,17 +84,17 @@ class PublicationRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        // If status is published and no published_at date is set, set it to now
-        if ($this->status === 'published' && !$this->published_at) {
+        // Set published_at to current time if status is published and published_at is not set
+        if ($this->status === 'published' && !$this->has('published_at')) {
             $this->merge([
-                'published_at' => now()->toDateTimeString(),
+                'published_at' => now()
             ]);
         }
 
-        // Auto-generate slug if not provided
-        if (!$this->slug && $this->title) {
+        // Auto-generate slug from title if not provided
+        if ($this->has('title') && !$this->has('slug')) {
             $this->merge([
-                'slug' => \Illuminate\Support\Str::slug($this->title),
+                'slug' => Str::slug($this->title)
             ]);
         }
     }

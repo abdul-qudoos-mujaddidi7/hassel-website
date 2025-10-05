@@ -78,7 +78,8 @@
                     </v-card-text>
 
                     <div class="d-flex flex-row-reverse mb-6 mx-6">
-                        <v-btn color="#112F53" class="px-4" @click="save">
+                        <v-btn class="create-btn-gradient px-4" @click="save">
+                            <v-icon>mdi-content-save</v-icon>
                             {{ buttonText }}
                         </v-btn>
                     </div>

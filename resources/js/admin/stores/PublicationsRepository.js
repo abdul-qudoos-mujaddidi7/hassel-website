@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
-export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
+export let usePublicationsRepository = defineStore("PublicationsRepository", {
     state() {
         return {
             isEditMode: ref(false),
@@ -18,23 +18,29 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             itemsPerPage: ref(5),
             createDialog: ref(false),
             
-            // Statistics data
-            beneficiariesStats: reactive([]),
-            beneficiariesStatsSearch: ref(""),
-            currentStat: reactive({}),
+            // Publications data
+            publications: reactive([]),
+            publicationsSearch: ref(""),
+            currentPublication: reactive({}),
             
-            // Stat types for dropdowns
-            statTypes: reactive([
-                { value: 'beneficiaries', label: 'Beneficiaries' },
-                { value: 'total_beneficiaries', label: 'Total Beneficiaries' },
-                { value: 'male_beneficiaries', label: 'Male Beneficiaries' },
-                { value: 'female_beneficiaries', label: 'Female Beneficiaries' },
-                { value: 'programs_completed', label: 'Programs Completed' },
-                { value: 'provinces_reached', label: 'Provinces Reached' },
-                { value: 'cooperatives_formed', label: 'Cooperatives Formed' },
-                { value: 'projects', label: 'Projects' },
-                { value: 'staff', label: 'Staff' },
-                { value: 'partners', label: 'Partners' }
+            // Status options for dropdowns
+            statusOptions: reactive([
+                { value: 'draft', label: 'Draft' },
+                { value: 'published', label: 'Published' },
+                { value: 'archived', label: 'Archived' }
+            ]),
+
+            // File type options
+            fileTypeOptions: reactive([
+                { value: 'pdf', label: 'PDF Document' },
+                { value: 'doc', label: 'Word Document' },
+                { value: 'docx', label: 'Word Document (DOCX)' },
+                { value: 'xls', label: 'Excel Spreadsheet' },
+                { value: 'xlsx', label: 'Excel Spreadsheet (XLSX)' },
+                { value: 'ppt', label: 'PowerPoint Presentation' },
+                { value: 'pptx', label: 'PowerPoint Presentation (PPTX)' },
+                { value: 'txt', label: 'Text File' },
+                { value: 'other', label: 'Other' }
             ]),
         };
     },
@@ -51,23 +57,33 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             return `${year}-${month}-${day}`;
         },
         
-        // Fetch all beneficiaries stats with pagination
-        async fetchBeneficiariesStats({ page = 1, itemsPerPage = 5 }) {
+        // Fetch all publications with pagination
+        async fetchPublications({ page = 1, itemsPerPage = 5, status = '', fileType = '' }) {
             this.loading = true;
             try {
-                const response = await axios.get(
-                    `beneficiaries-stats?page=${page}&perPage=${itemsPerPage}&search=${this.beneficiariesStatsSearch}`
-                );
+                const params = new URLSearchParams({
+                    page: page,
+                    perPage: itemsPerPage,
+                    search: this.publicationsSearch
+                });
                 
-                console.log('API Response:', response.data); // Debug log
+                if (status) {
+                    params.append('status', status);
+                }
                 
-                // Handle different response structures
+                if (fileType) {
+                    params.append('file_type', fileType);
+                }
+                
+                const response = await axios.get(`publications?${params}`);
+                
+                console.log('API Response:', response.data);
+                
                 if (response.data.success) {
-                    this.beneficiariesStats = response.data.data || [];
+                    this.publications = response.data.data || [];
                     this.totalItems = response.data.meta?.total || 0;
                 } else {
-                    // Handle error response
-                    this.beneficiariesStats = [];
+                    this.publications = [];
                     this.totalItems = 0;
                     toast.error(response.data.message || "Failed to fetch data", {
                         position: "top-right",
@@ -80,11 +96,11 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
                 console.error('API Error:', err);
                 console.error('Error Response:', err.response?.data);
                 
-                this.beneficiariesStats = [];
+                this.publications = [];
                 this.totalItems = 0;
                 this.loading = false;
                 
-                const errorMessage = err.response?.data?.message || "Failed to fetch beneficiaries statistics";
+                const errorMessage = err.response?.data?.message || "Failed to fetch publications";
                 toast.error(errorMessage, {
                     position: "top-right",
                     autoClose: 3000,
@@ -97,17 +113,17 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Fetch single stat by ID
-        async fetchBeneficiariesStat(id) {
+        // Fetch single publication by ID
+        async fetchPublication(id) {
             this.loading = true;
             try {
-                const response = await axios.get(`beneficiaries-stats/${id}`);
-                this.currentStat = response.data.data;
+                const response = await axios.get(`publications/${id}`);
+                this.currentPublication = response.data.data;
                 this.loading = false;
             } catch (err) {
                 console.error(err);
                 this.loading = false;
-                toast.error("Failed to fetch beneficiaries stat", {
+                toast.error("Failed to fetch publication", {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -119,12 +135,12 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Create new beneficiaries stat
-        async createBeneficiariesStat(formData) {
+        // Create new publication
+        async createPublication(formData) {
             try {
-                const response = await axios.post("beneficiaries-stats", formData);
+                const response = await axios.post("publications", formData);
                 this.createDialog = false;
-                toast.success("Beneficiaries stat created successfully!", {
+                toast.success("Publication created successfully!", {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -135,13 +151,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
                 });
                 
                 // Refresh the list
-                this.fetchBeneficiariesStats({
+                this.fetchPublications({
                     page: 1,
                     itemsPerPage: this.itemsPerPage,
                 });
             } catch (err) {
                 console.error(err);
-                const errorMessage = err.response?.data?.message || "Failed to create beneficiaries stat. Please try again.";
+                const errorMessage = err.response?.data?.message || "Failed to create publication. Please try again.";
                 toast.error(errorMessage, {
                     position: "top-right",
                     autoClose: 3000,
@@ -154,13 +170,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Update existing beneficiaries stat
-        async updateBeneficiariesStat(id, formData) {
+        // Update existing publication
+        async updatePublication(id, formData) {
             try {
-                const response = await axios.put(`beneficiaries-stats/${id}`, formData);
+                const response = await axios.put(`publications/${id}`, formData);
                 this.createDialog = false;
                 this.isEditMode = false;
-                toast.success("Beneficiaries stat updated successfully!", {
+                toast.success("Publication updated successfully!", {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -171,13 +187,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
                 });
                 
                 // Refresh the list
-                this.fetchBeneficiariesStats({
+                this.fetchPublications({
                     page: 1,
                     itemsPerPage: this.itemsPerPage,
                 });
             } catch (err) {
                 console.error(err);
-                const errorMessage = err.response?.data?.message || "Failed to update beneficiaries stat. Please try again.";
+                const errorMessage = err.response?.data?.message || "Failed to update publication. Please try again.";
                 toast.error(errorMessage, {
                     position: "top-right",
                     autoClose: 3000,
@@ -190,11 +206,11 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Delete beneficiaries stat
-        async deleteBeneficiariesStat(id) {
+        // Delete publication
+        async deletePublication(id) {
             try {
-                await axios.delete(`beneficiaries-stats/${id}`);
-                toast.success("Beneficiaries stat deleted successfully!", {
+                await axios.delete(`publications/${id}`);
+                toast.success("Publication deleted successfully!", {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -205,13 +221,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
                 });
                 
                 // Refresh the list
-                this.fetchBeneficiariesStats({
+                this.fetchPublications({
                     page: 1,
                     itemsPerPage: this.itemsPerPage,
                 });
             } catch (err) {
                 console.error(err);
-                const errorMessage = err.response?.data?.message || "Failed to delete beneficiaries stat. Please try again.";
+                const errorMessage = err.response?.data?.message || "Failed to delete publication. Please try again.";
                 toast.error(errorMessage, {
                     position: "top-right",
                     autoClose: 3000,
@@ -224,13 +240,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Bulk delete beneficiaries stats
-        async bulkDeleteBeneficiariesStats(ids) {
+        // Bulk delete publications
+        async bulkDeletePublications(ids) {
             try {
-                const deletePromises = ids.map(id => axios.delete(`beneficiaries-stats/${id}`));
+                const deletePromises = ids.map(id => axios.delete(`publications/${id}`));
                 await Promise.all(deletePromises);
                 
-                toast.success(`${ids.length} beneficiaries stats deleted successfully!`, {
+                toast.success(`${ids.length} publications deleted successfully!`, {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -241,13 +257,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
                 });
                 
                 // Refresh the list
-                this.fetchBeneficiariesStats({
+                this.fetchPublications({
                     page: 1,
                     itemsPerPage: this.itemsPerPage,
                 });
             } catch (err) {
                 console.error(err);
-                toast.error("Failed to delete selected beneficiaries stats. Please try again.", {
+                toast.error("Failed to delete selected publications. Please try again.", {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -259,37 +275,87 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Get statistics summary
-        async getStatsSummary() {
+        // Get published publications
+        async getPublishedPublications({ page = 1, itemsPerPage = 10 }) {
             try {
-                const response = await axios.get("beneficiaries-stats-summary");
+                const params = new URLSearchParams({
+                    page: page,
+                    perPage: itemsPerPage,
+                    search: this.publicationsSearch
+                });
+                
+                const response = await axios.get(`publications/published?${params}`);
+                return response.data;
+            } catch (err) {
+                console.error(err);
+                return { success: false, data: [], meta: { total: 0 } };
+            }
+        },
+        
+        // Get publications by file type
+        async getPublicationsByFileType(fileType, { page = 1, itemsPerPage = 10 }) {
+            try {
+                const params = new URLSearchParams({
+                    page: page,
+                    perPage: itemsPerPage
+                });
+                
+                const response = await axios.get(`publications/by-file-type/${fileType}?${params}`);
+                return response.data;
+            } catch (err) {
+                console.error(err);
+                return { success: false, data: [], meta: { total: 0 } };
+            }
+        },
+        
+        // Get publication statistics
+        async getPublicationStatistics() {
+            try {
+                const response = await axios.get("publications/statistics");
                 return response.data.data;
             } catch (err) {
                 console.error(err);
-                return [];
+                return {};
             }
         },
         
-        // Helper method to get stat type label
-        getStatTypeLabel(statType) {
-            const stat = this.statTypes.find(s => s.value === statType);
-            return stat ? stat.label : statType;
+        // Helper method to get status label
+        getStatusLabel(status) {
+            const statusOption = this.statusOptions.find(s => s.value === status);
+            return statusOption ? statusOption.label : status;
         },
         
-        // Helper method to format numbers
-        formatNumber(number) {
-            return new Intl.NumberFormat().format(number);
+        // Helper method to get file type label
+        getFileTypeLabel(type) {
+            const typeOption = this.fileTypeOptions.find(t => t.value === type);
+            return typeOption ? typeOption.label : type;
         },
         
-        // Reset current stat
-        resetCurrentStat() {
-            this.currentStat = {
+        // Helper method to format date
+        formatDate(date) {
+            if (!date) return '';
+            return new Date(date).toLocaleDateString();
+        },
+        
+        // Helper method to get file extension
+        getFileExtension(filePath) {
+            if (!filePath) return '';
+            return filePath.split('.').pop().toLowerCase();
+        },
+        
+        // Reset current publication
+        resetCurrentPublication() {
+            this.currentPublication = {
                 id: null,
-                stat_type: '',
-                value: 0,
+                title: '',
+                slug: '',
                 description: '',
-                year: new Date().getFullYear()
+                file_path: '',
+                file_type: '',
+                status: 'draft',
+                published_at: null
             };
         }
     },
 });
+

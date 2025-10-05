@@ -7,234 +7,162 @@
                     <v-avatar size="60" class="logo-avatar">
                         <img :src="logo" alt="Logo" class="logo-image" />
                     </v-avatar>
+                    <div class="logo-title">Admin Panel</div>
                 </div>
             </router-link>
         </div>
 
         <!-- Navigation Section -->
         <div class="navigation-section">
-            <router-link to="/admin/dashboard">
+            <router-link to="/admin/dashboard" exact @click="closeAllMenus">
                 <v-list-item
-                    active-class="bg-primaryOld text-white"
+                    active-class="active-item"
                     value="home"
                     prepend-icon="mdi mdi-home-lightning-bolt-outline"
-                    class="transition-all duration-300 cursor-pointer py-3 borderRadius"
+                    class="nav-item"
                 >
                     Dashboard
                 </v-list-item>
             </router-link>
 
-            <v-list-item
-                active-class="bg-primaryOld text-white"
-                prepend-icon="mdi mdi-gauge"
-                value="lead"
-                @click="toggleMenu('lead')"
-                class="transition-all duration-300 cursor-pointer py-3 borderRadius"
-            >
-                Leads
-            </v-list-item>
-            <transition name="slide-fade">
-                <v-list v-show="activeMenu === 'lead'" class="pl-4">
-                    <router-link
-                        v-for="item in leadItems"
-                        :key="item.to"
-                        :to="item.to"
-                    >
-                        <v-list-item
-                            :title="item.title"
-                            :prepend-icon="item.icon"
-                            :value="item.value"
-                            color="primaryOld"
-                            class="child rounded-lg"
-                        />
-                    </router-link>
-                </v-list>
-            </transition>
-
-            <router-link to="/admin/beneficiaries-stats">
+            <router-link to="/admin/beneficiaries-stats" exact @click="closeAllMenus">
                 <v-list-item
-                    active-class="bg-primaryOld text-white"
+                    active-class="active-item"
                     prepend-icon="mdi mdi-chart-line"
                     value="beneficiaries-stats"
-                    class="transition-all duration-300 cursor-pointer py-3 borderRadius"
+                    class="nav-item"
                 >
                     Beneficiaries Stats
                 </v-list-item>
             </router-link>
 
-            <router-link to="/admin/cure">
+            <!-- News -->
+            <router-link to="/admin/news" exact @click="closeAllMenus">
                 <v-list-item
-                    active-class="bg-primaryOld text-white"
-                    prepend-icon="mdi-tooth-outline"
-                    value="cure"
-                    class="transition-all duration-300 cursor-pointer py-3 borderRadius"
+                    active-class="active-item"
+                    prepend-icon="mdi-newspaper-variant-outline"
+                    value="news"
+                    class="nav-item"
                 >
-                    Cure Cycle
+                    News
                 </v-list-item>
             </router-link>
 
-            <router-link to="/admin/mainLaboratory">
+            <!-- Training Programs -->
+            <router-link to="/admin/training-programs" exact @click="closeAllMenus">
                 <v-list-item
-                    active-class="bg-primaryOld text-white"
-                    prepend-icon="mdi-microscope"
-                    value="in lab"
-                    class="transition-all duration-300 cursor-pointer py-3 borderRadius"
+                    active-class="active-item"
+                    prepend-icon="mdi-school-outline"
+                    value="training-programs"
+                    class="nav-item"
                 >
-                    Inbound Laboratory
+                    Training Programs
                 </v-list-item>
             </router-link>
 
-            <router-link to="/admin/laboratory">
+            <!-- Publications -->
+            <router-link to="/admin/publications" exact @click="closeAllMenus">
                 <v-list-item
-                    active-class="bg-primaryOld text-white"
-                    prepend-icon="mdi-test-tube"
-                    value="out lab"
-                    class="transition-all duration-300 cursor-pointer py-3 borderRadius"
+                    active-class="active-item"
+                    prepend-icon="mdi-book-outline"
+                    value="publications"
+                    class="nav-item"
                 >
-                    Outbound Laboratory
+                    Publications
+                </v-list-item>
+            </router-link>
+
+            <!-- Success Stories -->
+            <router-link to="/admin/success-stories" exact @click="closeAllMenus">
+                <v-list-item
+                    active-class="active-item"
+                    prepend-icon="mdi-trophy-outline"
+                    value="success-stories"
+                    class="nav-item"
+                >
+                    Success Stories
+                </v-list-item>
+            </router-link>
+
+            <!-- Contacts -->
+            <router-link to="/admin/contacts" exact @click="closeAllMenus">
+                <v-list-item
+                    active-class="active-item"
+                    prepend-icon="mdi-account-group-outline"
+                    value="contacts"
+                    class="nav-item"
+                >
+                    Contacts
                 </v-list-item>
             </router-link>
 
             <v-list-item
-                @click="toggleMenu('expense')"
-                active-class="bg-primaryOld text-white"
-                prepend-icon="mdi-currency-usd-off"
-                value="expense"
-                class="transition-all duration-300 cursor-pointer py-3 borderRadius"
-            >
-                Expenses
-            </v-list-item>
-            <transition name="slide-fade">
-                <v-list v-if="activeMenu === 'expense'" class="pl-4">
-                    <router-link
-                        v-for="item in navItems"
-                        :key="item.to"
-                        :to="item.to"
-                    >
-                        <v-list-item
-                            :title="item.title"
-                            :prepend-icon="item.icon"
-                            :value="item.value"
-                            color="primaryOld"
-                            class="child rounded-lg"
-                        />
-                    </router-link>
-                </v-list>
-            </transition>
-
-            <v-list-item
-                active-class="bg-primaryOld text-white"
-                prepend-icon="mdi mdi-card-account-details-outline"
-                value="people"
-                @click="toggleMenu('people')"
-                class="transition-all duration-300 cursor-pointer py-3 borderRadius"
-            >
-                People
-            </v-list-item>
-            <transition name="slide-fade">
-                <v-list v-if="activeMenu === 'people'" class="pl-4">
-                    <router-link
-                        v-for="item in peopleItems"
-                        :key="item.to"
-                        :to="item.to"
-                    >
-                        <v-list-item
-                            :title="item.title"
-                            :prepend-icon="item.icon"
-                            :value="item.value"
-                            color="primaryOld"
-                            class="child rounded-lg"
-                        />
-                    </router-link>
-                </v-list>
-            </transition>
-
-            <v-list-item
-                active-class="bg-primaryOld text-white"
+                active-class="active-item"
                 prepend-icon="mdi-finance"
                 value="Reports"
                 @click="toggleMenu('reports')"
-                class="transition-all duration-300 cursor-pointer py-3 borderRadius"
+                class="nav-item"
             >
                 Reports
+                <template v-slot:append>
+                    <v-icon :class="{'rotate-180': activeMenu === 'reports'}" class="transition-transform duration-300">
+                        mdi-chevron-down
+                    </v-icon>
+                </template>
             </v-list-item>
             <transition name="slide-fade">
-                <v-list v-if="activeMenu === 'reports'" class="pl-4">
+                <v-list v-if="activeMenu === 'reports'" class="submenu">
                     <router-link
                         v-for="item in reportItems"
                         :key="item.to"
                         :to="item.to"
+                        @click="closeAllMenus"
                     >
                         <v-list-item
                             :title="item.title"
                             :prepend-icon="item.icon"
                             :value="item.value"
-                            color="primaryOld"
-                            class="child rounded-lg"
+                            active-class="active-subitem"
+                            class="submenu-item"
                         />
                     </router-link>
                 </v-list>
             </transition>
 
             <v-list-item
-                active-class="bg-primaryOld text-white"
+                active-class="active-item"
                 prepend-icon="mdi-cog-outline"
                 value="Setting"
                 @click="toggleMenu('setting')"
-                class="transition-all duration-300 cursor-pointer py-3 borderRadius"
+                class="nav-item"
             >
                 Settings
+                <template v-slot:append>
+                    <v-icon :class="{'rotate-180': activeMenu === 'setting'}" class="transition-transform duration-300">
+                        mdi-chevron-down
+                    </v-icon>
+                </template>
             </v-list-item>
             <transition name="slide-fade">
-                <v-list v-if="activeMenu === 'setting'" class="pl-4">
+                <v-list v-if="activeMenu === 'setting'" class="submenu">
                     <router-link
                         v-for="item in settingItems"
                         :key="item.to"
                         :to="item.to"
+                        @click="closeAllMenus"
                     >
                         <v-list-item
                             :title="item.title"
                             :prepend-icon="item.icon"
                             :value="item.value"
-                            color="primaryOld"
-                            class="child rounded-lg"
+                            active-class="active-subitem"
+                            class="submenu-item"
                         />
                     </router-link>
                 </v-list>
             </transition>
         </div>
 
-        <!-- Profile Section - Positioned at the very end -->
-        <div class="profile-section mt-auto">
-            <hr class="profile-divider" />
-            <div class="user-profile-item">
-                <v-list-item
-                    :prepend-avatar="user.photo"
-                    :title="user.name"
-                    :subtitle="user.email"
-                    nav
-                    class="px-4 py-3 cursor-pointer user-profile-card"
-                    @click="dialog = true"
-                />
-            </div>
-
-            <v-dialog v-model="dialog" max-width="350">
-                <v-card class="text-center">
-                    <v-card-text>
-                        <v-avatar size="80">
-                            <img :src="user.photo" alt="Profile Photo" />
-                        </v-avatar>
-                        <h3 class="mt-3">{{ user.name }}</h3>
-                        <p class="text-gray-500">{{ user.email }}</p>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-btn color="error" block @click="logout"
-                            >Log Out</v-btn
-                        >
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-        </div>
     </div>
 </template>
 
@@ -250,131 +178,21 @@ onMounted(() => {
 });
 const logo = "https://via.placeholder.com/150"; // replace with your logo
 
-const dialog = ref(false);
 const activeMenu = ref(null);
 
-// Use actual user data from auth store
-const user = computed(() => {
-    if (authStore.user && authStore.user.name) {
-        return {
-            name: authStore.user.name,
-            email: authStore.user.email,
-            photo: authStore.user.photo || "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?semt=ais_hybrid&w=740"
-        };
-    }
-    // Fallback for when user data isn't loaded yet
-    return {
-        name: "Admin User",
-        email: "admin@example.com",
-        photo: "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?semt=ais_hybrid&w=740"
-    };
-});
-
-const logout = async () => {
-    try {
-        await authStore.logout();
-        dialog.value = false; // Close the dialog
-    } catch (error) {
-        console.error('Logout error:', error);
-    }
-};
-
 const toggleMenu = (menu) => {
-    activeMenu.value = activeMenu.value === menu ? null : menu;
+    // If clicking the same menu, toggle it
+    if (activeMenu.value === menu) {
+        activeMenu.value = null;
+    } else {
+        // If clicking a different menu, close all others and open this one
+        activeMenu.value = menu;
+    }
 };
 
-const navItems = [
-    {
-        to: "/admin/expense",
-        title: "All Expenses",
-        icon: "mdi mdi-circle-medium",
-        value: "AllExpenses",
-    },
-    {
-        to: "/admin/billExpense",
-        title: "Bill Expense",
-        icon: "mdi mdi-circle-medium",
-        value: "billExpense",
-    },
-    {
-        to: "/admin/expenseProducts",
-        title: "Products",
-        icon: "mdi mdi-circle-medium",
-        value: "expense product",
-    },
-    {
-        to: "/admin/expenseCat",
-        title: "Categories",
-        icon: "mdi mdi-circle-medium",
-        value: "categories",
-    },
-];
-
-const peopleItems = [
-    {
-        to: "/admin/employee",
-        title: "Employee",
-        icon: "mdi mdi-circle-medium",
-        value: "employee",
-    },
-    {
-        to: "/admin/patients",
-        title: "Patients",
-        icon: "mdi mdi-circle-medium",
-        value: "patients",
-    },
-    {
-        to: "/admin/owners",
-        title: "Owners",
-        icon: "mdi mdi-circle-medium",
-        value: "owners",
-    },
-    {
-        to: "/admin/supplier",
-        title: "Supplier",
-        icon: "mdi mdi-circle-medium",
-        value: "supplier",
-    },
-    {
-        to: "/admin/customer",
-        title: "Customer",
-        icon: "mdi mdi-circle-medium",
-        value: "customer",
-    },
-    {
-        to: "/admin/doctors",
-        title: "Doctors",
-        icon: "mdi mdi-circle-medium",
-        value: "doctors",
-    },
-    {
-        to: "/admin/user",
-        title: "User",
-        icon: "mdi mdi-circle-medium",
-        value: "user",
-    },
-];
-
-const leadItems = [
-    {
-        to: "/admin/lead",
-        title: "Leads",
-        icon: "mdi mdi-circle-medium",
-        value: "lead",
-    },
-    {
-        to: "/admin/leadCategory",
-        title: "Lead Category",
-        icon: "mdi mdi-circle-medium",
-        value: "leadCategory",
-    },
-    {
-        to: "/admin/leadStage",
-        title: "Lead Stage",
-        icon: "mdi mdi-circle-medium",
-        value: "leadStage",
-    },
-];
+const closeAllMenus = () => {
+    activeMenu.value = null;
+};
 
 const settingItems = [
     {
@@ -448,162 +266,24 @@ function handleDrawerState(isOpen) {
 </script>
 
 <style scoped>
-/* Hide scrollbar across all browsers */
-/* .child {
-    font-size: 14px;
-    transition: color 0.3s;
-} */
-.child > :nth-child(3) {
-    /* background-color: red; */
-    display: flex;
-    justify-content: flex-start;
-    width: 2rem;
-}
-
-.scrollable-content {
-    max-height: 80vh;
-    overflow-y: auto;
-    /* direction: ltr; */
-}
-.scrollable-content::-webkit-scrollbar {
-    width: 4px;
-    display: none;
-}
-
-.scrollable-content::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-.scrollable-content::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-}
-
-.scrollable-content::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-/* Smooth slide transition */
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-    opacity: 0;
-    transform: translateY(-10px);
-}
-
-/* Styling for child items */
-.child {
-    font-size: 0.875rem;
-    transition: color 0.3s ease;
-}
-.child:hover {
-    color: #333;
-}
-.borderRadius {
-    border-top-right-radius: 8px !important;
-    border-bottom-right-radius: 8px !important;
-}
-
-/* Brand styling for navigation items */
-.v-list-item {
-    color: white !important;
-    transition: all 0.3s ease;
-}
-
-.v-list-item:hover {
-    background-color: rgba(
-        5,
-        150,
-        105,
-        0.2
-    ) !important; /* Professional green with opacity */
-    color: #10b981 !important; /* Light green text */
-    border-radius: 12px;
-    margin: 3px 12px;
-    transform: none; /* Remove the left movement */
-    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3); /* Add subtle shadow instead */
-}
-
-.v-list-item.v-list-item--active {
-    background: linear-gradient(
-        135deg,
-        #059669,
-        #10b981
-    ) !important; /* Professional green gradient */
-    color: white !important; /* White text */
-    font-weight: 700;
-    border-radius: 12px;
-    margin: 3px 12px;
-    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.5);
-    border-left: 4px solid #a7f3d0;
-}
-
-.v-list-item.v-list-item--active .v-icon {
-    color: white !important; /* White icon for active */
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
-}
-
-.v-list-item:hover .v-icon {
-    color: #10b981 !important; /* Professional green icon on hover */
-}
-
-.v-list-item .v-icon {
-    color: white !important; /* Default white icons */
-}
-
-/* Profile Section Styling - Positioned at the very end */
-
-.user-profile-item {
-    padding: 8px 0;
-}
-
-.user-profile-card {
-    border-radius: 8px !important;
-    transition: all 0.2s ease;
-    background-color: transparent;
-    color: white !important;
-}
-
-.user-profile-card:hover {
-    background-color: rgba(
-        5,
-        150,
-        105,
-        0.2
-    ) !important; /* Professional green with opacity */
-    color: #10b981 !important; /* Professional green text */
-    border-radius: 12px;
-    transform: translateY(-2px); /* Keep subtle vertical lift for profile */
-    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4); /* Enhanced shadow for profile */
-}
-
-/* Ensure the sidebar container uses flexbox for proper positioning */
+/* Use Vuetify theme colors */
 .sidebar-container {
     display: flex;
     flex-direction: column;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    max-height: 100vh !important;
-    background: linear-gradient(
-        180deg,
-        #034e3f 0%,
-        #047857 50%,
-        #059669 100%
-    ); /* Professional green gradient */
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+    background: rgb(var(--v-theme-sidebar-bg));
     overflow: hidden;
-    color: white;
-    box-shadow: 3px 0 15px rgba(5, 150, 105, 0.2);
+    color: rgb(var(--v-theme-on-surface));
+    box-shadow: 3px 0 15px rgba(0, 0, 0, 0.08);
     position: relative;
 }
 
-/* Navigation section should take available space */
-.navigation-section {
-    flex: 1;
-    overflow-y: auto;
-    padding: 16px 0;
+/* Logo Section */
+.logo-section {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .logo-link {
@@ -614,21 +294,21 @@ function handleDrawerState(isOpen) {
 .logo-container {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
     gap: 8px;
-    padding: 16px 0;
+    padding: 0.5rem 1rem;
 }
 
 .logo-avatar {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     border: 3px solid #fff;
+    background: #fff;
 }
 
 .logo-avatar:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .logo-image {
@@ -639,9 +319,119 @@ function handleDrawerState(isOpen) {
 }
 
 .logo-title {
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: 600;
-    color: #333;
+    color: rgb(var(--v-theme-primary));
     text-align: center;
 }
+
+/* Navigation Section */
+.navigation-section {
+    flex: 1;
+    padding: 1rem 0.5rem;
+    overflow-y: auto;
+}
+
+.navigation-section::-webkit-scrollbar {
+    width: 4px;
+}
+
+.navigation-section::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.navigation-section::-webkit-scrollbar-thumb {
+    background: rgb(var(--v-theme-accent));
+    border-radius: 4px;
+}
+
+.navigation-section::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--v-theme-secondary));
+}
+
+/* Navigation Items */
+.nav-item {
+    border-radius: 8px !important;
+    margin: 4px 8px !important;
+    transition: all 0.3s ease !important;
+    color: rgb(var(--v-theme-on-surface)) !important;
+    position: relative;
+}
+
+.nav-item:hover {
+    background-color: rgba(var(--v-theme-primary), 0.08) !important;
+    color: rgb(var(--v-theme-primary)) !important;
+    transform: translateX(4px);
+}
+
+.nav-item:hover .v-icon {
+    color: rgb(var(--v-theme-primary)) !important;
+}
+
+/* Active Item States */
+.active-item {
+    background: linear-gradient(135deg, rgb(var(--v-theme-primary)), rgb(var(--v-theme-secondary))) !important;
+    color: rgb(var(--v-theme-on-primary)) !important;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.3);
+    border-left: 4px solid rgb(var(--v-theme-accent));
+}
+
+.active-item .v-icon {
+    color: rgb(var(--v-theme-on-primary)) !important;
+}
+
+/* Router Link Active State */
+.router-link-active .nav-item {
+    background: linear-gradient(135deg, rgb(var(--v-theme-primary)), rgb(var(--v-theme-secondary))) !important;
+    color: rgb(var(--v-theme-on-primary)) !important;
+}
+
+.router-link-active .nav-item .v-icon {
+    color: rgb(var(--v-theme-on-primary)) !important;
+}
+
+/* Submenus */
+.submenu {
+    padding-left: 1.5rem;
+    margin: 0.25rem 0;
+}
+
+.submenu-item {
+    border-radius: 6px !important;
+    margin: 2px 0 !important;
+    padding-left: 0.5rem !important;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    color: rgb(var(--v-theme-on-surface-variant)) !important;
+}
+
+.submenu-item:hover {
+    background-color: rgba(var(--v-theme-accent), 0.2) !important;
+    color: rgb(var(--v-theme-primary)) !important;
+    transform: translateX(2px);
+}
+
+.active-subitem {
+    background-color: rgb(var(--v-theme-accent)) !important;
+    color: rgb(var(--v-theme-on-primary)) !important;
+    font-weight: 500;
+}
+
+/* Menu Transitions */
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+    transition: all 0.3s ease;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
 </style>

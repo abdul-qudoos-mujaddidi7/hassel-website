@@ -3,59 +3,103 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class SuccessStoryRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     public function authorize(): bool
     {
         return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
-        $storyId = $this->route('successStory')?->id ?? $this->route('success_story')?->id;
-        $isUpdate = $this->isMethod('PUT') || $this->isMethod('PATCH');
-
-        return [
+        $rules = [
             'title' => 'required|string|max:255',
-            'slug' => [
-                'nullable',
-                'string',
-                'max:255',
-                Rule::unique('success_stories', 'slug')->ignore($storyId)
-            ],
-            'client_name' => 'required|string|max:255',
-            'story' => 'required|string',
-            'image' => $isUpdate
-                ? 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
-                : 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'slug' => 'nullable|string|max:255|unique:success_stories,slug',
+            'content' => 'required|string',
+            'featured_image' => 'nullable|string|max:500',
+            'author_name' => 'nullable|string|max:255',
+            'author_title' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
             'status' => 'required|in:draft,published,archived',
             'published_at' => 'nullable|date',
         ];
+
+        // For update requests, make fields sometimes required
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules['slug'] = 'nullable|string|max:255|unique:success_stories,slug,' . $this->route('success_story');
+            $rules['title'] = 'sometimes|required|string|max:255';
+            $rules['content'] = 'sometimes|required|string';
+            $rules['status'] = 'sometimes|required|in:draft,published,archived';
+        }
+
+        return $rules;
     }
 
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array<string, string>
+     */
     public function messages(): array
     {
         return [
-            'title.required' => 'The success story title is required.',
-            'client_name.required' => 'The client name is required.',
-            'story.required' => 'The success story content is required.',
-            'image.required' => 'An image is required for new success stories.',
-            'image.image' => 'The file must be a valid image.',
-            'image.mimes' => 'The image must be JPEG, PNG, JPG, GIF, or WebP.',
-            'image.max' => 'The image cannot be larger than 2MB.',
+            'title.required' => 'The title is required.',
+            'title.max' => 'The title may not be greater than 255 characters.',
+            'slug.unique' => 'The slug has already been taken.',
+            'content.required' => 'The content is required.',
+            'status.required' => 'The status is required.',
+            'status.in' => 'The selected status is invalid.',
+            'published_at.date' => 'The published date must be a valid date.',
         ];
     }
 
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'title' => 'title',
+            'slug' => 'slug',
+            'content' => 'content',
+            'featured_image' => 'featured image',
+            'author_name' => 'author name',
+            'author_title' => 'author title',
+            'location' => 'location',
+            'status' => 'status',
+            'published_at' => 'published date',
+        ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
     protected function prepareForValidation(): void
     {
-        if (!$this->slug && $this->title) {
-            $this->merge(['slug' => \Illuminate\Support\Str::slug($this->title)]);
+        // Set published_at to current time if status is published and published_at is not set
+        if ($this->status === 'published' && !$this->has('published_at')) {
+            $this->merge([
+                'published_at' => now()
+            ]);
         }
 
-        if ($this->status === 'published' && !$this->published_at) {
-            $this->merge(['published_at' => now()->toDateTimeString()]);
+        // Auto-generate slug from title if not provided
+        if ($this->has('title') && !$this->has('slug')) {
+            $this->merge([
+                'slug' => Str::slug($this->title)
+            ]);
         }
     }
 }

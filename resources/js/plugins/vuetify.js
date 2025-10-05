@@ -12,19 +12,29 @@ export default createVuetify({
         themes: {
             light: {
                 colors: {
-                    primary: "#134124", // Professional vibrant green
-                    secondary: "#375f1f", // Darker green
-                    accent: "#10B981", // Lighter green accent
-                    error: "#F44336",
-                    info: "#2196F3",
-                    success: "#4CAF50",
-                    warning: "#FF9800",
-                    // Custom colors for admin table styling
-                    tableRowBg: "#F0F9F6", // Very light green-tinted background for table rows
-                    background: "#FFFFFF", // White background
-                    lightSectionBg: "#F0F9F6", // Light green-tinted section bg
-                    primaryOld: "#059669", // Professional vibrant green for buttons
-                    tealColor: "#047857", // Darker green for icons
+                    // Primary Greens - Main brand colors
+                    primary: "#1b5e20", // Dark green for primary actions
+                    secondary: "#2e7d32", // Medium green for secondary elements
+                    // Supporting Greens
+                    success: "#4caf50", // Success states
+                    info: "#2196F3", // Keep blue for info
+                    warning: "#ff9800", // Keep orange for warnings
+                    error: "#f44336", // Keep red for errors
+                    surface: "#ffffff", // White for cards/surfaces
+                    
+                    // Additional Green Shades
+                    accent: "#81c784", // Light green accent
+                    "on-primary": "#ffffff", // Text on primary colors
+                    "on-secondary": "#ffffff", // Text on secondary colors
+                    
+                    // Custom colors for specific components
+                    "table-row-bg": "#f0fdf4", // Very light green for table rows
+                    "light-section": "#e8f5e9", // Light green section background
+                    "sidebar-bg": "#f8fdf8", // Sidebar background
+                    
+                    // Legacy colors for compatibility
+                    primaryOld: "#134124",
+                    tealColor: "#375f1f",
                 },
             },
         },

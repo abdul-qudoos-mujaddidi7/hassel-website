@@ -1,13 +1,12 @@
 <template>
-    <CreateBeneficiariesStats v-if="BeneficiariesRepository.createDialog" />
+    <CreateNews v-if="NewsRepository.createDialog" />
     <div :dir="dir">
         <!-- Page Header -->
-        <Header pageTitle='Beneficiaries Statistics' />
+        <Header pageTitle='News Management' />
         <v-divider :thickness="1" class="border-opacity-100" />
         
-
         <!-- Main Content Card -->
-        
+        <div class="content-card">
             <!-- Search and Actions Section -->
             <div class="btn-search pt-12 pb-6">
                 <div class="text-field w-25">
@@ -18,25 +17,36 @@
                         :label="$t('search')"
                         append-inner-icon="mdi-magnify"
                         hide-details
-                        v-model="BeneficiariesRepository.beneficiariesStatsSearch"
+                        v-model="NewsRepository.newsSearch"
                         @input="handleSearch"
                     ></v-text-field>
                 </div>
-                <div class="flex">
-                    <v-btn variant="outlined" class="create-btn-gradient px-6">
+                <div class="btn flex">
+                    <v-select
+                        v-model="selectedStatus"
+                        :items="NewsRepository.statusOptions"
+                        item-value="value"
+                        item-title="label"
+                        variant="outlined"
+                        density="compact"
+                        :label="$t('status')"
+                        class="mr-4"
+                        style="min-width: 150px;"
+                        @update:model-value="handleStatusFilter"
+                    ></v-select>
+                    <v-btn variant="outlined" color="primary" class="px-6">
                         {{ t("filter") }}
                     </v-btn>
                     &nbsp;
-                    
-                        <v-btn
-                            @click="CreateDialogShow"
-                            class="create-btn-gradient px-6"
-                            :text="$t('create')"
-                        >
-                            
-                        </v-btn>
-                    </div>
+                    <v-btn
+                        @click="CreateDialogShow"
+                        class="create-btn-gradient px-6"
+                        :text="$t('create')"
+                    >
+                        <v-icon>mdi-plus</v-icon>
+                    </v-btn>
                 </div>
+            </div>
             
             <!-- Data Table Section -->
             <div class="table-section">
@@ -47,27 +57,54 @@
                                 <v-data-table-server
                                     :dir="dir"
                                     theme="cursor-pointer"
-                                    v-model:items-per-page="BeneficiariesRepository.itemsPerPage"
+                                    v-model:items-per-page="NewsRepository.itemsPerPage"
                                     :headers="headers"
-                                    :items-length="BeneficiariesRepository.totalItems"
-                                    :items="BeneficiariesRepository.beneficiariesStats"
-                                    :loading="BeneficiariesRepository.loading"
+                                    :items-length="NewsRepository.totalItems"
+                                    :items="NewsRepository.news"
+                                    :loading="NewsRepository.loading"
                                     @update:options="handleTableUpdate"
                                     hover
                                     class="w-100 mx-auto"
                                 >
-                                    <!-- Stat Type Column -->
-                                    <template v-slot:item.stat_type="{ item }">
+                                    <!-- Title Column -->
+                                    <template v-slot:item.title="{ item }">
                                         <td class="py-2 pl-4">
-                                            <span >
-                                                {{ BeneficiariesRepository.getStatTypeLabel(item.stat_type) }}
-                                            </span>
+                                            <div class="d-flex align-center">
+                                                <v-avatar
+                                                    v-if="item.featured_image"
+                                                    size="40"
+                                                    class="mr-3"
+                                                >
+                                                    <v-img :src="item.featured_image" :alt="item.title"></v-img>
+                                                </v-avatar>
+                                                <div>
+                                                    <div class="font-weight-medium">{{ item.title }}</div>
+                                                    <div class="text-caption text-grey">{{ item.excerpt }}</div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </template>
 
-                                    
+                                    <!-- Status Column -->
+                                    <template v-slot:item.status="{ item }">
+                                        <td class="py-2 pl-4">
+                                            <v-chip
+                                                :color="getStatusColor(item.status)"
+                                                size="small"
+                                                variant="flat"
+                                            >
+                                                {{ NewsRepository.getStatusLabel(item.status) }}
+                                            </v-chip>
+                                        </td>
+                                    </template>
 
-                                   
+                                    <!-- Published Date Column -->
+                                    <template v-slot:item.published_at="{ item }">
+                                        <td class="py-2 pl-4">
+                                            <span>{{ NewsRepository.formatDate(item.published_at) }}</span>
+                                        </td>
+                                    </template>
+
                                     <!-- Checkbox for selecting rows -->
                                     <template v-slot:item.checkbox="{ item }">
                                         <v-checkbox
@@ -90,7 +127,6 @@
                                             <v-list>
                                                 <v-list-item>
                                                     <v-list-item-title
-                                                        
                                                         @click="edit(item)"
                                                         class="cursor-pointer d-flex gap-3 justify-left pb-3"
                                                     >
@@ -99,7 +135,16 @@
                                                     </v-list-item-title>
 
                                                     <v-list-item-title
-                                                       
+                                                        @click="toggleStatus(item)"
+                                                        class="cursor-pointer d-flex gap-3 pb-3"
+                                                    >
+                                                        <v-icon :color="item.status === 'published' ? 'orange' : 'green'">
+                                                            {{ item.status === 'published' ? 'mdi-eye-off' : 'mdi-eye' }}
+                                                        </v-icon>
+                                                        {{ item.status === 'published' ? 'Unpublish' : 'Publish' }}
+                                                    </v-list-item-title>
+
+                                                    <v-list-item-title
                                                         class="cursor-pointer d-flex gap-3"
                                                         @click="deleteItem(item)"
                                                     >
@@ -129,42 +174,55 @@
                 </v-app>
             </div>
         </div>
-
+    </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import Header from '../../components/Header.vue';
-import CreateBeneficiariesStats from "./CreateBeneficiariesStats.vue"; 
+import CreateNews from "./CreateNews.vue"; 
 import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
-import { useBeneficiariesRepository } from "../../stores/BeneficiariesRepository";
+import { useNewsRepository } from "../../stores/NewsRepository";
 import { useAuthRepository } from "../../../stores/Auth.js";
 
 const AuthRepository = useAuthRepository();
-const BeneficiariesRepository = useBeneficiariesRepository();
+const NewsRepository = useNewsRepository();
 
 const dir = computed(() => {
     return ["fa", "pa"].includes(locale.value) ? "rtl" : "ltr";
 });
+
+const selectedStatus = ref('');
 
 // Search handling with debounce
 let searchTimeout;
 const handleSearch = () => {
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
-        BeneficiariesRepository.fetchBeneficiariesStats({
+        NewsRepository.fetchNews({
             page: 1,
-            itemsPerPage: BeneficiariesRepository.itemsPerPage,
+            itemsPerPage: NewsRepository.itemsPerPage,
+            status: selectedStatus.value
         });
     }, 500);
 };
 
+// Status filter handler
+const handleStatusFilter = () => {
+    NewsRepository.fetchNews({
+        page: 1,
+        itemsPerPage: NewsRepository.itemsPerPage,
+        status: selectedStatus.value
+    });
+};
+
 // Table update handler
 const handleTableUpdate = (options) => {
-    BeneficiariesRepository.fetchBeneficiariesStats({
+    NewsRepository.fetchNews({
         page: options.page,
         itemsPerPage: options.itemsPerPage,
+        status: selectedStatus.value
     });
 };
 
@@ -172,42 +230,59 @@ const handleTableUpdate = (options) => {
 const selectedIds = ref([]);
 const sendSelectedIds = () => {
     if (selectedIds.value.length > 0) {
-        BeneficiariesRepository.bulkDeleteBeneficiariesStats(selectedIds.value);
+        NewsRepository.bulkDeleteNews(selectedIds.value);
         selectedIds.value = [];
     }
 };
 
 // Dialog management
 const CreateDialogShow = () => {
-    BeneficiariesRepository.resetCurrentStat();
-    BeneficiariesRepository.isEditMode = false;
-    BeneficiariesRepository.createDialog = true;
+    NewsRepository.resetCurrentNews();
+    NewsRepository.isEditMode = false;
+    NewsRepository.createDialog = true;
 };
 
 const edit = (item) => {
-    BeneficiariesRepository.isEditMode = true;
-    BeneficiariesRepository.currentStat = { ...item };
-    BeneficiariesRepository.createDialog = true;
+    NewsRepository.isEditMode = true;
+    NewsRepository.currentNews = { ...item };
+    NewsRepository.createDialog = true;
 };
 
 const deleteItem = async (item) => {
-    {
-        await BeneficiariesRepository.deleteBeneficiariesStat(item.id);
-    }
+    await NewsRepository.deleteNews(item.id);
 };
 
+const toggleStatus = async (item) => {
+    await NewsRepository.toggleStatus(item.id);
+};
+
+// Helper function to get status color
+const getStatusColor = (status) => {
+    switch (status) {
+        case 'published': return 'success';
+        case 'draft': return 'warning';
+        case 'archived': return 'grey';
+        default: return 'primary';
+    }
+};
 
 // Table headers
 const headers = computed(() => [
     { title: "", key: "checkbox", align: "start", sortable: false },
-    { title: t("stat_type"), key: "stat_type", align: "center", sortable: true },
-    { title: t("value"), key: "value", align: "center", sortable: true },
-    { title: t("description"), key: "description", align: "start", sortable: false },
-    { title: t("year"), key: "year", align: "center", sortable: true },
+    { title: t("title"), key: "title", align: "start", sortable: true },
+    { title: t("status"), key: "status", align: "center", sortable: true },
+    { title: t("published_date"), key: "published_at", align: "center", sortable: true },
+    { title: t("created_at"), key: "created_at", align: "center", sortable: true },
     { title: t("action"), key: "action", align: "center", sortable: false },
 ]);
 
-
+// Load data on mount
+onMounted(() => {
+    NewsRepository.fetchNews({
+        page: 1,
+        itemsPerPage: NewsRepository.itemsPerPage,
+    });
+});
 </script>
 
 <style scoped>
