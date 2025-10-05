@@ -1,11 +1,8 @@
 <template>
     <v-card :dir="isRtl ? 'rtl' : 'ltr'" :elevation="0" class="rounded-xl">
         <template v-slot:prepend>
-            <h1 class="text-[18px]">
+            <h1 class="header-title">
                 {{ $t(pageTitle) }}
-                <span v-if="pageSubtitle" class="text-[14px]">{{
-                    $t(pageSubtitle)
-                }}</span>
             </h1>
         </template>
 
@@ -52,80 +49,82 @@
                     </v-list>
                 </v-menu>
 
-                <!-- Logout Button -->
-                <v-dialog max-width="400">
-                    <template v-slot:activator="{ props: activatorProps }">
+                <!-- User Profile & Logout -->
+                <v-menu transition="scale-transition" offset="8">
+                    <template #activator="{ props }">
                         <v-btn
                             flat
-                            class="icon bg-head"
-                            size="small"
-                            height="4.7vh"
-                            width="4.7vh"
-                            :icon="$t('mdi-logout')"
-                            v-bind="activatorProps"
-                            :title="$t('logout_button')"
+                            class="profile-btn"
+                            v-bind="props"
+                            :title="user.name"
+                            size="large"
                         >
+                            <v-avatar size="40" class="profile-avatar">
+                                <img :src="user.photo" :alt="user.name" />
+                            </v-avatar>
+                            <span class="profile-name ml-3">{{ user.name }}</span>
                         </v-btn>
                     </template>
 
-                    <template v-slot:default="{ isActive }">
-                        <v-card>
-                            <v-card-title
-                                class="px-2 pt-2 d-flex justify-space-between"
-                            >
-                                <h3 class="font-weight-bold pl-4">
-                                    {{ $t("logout") }}
-                                </h3>
-
-                                <v-btn
-                                    variant="text"
-                                    class="font-weight-bold"
-                                    @click="isActive.value = false"
-                                    :aria-label="$t('close_dialog')"
-                                >
-                                    <v-icon>{{
-                                        $t("mdi-close")
-                                    }}</v-icon></v-btn
-                                >
-                            </v-card-title>
-
-                            <div
-                                class="d-flex flex-column justify-center align-center"
-                            >
-                                <img
-                                    src="../../../public/assets/IMG_20230530_185847_332.jpg"
-                                    :alt="$t('user_avatar')"
-                                    class="object-cover w-[6rem] h-[6rem] rounded-full"
-                                />
-                                <h3 class="mt-6">Zakiullahsafi0@gmail.com</h3>
+                    <v-card class="profile-card" elevation="8">
+                        <v-card-text class="profile-card-content">
+                            <div class="profile-header">
+                                <v-avatar size="70" class="profile-avatar-large">
+                                    <img :src="user.photo" :alt="user.name" />
+                                </v-avatar>
+                                <div class="profile-info">
+                                    <h3 class="profile-name-large">{{ user.name }}</h3>
+                                    <p class="profile-email">{{ user.email }}</p>
+                                </div>
                             </div>
-
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                    :text="$t('logout')"
-                                    @click="handleLogout"
-                                ></v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </template>
-                </v-dialog>
+                        </v-card-text>
+                        <v-divider></v-divider>
+                        <v-card-actions class="profile-actions">
+                            <v-btn
+                                @click="handleLogout"
+                                class="logout-btn"
+                                variant="text"
+                                block
+                            >
+                                <v-icon class="mr-2">mdi-logout</v-icon>
+                                {{ $t("logout") }}
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-menu>
             </div>
         </template>
     </v-card>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { useAuthRepository } from "../../stores/Auth.js";
+import { useAuthRepository } from '../../stores/Auth.js';
 
 const { t, locale } = useI18n();
-const authRepository = useAuthRepository();
+const authStore = useAuthRepository();
 
 const props = defineProps({
     pageTitle: { type: String, default: "" },
-    pageSubtitle: { type: String, default: "" },
+   
+});
+
+// Use actual user data from auth store
+const user = computed(() => {
+    if (authStore.user && authStore.user.name) {
+        return {
+            name: authStore.user.name,
+            email: authStore.user.email,
+            photo: authStore.user.photo || "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?semt=ais_hybrid&w=740"
+        };
+    }
+    // Fallback for when user data isn't loaded yet
+    return {
+        name: "Admin User",
+        email: "admin@example.com",
+        photo: "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?semt=ais_hybrid&w=740"
+    };
 });
 
 const items = ref([
@@ -151,38 +150,38 @@ const changeLanguage = (lang) => {
     isRtl.value = lang !== "en";
 };
 
-const handleLogout = () => {
+const handleLogout = async () => {
     console.log(t("logging_out_message"));
-    authRepository.logout();
+    try {
+        await authStore.logout();
+    } catch (error) {
+        console.error('Logout error:', error);
+    }
 };
 </script>
 
 <style scoped>
 .icon {
     border-radius: 8px !important;
-    background: linear-gradient(
-        135deg,
-        #059669,
-        #10b981
-    ) !important; /* Professional green gradient */
-    box-shadow: 0 3px 6px rgba(5, 150, 105, 0.3);
+    background: transparent !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: none;
+    border: 1px solid rgba(var(--v-theme-outline), 0.2) !important;
 }
 
 .icon .v-icon {
-    color: white !important;
+    color: rgb(var(--v-theme-on-surface)) !important;
     font-weight: bold;
 }
 
+.icon:hover .v-icon {
+    color: rgb(var(--v-theme-primary)) !important;
+}
+
 .icon:hover {
-    background: linear-gradient(
-        135deg,
-        #047857,
-        #059669
-    ) !important; /* Darker green gradient on hover */
-    box-shadow: 0 6px 12px rgba(5, 150, 105, 0.4);
-    transform: translateY(-2px) scale(1.05);
+    background: rgba(var(--v-theme-primary), 0.08) !important;
+    color: rgb(var(--v-theme-primary)) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.15) !important;
 }
 
 .drag {
@@ -203,5 +202,114 @@ const handleLogout = () => {
 .logout-avatar {
     padding: 0 !important;
     min-width: auto;
+}
+
+/* Profile Button Styles */
+.profile-btn {
+    border-radius: 8px !important;
+    background: transparent !important;
+    color: rgb(var(--v-theme-on-surface)) !important;
+    transition: all 0.3s ease !important;
+    text-transform: none !important;
+    font-weight: 500 !important;
+    padding: 8px 16px !important;
+    min-height: 48px !important;
+}
+
+.profile-btn:hover {
+    background: rgba(var(--v-theme-primary), 0.08) !important;
+    color: rgb(var(--v-theme-primary)) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.15) !important;
+}
+
+.profile-avatar {
+    border: 2px solid rgb(var(--v-theme-on-primary)) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.profile-avatar-large {
+    border: 3px solid rgb(var(--v-theme-primary)) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.profile-name {
+    color: rgb(var(--v-theme-on-surface)) !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+}
+
+.profile-name-large {
+    color: rgb(var(--v-theme-primary)) !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.25rem !important;
+}
+
+.profile-email {
+    color: rgb(var(--v-theme-on-surface-variant)) !important;
+    font-size: 0.9rem !important;
+}
+
+/* Profile Card Styles */
+.profile-card {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    min-width: 280px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+}
+
+.profile-card-content {
+    padding: 1.5rem !important;
+}
+
+.profile-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+}
+
+.profile-info {
+    flex: 1 !important;
+}
+
+.profile-name-large {
+    color: rgb(var(--v-theme-on-surface)) !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 0.25rem !important;
+    line-height: 1.2 !important;
+}
+
+.profile-email {
+    color: rgb(var(--v-theme-on-surface-variant)) !important;
+    font-size: 0.9rem !important;
+    margin: 0 !important;
+    line-height: 1.3 !important;
+}
+
+.profile-actions {
+    padding: 0.75rem 1.5rem 1.5rem !important;
+}
+
+.logout-btn {
+    color: rgb(var(--v-theme-error)) !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+}
+
+.logout-btn:hover {
+    background-color: rgba(var(--v-theme-error), 0.08) !important;
+    color: rgb(var(--v-theme-error)) !important;
+}
+
+
+.header-title {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: rgb(var(--v-theme-primary)) !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
 }
 </style>

@@ -11,7 +11,7 @@ class ContactRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // Public contact form - anyone can submit
+        return true;
     }
 
     /**
@@ -21,34 +21,47 @@ class ContactRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20|regex:/^[\+]?[0-9\s\-\(\)]+$/',
+            'phone' => 'nullable|string|max:20',
             'subject' => 'required|string|max:255',
             'message' => 'required|string|max:2000',
+            'type' => 'nullable|in:general,inquiry,complaint,suggestion,partnership',
+            'status' => 'nullable|in:pending,read,replied,closed',
         ];
+
+        // For update requests, make fields sometimes required
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules['name'] = 'sometimes|required|string|max:255';
+            $rules['email'] = 'sometimes|required|email|max:255';
+            $rules['subject'] = 'sometimes|required|string|max:255';
+            $rules['message'] = 'sometimes|required|string|max:2000';
+        }
+
+        return $rules;
     }
 
     /**
-     * Get custom error messages for validator errors.
+     * Get custom messages for validator errors.
      *
      * @return array<string, string>
      */
     public function messages(): array
     {
         return [
-            'name.required' => 'Please provide your name.',
-            'name.max' => 'Your name cannot exceed 255 characters.',
-            'email.required' => 'Please provide your email address.',
-            'email.email' => 'Please provide a valid email address.',
-            'email.max' => 'Your email address cannot exceed 255 characters.',
-            'phone.regex' => 'Please provide a valid phone number.',
-            'phone.max' => 'Your phone number cannot exceed 20 characters.',
-            'subject.required' => 'Please provide a subject for your message.',
-            'subject.max' => 'The subject cannot exceed 255 characters.',
-            'message.required' => 'Please provide your message.',
-            'message.max' => 'Your message cannot exceed 2000 characters.',
+            'name.required' => 'The name is required.',
+            'name.max' => 'The name may not be greater than 255 characters.',
+            'email.required' => 'The email is required.',
+            'email.email' => 'The email must be a valid email address.',
+            'email.max' => 'The email may not be greater than 255 characters.',
+            'phone.max' => 'The phone may not be greater than 20 characters.',
+            'subject.required' => 'The subject is required.',
+            'subject.max' => 'The subject may not be greater than 255 characters.',
+            'message.required' => 'The message is required.',
+            'message.max' => 'The message may not be greater than 2000 characters.',
+            'type.in' => 'The selected type is invalid.',
+            'status.in' => 'The selected status is invalid.',
         ];
     }
 
@@ -60,11 +73,13 @@ class ContactRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'full name',
-            'email' => 'email address',
-            'phone' => 'phone number',
+            'name' => 'name',
+            'email' => 'email',
+            'phone' => 'phone',
             'subject' => 'subject',
             'message' => 'message',
+            'type' => 'type',
+            'status' => 'status',
         ];
     }
 
@@ -73,19 +88,18 @@ class ContactRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        // Clean and format phone number
-        if ($this->phone) {
+        // Set default status if not provided
+        if (!$this->has('status')) {
             $this->merge([
-                'phone' => preg_replace('/[^\+0-9]/', '', $this->phone),
+                'status' => 'pending'
             ]);
         }
 
-        // Trim whitespace from all text fields
-        $this->merge([
-            'name' => trim($this->name ?? ''),
-            'email' => trim(strtolower($this->email ?? '')),
-            'subject' => trim($this->subject ?? ''),
-            'message' => trim($this->message ?? ''),
-        ]);
+        // Set default type if not provided
+        if (!$this->has('type')) {
+            $this->merge([
+                'type' => 'general'
+            ]);
+        }
     }
 }

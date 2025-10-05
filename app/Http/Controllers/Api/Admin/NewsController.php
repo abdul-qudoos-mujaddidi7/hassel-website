@@ -3,106 +3,212 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsRequest;
 use App\Models\News;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Http\JsonResponse;
 
 class NewsController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request): JsonResponse
     {
-        $query = News::query();
+        try {
+            $perPage = $request->get('perPage', 15);
+            $search = $request->get('search', '');
+            $status = $request->get('status', '');
+            
+            $query = News::query();
+            
+            if ($search) {
+                $query->where(function($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                      ->orWhere('content', 'like', "%{$search}%")
+                      ->orWhere('excerpt', 'like', "%{$search}%");
+                });
+            }
+            
+            if ($status) {
+                $query->where('status', $status);
+            }
+            
+            $news = $query->orderBy('created_at', 'desc')
+                ->paginate($perPage);
 
-        // Search
-        if ($request->has('search') && $request->search) {
-            $query->where('title', 'like', '%' . $request->search . '%')
-                  ->orWhere('content', 'like', '%' . $request->search . '%');
+            return response()->json([
+                'success' => true,
+                'data' => $news->items(),
+                'meta' => [
+                    'total' => $news->total(),
+                    'per_page' => $news->perPage(),
+                    'current_page' => $news->currentPage(),
+                    'last_page' => $news->lastPage(),
+                ],
+                'message' => 'News articles retrieved successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve news articles',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        // Filter by status
-        if ($request->has('status') && $request->status) {
-            $query->where('status', $request->status);
-        }
-
-        // Filter by type
-        if ($request->has('type') && $request->type) {
-            $query->where('type', $request->type);
-        }
-
-        // Pagination
-        $perPage = $request->get('per_page', 10);
-        $news = $query->orderBy('created_at', 'desc')->paginate($perPage);
-
-        return response()->json($news);
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(NewsRequest $request): JsonResponse
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'status' => 'required|in:draft,published,archived',
-            'type' => 'nullable|string|max:100',
-            'author' => 'nullable|string|max:255',
-            'excerpt' => 'nullable|string|max:500',
-            'featured_image' => 'nullable|url',
-            'tags' => 'nullable|string',
-            'featured' => 'boolean',
-            'published' => 'boolean'
-        ]);
+        try {
+            $validated = $request->validated();
+            $news = News::create($validated);
 
-        $data = $request->all();
-        
-        // Generate slug if not provided
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
+            return response()->json([
+                'success' => true,
+                'data' => $news,
+                'message' => 'News article created successfully'
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create news article',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        $news = News::create($data);
-
-        return response()->json($news, 201);
     }
 
-    public function show($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(News $news): JsonResponse
     {
-        $news = News::findOrFail($id);
-        return response()->json($news);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $news = News::findOrFail($id);
-
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'status' => 'required|in:draft,published,archived',
-            'type' => 'nullable|string|max:100',
-            'author' => 'nullable|string|max:255',
-            'excerpt' => 'nullable|string|max:500',
-            'featured_image' => 'nullable|url',
-            'tags' => 'nullable|string',
-            'featured' => 'boolean',
-            'published' => 'boolean'
-        ]);
-
-        $data = $request->all();
-        
-        // Generate slug if not provided
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
+        try {
+            return response()->json([
+                'success' => true,
+                'data' => $news,
+                'message' => 'News article retrieved successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve news article',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        $news->update($data);
-
-        return response()->json($news);
     }
 
-    public function destroy($id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(NewsRequest $request, News $news): JsonResponse
     {
-        $news = News::findOrFail($id);
-        $news->delete();
+        try {
+            $validated = $request->validated();
+            $news->update($validated);
 
-        return response()->json(['message' => 'News article deleted successfully']);
+            return response()->json([
+                'success' => true,
+                'data' => $news,
+                'message' => 'News article updated successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update news article',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(News $news): JsonResponse
+    {
+        try {
+            $news->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'News article deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete news article',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get published news articles
+     */
+    public function published(Request $request): JsonResponse
+    {
+        try {
+            $perPage = $request->get('perPage', 10);
+            $search = $request->get('search', '');
+            
+            $query = News::published();
+            
+            if ($search) {
+                $query->where(function($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                      ->orWhere('content', 'like', "%{$search}%")
+                      ->orWhere('excerpt', 'like', "%{$search}%");
+                });
+            }
+            
+            $news = $query->orderBy('published_at', 'desc')
+                ->paginate($perPage);
+
+            return response()->json([
+                'success' => true,
+                'data' => $news->items(),
+                'meta' => [
+                    'total' => $news->total(),
+                    'per_page' => $news->perPage(),
+                    'current_page' => $news->currentPage(),
+                    'last_page' => $news->lastPage(),
+                ],
+                'message' => 'Published news articles retrieved successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve published news articles',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Toggle publish status
+     */
+    public function toggleStatus(News $news): JsonResponse
+    {
+        try {
+            $newStatus = $news->status === 'published' ? 'draft' : 'published';
+            $news->update([
+                'status' => $newStatus,
+                'published_at' => $newStatus === 'published' ? now() : null
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $news,
+                'message' => "News article {$newStatus} successfully"
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to toggle news article status',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

@@ -12,30 +12,29 @@ export default createVuetify({
         themes: {
             light: {
                 colors: {
-                    // Brand colors from app.css
-                    primary: "#134124", // Deep green - main brand color
-                    secondary: "#375f1f", // Olive green - secondary brand color
-                    accent: "#eaaa03", // Golden accent - brand accent color
-                    cream: "#fbf5df", // Light cream - brand cream color
+                    // Primary Greens - Main brand colors
+                    primary: "#1b5e20", // Dark green for primary actions
+                    secondary: "#2e7d32", // Medium green for secondary elements
+                    // Supporting Greens
+                    success: "#4caf50", // Success states
+                    info: "#2196F3", // Keep blue for info
+                    warning: "#ff9800", // Keep orange for warnings
+                    error: "#f44336", // Keep red for errors
+                    surface: "#ffffff", // White for cards/surfaces
 
-                    // Standard colors
-                    error: "#dc2626", // Red for errors
-                    info: "#3b82f6", // Blue for info
-                    success: "#059669", // Green for success
-                    warning: "#f59e0b", // Amber for warnings
+                    // Additional Green Shades
+                    accent: "#81c784", // Light green accent
+                    "on-primary": "#ffffff", // Text on primary colors
+                    "on-secondary": "#ffffff", // Text on secondary colors
 
-                    // Admin panel specific colors
-                    background: "#ffffff", // White background
-                    surface: "#f8fafc", // Light gray surface
-                    surfaceVariant: "#f1f5f9", // Lighter gray for variants
+                    // Custom colors for specific components
+                    "table-row-bg": "#f0fdf4", // Very light green for table rows
+                    "light-section": "#e8f5e9", // Light green section background
+                    "sidebar-bg": "#f8fdf8", // Sidebar background
 
-                    // Table and component colors
-                    tableHeader: "#134124", // Deep green for table headers
-                    tableRow: "#f8fafc", // Light background for table rows
-                    tableRowHover: "#f0f9f6", // Light green tint for hover
-                    sidebar: "#134124", // Deep green for sidebar
-                    sidebarHover: "#375f1f", // Olive green for sidebar hover
-                    sidebarActive: "#eaaa03", // Golden accent for active items
+                    // Legacy colors for compatibility
+                    primaryOld: "#134124",
+                    tealColor: "#375f1f",
                 },
             },
         },

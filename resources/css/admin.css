@@ -5,60 +5,70 @@
 /* Admin Panel Custom Styles */
 .admin-layout {
     @apply min-h-screen;
-    background-color: #F0F9F6; /* Light green-tinted background */
+    background-color: #f8fdf8; /* Very light green background matching Vuetify theme */
 }
 
-/* Professional Green Color Utilities for Admin */
+/* Professional Green Color Utilities - Updated to match Vuetify theme */
 .bg-professional-primary {
-    background-color: #059669 !important; /* Professional vibrant green */
+    background-color: #1b5e20 !important; /* Vuetify primary dark green */
 }
 
 .bg-professional-secondary {
-    background-color: #047857 !important; /* Darker green */
+    background-color: #2e7d32 !important; /* Vuetify secondary medium green */
 }
 
 .bg-professional-accent {
-    background-color: #10B981 !important; /* Lighter green accent */
+    background-color: #81c784 !important; /* Vuetify accent light green */
 }
 
 .bg-professional-light {
-    background-color: #F0F9F6 !important; /* Light green-tinted background */
+    background-color: #f8fdf8 !important; /* Very light green background */
+}
+
+.bg-professional-surface {
+    background-color: #ffffff !important; /* White surface */
 }
 
 .bg-professional-dark {
-    background-color: #034E3F !important; /* Dark green */
+    background-color: #0f2a1a !important; /* Dark green for contrast */
 }
 
 .text-professional-primary {
-    color: #059669 !important; /* Professional vibrant green */
+    color: #1b5e20 !important; /* Vuetify primary dark green */
 }
 
 .text-professional-secondary {
-    color: #047857 !important; /* Darker green */
+    color: #2e7d32 !important; /* Vuetify secondary medium green */
 }
 
 .text-professional-accent {
-    color: #10B981 !important; /* Lighter green accent */
+    color: #81c784 !important; /* Vuetify accent light green */
 }
 
 .text-professional-dark {
-    color: #034E3F !important; /* Dark green */
+    color: #0f2a1a !important; /* Dark green for contrast */
 }
 
 .border-professional-primary {
-    border-color: #059669 !important; /* Professional vibrant green */
+    border-color: #1b5e20 !important; /* Vuetify primary dark green */
 }
 
 .border-professional-secondary {
-    border-color: #047857 !important; /* Darker green */
+    border-color: #2e7d32 !important; /* Vuetify secondary medium green */
+}
+
+.border-professional-accent {
+    border-color: #81c784 !important; /* Vuetify accent light green */
 }
 
 .border-professional-light {
-    border-color: #A7F3D0 !important; /* Light green border */
+    border-color: #e8f5e9 !important; /* Light green border */
 }
 
+/* Layout Components */
 .admin-sidebar {
     @apply fixed left-0 top-0 h-full w-72 bg-white shadow-lg z-30 transition-transform duration-300;
+    background: rgb(var(--v-theme-sidebar-bg)) !important;
 }
 
 .admin-sidebar.collapsed {
@@ -67,6 +77,7 @@
 
 .admin-main {
     @apply ml-72 transition-all duration-300;
+    background: rgb(var(--v-theme-background)) !important;
 }
 
 .admin-main.sidebar-collapsed {
@@ -75,86 +86,104 @@
 
 .admin-header {
     @apply bg-white shadow-sm border-b border-gray-200 px-6 py-4 flex items-center justify-between;
+    background: rgb(var(--v-theme-surface)) !important;
 }
 
 .admin-content {
-    @apply p-6 bg-gray-50 min-h-screen;
+    @apply p-6 min-h-screen;
+    background: rgb(var(--v-theme-background)) !important;
 }
 
 /* Vuetify overrides for admin */
 .v-application .admin-card {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200;
+    @apply rounded-lg shadow-sm border border-gray-200;
+    background: rgb(var(--v-theme-surface)) !important;
 }
 
 .v-application .admin-table {
-    @apply bg-white rounded-lg shadow-sm;
+    @apply rounded-lg shadow-sm;
+    background: rgb(var(--v-theme-surface)) !important;
 }
 
 .v-application .admin-form {
-    @apply bg-white rounded-lg shadow-sm p-6;
+    @apply rounded-lg shadow-sm p-6;
+    background: rgb(var(--v-theme-surface)) !important;
 }
-
-
 
 /* Status indicators */
 .status-active {
-    @apply bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium;
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+    background-color: rgba(76, 175, 80, 0.1) !important;
+    color: #2e7d32 !important;
 }
 
 .status-inactive {
-    @apply bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium;
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+    background-color: rgba(244, 67, 54, 0.1) !important;
+    color: #d32f2f !important;
 }
 
 .status-pending {
-    @apply bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium;
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+    background-color: rgba(255, 152, 0, 0.1) !important;
+    color: #f57c00 !important;
 }
 
 /* Action buttons */
 .action-btn {
-    @apply inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md transition-colors duration-200;
+    @apply inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md transition-all duration-300;
 }
 
 .action-btn-primary {
-    background-color: #059669; /* Professional vibrant green */
-    color: white;
-    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3);
+    background: linear-gradient(135deg, #1b5e20, #2e7d32) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(27, 94, 32, 0.3);
     border: none;
     font-weight: 600;
 }
 
 .action-btn-primary:hover {
-    background-color: #047857; /* Darker green */
-    @apply focus:outline-none focus:ring-2;
-    focus-ring-color: #059669;
-    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
-    transform: translateY(-1px);
+    background: linear-gradient(135deg, #134124, #1b5e20) !important;
+    box-shadow: 0 8px 25px rgba(27, 94, 32, 0.4);
+    transform: translateY(-2px) scale(1.02);
 }
 
 .action-btn-secondary {
-    background-color: #047857; /* Darker green */
-    color: white;
-    box-shadow: 0 2px 4px rgba(4, 120, 87, 0.3);
-    border: none;
+    background: linear-gradient(135deg, #2e7d32, #1b5e20) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    border: 1px solid #1b5e20;
     font-weight: 600;
 }
 
 .action-btn-secondary:hover {
-    background-color: #034E3F; /* Even darker green */
-    @apply focus:outline-none focus:ring-2;
-    focus-ring-color: #047857;
-    box-shadow: 0 4px 12px rgba(4, 120, 87, 0.4);
-    transform: translateY(-1px);
-}
-
-.action-btn-danger {
-    @apply bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500;
-    box-shadow: 0 2px 4px rgba(244, 67, 54, 0.2);
+    background: linear-gradient(135deg, #1b5e20, #134124) !important;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.4);
+    transform: translateY(-2px) scale(1.02);
 }
 
 .action-btn-success {
-    background-color: #4CAF50; /* Professional green for success */
-    color: white;
-    box-shadow: 0 2px 4px rgba(76, 175, 80, 0.2);
+    background: linear-gradient(135deg, #4caf50, #388e3c) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.action-btn-success:hover {
+    background: linear-gradient(135deg, #388e3c, #2e7d32) !important;
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.action-btn-danger {
+    background: linear-gradient(135deg, #f44336, #d32f2f) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+.action-btn-danger:hover {
+    background: linear-gradient(135deg, #d32f2f, #c62828) !important;
+    box-shadow: 0 8px 25px rgba(244, 67, 54, 0.4);
+    transform: translateY(-2px) scale(1.02);
 }
 
 /* Form styles */
@@ -167,30 +196,30 @@
 }
 
 .form-input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2;
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors duration-200;
 }
 
 .form-input:focus {
-    --tw-ring-color: #059669;
-    border-color: #059669;
+    --tw-ring-color: #1b5e20;
+    border-color: #1b5e20;
 }
 
 .form-textarea {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 resize-y;
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 resize-y transition-colors duration-200;
 }
 
 .form-textarea:focus {
-    --tw-ring-color: #059669;
-    border-color: #059669;
+    --tw-ring-color: #1b5e20;
+    border-color: #1b5e20;
 }
 
 .form-select {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2;
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors duration-200;
 }
 
 .form-select:focus {
-    --tw-ring-color: #059669;
-    border-color: #059669;
+    --tw-ring-color: #1b5e20;
+    border-color: #1b5e20;
 }
 
 /* Table styles */
@@ -205,16 +234,11 @@
     display: none; /* WebKit browsers (Chrome, Safari, Edge) */
 }
 
-/* Apply #555 background to the main layout */
-
-/* Apply #555 to the content card background */
-
-/* Apply #555 to the page content area */
-
-
+/* Data table footer */
 div.v-data-table-footer {
     display: flex;
     justify-content: space-between;
+    background: rgb(var(--v-theme-surface)) !important;
 }
 
 .btn-search {
@@ -222,38 +246,34 @@ div.v-data-table-footer {
     justify-content: space-between;
 }
 
-/* .custom-app-background {
-  background-color: var(--v-theme-lightSectionBg);
-  min-height: 100vh; /* ensure full-page background
-} */
-/* Override Vuetify table styles with higher specificity */
+/* Enhanced Vuetify table styles with Vuetify theme colors */
 .v-application .v-data-table .v-data-table__wrapper table tbody tr {
     background-color: transparent !important;
-    border-left: 4px solid #059669 !important;
+    border-left: 4px solid rgb(var(--v-theme-secondary)) !important;
     border-bottom: 4px solid rgb(var(--v-theme-background)) !important;
     border-width: 4px !important;
     border-top: none !important;
     border-right: none !important;
+    transition: all 0.3s ease;
 }
 
 .v-application .v-data-table .v-data-table__wrapper table tbody tr:hover {
-    background-color: #f8fafc !important;
+    background-color: rgba(var(--v-theme-primary), 0.05) !important;
+    transform: translateX(4px);
 }
 
 .v-table > :nth-child(1) > :nth-child(1) > :nth-child(1) > tr {
-      background-color: rgb(var(--v-theme-tableRowBg));
-    border-left: 4px solid #059669;
-      border-bottom: 4px solid rgb(var(--v-theme-background));
-
-    border-width: 4px;
-    border-top: none;
-    border-right: none;
+    background-color: rgba(var(--v-theme-primary), 0.08) !important;
+    border-left: 4px solid rgb(var(--v-theme-secondary)) !important;
+    border-bottom: 4px solid rgb(var(--v-theme-background)) !important;
+    border-top: none !important;
+    border-right: none !important;
 }
 
-/* Additional table row styling with higher specificity */
+/* Additional table row styling */
 .v-application .v-data-table .v-data-table__tr {
     border-bottom: 4px solid rgb(var(--v-theme-background)) !important;
-    border-left: 4px solid #059669 !important;
+    border-left: 4px solid rgb(var(--v-theme-secondary)) !important;
     border-right: none !important;
     border-width: 4px !important;
     background-color: transparent !important;
@@ -261,39 +281,34 @@ div.v-data-table-footer {
 
 .v-data-table__tr {
     border-bottom: 4px solid rgb(var(--v-theme-background));
-    border-left: 4px solid #059669 !important;
+    border-left: 4px solid rgb(var(--v-theme-secondary)) !important;
     border-right: none;
     border-width: 4px;
-    
 }
-/* RTL support with higher specificity */
+
+/* RTL support */
 [dir="rtl"] .v-application .v-data-table .v-data-table__tr {
-    border-bottom: 4px solid #ffff !important;
-    border-right: 4px solid #059669 !important;
+    border-bottom: 4px solid rgb(var(--v-theme-background)) !important;
+    border-right: 4px solid rgb(var(--v-theme-secondary)) !important;
     border-left: none !important;
     border-width: 4px !important;
     background-color: transparent !important;
 }
 
 [dir="rtl"] .v-data-table__tr {
-    border-bottom: 4px solid #ffff;
-    border-right: 4px solid #059669 !important;
+    border-bottom: 4px solid rgb(var(--v-theme-background));
+    border-right: 4px solid rgb(var(--v-theme-secondary)) !important;
     border-left: none !important;
     border-width: 4px;
 }
-[dir="rtl"].v-table > :nth-child(1) > :nth-child(1) > :nth-child(1) > tr {
-     background-color: rgb(var(--v-theme-tableRowBg));
-    border-right: 4px solid #059669 !important;
-    border-left: none;
-    border-bottom: 4px solid #ffff;
-    border-width: 4px;
-    border-top: none;
-}
 
-div.v-data-table-footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+[dir="rtl"].v-table > :nth-child(1) > :nth-child(1) > :nth-child(1) > tr {
+    background-color: rgba(var(--v-theme-primary), 0.08) !important;
+    border-right: 4px solid rgb(var(--v-theme-secondary)) !important;
+    border-left: none !important;
+    border-bottom: 4px solid rgb(var(--v-theme-background)) !important;
+    border-width: 4px !important;
+    border-top: none !important;
 }
 
 [dir="rtl"] div.v-data-table-footer {
@@ -302,6 +317,7 @@ div.v-data-table-footer {
     direction: ltr;
 }
 
+/* Utility spans */
 .span {
     background-color: #ecf1f4;
     position: absolute;
@@ -325,19 +341,74 @@ div.v-data-table-footer {
 }
 
 .styleBTN {
-    border: 1px solid #059669;
+    border: 1px solid rgb(var(--v-theme-primary));
     display: flex;
     flex-wrap: nowrap;
 }
+
 .v-navigation-drawer__content {
     flex: 0 1 auto;
     height: 100%;
     max-width: 100%;
-    /* overflow-x: hidden; */
     overflow-y: hidden !important;
 }
 
+/* Custom shadows and effects */
+.professional-shadow {
+    box-shadow: 0 4px 20px rgba(27, 94, 32, 0.15);
+}
 
+.professional-shadow-lg {
+    box-shadow: 0 8px 30px rgba(27, 94, 32, 0.2);
+}
+
+/* Gradient backgrounds */
+.gradient-primary {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+}
+
+.gradient-secondary {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+}
+
+.gradient-accent {
+    background: linear-gradient(135deg, #81c784, #4caf50);
+}
+
+/* Badge styles */
+.badge-primary {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    background-color: rgba(27, 94, 32, 0.1);
+    color: #1b5e20;
+}
+
+.badge-secondary {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    background-color: rgba(46, 125, 50, 0.1);
+    color: #2e7d32;
+}
+
+.badge-accent {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    background-color: rgba(129, 199, 132, 0.1);
+    color: #388e3c;
+}
+
+/* Loading states */
+.loading-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
 
 /* Responsive design */
 @media (max-width: 768px) {
@@ -352,9 +423,79 @@ div.v-data-table-footer {
     .admin-main {
         @apply ml-0;
     }
+    
+    .admin-content {
+        @apply p-4;
+    }
+    
+    .action-btn {
+        @apply px-2 py-1 text-xs;
+    }
+}
 
-/* Add more weights if necessary */
+/* Print styles */
+@media print {
+    .admin-sidebar,
+    .admin-header {
+        display: none !important;
+    }
+    
+    .admin-main {
+        margin-left: 0 !important;
+    }
+    
+    .action-btn {
+        display: none !important;
+    }
+}
 
+/* Create Button Gradient Styles */
+.create-btn-gradient {
+    background: linear-gradient(135deg, rgb(var(--v-theme-primary)), rgb(var(--v-theme-secondary))) !important;
+    color: rgb(var(--v-theme-on-primary)) !important;
+    border: none !important;
+    transition: all 0.3s ease !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+}
 
-/* #ECF1F4 */
+.create-btn-gradient:hover {
+    background: linear-gradient(135deg, rgb(var(--v-theme-secondary)), rgb(var(--v-theme-primary))) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(var(--v-theme-primary), 0.4) !important;
+}
+
+.create-btn-gradient:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 8px rgba(var(--v-theme-primary), 0.3) !important;
+}
+
+.create-btn-gradient .v-icon {
+    color: rgb(var(--v-theme-on-primary)) !important;
+}
+
+/* Alternative class for buttons with different text */
+.btn-create {
+    background: linear-gradient(135deg, rgb(var(--v-theme-primary)), rgb(var(--v-theme-secondary))) !important;
+    color: rgb(var(--v-theme-on-primary)) !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.3) !important;
+    transition: all 0.3s ease !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+}
+
+.btn-create:hover {
+    background: linear-gradient(135deg, rgb(var(--v-theme-secondary)), rgb(var(--v-theme-primary))) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(var(--v-theme-primary), 0.4) !important;
+}
+
+.btn-create:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 8px rgba(var(--v-theme-primary), 0.3) !important;
+}
+
+.btn-create .v-icon {
+    color: rgb(var(--v-theme-on-primary)) !important;
 }

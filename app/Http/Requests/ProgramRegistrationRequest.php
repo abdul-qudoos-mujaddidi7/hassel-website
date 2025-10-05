@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class ProgramRegistrationRequest extends FormRequest
 {
@@ -12,7 +11,7 @@ class ProgramRegistrationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // Public registration - anyone can register
+        return true;
     }
 
     /**
@@ -22,48 +21,57 @@ class ProgramRegistrationRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'program_type' => 'required|in:training_program,market_access_program,community_program',
-            'program_id' => [
-                'required',
-                'integer',
-                function ($attribute, $value, $fail) {
-                    // Dynamic validation based on program_type
-                    $programType = $this->input('program_type');
-                    $table = $programType . 's'; // e.g., training_programs
-
-                    if (!\Illuminate\Support\Facades\DB::table($table)->where('id', $value)->exists()) {
-                        $fail('The selected program does not exist.');
-                    }
-                }
-            ],
-            'user_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20|regex:/^[\+]?[0-9\s\-\(\)]+$/',
-            'location' => 'nullable|string|max:255',
+        $rules = [
+            'program_id' => 'required|integer|exists:training_programs,id',
+            'program_type' => 'required|in:training_program,smart_farming_program,seed_supply_program,market_access_program,environmental_project,community_program',
+            'participant_name' => 'required|string|max:255',
+            'participant_email' => 'required|email|max:255',
+            'participant_phone' => 'required|string|max:20',
+            'participant_address' => 'nullable|string|max:500',
+            'organization' => 'nullable|string|max:255',
+            'experience_level' => 'nullable|in:beginner,intermediate,advanced',
+            'motivation' => 'nullable|string|max:1000',
+            'status' => 'nullable|in:pending,approved,rejected,completed',
+            'notes' => 'nullable|string|max:1000',
         ];
+
+        // For update requests, make fields sometimes required
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules['program_id'] = 'sometimes|required|integer|exists:training_programs,id';
+            $rules['program_type'] = 'sometimes|required|in:training_program,smart_farming_program,seed_supply_program,market_access_program,environmental_project,community_program';
+            $rules['participant_name'] = 'sometimes|required|string|max:255';
+            $rules['participant_email'] = 'sometimes|required|email|max:255';
+            $rules['participant_phone'] = 'sometimes|required|string|max:20';
+        }
+
+        return $rules;
     }
 
     /**
-     * Get custom error messages for validator errors.
+     * Get custom messages for validator errors.
      *
      * @return array<string, string>
      */
     public function messages(): array
     {
         return [
-            'program_type.required' => 'Please select a program type.',
+            'program_id.required' => 'The program is required.',
+            'program_id.exists' => 'The selected program does not exist.',
+            'program_type.required' => 'The program type is required.',
             'program_type.in' => 'The selected program type is invalid.',
-            'program_id.required' => 'Please select a program to register for.',
-            'program_id.integer' => 'Invalid program selection.',
-            'user_name.required' => 'Please provide your full name.',
-            'user_name.max' => 'Your name cannot exceed 255 characters.',
-            'email.required' => 'Please provide your email address.',
-            'email.email' => 'Please provide a valid email address.',
-            'email.max' => 'Your email address cannot exceed 255 characters.',
-            'phone.regex' => 'Please provide a valid phone number.',
-            'phone.max' => 'Your phone number cannot exceed 20 characters.',
-            'location.max' => 'Your location cannot exceed 255 characters.',
+            'participant_name.required' => 'The participant name is required.',
+            'participant_name.max' => 'The participant name may not be greater than 255 characters.',
+            'participant_email.required' => 'The participant email is required.',
+            'participant_email.email' => 'The participant email must be a valid email address.',
+            'participant_email.max' => 'The participant email may not be greater than 255 characters.',
+            'participant_phone.required' => 'The participant phone is required.',
+            'participant_phone.max' => 'The participant phone may not be greater than 20 characters.',
+            'participant_address.max' => 'The participant address may not be greater than 500 characters.',
+            'organization.max' => 'The organization may not be greater than 255 characters.',
+            'experience_level.in' => 'The selected experience level is invalid.',
+            'motivation.max' => 'The motivation may not be greater than 1000 characters.',
+            'status.in' => 'The selected status is invalid.',
+            'notes.max' => 'The notes may not be greater than 1000 characters.',
         ];
     }
 
@@ -75,12 +83,17 @@ class ProgramRegistrationRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'program_type' => 'program type',
             'program_id' => 'program',
-            'user_name' => 'full name',
-            'email' => 'email address',
-            'phone' => 'phone number',
-            'location' => 'location',
+            'program_type' => 'program type',
+            'participant_name' => 'participant name',
+            'participant_email' => 'participant email',
+            'participant_phone' => 'participant phone',
+            'participant_address' => 'participant address',
+            'organization' => 'organization',
+            'experience_level' => 'experience level',
+            'motivation' => 'motivation',
+            'status' => 'status',
+            'notes' => 'notes',
         ];
     }
 
@@ -89,68 +102,11 @@ class ProgramRegistrationRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        // Clean and format phone number
-        if ($this->phone) {
+        // Set default status if not provided
+        if (!$this->has('status')) {
             $this->merge([
-                'phone' => preg_replace('/[^\+0-9]/', '', $this->phone),
+                'status' => 'pending'
             ]);
-        }
-
-        // Trim whitespace from text fields
-        $this->merge([
-            'user_name' => trim($this->user_name ?? ''),
-            'email' => trim(strtolower($this->email ?? '')),
-            'location' => trim($this->location ?? ''),
-        ]);
-
-        // Set registration date to now
-        $this->merge([
-            'registration_date' => now(),
-            'status' => 'pending', // Default status
-        ]);
-    }
-
-    /**
-     * Configure the validator instance.
-     */
-    public function withValidator($validator): void
-    {
-        $validator->after(function ($validator) {
-            // Check for duplicate registration
-            $exists = \App\Models\ProgramRegistration::where('program_type', $this->program_type)
-                ->where('program_id', $this->program_id)
-                ->where('email', $this->email)
-                ->exists();
-
-            if ($exists) {
-                $validator->errors()->add('email', 'You have already registered for this program.');
-            }
-
-            // Check if program is open for registration
-            if ($this->program_type && $this->program_id) {
-                $programModel = $this->getProgramModel();
-
-                if ($programModel && method_exists($programModel, 'canRegister') && !$programModel->canRegister()) {
-                    $validator->errors()->add('program_id', 'This program is not open for registration or is full.');
-                }
-            }
-        });
-    }
-
-    /**
-     * Get the program model based on type and ID
-     */
-    private function getProgramModel()
-    {
-        switch ($this->program_type) {
-            case 'training_program':
-                return \App\Models\TrainingProgram::find($this->program_id);
-            case 'market_access_program':
-                return \App\Models\MarketAccessProgram::find($this->program_id);
-            case 'community_program':
-                return \App\Models\CommunityProgram::find($this->program_id);
-            default:
-                return null;
         }
     }
 }

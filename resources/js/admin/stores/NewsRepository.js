@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
-export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
+export let useNewsRepository = defineStore("NewsRepository", {
     state() {
         return {
             isEditMode: ref(false),
@@ -18,23 +18,16 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             itemsPerPage: ref(5),
             createDialog: ref(false),
             
-            // Statistics data
-            beneficiariesStats: reactive([]),
-            beneficiariesStatsSearch: ref(""),
-            currentStat: reactive({}),
+            // News data
+            news: reactive([]),
+            newsSearch: ref(""),
+            currentNews: reactive({}),
             
-            // Stat types for dropdowns
-            statTypes: reactive([
-                { value: 'beneficiaries', label: 'Beneficiaries' },
-                { value: 'total_beneficiaries', label: 'Total Beneficiaries' },
-                { value: 'male_beneficiaries', label: 'Male Beneficiaries' },
-                { value: 'female_beneficiaries', label: 'Female Beneficiaries' },
-                { value: 'programs_completed', label: 'Programs Completed' },
-                { value: 'provinces_reached', label: 'Provinces Reached' },
-                { value: 'cooperatives_formed', label: 'Cooperatives Formed' },
-                { value: 'projects', label: 'Projects' },
-                { value: 'staff', label: 'Staff' },
-                { value: 'partners', label: 'Partners' }
+            // Status options for dropdowns
+            statusOptions: reactive([
+                { value: 'draft', label: 'Draft' },
+                { value: 'published', label: 'Published' },
+                { value: 'archived', label: 'Archived' }
             ]),
         };
     },
@@ -51,23 +44,29 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             return `${year}-${month}-${day}`;
         },
         
-        // Fetch all beneficiaries stats with pagination
-        async fetchBeneficiariesStats({ page = 1, itemsPerPage = 5 }) {
+        // Fetch all news with pagination
+        async fetchNews({ page = 1, itemsPerPage = 5, status = '' }) {
             this.loading = true;
             try {
-                const response = await axios.get(
-                    `beneficiaries-stats?page=${page}&perPage=${itemsPerPage}&search=${this.beneficiariesStatsSearch}`
-                );
+                const params = new URLSearchParams({
+                    page: page,
+                    perPage: itemsPerPage,
+                    search: this.newsSearch
+                });
                 
-                console.log('API Response:', response.data); // Debug log
+                if (status) {
+                    params.append('status', status);
+                }
                 
-                // Handle different response structures
+                const response = await axios.get(`news?${params}`);
+                
+                console.log('API Response:', response.data);
+                
                 if (response.data.success) {
-                    this.beneficiariesStats = response.data.data || [];
+                    this.news = response.data.data || [];
                     this.totalItems = response.data.meta?.total || 0;
                 } else {
-                    // Handle error response
-                    this.beneficiariesStats = [];
+                    this.news = [];
                     this.totalItems = 0;
                     toast.error(response.data.message || "Failed to fetch data", {
                         position: "top-right",
@@ -80,11 +79,11 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
                 console.error('API Error:', err);
                 console.error('Error Response:', err.response?.data);
                 
-                this.beneficiariesStats = [];
+                this.news = [];
                 this.totalItems = 0;
                 this.loading = false;
                 
-                const errorMessage = err.response?.data?.message || "Failed to fetch beneficiaries statistics";
+                const errorMessage = err.response?.data?.message || "Failed to fetch news articles";
                 toast.error(errorMessage, {
                     position: "top-right",
                     autoClose: 3000,
@@ -97,17 +96,17 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Fetch single stat by ID
-        async fetchBeneficiariesStat(id) {
+        // Fetch single news by ID
+        async fetchNewsItem(id) {
             this.loading = true;
             try {
-                const response = await axios.get(`beneficiaries-stats/${id}`);
-                this.currentStat = response.data.data;
+                const response = await axios.get(`news/${id}`);
+                this.currentNews = response.data.data;
                 this.loading = false;
             } catch (err) {
                 console.error(err);
                 this.loading = false;
-                toast.error("Failed to fetch beneficiaries stat", {
+                toast.error("Failed to fetch news article", {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -119,12 +118,12 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Create new beneficiaries stat
-        async createBeneficiariesStat(formData) {
+        // Create new news article
+        async createNews(formData) {
             try {
-                const response = await axios.post("beneficiaries-stats", formData);
+                const response = await axios.post("news", formData);
                 this.createDialog = false;
-                toast.success("Beneficiaries stat created successfully!", {
+                toast.success("News article created successfully!", {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -135,13 +134,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
                 });
                 
                 // Refresh the list
-                this.fetchBeneficiariesStats({
+                this.fetchNews({
                     page: 1,
                     itemsPerPage: this.itemsPerPage,
                 });
             } catch (err) {
                 console.error(err);
-                const errorMessage = err.response?.data?.message || "Failed to create beneficiaries stat. Please try again.";
+                const errorMessage = err.response?.data?.message || "Failed to create news article. Please try again.";
                 toast.error(errorMessage, {
                     position: "top-right",
                     autoClose: 3000,
@@ -154,13 +153,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Update existing beneficiaries stat
-        async updateBeneficiariesStat(id, formData) {
+        // Update existing news article
+        async updateNews(id, formData) {
             try {
-                const response = await axios.put(`beneficiaries-stats/${id}`, formData);
+                const response = await axios.put(`news/${id}`, formData);
                 this.createDialog = false;
                 this.isEditMode = false;
-                toast.success("Beneficiaries stat updated successfully!", {
+                toast.success("News article updated successfully!", {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -171,13 +170,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
                 });
                 
                 // Refresh the list
-                this.fetchBeneficiariesStats({
+                this.fetchNews({
                     page: 1,
                     itemsPerPage: this.itemsPerPage,
                 });
             } catch (err) {
                 console.error(err);
-                const errorMessage = err.response?.data?.message || "Failed to update beneficiaries stat. Please try again.";
+                const errorMessage = err.response?.data?.message || "Failed to update news article. Please try again.";
                 toast.error(errorMessage, {
                     position: "top-right",
                     autoClose: 3000,
@@ -190,11 +189,11 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Delete beneficiaries stat
-        async deleteBeneficiariesStat(id) {
+        // Delete news article
+        async deleteNews(id) {
             try {
-                await axios.delete(`beneficiaries-stats/${id}`);
-                toast.success("Beneficiaries stat deleted successfully!", {
+                await axios.delete(`news/${id}`);
+                toast.success("News article deleted successfully!", {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -205,13 +204,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
                 });
                 
                 // Refresh the list
-                this.fetchBeneficiariesStats({
+                this.fetchNews({
                     page: 1,
                     itemsPerPage: this.itemsPerPage,
                 });
             } catch (err) {
                 console.error(err);
-                const errorMessage = err.response?.data?.message || "Failed to delete beneficiaries stat. Please try again.";
+                const errorMessage = err.response?.data?.message || "Failed to delete news article. Please try again.";
                 toast.error(errorMessage, {
                     position: "top-right",
                     autoClose: 3000,
@@ -224,13 +223,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Bulk delete beneficiaries stats
-        async bulkDeleteBeneficiariesStats(ids) {
+        // Bulk delete news articles
+        async bulkDeleteNews(ids) {
             try {
-                const deletePromises = ids.map(id => axios.delete(`beneficiaries-stats/${id}`));
+                const deletePromises = ids.map(id => axios.delete(`news/${id}`));
                 await Promise.all(deletePromises);
                 
-                toast.success(`${ids.length} beneficiaries stats deleted successfully!`, {
+                toast.success(`${ids.length} news articles deleted successfully!`, {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -241,13 +240,13 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
                 });
                 
                 // Refresh the list
-                this.fetchBeneficiariesStats({
+                this.fetchNews({
                     page: 1,
                     itemsPerPage: this.itemsPerPage,
                 });
             } catch (err) {
                 console.error(err);
-                toast.error("Failed to delete selected beneficiaries stats. Please try again.", {
+                toast.error("Failed to delete selected news articles. Please try again.", {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -259,36 +258,80 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Get statistics summary
-        async getStatsSummary() {
+        // Toggle publish status
+        async toggleStatus(id) {
             try {
-                const response = await axios.get("beneficiaries-stats-summary");
-                return response.data.data;
+                const response = await axios.post(`news/${id}/toggle-status`);
+                toast.success("News article status updated successfully!", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                
+                // Refresh the list
+                this.fetchNews({
+                    page: 1,
+                    itemsPerPage: this.itemsPerPage,
+                });
             } catch (err) {
                 console.error(err);
-                return [];
+                const errorMessage = err.response?.data?.message || "Failed to update news article status. Please try again.";
+                toast.error(errorMessage, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }
         },
         
-        // Helper method to get stat type label
-        getStatTypeLabel(statType) {
-            const stat = this.statTypes.find(s => s.value === statType);
-            return stat ? stat.label : statType;
+        // Get published news
+        async getPublishedNews({ page = 1, itemsPerPage = 10 }) {
+            try {
+                const params = new URLSearchParams({
+                    page: page,
+                    perPage: itemsPerPage,
+                    search: this.newsSearch
+                });
+                
+                const response = await axios.get(`news/published?${params}`);
+                return response.data;
+            } catch (err) {
+                console.error(err);
+                return { success: false, data: [], meta: { total: 0 } };
+            }
         },
         
-        // Helper method to format numbers
-        formatNumber(number) {
-            return new Intl.NumberFormat().format(number);
+        // Helper method to get status label
+        getStatusLabel(status) {
+            const statusOption = this.statusOptions.find(s => s.value === status);
+            return statusOption ? statusOption.label : status;
         },
         
-        // Reset current stat
-        resetCurrentStat() {
-            this.currentStat = {
+        // Helper method to format date
+        formatDate(date) {
+            if (!date) return '';
+            return new Date(date).toLocaleDateString();
+        },
+        
+        // Reset current news
+        resetCurrentNews() {
+            this.currentNews = {
                 id: null,
-                stat_type: '',
-                value: 0,
-                description: '',
-                year: new Date().getFullYear()
+                title: '',
+                slug: '',
+                excerpt: '',
+                content: '',
+                featured_image: '',
+                status: 'draft',
+                published_at: null
             };
         }
     },

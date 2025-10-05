@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 
-class TrainingProgramRequest extends FormRequest
+class JobAnnouncementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,29 +24,29 @@ class TrainingProgramRequest extends FormRequest
     {
         $rules = [
             'title' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:training_programs,slug',
+            'slug' => 'nullable|string|max:255|unique:job_announcements,slug',
             'description' => 'required|string',
-            'cover_image' => 'nullable|string|max:500',
-            'thumbnail_image' => 'nullable|string|max:500',
-            'program_type' => 'required|string|max:100',
-            'duration' => 'nullable|string|max:100',
+            'requirements' => 'nullable|string',
+            'responsibilities' => 'nullable|string',
             'location' => 'required|string|max:255',
-            'instructor' => 'nullable|string|max:255',
-            'max_participants' => 'nullable|integer|min:1',
-            'start_date' => 'required|date|after_or_equal:today',
-            'end_date' => 'required|date|after:start_date',
-            'status' => 'required|in:draft,published,ongoing,completed,cancelled',
+            'employment_type' => 'required|in:full_time,part_time,contract,internship',
+            'experience_level' => 'required|in:entry,mid,senior,executive',
+            'salary_range' => 'nullable|string|max:100',
+            'application_deadline' => 'required|date|after:today',
+            'status' => 'required|in:draft,published,closed',
+            'published_at' => 'nullable|date',
         ];
 
         // For update requests, make fields sometimes required
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
-            $rules['slug'] = 'nullable|string|max:255|unique:training_programs,slug,' . $this->route('training_program');
+            $rules['slug'] = 'nullable|string|max:255|unique:job_announcements,slug,' . $this->route('job_announcement');
             $rules['title'] = 'sometimes|required|string|max:255';
             $rules['description'] = 'sometimes|required|string';
             $rules['location'] = 'sometimes|required|string|max:255';
-            $rules['start_date'] = 'sometimes|required|date';
-            $rules['end_date'] = 'sometimes|required|date|after:start_date';
-            $rules['status'] = 'sometimes|required|in:draft,published,ongoing,completed,cancelled';
+            $rules['employment_type'] = 'sometimes|required|in:full_time,part_time,contract,internship';
+            $rules['experience_level'] = 'sometimes|required|in:entry,mid,senior,executive';
+            $rules['application_deadline'] = 'sometimes|required|date';
+            $rules['status'] = 'sometimes|required|in:draft,published,closed';
         }
 
         return $rules;
@@ -65,16 +64,16 @@ class TrainingProgramRequest extends FormRequest
             'title.max' => 'The title may not be greater than 255 characters.',
             'slug.unique' => 'The slug has already been taken.',
             'description.required' => 'The description is required.',
-            'program_type.required' => 'The program type is required.',
             'location.required' => 'The location is required.',
-            'max_participants.integer' => 'The max participants must be a whole number.',
-            'max_participants.min' => 'The max participants must be at least 1.',
-            'start_date.required' => 'The start date is required.',
-            'start_date.after_or_equal' => 'The start date must be today or later.',
-            'end_date.required' => 'The end date is required.',
-            'end_date.after' => 'The end date must be after the start date.',
+            'employment_type.required' => 'The employment type is required.',
+            'employment_type.in' => 'The selected employment type is invalid.',
+            'experience_level.required' => 'The experience level is required.',
+            'experience_level.in' => 'The selected experience level is invalid.',
+            'application_deadline.required' => 'The application deadline is required.',
+            'application_deadline.after' => 'The application deadline must be in the future.',
             'status.required' => 'The status is required.',
             'status.in' => 'The selected status is invalid.',
+            'published_at.date' => 'The published date must be a valid date.',
         ];
     }
 
@@ -89,16 +88,15 @@ class TrainingProgramRequest extends FormRequest
             'title' => 'title',
             'slug' => 'slug',
             'description' => 'description',
-            'cover_image' => 'cover image',
-            'thumbnail_image' => 'thumbnail image',
-            'program_type' => 'program type',
-            'duration' => 'duration',
+            'requirements' => 'requirements',
+            'responsibilities' => 'responsibilities',
             'location' => 'location',
-            'instructor' => 'instructor',
-            'max_participants' => 'max participants',
-            'start_date' => 'start date',
-            'end_date' => 'end date',
+            'employment_type' => 'employment type',
+            'experience_level' => 'experience level',
+            'salary_range' => 'salary range',
+            'application_deadline' => 'application deadline',
             'status' => 'status',
+            'published_at' => 'published date',
         ];
     }
 
@@ -107,6 +105,13 @@ class TrainingProgramRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
+        // Set published_at to current time if status is published and published_at is not set
+        if ($this->status === 'published' && !$this->has('published_at')) {
+            $this->merge([
+                'published_at' => now()
+            ]);
+        }
+
         // Auto-generate slug from title if not provided
         if ($this->has('title') && !$this->has('slug')) {
             $this->merge([
