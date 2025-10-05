@@ -2,15 +2,14 @@
     <CreateBeneficiariesStats v-if="BeneficiariesRepository.createDialog" />
     <div :dir="dir">
         <!-- Page Header -->
-        <Header pageTitle='Beneficiaries Statistics' />
+        <Header pageTitle="Beneficiaries Statistics" />
         <v-divider :thickness="1" class="border-opacity-100" />
-        
 
         <!-- Main Content Card -->
-        
+        <div class="content-card">
             <!-- Search and Actions Section -->
-            <div class="btn-search pt-12 pb-6">
-                <div class="text-field w-25">
+            <div class="search-actions-section">
+                <div class="text-field">
                     <v-text-field
                         color="primary"
                         density="compact"
@@ -18,26 +17,25 @@
                         :label="$t('search')"
                         append-inner-icon="mdi-magnify"
                         hide-details
-                        v-model="BeneficiariesRepository.beneficiariesStatsSearch"
+                        v-model="
+                            BeneficiariesRepository.beneficiariesStatsSearch
+                        "
                         @input="handleSearch"
                     ></v-text-field>
                 </div>
-                <div class="flex">
+                <div class="btn">
                     <v-btn variant="outlined" class="create-btn-gradient px-6">
                         {{ t("filter") }}
                     </v-btn>
-                    &nbsp;
-                    
-                        <v-btn
-                            @click="CreateDialogShow"
-                            class="create-btn-gradient px-6"
-                            :text="$t('create')"
-                        >
-                            
-                        </v-btn>
-                    </div>
+                    <v-btn
+                        @click="CreateDialogShow"
+                        class="create-btn-gradient px-6"
+                        :text="$t('create')"
+                    >
+                    </v-btn>
                 </div>
-            
+            </div>
+
             <!-- Data Table Section -->
             <div class="table-section">
                 <v-app>
@@ -47,10 +45,16 @@
                                 <v-data-table-server
                                     :dir="dir"
                                     theme="cursor-pointer"
-                                    v-model:items-per-page="BeneficiariesRepository.itemsPerPage"
+                                    v-model:items-per-page="
+                                        BeneficiariesRepository.itemsPerPage
+                                    "
                                     :headers="headers"
-                                    :items-length="BeneficiariesRepository.totalItems"
-                                    :items="BeneficiariesRepository.beneficiariesStats"
+                                    :items-length="
+                                        BeneficiariesRepository.totalItems
+                                    "
+                                    :items="
+                                        BeneficiariesRepository.beneficiariesStats
+                                    "
                                     :loading="BeneficiariesRepository.loading"
                                     @update:options="handleTableUpdate"
                                     hover
@@ -59,15 +63,52 @@
                                     <!-- Stat Type Column -->
                                     <template v-slot:item.stat_type="{ item }">
                                         <td class="py-2 pl-4">
-                                            <span >
-                                                {{ BeneficiariesRepository.getStatTypeLabel(item.stat_type) }}
+                                            <v-chip
+                                                :color="
+                                                    getStatTypeColor(
+                                                        item.stat_type
+                                                    )
+                                                "
+                                                variant="flat"
+                                                size="small"
+                                            >
+                                                {{
+                                                    BeneficiariesRepository.getStatTypeLabel(
+                                                        item.stat_type
+                                                    )
+                                                }}
+                                            </v-chip>
+                                        </td>
+                                    </template>
+
+                                    <!-- Value Column -->
+                                    <template v-slot:item.value="{ item }">
+                                        <td class="py-2 pl-4">
+                                            <span
+                                                class="font-weight-bold text-h6"
+                                            >
+                                                {{
+                                                    BeneficiariesRepository.formatNumber(
+                                                        item.value
+                                                    )
+                                                }}
                                             </span>
                                         </td>
                                     </template>
 
-                                    
+                                    <!-- Year Column -->
+                                    <template v-slot:item.year="{ item }">
+                                        <td class="py-2 pl-4">
+                                            <v-chip
+                                                color="primary"
+                                                variant="outlined"
+                                                size="small"
+                                            >
+                                                {{ item.year }}
+                                            </v-chip>
+                                        </td>
+                                    </template>
 
-                                   
                                     <!-- Checkbox for selecting rows -->
                                     <template v-slot:item.checkbox="{ item }">
                                         <v-checkbox
@@ -80,7 +121,9 @@
                                     <!-- Actions Column -->
                                     <template v-slot:item.action="{ item }">
                                         <v-menu>
-                                            <template v-slot:activator="{ props }">
+                                            <template
+                                                v-slot:activator="{ props }"
+                                            >
                                                 <v-btn
                                                     icon="mdi-dots-vertical"
                                                     v-bind="props"
@@ -90,20 +133,36 @@
                                             <v-list>
                                                 <v-list-item>
                                                     <v-list-item-title
-                                                        
+                                                        v-if="
+                                                            AuthRepository.permissions &&
+                                                            AuthRepository.permissions.includes(
+                                                                'editBeneficiariesStats'
+                                                            )
+                                                        "
                                                         @click="edit(item)"
                                                         class="cursor-pointer d-flex gap-3 justify-left pb-3"
                                                     >
-                                                        <v-icon color="tealColor">mdi-square-edit-outline</v-icon>
+                                                        <v-icon color="primary"
+                                                            >mdi-square-edit-outline</v-icon
+                                                        >
                                                         {{ $t("edit") }}
                                                     </v-list-item-title>
 
                                                     <v-list-item-title
-                                                       
+                                                        v-if="
+                                                            AuthRepository.permissions &&
+                                                            AuthRepository.permissions.includes(
+                                                                'deleteBeneficiariesStats'
+                                                            )
+                                                        "
                                                         class="cursor-pointer d-flex gap-3"
-                                                        @click="deleteItem(item)"
+                                                        @click="
+                                                            deleteItem(item)
+                                                        "
                                                     >
-                                                        <v-icon color="error">mdi-delete-outline</v-icon>
+                                                        <v-icon color="error"
+                                                            >mdi-delete-outline</v-icon
+                                                        >
                                                         {{ $t("delete") }}
                                                     </v-list-item-title>
                                                 </v-list-item>
@@ -111,7 +170,7 @@
                                         </v-menu>
                                     </template>
                                 </v-data-table-server>
-                                
+
                                 <!-- Bulk Delete Button -->
                                 <v-btn
                                     class="header-button"
@@ -128,150 +187,6 @@
                     </v-main>
                 </v-app>
             </div>
-        </div>
-
-        <!-- Data Table Section -->
-        <div class="table-section">
-            <v-app>
-                <v-main class="main">
-                    <v-row>
-                        <v-col>
-                            <v-data-table-server
-                                :dir="dir"
-                                theme="cursor-pointer"
-                                v-model:items-per-page="
-                                    BeneficiariesRepository.itemsPerPage
-                                "
-                                :headers="headers"
-                                :items-length="
-                                    BeneficiariesRepository.totalItems
-                                "
-                                :items="
-                                    BeneficiariesRepository.beneficiariesStats
-                                "
-                                :loading="BeneficiariesRepository.loading"
-                                @update:options="handleTableUpdate"
-                                hover
-                                class="w-100 mx-auto"
-                            >
-                                <!-- Stat Type Column -->
-                                <template v-slot:item.stat_type="{ item }">
-                                    <td class="py-2 pl-4">
-                                        <v-chip
-                                            :color="
-                                                getStatTypeColor(item.stat_type)
-                                            "
-                                            variant="flat"
-                                            size="small"
-                                        >
-                                            {{
-                                                BeneficiariesRepository.getStatTypeLabel(
-                                                    item.stat_type
-                                                )
-                                            }}
-                                        </v-chip>
-                                    </td>
-                                </template>
-
-                                <!-- Value Column -->
-                                <template v-slot:item.value="{ item }">
-                                    <td class="py-2 pl-4">
-                                        <span class="font-weight-bold text-h6">
-                                            {{
-                                                BeneficiariesRepository.formatNumber(
-                                                    item.value
-                                                )
-                                            }}
-                                        </span>
-                                    </td>
-                                </template>
-
-                                <!-- Year Column -->
-                                <template v-slot:item.year="{ item }">
-                                    <td class="py-2 pl-4">
-                                        <v-chip
-                                            color="primary"
-                                            variant="outlined"
-                                            size="small"
-                                        >
-                                            {{ item.year }}
-                                        </v-chip>
-                                    </td>
-                                </template>
-
-                                <!-- Checkbox for selecting rows -->
-                                <template v-slot:item.checkbox="{ item }">
-                                    <v-checkbox
-                                        :value="item.id"
-                                        v-model="selectedIds"
-                                        class="w-6 d-flex"
-                                    ></v-checkbox>
-                                </template>
-
-                                <!-- Actions Column -->
-                                <template v-slot:item.action="{ item }">
-                                    <v-menu>
-                                        <template v-slot:activator="{ props }">
-                                            <v-btn
-                                                icon="mdi-dots-vertical"
-                                                v-bind="props"
-                                                variant="text"
-                                            ></v-btn>
-                                        </template>
-                                        <v-list>
-                                            <v-list-item>
-                                                <v-list-item-title
-                                                    v-if="
-                                                        AuthRepository.permissions &&
-                                                        AuthRepository.permissions.includes(
-                                                            'editBeneficiariesStats'
-                                                        )
-                                                    "
-                                                    @click="edit(item)"
-                                                    class="cursor-pointer d-flex gap-3 justify-left pb-3"
-                                                >
-                                                    <v-icon color="primary"
-                                                        >mdi-square-edit-outline</v-icon
-                                                    >
-                                                    {{ $t("edit") }}
-                                                </v-list-item-title>
-
-                                                <v-list-item-title
-                                                    v-if="
-                                                        AuthRepository.permissions &&
-                                                        AuthRepository.permissions.includes(
-                                                            'deleteBeneficiariesStats'
-                                                        )
-                                                    "
-                                                    class="cursor-pointer d-flex gap-3"
-                                                    @click="deleteItem(item)"
-                                                >
-                                                    <v-icon color="error"
-                                                        >mdi-delete-outline</v-icon
-                                                    >
-                                                    {{ $t("delete") }}
-                                                </v-list-item-title>
-                                            </v-list-item>
-                                        </v-list>
-                                    </v-menu>
-                                </template>
-                            </v-data-table-server>
-
-                            <!-- Bulk Delete Button -->
-                            <v-btn
-                                class="header-button"
-                                v-if="selectedIds.length > 0"
-                                @click="sendSelectedIds"
-                                color="#B71C1C"
-                                flat
-                                inset
-                                :text="`Delete ${selectedIds.length} selected`"
-                            >
-                            </v-btn>
-                        </v-col>
-                    </v-row>
-                </v-main>
-            </v-app>
         </div>
     </div>
 </template>
@@ -340,15 +255,6 @@ const deleteItem = async (item) => {
     }
 };
 
-<<<<<<< HEAD
-// Helper function to get stat type color - using consistent brand color
-const getStatTypeColor = (statType) => {
-    // Use primary brand color for all stat types for consistency
-    return "primary";
-};
-=======
->>>>>>> ffc98f5e5ba858bdfb1bf23473d47f498ce04cf3
-
 // Table headers
 const headers = computed(() => [
     { title: "", key: "checkbox", align: "start", sortable: false },
@@ -366,19 +272,19 @@ const headers = computed(() => [
         sortable: false,
     },
     { title: t("year"), key: "year", align: "center", sortable: true },
-<<<<<<< HEAD
-    {
-        title: t("created_at"),
-        key: "created_at",
-        align: "center",
-        sortable: true,
-    },
-=======
->>>>>>> ffc98f5e5ba858bdfb1bf23473d47f498ce04cf3
     { title: t("action"), key: "action", align: "center", sortable: false },
 ]);
 
-
+// Get color for stat type chip
+const getStatTypeColor = (statType) => {
+    const colors = {
+        farmers: "green",
+        women: "pink",
+        youth: "blue",
+        total: "primary",
+    };
+    return colors[statType] || "grey";
+};
 </script>
 
 <style scoped>
