@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class CommunityProgram extends Model
 {
+    use \App\Models\Concerns\TranslatesFields;
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'title',
+        'description',
+        'target_group',
+        'partner_organizations',
+    ];
     use HasFactory;
 
     protected $fillable = [

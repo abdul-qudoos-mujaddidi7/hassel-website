@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class AgriTechTool extends Model
 {
+    use \App\Models\Concerns\TranslatesFields;
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'name',
+        'description',
+    ];
     use HasFactory;
 
     protected $fillable = [

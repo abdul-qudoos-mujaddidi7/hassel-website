@@ -9,6 +9,14 @@ use Illuminate\Support\Str;
 
 class SuccessStory extends Model
 {
+    use \App\Models\Concerns\TranslatesFields;
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'title',
+        'client_name',
+        'story',
+    ];
     use HasFactory;
 
     protected $fillable = [

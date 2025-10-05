@@ -9,6 +9,14 @@ use Illuminate\Support\Str;
 
 class News extends Model
 {
+  use \App\Models\Concerns\TranslatesFields;
+
+  /** @var array<int, string> */
+  protected $translatable = [
+    'title',
+    'excerpt',
+    'content',
+  ];
   use HasFactory;
 
   protected $fillable = [

@@ -10,6 +10,21 @@ use Illuminate\Support\Str;
 
 class SeedSupplyProgram extends Model
 {
+    use \App\Models\Concerns\TranslatesFields;
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'name',
+        'short_description',
+        'description',
+        'input_type',
+        'target_crops',
+        'distribution_centers',
+        'usage_instructions',
+        'technical_specifications',
+        'supplier',
+        'contact_info',
+    ];
     use HasFactory;
 
     protected $fillable = [

@@ -40,6 +40,17 @@ Goal
   - Backend service saves/updates translations accordingly.
   - GET (admin show) can return include_translations=1 for editing.
 
+4.1) Backend specifics for Admin CRUD (Requests + Responses)
+- Form Request rules (per entity):
+  - translations => sometimes|array
+  - translations.farsi => sometimes|array
+  - translations.pashto => sometimes|array
+  - For each translatable field: sometimes|nullable|string
+  - Keep base language required rules as-is (e.g., title required)
+- Controllers (admin) should:
+  - Use the entity’s Form Request (store/update) and call TranslationSyncService::sync($model, $translations)
+  - Return Resource classes for index/show/store/update; index uses Resource::collection with meta
+
 5) Frontend Integration (Vue)
 - Static UI: continue to use useI18n().
 - Dynamic content requests: always send current locale.

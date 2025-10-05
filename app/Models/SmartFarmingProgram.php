@@ -11,6 +11,19 @@ use Carbon\Carbon;
 
 class SmartFarmingProgram extends Model
 {
+    use \App\Models\Concerns\TranslatesFields;
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'name',
+        'short_description',
+        'description',
+        'implementation_guide',
+        'sustainability_impact',
+        'farming_type',
+        'target_crops',
+        'location',
+    ];
     use HasFactory;
 
     protected $fillable = [

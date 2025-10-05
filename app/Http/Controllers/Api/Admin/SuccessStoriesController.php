@@ -4,31 +4,82 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Models\SuccessStory;
+use App\Services\TranslationSyncService;
 
 class SuccessStoriesController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        return response()->json(['message' => 'Success Stories management - Coming soon']);
+        $perPage = $request->get('perPage', 15);
+        $query = SuccessStory::query()->orderBy('created_at', 'desc');
+        $stories = $query->paginate($perPage);
+
+        return response()->json([
+            'success' => true,
+            'data' => $stories->items(),
+            'meta' => [
+                'total' => $stories->total(),
+                'per_page' => $stories->perPage(),
+                'current_page' => $stories->currentPage(),
+                'last_page' => $stories->lastPage(),
+            ],
+        ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        return response()->json(['message' => 'Create success story - Coming soon']);
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255',
+            'client_name' => 'nullable|string|max:255',
+            'story' => 'nullable|string',
+            'image' => 'nullable|string',
+            'status' => 'required|string|in:draft,published',
+            'published_at' => 'nullable|date',
+            'translations' => 'sometimes|array',
+        ]);
+
+        $translations = $validated['translations'] ?? [];
+        unset($validated['translations']);
+
+        $story = SuccessStory::create($validated);
+        TranslationSyncService::sync($story, $translations);
+
+        return response()->json(['success' => true, 'data' => $story], 201);
     }
 
-    public function show($id)
+    public function show(SuccessStory $successStory): JsonResponse
     {
-        return response()->json(['message' => 'Show success story - Coming soon']);
+        return response()->json(['success' => true, 'data' => $successStory]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, SuccessStory $successStory): JsonResponse
     {
-        return response()->json(['message' => 'Update success story - Coming soon']);
+        $validated = $request->validate([
+            'title' => 'sometimes|required|string|max:255',
+            'slug' => 'sometimes|nullable|string|max:255',
+            'client_name' => 'sometimes|nullable|string|max:255',
+            'story' => 'sometimes|nullable|string',
+            'image' => 'sometimes|nullable|string',
+            'status' => 'sometimes|required|string|in:draft,published',
+            'published_at' => 'sometimes|nullable|date',
+            'translations' => 'sometimes|array',
+        ]);
+
+        $translations = $validated['translations'] ?? [];
+        unset($validated['translations']);
+
+        $successStory->update($validated);
+        TranslationSyncService::sync($successStory, $translations);
+
+        return response()->json(['success' => true, 'data' => $successStory]);
     }
 
-    public function destroy($id)
+    public function destroy(SuccessStory $successStory): JsonResponse
     {
-        return response()->json(['message' => 'Delete success story - Coming soon']);
+        $successStory->delete();
+        return response()->json(['success' => true]);
     }
 }

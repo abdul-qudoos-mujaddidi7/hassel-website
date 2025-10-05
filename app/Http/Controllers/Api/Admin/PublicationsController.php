@@ -7,6 +7,7 @@ use App\Http\Requests\PublicationRequest;
 use App\Models\Publication;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Services\TranslationSyncService;
 
 class PublicationsController extends Controller
 {
@@ -20,24 +21,24 @@ class PublicationsController extends Controller
             $search = $request->get('search', '');
             $status = $request->get('status', '');
             $fileType = $request->get('file_type', '');
-            
+
             $query = Publication::query();
-            
+
             if ($search) {
-                $query->where(function($q) use ($search) {
+                $query->where(function ($q) use ($search) {
                     $q->where('title', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%");
+                        ->orWhere('description', 'like', "%{$search}%");
                 });
             }
-            
+
             if ($status) {
                 $query->where('status', $status);
             }
-            
+
             if ($fileType) {
                 $query->where('file_type', $fileType);
             }
-            
+
             $publications = $query->orderBy('created_at', 'desc')
                 ->paginate($perPage);
 
@@ -68,7 +69,9 @@ class PublicationsController extends Controller
     {
         try {
             $validated = $request->validated();
+            $translations = $request->input('translations', []);
             $publication = Publication::create($validated);
+            TranslationSyncService::sync($publication, $translations);
 
             return response()->json([
                 'success' => true,
@@ -111,7 +114,9 @@ class PublicationsController extends Controller
     {
         try {
             $validated = $request->validated();
+            $translations = $request->input('translations', []);
             $publication->update($validated);
+            TranslationSyncService::sync($publication, $translations);
 
             return response()->json([
                 'success' => true,
@@ -156,16 +161,16 @@ class PublicationsController extends Controller
         try {
             $perPage = $request->get('perPage', 10);
             $search = $request->get('search', '');
-            
+
             $query = Publication::published();
-            
+
             if ($search) {
-                $query->where(function($q) use ($search) {
+                $query->where(function ($q) use ($search) {
                     $q->where('title', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%");
+                        ->orWhere('description', 'like', "%{$search}%");
                 });
             }
-            
+
             $publications = $query->orderBy('published_at', 'desc')
                 ->paginate($perPage);
 
@@ -196,7 +201,7 @@ class PublicationsController extends Controller
     {
         try {
             $perPage = $request->get('perPage', 10);
-            
+
             $publications = Publication::published()
                 ->where('file_type', $fileType)
                 ->orderBy('published_at', 'desc')

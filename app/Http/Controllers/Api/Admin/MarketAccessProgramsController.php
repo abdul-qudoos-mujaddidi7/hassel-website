@@ -4,31 +4,79 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Models\MarketAccessProgram;
+use App\Services\TranslationSyncService;
+use App\Http\Requests\MarketAccessProgramRequest;
+use App\Http\Resources\MarketAccessProgramResource;
 
 class MarketAccessProgramsController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        return response()->json(['message' => 'Market Access Programs management - Coming soon']);
+        $perPage = $request->get('perPage', 15);
+        $search = $request->get('search', '');
+        $status = $request->get('status', '');
+
+        $query = MarketAccessProgram::query()->orderBy('created_at', 'desc');
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('target_crops', 'like', "%{$search}%")
+                    ->orWhere('partner_organizations', 'like', "%{$search}%");
+            });
+        }
+        if ($status) {
+            $query->where('status', $status);
+        }
+        $items = $query->paginate($perPage);
+        return response()->json([
+            'success' => true,
+            'data' => MarketAccessProgramResource::collection($items),
+            'meta' => [
+                'total' => $items->total(),
+                'per_page' => $items->perPage(),
+                'current_page' => $items->currentPage(),
+                'last_page' => $items->lastPage(),
+            ],
+        ]);
     }
 
-    public function store(Request $request)
+    public function store(MarketAccessProgramRequest $request): JsonResponse
     {
-        return response()->json(['message' => 'Create market access program - Coming soon']);
+        $validated = $request->validated();
+
+        $translations = $validated['translations'] ?? [];
+        unset($validated['translations']);
+
+        $item = MarketAccessProgram::create($validated);
+        TranslationSyncService::sync($item, $translations);
+
+        return response()->json(['success' => true, 'data' => new MarketAccessProgramResource($item)], 201);
     }
 
-    public function show($id)
+    public function show(MarketAccessProgram $marketAccessProgram): JsonResponse
     {
-        return response()->json(['message' => 'Show market access program - Coming soon']);
+        return response()->json(['success' => true, 'data' => new MarketAccessProgramResource($marketAccessProgram)]);
     }
 
-    public function update(Request $request, $id)
+    public function update(MarketAccessProgramRequest $request, MarketAccessProgram $marketAccessProgram): JsonResponse
     {
-        return response()->json(['message' => 'Update market access program - Coming soon']);
+        $validated = $request->validated();
+
+        $translations = $validated['translations'] ?? [];
+        unset($validated['translations']);
+
+        $marketAccessProgram->update($validated);
+        TranslationSyncService::sync($marketAccessProgram, $translations);
+
+        return response()->json(['success' => true, 'data' => new MarketAccessProgramResource($marketAccessProgram)]);
     }
 
-    public function destroy($id)
+    public function destroy(MarketAccessProgram $marketAccessProgram): JsonResponse
     {
-        return response()->json(['message' => 'Delete market access program - Coming soon']);
+        $marketAccessProgram->delete();
+        return response()->json(['success' => true]);
     }
 }

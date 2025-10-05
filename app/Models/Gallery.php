@@ -10,6 +10,13 @@ use Illuminate\Support\Str;
 
 class Gallery extends Model
 {
+    use \App\Models\Concerns\TranslatesFields;
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'title',
+        'description',
+    ];
     use HasFactory;
 
     protected $fillable = [

@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class JobAnnouncement extends Model
 {
-    use HasFactory;
+    use HasFactory, \App\Models\Concerns\TranslatesFields;
 
     protected $fillable = [
         'title',
@@ -26,6 +26,14 @@ class JobAnnouncement extends Model
     protected $casts = [
         'deadline' => 'date',
         'opened_at' => 'datetime',
+    ];
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'title',
+        'description',
+        'requirements',
+        'location',
     ];
 
     // Relationships

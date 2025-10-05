@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class MarketAccessProgram extends Model
 {
+    use \App\Models\Concerns\TranslatesFields;
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'title',
+        'description',
+        'target_crops',
+        'partner_organizations',
+    ];
     use HasFactory;
 
     protected $fillable = [

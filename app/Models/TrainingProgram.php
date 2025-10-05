@@ -11,6 +11,16 @@ use Carbon\Carbon;
 
 class TrainingProgram extends Model
 {
+    use \App\Models\Concerns\TranslatesFields;
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'title',
+        'description',
+        'program_type',
+        'location',
+        'instructor',
+    ];
     use HasFactory;
 
     protected $fillable = [
