@@ -26,7 +26,7 @@ class PublicationResource extends JsonResource
             // Computed attributes
             'is_published' => $this->is_published,
             'file_size' => $this->file_size,
-            'download_count' => $this->download_count ?? 0,
+            'download_count' => 0, // Default to 0 since download_count field doesn't exist yet
 
             // Translations
             'translations' => $this->when(

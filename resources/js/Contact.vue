@@ -52,7 +52,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     <!-- Contact Information -->
-                    <div>
+                    <div class="order-2 lg:order-1">
                         <h2 class="heading-lg text-gray-900 mb-8">
                             Get in Touch
                         </h2>
@@ -310,7 +310,7 @@
                     </div>
 
                     <!-- Contact Form -->
-                    <div>
+                    <div class="order-1 lg:order-2">
                         <h2 class="heading-lg text-gray-900 mb-8">
                             Send us a Message
                         </h2>
