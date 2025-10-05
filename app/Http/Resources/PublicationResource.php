@@ -9,11 +9,12 @@ class PublicationResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $lang = $request->get('lang', 'en');
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('title', $lang) ?? $this->title) : $this->title,
             'slug' => $this->slug,
-            'description' => $this->description,
+            'description' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('description', $lang) ?? $this->description) : $this->description,
             'file_path' => $this->file_path,
             'file_url' => $this->file_path ? asset('storage/' . $this->file_path) : null,
             'file_type' => $this->file_type,

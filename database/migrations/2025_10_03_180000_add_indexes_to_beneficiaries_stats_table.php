@@ -17,12 +17,12 @@ return new class extends Migration
             $table->index('year');
             $table->index(['stat_type', 'year']);
             $table->index('created_at');
-            
+
             // Add unique constraint to prevent duplicate stats for same type and year
             $table->unique(['stat_type', 'year'], 'unique_stat_type_year');
-            
-            // Add check constraint to ensure value is positive
-            $table->check('value >= 0', 'check_positive_value');
+
+            // NOTE: Portable check constraints are not supported across all drivers in Laravel's Schema builder.
+            // If you need a DB-level check, use a raw statement per driver. For portability, we skip it here.
         });
     }
 
@@ -37,13 +37,12 @@ return new class extends Migration
             $table->dropIndex(['year']);
             $table->dropIndex(['stat_type', 'year']);
             $table->dropIndex(['created_at']);
-            
+
             // Drop unique constraint
             $table->dropUnique('unique_stat_type_year');
-            
+
             // Drop check constraint
             $table->dropCheck('check_positive_value');
         });
     }
 };
-

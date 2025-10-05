@@ -14,12 +14,13 @@ class NewsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $lang = $request->get('lang', 'en');
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('title', $lang) ?? $this->title) : $this->title,
             'slug' => $this->slug,
-            'excerpt' => $this->excerpt,
-            'content' => $this->when($request->routeIs('api.news.show'), $this->content),
+            'excerpt' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('excerpt', $lang) ?? $this->excerpt) : $this->excerpt,
+            'content' => $this->when($request->routeIs('api.news.show'), method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('content', $lang) ?? $this->content) : $this->content),
             'featured_image' => $this->featured_image,
             'featured_image_url' => $this->featured_image ? asset('storage/' . $this->featured_image) : null,
             'status' => $this->status,

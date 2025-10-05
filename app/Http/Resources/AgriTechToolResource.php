@@ -9,11 +9,12 @@ class AgriTechToolResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $lang = $request->get('lang', 'en');
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('name', $lang) ?? $this->name) : $this->name,
             'slug' => $this->slug,
-            'description' => $this->description,
+            'description' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('description', $lang) ?? $this->description) : $this->description,
             'cover_image' => $this->cover_image ? asset($this->cover_image) : null,
             'thumbnail_image' => $this->thumbnail_image ? asset($this->thumbnail_image) : null,
             'tool_type' => $this->tool_type,

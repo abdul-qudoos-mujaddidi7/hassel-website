@@ -1,7 +1,9 @@
 <template>
     <div class="min-h-screen">
         <!-- Hero Section with 5 Images Slider -->
-        <section class="relative h-screen overflow-hidden text-white">
+        <section
+            class="relative min-h-[70vh] md:h-screen overflow-hidden text-white"
+        >
             <!-- Image Slider Background -->
             <div class="absolute inset-0">
                 <div
@@ -15,7 +17,10 @@
                     <img
                         :src="slide.image"
                         :alt="slide.title"
-                        class="absolute inset-0 w-full h-full object-cover kenburns"
+                        :class="[
+                            'absolute inset-0 w-full h-full object-cover',
+                            windowWidth < 768 ? '' : 'kenburns',
+                        ]"
                     />
                     <div
                         class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"
@@ -53,7 +58,7 @@
                     >
                         <router-link
                             to="/contact"
-                            class="btn btn-cta w-full sm:w-auto flex items-center justify-center text-base px-4 py-3 md:text-lg md:px-8 md:py-4"
+                            class="btn btn-cta inline-flex items-center justify-center text-xs px-3 py-2 md:text-lg md:px-8 md:py-4 rounded-md"
                         >
                             Contact Us
                             <svg
@@ -921,6 +926,7 @@ const totalSlides = computed(() => {
 // Foundation tabs state (Vision / Mission / Values)
 
 // Hero slider data - 5 images
+// Use one consistent hero headline/description across all slides (better UX)
 const heroSlides = computed(() => [
     {
         image: "/images/home/hero1.avif",
@@ -929,23 +935,23 @@ const heroSlides = computed(() => [
     },
     {
         image: "/images/home/hero2.avif",
-        title: t("home.hero2.title"),
-        description: t("home.hero2.subtitle"),
+        title: t("home.hero.title"),
+        description: t("home.hero.subtitle"),
     },
     {
         image: "/images/home/hero3.avif",
-        title: t("home.hero3.title"),
-        description: t("home.hero3.subtitle"),
+        title: t("home.hero.title"),
+        description: t("home.hero.subtitle"),
     },
     {
         image: "/images/home/hero4.avif",
-        title: t("home.hero4.title"),
-        description: t("home.hero4.subtitle"),
+        title: t("home.hero.title"),
+        description: t("home.hero.subtitle"),
     },
     {
         image: "/images/home/hero5.avif",
-        title: t("home.hero5.title"),
-        description: t("home.hero5.subtitle"),
+        title: t("home.hero.title"),
+        description: t("home.hero.subtitle"),
     },
 ]);
 

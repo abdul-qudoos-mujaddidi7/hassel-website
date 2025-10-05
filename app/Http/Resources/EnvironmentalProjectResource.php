@@ -9,17 +9,18 @@ class EnvironmentalProjectResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $lang = $request->get('lang', 'en');
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('title', $lang) ?? $this->title) : $this->title,
             'slug' => $this->slug,
-            'description' => $this->description,
+            'description' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('description', $lang) ?? $this->description) : $this->description,
             'cover_image' => $this->cover_image ? asset($this->cover_image) : null,
             'thumbnail_image' => $this->thumbnail_image ? asset($this->thumbnail_image) : null,
             'project_type' => $this->project_type,
             'project_type_display' => $this->project_type_display,
             'impact_metrics' => $this->impact_metrics_list,
-            'funding_source' => $this->funding_source,
+            'funding_source' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('funding_source', $lang) ?? $this->funding_source) : $this->funding_source,
             'status' => $this->status,
             'created_at' => $this->created_at->toDateTimeString(),
 

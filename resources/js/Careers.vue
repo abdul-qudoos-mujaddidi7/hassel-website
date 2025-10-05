@@ -275,9 +275,7 @@
         </section>
 
         <!-- Apply by Email Note -->
-        <section
-            class="py-12 md:py-16 lg:py-20 bg-gradient-to-r from-green-600 to-emerald-600 text-white"
-        >
+        <section class="py-12 md:py-16 lg:py-20 text-white">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="heading-lg mb-4">How to Apply</h2>
                 <p class="text-base md:text-lg text-green-100">

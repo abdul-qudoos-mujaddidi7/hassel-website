@@ -1,600 +1,100 @@
-# MOUNT AGRO INSTITUTION - FRONTEND DEVELOPMENT PLAN (BACKEND-ALIGNED)
-# ========================================================================
+Multilingual Dynamic Content Plan (Frontend + Backend CRUD)
+
+Goal
+- Serve all dynamic content (news, publications, success stories, etc.) in the user’s selected language using one master translations table.
+- Keep i18n (useI18n) for static UI strings; resolve dynamic data on the server by lang with clean fallbacks.
+- Ensure Admin CRUD supports creating/editing translations per model/field/language.
+
+1) Data Model (DONE)
+- tables:
+  - base tables (news, publications, success_stories, ...): store default language content (en) in normal columns.
+  - translations (polymorphic): id, model_type, model_id, field_name, language (en|fa|ps), content, timestamps.
+- model helpers:
+  - getTranslation(field, lang): returns translated content or null if missing.
+  - Accessor pattern (preferred in Resources): prefer $this->getTranslation('title',$lang) ?? $this->title.
+- DB constraints:
+  - unique key: (model_type, model_id, field_name, language) to avoid duplicates.
+
+2) API Contract (every dynamic endpoint)
+- Accept ?lang=en|fa|ps; default en.
+- Resolve translatable fields by lang on the server; include base fallback.
+- Optional query: include_translations=1 to return full translations array for Admin or UI preview.
+- Pagination responses remain unchanged.
+
+3) Laravel Resources update (server-side resolution)
+- NewsResource, PublicationResource, SuccessStoryResource, etc.:
+  - Read $lang = $request->get('lang','en').
+  - For each translatable field (title, excerpt, content, description, client_name, etc.) return:
+    - 'title' => $this->getTranslation('title',$lang) ?? $this->title
+  - Keep URLs, dates, ids unchanged.
+- Add a small base Resource trait (optional) to DRY the lookup logic.
+
+4) Admin CRUD (to support translations)
+- Admin UI per model (News, Publications, Success Stories, etc.):
+  - Base (default) language tab: edit normal columns (en).
+  - Language tabs (fa, ps): for each translatable field show inputs bound to translations table.
+  - Auto-create translation rows on save if content is present; update existing rows if present; delete row if translation is cleared.
+  - Validation: allow empty translation; base language still required based on model rules.
+- API Admin endpoints additions:
+  - POST/PUT accepts translations payload per language: { translations: { fa: { title, excerpt, content }, ps: {...} } }
+  - Backend service saves/updates translations accordingly.
+  - GET (admin show) can return include_translations=1 for editing.
+
+5) Frontend Integration (Vue)
+- Static UI: continue to use useI18n().
+- Dynamic content requests: always send current locale.
+  - Create axiosLang.ts helper (or interceptor):
+    - import { useI18n } from '...';
+    - attaches params.lang = currentLanguage for all /api/* calls by default (configurable).
+  - Watch language change: re-fetch current page lists/details when language switches.
+- Components to update data fetch with lang (minimal because interceptor handles it):
+  - Home (latest news)
+  - Resources (news list, publications, success stories)
+  - NewsDetail, SuccessStoryDetail
+  - Any other pages rendering dynamic DB content
+
+5.1) Pillars (dynamic) — clarify and support
+- Confirm existing tables per pillar (training_programs, agri_tech_tools, smart_farming_programs, seed_supply_programs, market_access_programs, environmental_projects, community_programs).
+- For each index and detail endpoint, accept ?lang and resolve translatable fields via master translations.
+- Add Pillar meta endpoint (optional) /api/pillars to return per-pillar localized title/description used on Home and landing pages.
+- Frontend: Home pillars section should be driven by API (not hardcoded strings) once backend meta is available.
+
+6) Fallback & Edge Cases
+- If a translation is missing: server returns base language value (en).
+- If the base language field is empty (shouldn’t happen): return empty string.
+- For SEO (if required later): add route variants per lang or query param canonicalization (out of scope now).
+
+7) Performance & Caching (recommended)
+- Eloquent relation eager-load: translations relation to avoid N+1.
+- Cache resolved (model_id, lang) field map for show pages.
+- Invalidate cache on create/update/delete of base or translation rows.
+
+8) Testing Plan
+- Unit tests (Laravel):
+  - Resource resolution returns translated fields for fa/ps; base for en; fallback when translation missing.
+  - Admin save updates translations table (create/update/delete scenarios).
+- Feature tests (API): lists & details return correctly resolved texts for each lang parameter.
+- Frontend smoke tests: switch language and verify content text changes (Cypress optional).
+
+9) Migration/Backfill
+- Ensure translations table uses the unique index.
+- Script (artisan command) to backfill legacy content into translations if needed (optional).
+
+10) Rollout Steps
+- Backend: update Resources & controllers to read ?lang and resolve fields.
+- Admin: extend forms to include tabs per language with translations payload.
+- Frontend: add axios interceptor to attach lang; refetch on language switch.
+- QA in three languages; validate fallbacks.
+
+11) Nice-to-Haves (later)
+- Slug translation strategy (either keep single canonical slug or per-language slug map).
+- RTL layout toggle per language (already partly in App.vue; finish once styles are ready).
+- Search endpoints: add full-text search by translations (join translations by field_name).
+
+Deliverables
+- Updated Resources with lang-based resolution and fallbacks.
+- Admin CRUD endpoints handling translations payload.
+- Frontend axios lang propagation + refetch on locale change.
+- Documentation of translatable fields per model.
 
-## PROJECT OVERVIEW
-- **Technology Stack**: Vue.js 3 + Tailwind CSS + Laravel API
-- **Multi-language Support**: English, Pashto, Farsi
-- **Design System**: Modern, Professional, Agricultural Theme
-- **Architecture**: Single Page Application (SPA) with API integration
-- **Backend API**: Fully implemented with 200+ endpoints
-- **Business Focus**: 7 Main Business Pillars Implementation (based on backend models)
 
-## BACKEND IMPLEMENTATION STATUS ✅
-=====================================
-
-### ✅ FULLY IMPLEMENTED & READY:
-- **Database**: 18 tables with all relationships
-- **Models**: 17 models with scopes, accessors, translations
-- **Public APIs**: 15+ endpoints for content consumption
-- **Admin APIs**: 16+ CRUD endpoints for content management
-- **Authentication**: Admin login system with Sanctum
-- **File Handling**: Upload, optimization, storage services
-- **Email System**: Contact forms, registration notifications
-- **Multi-language**: Translation system with polymorphic relationships
-- **Sample Data**: 200+ records across all content types
-- **Business Logic**: Complete business pillar functionality
-
-### 📊 CONTENT READY FOR FRONTEND:
-- **News**: 23 articles (API: /api/news)
-- **Publications**: 22 documents (API: /api/publications)
-- **Success Stories**: 14 stories (API: /api/success-stories)
-- **Job Announcements**: 16 positions (API: /api/jobs)
-- **RFP/RFQ**: 10 listings (API: /api/rfp-rfqs)
-- **Galleries**: 5 galleries with 35+ images (API: /api/galleries)
-- **Training Programs**: 18 programs (API: /api/training-programs)
-- **Agri-Tech Tools**: 8 tools (API: /api/agri-tech-tools)
-- **Smart & Sustainable Farming**: 6 programs (API: /api/smart-farming-programs)
-- **Seed & Input Supply Chain**: 6 products (API: /api/seed-supply-programs)
-- **Market Access Programs**: 3 programs (API: /api/market-access-programs)
-- **Environmental Projects**: 3 projects (API: /api/environmental-projects)
-- **Community Programs**: 3 programs (API: /api/community-programs)
-- **Statistics**: Beneficiaries data (API: /api/stats)
-- **Translations**: Multi-language samples (API: /api/translations)
-
-### 🔑 ADMIN SYSTEM READY:
-- **Login**: zakiullahsafi00@gmail.com / safi@123
-- **Full CRUD**: All content types manageable
-- **File Management**: Upload/download system
-- **Registration Management**: Program registration handling
-- **Contact Management**: Contact form submissions
-- **User Management**: Admin user creation
-- **Statistics Dashboard**: Real-time metrics
-
-## PHASE 1: DESIGN SYSTEM & FOUNDATION
-========================================
-
-### 1.1 Color Palette & Typography ✅
-- **Primary Colors**: Forest Green (#2D5016), Earth Brown (#8B4513)
-- **Secondary Colors**: Sage Green (#87A96B), Cream (#F5F5DC), Wheat (#F5DEB3)
-- **Accent Colors**: Sky Blue (#87CEEB), Sunset Orange (#FF8C00)
-- **Typography**: Google Fonts (Poppins for headings, Inter for body)
-- **Icons**: Font Awesome 6 (solid, regular, brands)
-
-### 1.2 Component Library ✅
-- **Base Components**: Button, Input, Card, Modal, Dropdown, Tabs
-- **Layout Components**: Header, Footer, Sidebar, Container, Grid
-- **Content Components**: Hero, Section, Testimonial, Stats, Gallery
-- **Form Components**: ContactForm, SearchForm, FilterForm, RegistrationForm
-- **Navigation Components**: Navbar, Breadcrumb, Pagination
-- **Business Pillar Components**: PillarCard, ProgramCard, ToolCard, ImpactMetric
-
-### 1.3 Animation System ✅
-- **Transitions**: fadeInUp, slideInLeft, slideInRight, zoomIn
-- **Hover Effects**: scale, shadow, color transitions
-- **Loading States**: skeleton loaders, spinners, progress bars
-- **Scroll Animations**: Intersection Observer API integration
-
-## PHASE 2: CORE PAGES DEVELOPMENT
-==================================
-
-### 2.1 Home Page (/) ✅
-- **Hero Section**: Image slider with Ken Burns effect, CTA buttons
-- **Welcome Section**: Brief introduction with animated stats
-- **Vision/Mission/Values**: Card grid with icons and animations
-- **Business Pillars Overview**: 7 main pillars with icons and brief descriptions (based on backend models)
-  - Training Programs (AgriEducation & Capacity Building)
-  - Agri-Tech Tools & Solutions
-  - Smart & Sustainable Farming
-  - Seed & Input Supply Chain
-  - Market Access Programs
-  - Environmental Projects
-  - Community Programs
-- **Who We Are**: Company overview with history timeline
-- **Latest News**: Preview of recent news articles (API integration)
-- **Photo Gallery**: Image grid with lightbox functionality
-- **Stakeholders**: Partner logos and information
-- **Funding Partners**: Donor recognition section
-- **Statistics**: Animated counters for beneficiaries, projects, staff
-- **Closing CTA**: Contact information and call-to-action
-
-### 2.2 About Us Page (/about) ✅
-- **Hero Section**: Company overview with background image
-- **Who We Are**: Detailed company description
-- **Our History**: Interactive timeline with milestones
-- **Goals & Objectives**: Structured content with icons
-- **Strategic Partnerships**: Partner information and logos
-- **Leadership Team**: Executive board and team member profiles
-- **Organization Structure**: Visual org chart
-- **Geographical Coverage**: Map showing service areas
-- **What We Do**: Services overview with detailed descriptions
-
-### 2.3 Our Work Page (/our-work) ✅ COMPLETED
-- **Hero Section**: Our work overview with background image ✅
-- **Thematic Areas**: 7 business pillars overview (static cards with links) ✅
-- **Featured Programs (Dynamic)**: Mixed highlight of current initiatives ✅
-  - Up to 5 items across all pillars with dynamic filtering
-  - Auto-sliding carousel with manual navigation
-  - Dynamic filter chips based on actual API data
-- **Our Impact (Dynamic)**: Key stats from beneficiaries data ✅
-  - Real-time stats from /api/stats endpoint
-- **Success Stories (Dynamic)**: Selected success stories preview ✅
-  - Real testimonials from /api/success-stories
-- **CTA Section**: Clear calls-to-action for program engagement ✅
-
-### 2.4 Business Pillars Pages (Backend-Aligned)
-
-#### 2.4.1 Training Programs (/training-programs)✅
-- **Hero Section**: Training and education overview✅
-- **Canonical Programs Directory (Full List)**: Dynamic, filterable, paginated list (authoritative)
-  - Filters: status (upcoming, ongoing, completed), type (basic, intermediate, advanced, specialized), duration, location
-  - Sorting: newest-first by published_at/start_date
-  - Pagination: server-backed (per_page, page)
-- **Program Detail Pages**: SEO-friendly individual pages (deep content, shareable URLs)✅
-  - Content: full description, syllabus/outline, images, timeline/date range, location, partners, instructors
-  - Actions: clear Register CTA, related programs
-- **Registration System**: Multi-step forms (API integrated) with validation and success state✅
-- **Instructor Profiles (inline on detail)**: Expert team with roles and qualifications✅
-- **Program Calendar (optional)**: Upcoming dates on detail and aggregated view✅
-- **Success Metrics (optional)**: Completions/beneficiaries tied to program where available✅
-
-#### 2.4.2 Agri-Tech Tools (/agri-tech)✅
-- **Hero Section**: Technology solutions showcase✅
-- **Tools Catalog**: Dynamic list from API✅
-  - Tool types: mobile_app, web_tool, desktop_software
-  - Platform filtering: Android, iOS, Web, Windows
-  - Version information and download links
-- **Tool Detail Pages**: Features, specifications, usage guides✅
-- **Tech Innovation**: Latest tools and updates✅
-
-#### 2.4.3 Smart & Sustainable Farming (/smart-farming)✅
-- **Hero Section**: Modern farming techniques overview✅
-- **Programs List**: Dynamic list from API✅
-  - Farming types: drip_irrigation, greenhouse, precision_agriculture, organic_farming, climate_resilient, soil_health
-  - Target crops filtering (JSON data)
-  - Sustainability levels: basic, intermediate, advanced, expert
-- **Program Detail Pages**: Implementation guides and sustainability impact✅
-- **Application System**: Program registration forms✅
-- **Sustainability Dashboard**: Environmental impact metrics✅
-- **Implementation Guides**: Step-by-step farming techniques✅
-
-#### 2.4.4 Seed & Input Supply Chain (/seed-supply)✅
-- **Hero Section**: High-quality inputs and distribution overview✅
-- **Products List**: Dynamic list from API✅
-  - Input types: seeds, fertilizers, pesticides, equipment, materials, testing_kits
-  - Quality grades: premium, standard, basic
-  - Availability filtering: in_stock, limited, out_of_stock
-- **Product Detail Pages**: Specifications and usage instructions✅
-- **Order System**: Product ordering and distribution✅
-- **Distribution Centers**: Location-based availability✅
-- **Quality Assurance**: Product quality and certification info✅
-
-#### 2.4.5 Market Access Programs (/market-access)
-- **Hero Section**: Market access and programs overview
-- **Programs List**: Dynamic list from API
-  - Program types: market_linkage, post_harvest, value_chain
-  - Target crops filtering (JSON data)
-  - Partner organizations information
-- **Program Detail Pages**: Full program information
-- **Application System**: Program application forms
-- **Success Stories**: Market access achievements
-- **Market Intelligence**: Trends and analysis
-
-#### 2.4.6 Environmental Projects (/environment)
-- **Hero Section**: Environmental sustainability focus
-- **Projects List**: Dynamic list from API
-  - Project types: conservation, reforestation, water_management
-  - Status filtering: draft, published, ongoing, completed
-  - Location-based filtering
-- **Project Detail Pages**: Impact metrics and progress
-- **Sustainability Dashboard**: Environmental impact metrics
-- **Impact Reports**: Project assessments and progress
-- **Get Involved**: Volunteer and participation opportunities
-
-#### 2.4.7 Community Programs (/community)
-- **Hero Section**: Community empowerment overview
-- **Programs List**: Dynamic list from API
-  - Target groups: women, youth, cooperatives, farmers
-  - Program types: capacity_building, leadership, entrepreneurship
-  - Partner organizations information
-- **Program Detail Pages**: Community impact and participation
-- **Registration System**: Community program signup
-- **Success Stories**: Community impact examples
-- **Leadership Development**: Community leader spotlights
-
-### 2.5 Resources & Media Page (/resources) ✅
-- **Hero Section**: Resources overview with search functionality
-- **Tab Navigation**: News, Publications, Success Stories, RFPs/RFQs, Gallery, Programs
-- **News Tab**: 
-  - Article list with filters (date, category, language)
-  - Article detail view with related articles
-  - Search and pagination functionality
-- **Publications Tab**:
-  - Document list with download links
-  - PDF preview functionality
-  - Category filtering
-- **Success Stories Tab**:
-  - Client story cards with images
-  - Story detail view with full narrative
-  - Category and location filters
-- **RFPs/RFQs Tab**:
-  - Active and closed opportunities
-  - Document downloads and submission forms
-  - Deadline tracking
-- **Gallery Tab**:
-  - Photo galleries with categories
-  - Lightbox image viewer
-  - Image download functionality
-- **Programs Tab**:
-  - Training programs with registration
-  - Community programs information
-  - Environmental projects showcase
-
-### 2.6 Careers Page (/careers) ✅
-- **Hero Section**: Career opportunities overview
-- **Why Work With Us**: Company culture and benefits
-- **Current Openings**: Job listings with filters
-- **Job Detail View**: Full job description and application form
-- **Application Process**: Step-by-step guide
-- **Employee Benefits**: Comprehensive benefits package
-- **Application Form**: Multi-step application with file upload
-
-### 2.7 Contact Us Page (/contact) ✅
-- **Hero Section**: Contact information overview
-- **Contact Form**: Multi-field form with validation
-- **Regional Offices**: Office locations with maps
-- **Contact Information**: Phone, email, address details
-- **Office Hours**: Business hours and availability
-- **Map Integration**: Interactive location map
-- **Social Media**: Links to social platforms
-
-## PHASE 3: API INTEGRATION
-============================
-
-### 3.1 API Service Layer (Backend-Aligned)
-- **Base API Service**: Axios configuration and interceptors
-- **Authentication Service**: Admin login, logout, token management
-- **Content Services**: 
-  - NewsService (API: /api/news)
-  - PublicationService (API: /api/publications)
-  - GalleryService (API: /api/galleries)
-  - JobService (API: /api/jobs)
-  - SuccessStoryService (API: /api/success-stories)
-  - RfpRfqService (API: /api/rfp-rfqs)
-- **Business Pillar Services**:
-  - TrainingProgramService (API: /api/training-programs)
-  - AgriTechToolService (API: /api/agri-tech-tools)
-  - SmartFarmingProgramService (API: /api/smart-farming-programs)
-  - SeedSupplyProgramService (API: /api/seed-supply-programs)
-  - MarketAccessProgramService (API: /api/market-access-programs)
-  - EnvironmentalProjectService (API: /api/environmental-projects)
-  - CommunityProgramService (API: /api/community-programs)
-- **Registration Services**:
-  - ProgramRegistrationService (API: /api/program-registrations)
-  - ContactService (API: /api/contact)
-- **Admin Services**: All admin CRUD operations (API: /api/admin/*)
-- **Statistics Service**: BeneficiariesStats (API: /api/stats)
-- **Translation Service**: Multi-language content (API: /api/translations)
-
-### 3.2 State Management
-- **Vuex/Pinia Store**: Centralized state management
-- **Modules**: Auth, Content, BusinessPillars, UI, Language
-- **Actions**: API calls and data mutations
-- **Getters**: Computed state properties
-- **Mutations**: State updates
-
-### 3.3 Data Fetching (Backend-Aligned)
-- **Home Page Data**: 
-  - Latest news (API: /api/news?limit=6)
-  - Statistics (API: /api/stats)
-  - Featured galleries (API: /api/galleries?featured=true)
-  - Upcoming training programs (API: /api/training-programs?status=upcoming)
-- **Content Pages**: 
-  - Dynamic content with filtering and search
-  - Pagination support (per_page, page parameters)
-  - Status filtering (published, draft, archived)
-- **Business Pillar Data**:
-  - Training programs with registration system
-  - Agri-tech tools with download links
-  - Smart farming programs with application system
-  - Seed supply products with ordering system
-  - Market access programs with applications
-  - Environmental projects with impact metrics
-  - Community programs with target group filtering
-- **Registration System**: Complete program registration workflow
-- **Search Functionality**: Global search across all content types
-- **Multi-language**: Dynamic content translation via API
-- **Admin Dashboard**: Full CRUD operations for all content
-
-## PHASE 4: MULTI-LANGUAGE SUPPORT
-===================================
-
-### 4.1 Internationalization (i18n)
-- **Vue i18n Setup**: Language detection and switching
-- **Language Files**: JSON files for each language
-- **Static Content**: Hardcoded text translations
-- **Dynamic Content**: API-driven translations
-- **RTL Support**: Right-to-left layout for Pashto/Farsi
-
-### 4.2 Language Switching
-- **Language Selector**: Dropdown in header
-- **URL Structure**: /en/, /pashto/, /farsi/ prefixes
-- **Default Language**: English as fallback
-- **Language Persistence**: Remember user preference
-- **Content Loading**: Load appropriate language content
-
-## PHASE 5: RESPONSIVE DESIGN
-==============================
-
-### 5.1 Mobile-First Approach
-- **Breakpoints**: Mobile (320px), Tablet (768px), Desktop (1024px+)
-- **Touch Interactions**: Swipe, tap, pinch gestures
-- **Mobile Navigation**: Hamburger menu with slide-out
-- **Touch-Friendly**: Large buttons and touch targets
-- **Performance**: Optimized for mobile networks
-
-### 5.2 Cross-Browser Compatibility
-- **Modern Browsers**: Chrome, Firefox, Safari, Edge
-- **Progressive Enhancement**: Graceful degradation
-- **CSS Fallbacks**: Vendor prefixes and fallbacks
-- **JavaScript Polyfills**: ES6+ feature support
-- **Testing**: Cross-browser testing checklist
-
-## PHASE 6: PERFORMANCE OPTIMIZATION
-=====================================
-
-### 6.1 Loading Performance
-- **Code Splitting**: Route-based and component-based splitting
-- **Lazy Loading**: Images and components loaded on demand
-- **Bundle Optimization**: Tree shaking and minification
-- **CDN Integration**: Static asset delivery
-- **Caching Strategy**: Browser and server-side caching
-
-### 6.2 Image Optimization
-- **Responsive Images**: Different sizes for different devices
-- **WebP Format**: Modern image format with fallbacks
-- **Lazy Loading**: Intersection Observer for images
-- **Compression**: Optimized file sizes
-- **Placeholders**: Skeleton loaders during image load
-
-### 6.3 SEO Optimization
-- **Meta Tags**: Dynamic meta tags for each page
-- **Open Graph**: Social media sharing optimization
-- **Structured Data**: JSON-LD markup for search engines
-- **Sitemap**: XML sitemap generation
-- **Robots.txt**: Search engine crawling instructions
-
-## PHASE 7: INTERACTIVE FEATURES
-=================================
-
-### 7.1 Program Registration System
-- **Training Program Registration**: Multi-step registration forms
-- **Community Program Signup**: Easy enrollment process
-- **Market Access Application**: Business opportunity applications
-- **Registration Management**: User dashboard for enrolled programs
-- **Email Notifications**: Confirmation and reminder emails
-
-### 7.2 Interactive Tools
-- **Crop Calculator**: Yield and profit calculations
-- **Weather Widget**: Real-time weather information
-- **Disease Identifier**: Image-based crop disease detection
-- **Market Price Tracker**: Live price updates
-- **Sustainability Calculator**: Environmental impact assessment
-
-### 7.3 User Engagement Features
-- **Newsletter Signup**: Email subscription functionality
-- **Social Sharing**: Share content on social media
-- **Comments System**: User feedback and engagement
-- **Bookmarking**: Save favorite content for later
-- **Print Functionality**: Print-friendly page layouts
-
-## PHASE 8: ADMIN DASHBOARD INTEGRATION
-========================================
-
-### 8.1 Admin Interface Components (Backend-Aligned)
-- **Dashboard Overview**: Statistics, recent activity, quick actions (API: /api/admin/dashboard)
-- **Content Management**: Full CRUD for all content types
-  - News Management (API: /api/admin/news)
-  - Publications Management (API: /api/admin/publications)
-  - Galleries Management (API: /api/admin/galleries)
-  - Job Announcements Management (API: /api/admin/jobs)
-  - Success Stories Management (API: /api/admin/success-stories)
-  - RFP/RFQ Management (API: /api/admin/rfp-rfqs)
-- **Business Pillar Management**: Complete pillar content management
-  - Training Programs (API: /api/admin/training-programs)
-  - Agri-Tech Tools (API: /api/admin/agri-tech-tools)
-  - Smart Farming Programs (API: /api/admin/smart-farming-programs)
-  - Seed Supply Programs (API: /api/admin/seed-supply-programs)
-  - Market Access Programs (API: /api/admin/market-access-programs)
-  - Environmental Projects (API: /api/admin/environmental-projects)
-  - Community Programs (API: /api/admin/community-programs)
-- **Registration Management**: Program registrations (API: /api/admin/registrations)
-- **Contact Management**: Contact form submissions (API: /api/admin/contacts)
-- **Statistics Management**: Beneficiaries stats (API: /api/admin/stats)
-- **User Management**: Admin users and roles (API: /api/admin/users)
-- **Translation Management**: Multi-language content (API: /api/admin/translations)
-
-### 8.2 Admin Features
-- **Content Editor**: Rich text editor for news and publications
-- **Program Editor**: Training and community program management
-- **Image Upload**: Drag-and-drop image upload with preview
-- **File Management**: PDF and document upload/management
-- **Bulk Operations**: Mass content operations and updates
-- **Content Preview**: Live preview of content before publishing
-- **Draft System**: Save and manage draft content
-
-## PHASE 9: TESTING & QUALITY ASSURANCE
-=========================================
-
-### 9.1 Unit Testing
-- **Component Tests**: Test individual Vue components
-- **Service Tests**: Test API services and utilities
-- **Helper Tests**: Test utility functions and helpers
-- **Mock Data**: Test with mock API responses
-- **Coverage Reports**: Ensure comprehensive test coverage
-
-### 9.2 Integration Testing
-- **API Integration**: Test frontend-backend communication
-- **User Flows**: Test complete user journeys
-- **Business Pillar Flows**: Test program registration and management
-- **Cross-Browser**: Test across different browsers
-- **Mobile Testing**: Test on various mobile devices
-- **Performance Testing**: Load and stress testing
-
-### 9.3 User Experience Testing
-- **Usability Testing**: Real user testing sessions
-- **A/B Testing**: Test different design variations
-- **Accessibility Testing**: Test with assistive technologies
-- **Performance Testing**: Core Web Vitals optimization
-- **Feedback Collection**: User feedback and iteration
-
-## PHASE 10: DEPLOYMENT & MAINTENANCE
-======================================
-
-### 10.1 Build & Deployment
-- **Production Build**: Optimized production build process
-- **Environment Configuration**: Different configs for dev/staging/prod
-- **Asset Optimization**: Minification, compression, and optimization
-- **CDN Setup**: Content delivery network configuration
-- **SSL Certificate**: HTTPS implementation
-- **Domain Configuration**: Custom domain setup
-
-### 10.2 Monitoring & Analytics
-- **Error Tracking**: Real-time error monitoring
-- **Performance Monitoring**: Core Web Vitals tracking
-- **User Analytics**: User behavior and engagement tracking
-- **Business Metrics**: Program registrations and engagement
-- **Uptime Monitoring**: Service availability monitoring
-- **Security Monitoring**: Security threat detection
-
-### 10.3 Maintenance & Updates
-- **Content Updates**: Regular content refresh procedures
-- **Program Updates**: Training and community program updates
-- **Security Updates**: Regular security patches and updates
-- **Performance Optimization**: Ongoing performance improvements
-- **Backup Strategy**: Regular data and content backups
-- **Documentation**: Maintain comprehensive documentation
-
-## COMPLETION CRITERIA
-=====================
-
-### Design & Foundation
-- [ ] Color palette and typography system implemented
-- [ ] Component library created and documented
-- [ ] Animation system integrated
-- [ ] Responsive design across all devices
-
-### Core Pages
-- [ ] Home page with all sections and API integration
-- [ ] About page with complete content structure
-- [ ] Our Work page with services and products
-- [ ] All 7 Business Pillar pages implemented
-- [ ] Resources page with tabbed content and search
-- [ ] Careers page with job listings and applications
-- [ ] Contact page with forms and location info
-
-### Business Pillar Integration (Backend-Aligned)
-- [ ] Training Programs page with registration system (API integrated)
-- [ ] Agri-Tech Tools page with download links and specifications
-- [ ] Smart & Sustainable Farming page with application system
-- [ ] Seed & Input Supply Chain page with ordering system
-- [ ] Market Access Programs page with application system
-- [ ] Environmental Projects page with impact metrics
-- [ ] Community Programs page with target group filtering
-
-### API Integration (Backend-Aligned)
-- [ ] All public API services implemented (15+ endpoints)
-- [ ] All admin API services implemented (16+ CRUD endpoints)
-- [ ] State management system working with Pinia
-- [ ] Data fetching and caching implemented
-- [ ] Error handling and loading states
-- [ ] Program registration system working (3 program types)
-- [ ] Contact form integration working
-- [ ] File upload/download system working
-- [ ] Multi-language content loading
-- [ ] Statistics dashboard integration
-- [ ] Search and filtering system
-
-### Multi-Language Support
-- [ ] i18n system fully implemented
-- [ ] All static content translated
-- [ ] Dynamic content translation working
-- [ ] Language switching functional
-- [ ] RTL support for Pashto/Farsi
-
-### Performance & SEO
-- [ ] Page load times optimized
-- [ ] Images optimized and lazy-loaded
-- [ ] SEO meta tags implemented
-- [ ] Structured data markup added
-- [ ] Sitemap and robots.txt created
-
-### Testing & Quality
-- [ ] Unit tests written and passing
-- [ ] Integration tests completed
-- [ ] Cross-browser compatibility verified
-- [ ] Mobile responsiveness tested
-- [ ] Accessibility standards met
-
-### Deployment
-- [x] Production build process working
-- [ ] CDN and hosting configured
-- [ ] SSL certificate installed
-- [ ] Monitoring and analytics setup
-- [ ] Documentation completed
-
-## ESTIMATED TIMELINE
-====================
-
-### Phase 1-2: Design & Core Pages (7-9 days)
-- Design system and component library
-- All main pages with static content
-- All 7 business pillar pages (including Smart & Sustainable Farming and Seed & Input Supply Chain)
-- Basic responsive design
-
-### Phase 3-4: API Integration & i18n (5-6 days)
-- API service layer implementation
-- State management setup
-- Multi-language support
-- Program registration system
-
-### Phase 5-6: Responsive & Performance (4-5 days)
-- Mobile optimization
-- Performance optimization
-- SEO implementation
-
-### Phase 7-8: Interactive Features & Admin (6-7 days)
-- Interactive tools and calculators
-- Program registration system
-- Admin dashboard integration
-- Advanced features
-
-### Phase 9-10: Testing & Deployment (4-5 days)
-- Comprehensive testing
-- Production deployment
-- Monitoring setup
-
-**Total Estimated Time**: 22-26 days (reduced due to complete backend implementation)
-
-## TECHNICAL SPECIFICATIONS
-===========================
-
-### Frontend Stack
-- **Framework**: Vue.js 3 with Composition API
-- **Styling**: Tailwind CSS with custom components
-- **State Management**: Pinia
-- **Routing**: Vue Router 4
-- **HTTP Client**: Axios
-- **Internationalization**: Vue i18n
-- **Build Tool**: Vite
-- **Testing**: Vitest + Vue Test Utils
-
-### Key Features
-- **Responsive Design**: Mobile-first approach
-- **Multi-language**: English, Pashto, Farsi support
-- **Business Pillars**: 7 dedicated pillar pages
-- **Interactive Tools**: Calculators, weather, disease ID
-- **Program Registration**: Training and community programs
-- **Admin Dashboard**: Content and program management
-- **Performance**: Optimized loading and caching
-- **SEO**: Search engine optimization
-- **Accessibility**: WCAG comp

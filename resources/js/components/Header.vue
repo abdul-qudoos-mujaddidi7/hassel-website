@@ -10,7 +10,11 @@
                         <img
                             :src="'/mountagro-logo.png'"
                             alt="Mount Agro Logo"
-                            class="w-28 h-28 rounded-lg object-contain"
+                            width="112"
+                            height="112"
+                            decoding="async"
+                            fetchpriority="high"
+                            class="w-24 h-24 md:w-28 md:h-28 rounded-lg object-contain"
                         />
                     </router-link>
                 </div>
@@ -32,7 +36,7 @@
                     >
                         <component
                             :is="item.icon"
-                            class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200"
+                            class="block w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200 mt-px"
                         />
                         <span>{{ item.name }}</span>
                     </router-link>
@@ -185,9 +189,12 @@
                 >
                     <div class="flex items-center">
                         <img
-                            :src="'/mountagro-logo.jpg'"
+                            :src="'/mountagro-logo.png'"
                             alt="Mount Agro Logo"
-                            class="w-20 h-20 rounded-lg object-contain"
+                            width="80"
+                            height="80"
+                            decoding="async"
+                            class="w-16 h-16 rounded-lg object-contain"
                         />
                     </div>
                     <button
