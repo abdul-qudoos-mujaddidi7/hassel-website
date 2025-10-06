@@ -20,7 +20,7 @@
                         @input="handleSearch"
                     ></v-text-field>
                 </div>
-                <div class="btn flex">
+                <div class="flex">
                     <v-select
                         v-model="selectedStatus"
                         :items="NewsRepository.statusOptions"
@@ -33,16 +33,15 @@
                         style="min-width: 150px;"
                         @update:model-value="handleStatusFilter"
                     ></v-select>
-                    <v-btn variant="outlined" color="primary" class="px-6">
+                    <v-btn color="primary" class="btn btn-primary px-6">
                         {{ t("filter") }}
                     </v-btn>
                     &nbsp;
                     <v-btn
                         @click="CreateDialogShow"
-                        class="create-btn-gradient px-6"
-                        :text="$t('create')"
+                        class="btn btn-primary w-full justify-center px-6"
                     >
-                        <v-icon>mdi-plus</v-icon>
+                        {{ t("create") }}
                     </v-btn>
                 </div>
             </div>

@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 /* Admin Panel Custom Styles */
+
+
+:root {
+    --brand-secondary: #375f1f; /* olive green */
+    --brand-primary: #134124; /* deep green */
+    --brand-cream: #fbf5df; /* light cream */
+    --brand-accent: #eaaa03; /* golden accent */
+}
 .admin-layout {
     @apply min-h-screen;
     background-color: #f8fdf8; /* Very light green background matching Vuetify theme */
@@ -452,52 +460,55 @@ div.v-data-table-footer {
 }
 
 /* Create Button Gradient Styles */
-.create-btn-gradient {
-    background: linear-gradient(135deg, rgb(var(--v-theme-primary)), rgb(var(--v-theme-secondary))) !important;
-    color: rgb(var(--v-theme-on-primary)) !important;
-    border: none !important;
-    transition: all 0.3s ease !important;
-    font-weight: 600 !important;
-    text-transform: none !important;
+.btn {
+    border-radius: 0.75rem;
+    font-weight: 600;
+}
+.btn-primary {
+    background: var(--brand-primary);
+    color: #fff;
+}
+.btn-primary:hover {
+    filter: brightness(1.05);
+}
+.btn-secondary {
+    background: var(--brand-secondary);
+    color: #fff;
+}
+.btn-secondary:hover {
+    filter: brightness(1.05);
+}
+.btn-cta {
+    background-image: linear-gradient(
+        90deg,
+        var(--brand-secondary),
+        var(--brand-primary)
+    );
+    color: #fff;
+}
+.btn-cta:hover {
+    filter: brightness(1.05);
 }
 
-.create-btn-gradient:hover {
-    background: linear-gradient(135deg, rgb(var(--v-theme-secondary)), rgb(var(--v-theme-primary))) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 16px rgba(var(--v-theme-primary), 0.4) !important;
+/* Brand backgrounds and text helpers */
+.bg-brand-primary {
+    background-color: var(--brand-primary);
 }
-
-.create-btn-gradient:active {
-    transform: translateY(0) !important;
-    box-shadow: 0 2px 8px rgba(var(--v-theme-primary), 0.3) !important;
+.bg-brand-secondary {
+    background-color: var(--brand-secondary);
 }
-
-.create-btn-gradient .v-icon {
-    color: rgb(var(--v-theme-on-primary)) !important;
+.bg-brand-accent {
+    background-color: var(--brand-accent);
 }
-
-/* Alternative class for buttons with different text */
-.btn-create {
-    background: linear-gradient(135deg, rgb(var(--v-theme-primary)), rgb(var(--v-theme-secondary))) !important;
-    color: rgb(var(--v-theme-on-primary)) !important;
-    border: none !important;
-    box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.3) !important;
-    transition: all 0.3s ease !important;
-    font-weight: 600 !important;
-    text-transform: none !important;
+.bg-brand-cream {
+    background-color: var(--brand-cream);
 }
-
-.btn-create:hover {
-    background: linear-gradient(135deg, rgb(var(--v-theme-secondary)), rgb(var(--v-theme-primary))) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 16px rgba(var(--v-theme-primary), 0.4) !important;
+.text-brand-primary {
+    color: var(--brand-primary);
 }
-
-.btn-create:active {
-    transform: translateY(0) !important;
-    box-shadow: 0 2px 8px rgba(var(--v-theme-primary), 0.3) !important;
+.text-brand-secondary {
+    color: var(--brand-secondary);
 }
-
-.btn-create .v-icon {
-    color: rgb(var(--v-theme-on-primary)) !important;
+.text-brand-accent {
+    color: var(--brand-accent);
 }
