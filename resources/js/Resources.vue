@@ -1,144 +1,174 @@
 <template>
-    <div class="min-h-screen">
+    <div class="min-h-screen overflow-x-hidden">
         <!-- Hero Section -->
         <section
-            class="relative bg-gradient-to-br from-green-800 via-green-700 to-green-600 text-white overflow-hidden"
+            class="relative h-[340px] md:h-[440px] lg:h-[520px] overflow-hidden"
+            :style="{
+                backgroundImage: `url(/images/ourWork/ourworkhero.avif)`,
+            }"
         >
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 bg-black opacity-20"></div>
-            <div class="absolute inset-0 opacity-5">
-                <div
-                    class="absolute inset-0"
-                    style="
-                        background-image: radial-gradient(
-                            circle at 1px 1px,
-                            white 1px,
-                            transparent 0
-                        );
-                        background-size: 20px 20px;
-                    "
-                ></div>
-            </div>
-
+            <div class="absolute inset-0 bg-black/60"></div>
             <div
-                class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32"
+                class="relative z-10 max-w-7xl mx-auto h-full flex items-center px-4 sm:px-6 lg:px-8"
             >
-                <div class="text-center">
+                <div class="text-center w-full">
                     <h1
-                        class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fadeInUp"
+                        class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
                     >
-                        Resources & <span class="gradient-text">Media</span>
+                        Resources
                     </h1>
                     <p
-                        class="text-xl md:text-2xl text-green-100 mb-8 max-w-3xl mx-auto animate-fadeInUp"
-                        style="animation-delay: 0.2s"
+                        class="text-base md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed"
                     >
-                        Access our latest publications, insights, success
-                        stories, and media resources
+                        Access our comprehensive collection of publications,
+                        research, and media resources
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Tab Navigation -->
-        <section class="py-8 bg-white border-b border-gray-200">
+        <!-- Main Content -->
+        <section class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-wrap justify-center gap-4">
-                    <button
-                        v-for="tab in tabs"
-                        :key="tab.id"
-                        @click="activeTab = tab.id"
-                        :class="[
-                            'px-6 py-3 rounded-lg font-semibold transition-colors',
-                            activeTab === tab.id
-                                ? 'btn-primary'
-                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
-                        ]"
-                    >
-                        <component :is="tab.icon" class="w-5 h-5 mr-2 inline" />
-                        {{ tab.name }}
-                    </button>
+                <!-- Tab Navigation -->
+                <div class="mb-10 md:mb-16">
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex gap-2 md:gap-6 justify-center">
+                            <button
+                                @click="activeTab = 'news'"
+                                :class="[
+                                    'whitespace-nowrap py-3 md:py-4 px-2 md:px-1 border-b-2 font-medium text-xs md:text-sm transition-colors duration-200',
+                                    activeTab === 'news'
+                                        ? 'border-green-600 text-green-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                                ]"
+                            >
+                                News
+                            </button>
+                            <button
+                                @click="activeTab = 'publications'"
+                                :class="[
+                                    'whitespace-nowrap py-3 md:py-4 px-2 md:px-1 border-b-2 font-medium text-xs md:text-sm transition-colors duration-200',
+                                    activeTab === 'publications'
+                                        ? 'border-green-600 text-green-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                                ]"
+                            >
+                                Publications
+                            </button>
+                            <button
+                                @click="activeTab = 'success-stories'"
+                                :class="[
+                                    'whitespace-nowrap py-3 md:py-4 px-2 md:px-1 border-b-2 font-medium text-xs md:text-sm transition-colors duration-200',
+                                    activeTab === 'success-stories'
+                                        ? 'border-green-600 text-green-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                                ]"
+                            >
+                                Success Stories
+                            </button>
+                        </nav>
+                    </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Tab Content -->
-        <section class="section-padding bg-gradient-bg-organic">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- News Tab -->
-                <div v-if="activeTab === 'news'" class="space-y-8">
-                    <h2 class="heading-lg text-gray-900 text-center mb-8">
-                        Latest News
-                    </h2>
+                <div v-if="activeTab === 'news'" class="space-y-12">
+                    <div class="text-center">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                            Latest News
+                        </h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">
+                            Stay informed with our latest updates and
+                            announcements
+                        </p>
+                    </div>
 
-                    <!-- News Articles Container - Always maintain height -->
-                    <div class="space-y-8 relative min-h-[600px]">
-                        <!-- Debug Info -->
-                        <div class="bg-yellow-100 p-2 mb-4 text-xs">
-                            <p>Loading: {{ newsLoading }}</p>
-                            <p>News Count: {{ news.length }}</p>
-                            <p>Total Pages: {{ newsPagination.totalPages }}</p>
-                        </div>
-
-                        <!-- Loading State - Show skeleton when no news or loading -->
+                    <div class="relative min-h-[600px]">
+                        <!-- Loading State -->
                         <div
                             v-if="newsLoading && news.length === 0"
-                            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                         >
                             <div v-for="i in 6" :key="i" class="animate-pulse">
                                 <div
-                                    class="bg-gray-300 h-48 rounded-lg mb-4"
+                                    class="bg-gray-200 h-48 rounded-lg mb-4"
                                 ></div>
-                                <div class="h-4 bg-gray-300 rounded mb-2"></div>
-                                <div
-                                    class="h-4 bg-gray-300 rounded w-3/4 mb-2"
-                                ></div>
-                                <div
-                                    class="h-3 bg-gray-300 rounded w-1/2"
-                                ></div>
+                                <div class="space-y-3">
+                                    <div class="h-4 bg-gray-200 rounded"></div>
+                                    <div
+                                        class="h-4 bg-gray-200 rounded w-3/4"
+                                    ></div>
+                                    <div
+                                        class="h-3 bg-gray-200 rounded w-1/2"
+                                    ></div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- News Grid with Loading Overlay -->
+                        <!-- News Grid -->
                         <div
                             v-else-if="news.length > 0"
-                            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 relative"
+                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative"
                         >
                             <!-- Loading overlay for pagination -->
                             <div
                                 v-if="newsLoading"
-                                class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-10 rounded-lg"
+                                class="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center z-10 rounded-lg"
                             >
                                 <div
-                                    class="flex items-center space-x-2 text-green-600"
+                                    class="flex items-center space-x-3 text-gray-600"
                                 >
                                     <div
-                                        class="animate-spin rounded-full h-6 w-6 border-b-2 border-green-600"
+                                        class="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-600"
                                     ></div>
                                     <span class="font-medium">Loading...</span>
                                 </div>
                             </div>
+
                             <article
                                 v-for="article in news"
                                 :key="article.id"
-                                class="bg-white rounded-professional-lg overflow-hidden shadow-professional card-hover h-full flex flex-col"
+                                class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200 h-full flex flex-col"
                             >
-                                <div class="flex-shrink-0">
+                                <div class="relative">
                                     <img
                                         :src="
                                             article.featured_image ||
-                                            'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=400&h=200&fit=crop&crop=center&auto=format'
+                                            '/images/placeholder-news.jpg'
                                         "
                                         :alt="article.title"
                                         class="w-full h-48 object-cover"
                                     />
                                 </div>
-                                <div class="p-6 flex flex-col flex-grow">
+                                <div class="p-6 flex-1 flex flex-col">
                                     <div
                                         class="flex items-center text-sm text-gray-500 mb-3"
                                     >
+                                        <span>{{
+                                            formatDate(article.published_at)
+                                        }}</span>
+                                        <span class="mx-2">•</span>
+                                        <span>5 min read</span>
+                                    </div>
+                                    <h3
+                                        class="text-lg font-semibold text-gray-900 mb-3 line-clamp-2"
+                                    >
+                                        {{ article.title }}
+                                    </h3>
+                                    <p
+                                        class="text-gray-600 mb-4 flex-1 line-clamp-3"
+                                    >
+                                        {{ article.excerpt }}
+                                    </p>
+                                    <router-link
+                                        :to="`/news/${
+                                            article.slug || article.id
+                                        }`"
+                                        class="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm transition-colors duration-200"
+                                    >
+                                        Read More
                                         <svg
-                                            class="w-4 h-4 mr-1"
+                                            class="ml-2 w-4 h-4"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -147,60 +177,49 @@
                                                 stroke-linecap="round"
                                                 stroke-linejoin="round"
                                                 stroke-width="2"
-                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                                d="M9 5l7 7-7 7"
                                             />
                                         </svg>
-                                        {{ formatDate(article.published_at) }}
-                                    </div>
-                                    <h3
-                                        class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 h-14 flex items-start"
-                                    >
-                                        {{ article.title }}
-                                    </h3>
-                                    <div class="flex-grow mb-4">
-                                        <p
-                                            class="text-gray-600 line-clamp-3 leading-relaxed"
-                                        >
-                                            {{
-                                                article.excerpt ||
-                                                article.content?.substring(
-                                                    0,
-                                                    150
-                                                ) + "..."
-                                            }}
-                                        </p>
-                                    </div>
-                                    <div class="mt-auto">
-                                        <router-link
-                                            :to="`/news/${
-                                                article.slug || article.id
-                                            }`"
-                                            class="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
-                                        >
-                                            Read More
-                                            <svg
-                                                class="w-4 h-4 ml-1"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M9 5l7 7-7 7"
-                                                />
-                                            </svg>
-                                        </router-link>
-                                    </div>
+                                    </router-link>
                                 </div>
                             </article>
+                        </div>
+
+                        <!-- Empty State -->
+                        <div v-else class="text-center py-16">
+                            <div class="max-w-md mx-auto">
+                                <div
+                                    class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                                >
+                                    <svg
+                                        class="w-8 h-8 text-gray-400"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                                        />
+                                    </svg>
+                                </div>
+                                <h3
+                                    class="text-lg font-medium text-gray-900 mb-2"
+                                >
+                                    No news articles found
+                                </h3>
+                                <p class="text-gray-500">
+                                    Check back later for the latest updates
+                                </p>
+                            </div>
                         </div>
 
                         <!-- Pagination -->
                         <div
                             v-if="newsPagination.totalPages > 1"
-                            class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-2 mt-8"
+                            class="flex justify-center items-center space-x-2 mt-12"
                         >
                             <button
                                 @click="
@@ -210,22 +229,22 @@
                                     newsPagination.currentPage === 1 ||
                                     newsLoading
                                 "
-                                class="px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:scale-105 active:scale-95 min-w-[80px]"
+                                class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                             >
                                 Previous
                             </button>
 
-                            <div class="flex space-x-1">
+                            <div class="flex items-center space-x-1">
                                 <button
                                     v-for="page in visiblePages"
                                     :key="page"
                                     @click="goToNewsPage(page)"
                                     :disabled="newsLoading"
                                     :class="[
-                                        'px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95 min-w-[40px]',
+                                        'px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed',
                                         page === newsPagination.currentPage
-                                            ? 'bg-green-600 text-white shadow-md'
-                                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50',
+                                            ? 'bg-green-600 text-white'
+                                            : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100',
                                     ]"
                                 >
                                     {{ page }}
@@ -240,19 +259,43 @@
                                     newsPagination.currentPage ===
                                         newsPagination.totalPages || newsLoading
                                 "
-                                class="px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:scale-105 active:scale-95 min-w-[80px]"
+                                class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                             >
                                 Next
                             </button>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Empty State -->
-                        <div v-else class="text-center py-12">
-                            <div
-                                class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-full"
-                            >
+                <!-- Publications Tab -->
+                <div
+                    v-else-if="activeTab === 'publications'"
+                    class="space-y-12"
+                >
+                    <div class="text-center">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                            Publications & Resources
+                        </h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">
+                            Access our comprehensive collection of research
+                            papers, reports, and publications
+                        </p>
+                    </div>
+
+                    <!-- Search and Filter Section -->
+                    <div class="bg-gray-50 rounded-lg p-4 md:p-6">
+                        <div class="max-w-2xl mx-auto">
+                            <!-- Unified Search Input -->
+                            <div class="relative">
+                                <input
+                                    v-model="publicationSearch"
+                                    @input="searchPublications"
+                                    type="text"
+                                    placeholder="Search by title or type (e.g., Report)"
+                                    class="w-full pl-9 pr-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                />
                                 <svg
-                                    class="w-5 h-5 mr-2"
+                                    class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -261,161 +304,476 @@
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         stroke-width="2"
-                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                                     />
                                 </svg>
-                                No news articles found.
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Publications Tab -->
-                <div v-if="activeTab === 'publications'" class="space-y-8">
-                    <h2 class="heading-lg text-gray-900 text-center mb-8">
-                        Publications
-                    </h2>
-                    <div class="text-center py-12">
+                    <!-- Publications Grid -->
+                    <div class="relative min-h-[600px]">
+                        <!-- Loading State -->
                         <div
-                            class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-full"
+                            v-if="
+                                publicationsLoading && publications.length === 0
+                            "
+                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                         >
-                            <svg
-                                class="w-5 h-5 mr-2"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
+                            <div v-for="i in 6" :key="i" class="animate-pulse">
+                                <div
+                                    class="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+                                >
+                                    <div class="flex items-center mb-4">
+                                        <div
+                                            class="w-12 h-12 bg-gray-200 rounded-lg"
+                                        ></div>
+                                        <div class="ml-3 flex-1">
+                                            <div
+                                                class="h-4 bg-gray-200 rounded w-3/4 mb-2"
+                                            ></div>
+                                            <div
+                                                class="h-3 bg-gray-200 rounded w-1/2"
+                                            ></div>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div
+                                            class="h-4 bg-gray-200 rounded"
+                                        ></div>
+                                        <div
+                                            class="h-4 bg-gray-200 rounded w-5/6"
+                                        ></div>
+                                    </div>
+                                    <div
+                                        class="mt-4 h-10 bg-gray-200 rounded"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Publications Grid -->
+                        <div
+                            v-else-if="publications.length > 0"
+                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 relative"
+                        >
+                            <!-- Loading overlay for pagination -->
+                            <div
+                                v-if="publicationsLoading"
+                                class="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center z-10 rounded-lg"
                             >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                            No publications found.
+                                <div
+                                    class="flex items-center space-x-3 text-gray-600"
+                                >
+                                    <div
+                                        class="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-600"
+                                    ></div>
+                                    <span class="font-medium">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div
+                                v-for="publication in publications"
+                                :key="publication.id"
+                                class="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200 overflow-hidden"
+                            >
+                                <div class="p-3 md:p-6">
+                                    <!-- File Type Icon and Info -->
+                                    <div class="flex items-start mb-2 md:mb-4">
+                                        <div class="flex-shrink-0">
+                                            <div
+                                                class="w-8 h-8 md:w-12 md:h-12 bg-green-100 rounded-lg flex items-center justify-center"
+                                            >
+                                                <svg
+                                                    v-if="
+                                                        publication.file_type ===
+                                                        'pdf'
+                                                    "
+                                                    class="w-4 h-4 md:w-6 md:h-6 text-red-600"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
+                                                    />
+                                                </svg>
+                                                <svg
+                                                    v-else-if="
+                                                        publication.file_type ===
+                                                            'doc' ||
+                                                        publication.file_type ===
+                                                            'docx'
+                                                    "
+                                                    class="w-4 h-4 md:w-6 md:h-6 text-blue-600"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
+                                                    />
+                                                </svg>
+                                                <svg
+                                                    v-else
+                                                    class="w-4 h-4 md:w-6 md:h-6 text-gray-600"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                                    />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="ml-3 flex-1 min-w-0">
+                                            <div
+                                                class="flex items-center justify-between"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
+                                                >
+                                                    {{
+                                                        publication.file_type_display
+                                                    }}
+                                                </span>
+                                                <span
+                                                    class="text-xs text-gray-500"
+                                                >
+                                                    {{ publication.file_size }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Publication Title -->
+                                    <h3
+                                        class="text-sm md:text-lg font-semibold text-gray-900 mb-1 md:mb-2 line-clamp-2"
+                                    >
+                                        {{ publication.title }}
+                                    </h3>
+
+                                    <!-- Publication Description -->
+                                    <p
+                                        class="text-gray-600 text-xs md:text-sm mb-2 md:mb-4 line-clamp-2 md:line-clamp-3"
+                                    >
+                                        {{ publication.description }}
+                                    </p>
+
+                                    <!-- Publication Meta -->
+                                    <div
+                                        class="flex items-center justify-between text-xs md:text-sm text-gray-500 mb-2 md:mb-4"
+                                    >
+                                        <span class="truncate">{{
+                                            publication.published_date
+                                        }}</span>
+                                        <span
+                                            v-if="
+                                                publication.download_count > 0
+                                            "
+                                            class="hidden md:inline"
+                                        >
+                                            {{ publication.download_count }}
+                                            downloads
+                                        </span>
+                                    </div>
+
+                                    <!-- Download Button -->
+                                    <button
+                                        @click="
+                                            downloadPublication(publication)
+                                        "
+                                        class="w-full bg-green-600 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-center text-xs md:text-sm"
+                                    >
+                                        <svg
+                                            class="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                            />
+                                        </svg>
+                                        Download
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Empty State -->
+                        <div v-else class="text-center py-20">
+                            <div class="max-w-md mx-auto">
+                                <div
+                                    class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                                >
+                                    <svg
+                                        class="w-8 h-8 text-gray-400"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                        />
+                                    </svg>
+                                </div>
+                                <h3
+                                    class="text-lg font-medium text-gray-900 mb-2"
+                                >
+                                    No publications found
+                                </h3>
+                                <p class="text-gray-500">
+                                    Try adjusting your search or filter criteria
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Success Stories Tab -->
-                <div v-if="activeTab === 'stories'" class="space-y-8">
-                    <h2 class="heading-lg text-gray-900 text-center mb-8">
-                        Success Stories
-                    </h2>
-                    <div class="text-center py-12">
-                        <div
-                            class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-full"
-                        >
-                            <svg
-                                class="w-5 h-5 mr-2"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                            No success stories found.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RFPs/RFQs Tab -->
-                <div v-if="activeTab === 'rfps'" class="space-y-8">
-                    <h2 class="heading-lg text-gray-900 text-center mb-8">
-                        RFPs & RFQs
-                    </h2>
-                    <div class="text-center py-12">
-                        <div
-                            class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-full"
-                        >
-                            <svg
-                                class="w-5 h-5 mr-2"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                            No RFPs or RFQs found.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gallery Tab -->
-                <div v-if="activeTab === 'gallery'" class="space-y-8">
-                    <h2 class="heading-lg text-gray-900 text-center mb-8">
-                        Photo Gallery
-                    </h2>
-                    <div class="text-center py-12">
-                        <div
-                            class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-full"
-                        >
-                            <svg
-                                class="w-5 h-5 mr-2"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                            No photos found.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section
-            class="section-padding bg-gradient-to-r from-green-600 to-emerald-600 text-white"
-        >
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="heading-lg mb-6">Need More Information?</h2>
-                <p class="text-xl text-green-100 mb-8">
-                    Can't find what you're looking for? Contact us for
-                    additional resources and support.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <router-link
-                        to="/contact"
-                        class="btn btn-cta text-lg px-8 py-4"
+                    <!-- Pagination -->
+                    <div
+                        v-if="publications.length > 0"
+                        class="flex justify-center"
                     >
-                        Contact Us
-                        <svg
-                            class="w-5 h-5 ml-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        <nav class="flex items-center space-x-2">
+                            <button
+                                @click="
+                                    loadPublications(
+                                        publicationsCurrentPage - 1
+                                    )
+                                "
+                                :disabled="publicationsCurrentPage <= 1"
+                                class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Previous
+                            </button>
+                            <span class="px-3 py-2 text-sm text-gray-700">
+                                Page {{ publicationsCurrentPage }} of
+                                {{ publicationsTotalPages }}
+                            </span>
+                            <button
+                                @click="
+                                    loadPublications(
+                                        publicationsCurrentPage + 1
+                                    )
+                                "
+                                :disabled="
+                                    publicationsCurrentPage >=
+                                    publicationsTotalPages
+                                "
+                                class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Next
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Other Tabs - Empty States -->
+
+                <div
+                    v-else-if="activeTab === 'success-stories'"
+                    class="space-y-12"
+                >
+                    <div class="text-center">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                            Success Stories
+                        </h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">
+                            Real impact from our community and clients
+                        </p>
+                    </div>
+
+                    <!-- Search -->
+                    <div
+                        class="bg-gray-50 rounded-lg p-4 md:p-6 max-w-2xl mx-auto"
+                    >
+                        <div class="relative">
+                            <input
+                                v-model="successStoriesSearch"
+                                @input="searchSuccessStories"
+                                type="text"
+                                placeholder="Search by title, client or keywords"
+                                class="w-full pl-9 pr-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                             />
-                        </svg>
-                    </router-link>
-                    <router-link
-                        to="/our-work"
-                        class="btn border-2 border-white text-white hover:bg-white hover:text-green-600 text-lg px-8 py-4"
+                            <svg
+                                class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Stories (Z-layout with Load More) -->
+                    <div class="relative min-h-[400px]">
+                        <div
+                            v-if="
+                                successStoriesLoading &&
+                                successStories.length === 0
+                            "
+                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                        >
+                            <div v-for="i in 6" :key="i" class="animate-pulse">
+                                <div
+                                    class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
+                                >
+                                    <div class="h-40 bg-gray-200"></div>
+                                    <div class="p-4 space-y-2">
+                                        <div
+                                            class="h-4 bg-gray-200 rounded w-3/4"
+                                        ></div>
+                                        <div
+                                            class="h-3 bg-gray-200 rounded w-1/2"
+                                        ></div>
+                                        <div
+                                            class="h-3 bg-gray-200 rounded w-full"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            v-else-if="successStories.length > 0"
+                            class="space-y-16 md:space-y-20"
+                        >
+                            <article
+                                v-for="(story, idx) in successStories"
+                                :key="story.id"
+                                class="flex flex-col md:flex-row md:items-center gap-4 md:gap-10 lg:gap-14"
+                                :class="{
+                                    'md:flex-row-reverse': idx % 2 === 1,
+                                }"
+                            >
+                                <img
+                                    :src="
+                                        story.image_url ||
+                                        '/images/placeholder-news.jpg'
+                                    "
+                                    :alt="story.title"
+                                    class="w-full md:w-1/2 h-56 md:h-[22rem] object-cover rounded-xl shadow-sm"
+                                />
+                                <div class="w-full md:w-1/2">
+                                    <div class="text-xs text-gray-500 mb-2">
+                                        {{ story.published_date }}
+                                    </div>
+                                    <h3
+                                        class="text-xl md:text-2xl font-semibold text-gray-900 mb-2 md:mb-3 leading-snug"
+                                    >
+                                        {{ story.title }}
+                                    </h3>
+                                    <div
+                                        v-if="story.client_name"
+                                        class="text-sm text-gray-600 mb-2 md:mb-3"
+                                    >
+                                        Client: {{ story.client_name }}
+                                    </div>
+                                    <p class="text-gray-700 mb-3 md:mb-5">
+                                        {{ story.story_excerpt }}
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div v-else class="text-center py-12 text-gray-500">
+                            No stories found
+                        </div>
+                    </div>
+
+                    <!-- Load more -->
+                    <div
+                        v-if="successStoriesPage < successStoriesTotalPages"
+                        class="flex justify-center mt-8 md:mt-12"
                     >
-                        View Our Work
-                    </router-link>
+                        <button
+                            @click="loadMoreSuccessStories"
+                            :disabled="successStoriesLoading"
+                            class="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 shadow-sm"
+                        >
+                            {{
+                                successStoriesLoading
+                                    ? "Loading…"
+                                    : "Load more stories"
+                            }}
+                        </button>
+                    </div>
+                </div>
+
+                <div v-else-if="activeTab === 'rfps'" class="text-center py-20">
+                    <div class="max-w-md mx-auto">
+                        <div
+                            class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                        >
+                            <svg
+                                class="w-8 h-8 text-gray-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">
+                            RFPs/RFQs
+                        </h3>
+                        <p class="text-gray-500">
+                            Request for proposals and quotations will be posted
+                            here
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    v-else-if="activeTab === 'gallery'"
+                    class="text-center py-20"
+                >
+                    <div class="max-w-md mx-auto">
+                        <div
+                            class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                        >
+                            <svg
+                                class="w-8 h-8 text-gray-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">
+                            Gallery
+                        </h3>
+                        <p class="text-gray-500">
+                            Photos and media from our activities will be
+                            displayed here
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -423,10 +781,53 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import axios from "axios";
 
-const activeTab = ref("news");
+// Initialize activeTab from URL hash or localStorage
+const getInitialTab = () => {
+    // Check URL hash first
+    if (window.location.hash) {
+        const hash = window.location.hash.replace("#", "");
+        if (
+            ["news", "publications", "success-stories", "rfps"].includes(hash)
+        ) {
+            return hash;
+        }
+    }
+
+    // Fallback to localStorage
+    const savedTab = localStorage.getItem("resourcesActiveTab");
+    if (
+        savedTab &&
+        ["news", "publications", "success-stories", "rfps"].includes(savedTab)
+    ) {
+        return savedTab;
+    }
+
+    // Default to news
+    return "news";
+};
+
+const activeTab = ref(getInitialTab());
+
+// Watch for tab changes and update URL hash and localStorage
+watch(activeTab, (newTab) => {
+    // Update URL hash
+    window.location.hash = newTab;
+
+    // Save to localStorage
+    localStorage.setItem("resourcesActiveTab", newTab);
+
+    // Load data for the new tab
+    if (newTab === "publications") {
+        fetchPublications();
+    } else if (newTab === "news") {
+        fetchNews();
+    } else if (newTab === "success-stories") {
+        fetchSuccessStories();
+    }
+});
 
 // News data and pagination
 const news = ref([]);
@@ -437,6 +838,25 @@ const newsPagination = ref({
     totalItems: 0,
     perPage: 6,
 });
+
+// Publications data and pagination
+const publications = ref([]);
+const publicationsLoading = ref(false);
+const publicationSearch = ref("");
+const publicationsPagination = ref({
+    currentPage: 1,
+    totalPages: 1,
+    totalItems: 0,
+    perPage: 12,
+});
+
+// Computed properties for publications
+const publicationsCurrentPage = computed(
+    () => publicationsPagination.value.currentPage
+);
+const publicationsTotalPages = computed(
+    () => publicationsPagination.value.totalPages
+);
 
 // Computed property for visible pagination pages
 const visiblePages = computed(() => {
@@ -496,123 +916,12 @@ const fetchNews = async (page = 1) => {
         console.error("Error details:", error.response?.data || error.message);
         console.error("Error status:", error.response?.status);
 
-        // Fallback news data
-        news.value = [
-            {
-                id: 1,
-                title: "New Training Program Launched in Herat Province",
-                excerpt:
-                    "Mount Agro launches comprehensive agricultural training program reaching 500 farmers in Herat, focusing on modern irrigation techniques and crop diversification.",
-                content:
-                    "Mount Agro has successfully launched a new comprehensive agricultural training program in Herat Province, reaching over 500 farmers across the region. The program focuses on modern irrigation techniques, crop diversification, and sustainable farming practices. This initiative is part of our ongoing commitment to empower Afghanistan's agricultural communities through innovative solutions and comprehensive support programs.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date().toISOString(),
-                slug: "new-training-program-launch",
-            },
-            {
-                id: 2,
-                title: "AgriTech Mobile App Reaches 10,000 Users",
-                excerpt:
-                    "Our innovative mobile application providing weather forecasts, market prices, and agricultural advice has successfully reached 10,000 active users across Afghanistan.",
-                content:
-                    "Our innovative mobile application has reached a significant milestone with 10,000 active users across Afghanistan. The app provides farmers with real-time weather forecasts, market prices, and expert agricultural advice, helping them make informed decisions about their farming activities. This digital solution is transforming how farmers access information and manage their agricultural operations.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 7 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "agritech-app-milestone",
-            },
-            {
-                id: 3,
-                title: "Women's Cooperative Program Shows Remarkable Success",
-                excerpt:
-                    "Our women's agricultural cooperative program has empowered over 200 women farmers, increasing their income by an average of 40% through collective farming and marketing initiatives.",
-                content:
-                    "Our women's agricultural cooperative program has achieved remarkable success, empowering over 200 women farmers across Afghanistan. Through collective farming and marketing initiatives, participants have seen an average income increase of 40%. This program demonstrates our commitment to gender equality and women's empowerment in the agricultural sector.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 14 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "womens-cooperative-success",
-            },
-            {
-                id: 4,
-                title: "Environmental Conservation Project Launched",
-                excerpt:
-                    "New environmental conservation project focuses on sustainable farming practices and climate resilience across multiple provinces.",
-                content:
-                    "We have launched a comprehensive environmental conservation project that focuses on promoting sustainable farming practices and building climate resilience across multiple provinces. This initiative includes training on soil conservation, water management, and climate-smart agriculture techniques.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 21 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "environmental-conservation-project",
-            },
-            {
-                id: 5,
-                title: "Market Access Program Expands to New Regions",
-                excerpt:
-                    "Our market access program has expanded to three new regions, connecting farmers with profitable markets and value chains.",
-                content:
-                    "Our market access program has successfully expanded to three new regions, providing farmers with direct connections to profitable markets and value chains. This expansion has resulted in increased income opportunities for over 1,000 farmers and improved market access for agricultural products.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 28 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "market-access-expansion",
-            },
-            {
-                id: 6,
-                title: "Smart Farming Technology Implementation",
-                excerpt:
-                    "Implementation of smart farming technology has increased crop yields by 25% in pilot regions.",
-                content:
-                    "The implementation of smart farming technology in pilot regions has shown remarkable results, with crop yields increasing by an average of 25%. This technology includes precision irrigation systems, soil monitoring sensors, and automated farming equipment that helps farmers optimize their agricultural practices.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 35 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "smart-farming-technology",
-            },
-            {
-                id: 7,
-                title: "Community Development Initiative Success",
-                excerpt:
-                    "Community development initiative has established 15 new farmer cooperatives across the country.",
-                content:
-                    "Our community development initiative has successfully established 15 new farmer cooperatives across the country, bringing together over 2,000 farmers in collective farming and marketing efforts. These cooperatives have improved access to resources, reduced costs, and increased market bargaining power for participating farmers.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 42 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "community-development-success",
-            },
-            {
-                id: 8,
-                title: "Seed Supply Chain Strengthened",
-                excerpt:
-                    "Strengthened seed supply chain now provides high-quality seeds to over 5,000 farmers.",
-                content:
-                    "Our seed supply chain has been significantly strengthened, now providing high-quality, certified seeds to over 5,000 farmers across Afghanistan. This improved supply chain ensures farmers have access to the best seeds for their specific growing conditions and climate requirements.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 49 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "seed-supply-chain-strengthened",
-            },
-        ];
+        // Set empty state on error
+        news.value = [];
         newsPagination.value = {
             currentPage: 1,
             totalPages: 1,
-            totalItems: news.value.length,
+            totalItems: 0,
             perPage: 6,
         };
     } finally {
@@ -631,7 +940,7 @@ const goToNewsPage = (page) => {
     }
 };
 
-// Format date utility
+// Format date
 const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -642,114 +951,303 @@ const formatDate = (dateString) => {
     });
 };
 
-// Initialize news when component mounts
+// Success Stories state
+const successStories = ref([]);
+const successStoriesLoading = ref(false);
+const successStoriesSearch = ref("");
+const successStoriesPage = ref(1);
+const successStoriesTotalPages = ref(1);
+
+const fetchSuccessStories = async (page = 1) => {
+    try {
+        successStoriesLoading.value = true;
+        const response = await axios.get("/api/success-stories", {
+            params: {
+                page,
+                per_page: 3,
+                search: successStoriesSearch.value || undefined,
+            },
+        });
+        const data = response.data;
+        successStories.value = data.data || [];
+        successStoriesPage.value = data.meta?.current_page || page;
+        successStoriesTotalPages.value = data.meta?.last_page || 1;
+    } catch (e) {
+        console.error("Error fetching success stories", e);
+        successStories.value = [];
+        successStoriesPage.value = 1;
+        successStoriesTotalPages.value = 1;
+    } finally {
+        successStoriesLoading.value = false;
+    }
+};
+
+const searchSuccessStories = () => {
+    successStoriesPage.value = 1;
+    fetchSuccessStories(1);
+};
+
+const loadSuccessStories = (page) => {
+    if (
+        page >= 1 &&
+        page <= successStoriesTotalPages.value &&
+        !successStoriesLoading.value
+    ) {
+        fetchSuccessStories(page);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+};
+
+// Append next page to the existing list for "Load more"
+const loadMoreSuccessStories = async () => {
+    if (successStoriesPage.value >= successStoriesTotalPages.value) return;
+    const next = successStoriesPage.value + 1;
+    try {
+        successStoriesLoading.value = true;
+        const response = await axios.get("/api/success-stories", {
+            params: {
+                page: next,
+                per_page: 3,
+                search: successStoriesSearch.value || undefined,
+            },
+        });
+        const data = response.data;
+        const batch = data.data || [];
+        successStories.value = [...successStories.value, ...batch];
+        successStoriesPage.value = data.meta?.current_page || next;
+        successStoriesTotalPages.value =
+            data.meta?.last_page || successStoriesTotalPages.value;
+    } catch (e) {
+        console.error("Error loading more success stories", e);
+    } finally {
+        successStoriesLoading.value = false;
+    }
+};
+
+const openStory = (story) => {
+    // For now, navigate to a dedicated page if exists later; keep simple
+    alert(story.title + "\n\n" + story.story);
+};
+
+// Publications methods
+const fetchPublications = async (page = 1) => {
+    try {
+        publicationsLoading.value = true;
+        const response = await axios.get("/api/publications", {
+            params: {
+                page: page,
+                per_page: publicationsPagination.value.perPage,
+                search: publicationSearch.value || undefined,
+            },
+        });
+
+        const data = response.data;
+
+        if (data.data) {
+            publications.value = data.data;
+            publicationsPagination.value = {
+                currentPage: data.meta?.current_page || page,
+                totalPages: data.meta?.last_page || 1,
+                totalItems: data.meta?.total || 0,
+                perPage: data.meta?.per_page || 12,
+            };
+        } else if (Array.isArray(data)) {
+            publications.value = data;
+            publicationsPagination.value = {
+                currentPage: 1,
+                totalPages: 1,
+                totalItems: data.length,
+                perPage: 12,
+            };
+        }
+    } catch (error) {
+        console.error("Error fetching publications:", error);
+        console.error("Error details:", error.response?.data || error.message);
+        console.error("Error status:", error.response?.status);
+
+        // Set empty state on error
+        publications.value = [];
+        publicationsPagination.value = {
+            currentPage: 1,
+            totalPages: 1,
+            totalItems: 0,
+            perPage: 12,
+        };
+    } finally {
+        publicationsLoading.value = false;
+    }
+};
+
+const loadPublications = (page) => {
+    if (
+        page >= 1 &&
+        page <= publicationsPagination.value.totalPages &&
+        !publicationsLoading.value
+    ) {
+        fetchPublications(page);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+};
+
+const searchPublications = () => {
+    // Reset to first page when searching
+    publicationsPagination.value.currentPage = 1;
+    fetchPublications(1);
+};
+
+// No separate filter; search handles type/title/description
+
+const downloadPublication = async (publication) => {
+    try {
+        if (publication.file_url) {
+            // Create a temporary link to download the file
+            const link = document.createElement("a");
+            link.href = publication.file_url;
+            link.download = publication.title;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Track download (optional - you might want to send analytics)
+            console.log(`Downloaded: ${publication.title}`);
+        } else {
+            console.error("No file URL available for download");
+        }
+    } catch (error) {
+        console.error("Error downloading publication:", error);
+    }
+};
+
+// Load data on component mount
 onMounted(() => {
-    fetchNews(1);
+    // Only load data for the initial active tab
+    if (activeTab.value === "news") {
+        fetchNews();
+    } else if (activeTab.value === "publications") {
+        fetchPublications();
+    } else if (activeTab.value === "success-stories") {
+        fetchSuccessStories();
+    }
+
+    // Refetch current tab when language changes
+    const handleLanguageChanged = () => {
+        if (activeTab.value === "news") {
+            fetchNews(newsPagination.value.currentPage || 1);
+        } else if (activeTab.value === "publications") {
+            fetchPublications(publicationsPagination.value.currentPage || 1);
+        } else if (activeTab.value === "success-stories") {
+            fetchSuccessStories(successStoriesPage.value || 1);
+        }
+    };
+    window.addEventListener("language:changed", handleLanguageChanged);
+
+    onUnmounted(() => {
+        window.removeEventListener("language:changed", handleLanguageChanged);
+    });
 });
-
-const tabs = [
-    { id: "news", name: "News", icon: "NewsIcon" },
-    { id: "publications", name: "Publications", icon: "PublicationsIcon" },
-    { id: "stories", name: "Success Stories", icon: "StoriesIcon" },
-    { id: "rfps", name: "RFPs/RFQs", icon: "RfpsIcon" },
-    { id: "gallery", name: "Gallery", icon: "GalleryIcon" },
-];
-
-// Icon components
-const NewsIcon = () =>
-    h(
-        "svg",
-        {
-            class: "w-5 h-5",
-            fill: "none",
-            stroke: "currentColor",
-            viewBox: "0 0 24 24",
-        },
-        [
-            h("path", {
-                "stroke-linecap": "round",
-                "stroke-linejoin": "round",
-                "stroke-width": "2",
-                d: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z",
-            }),
-        ]
-    );
-
-const PublicationsIcon = () =>
-    h(
-        "svg",
-        {
-            class: "w-5 h-5",
-            fill: "none",
-            stroke: "currentColor",
-            viewBox: "0 0 24 24",
-        },
-        [
-            h("path", {
-                "stroke-linecap": "round",
-                "stroke-linejoin": "round",
-                "stroke-width": "2",
-                d: "M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z",
-            }),
-        ]
-    );
-
-const StoriesIcon = () =>
-    h(
-        "svg",
-        {
-            class: "w-5 h-5",
-            fill: "none",
-            stroke: "currentColor",
-            viewBox: "0 0 24 24",
-        },
-        [
-            h("path", {
-                "stroke-linecap": "round",
-                "stroke-linejoin": "round",
-                "stroke-width": "2",
-                d: "M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z",
-            }),
-        ]
-    );
-
-const RfpsIcon = () =>
-    h(
-        "svg",
-        {
-            class: "w-5 h-5",
-            fill: "none",
-            stroke: "currentColor",
-            viewBox: "0 0 24 24",
-        },
-        [
-            h("path", {
-                "stroke-linecap": "round",
-                "stroke-linejoin": "round",
-                "stroke-width": "2",
-                d: "M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01",
-            }),
-        ]
-    );
-
-const GalleryIcon = () =>
-    h(
-        "svg",
-        {
-            class: "w-5 h-5",
-            fill: "none",
-            stroke: "currentColor",
-            viewBox: "0 0 24 24",
-        },
-        [
-            h("path", {
-                "stroke-linecap": "round",
-                "stroke-linejoin": "round",
-                "stroke-width": "2",
-                d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z",
-            }),
-        ]
-    );
-
-// Static data arrays removed - using dynamic API data instead
 </script>
+
+<style scoped>
+/* Custom animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Hide horizontal scrollbar for tab nav on mobile */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Card hover effects */
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Professional rounded corners */
+.rounded-professional-lg {
+    border-radius: 12px;
+}
+
+/* Professional shadows */
+.shadow-professional {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Heading styles */
+.heading-lg {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* Button styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+</style>

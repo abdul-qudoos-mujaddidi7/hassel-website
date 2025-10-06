@@ -21,17 +21,17 @@ export default createVuetify({
                     warning: "#ff9800", // Keep orange for warnings
                     error: "#f44336", // Keep red for errors
                     surface: "#ffffff", // White for cards/surfaces
-                    
+
                     // Additional Green Shades
                     accent: "#81c784", // Light green accent
                     "on-primary": "#ffffff", // Text on primary colors
                     "on-secondary": "#ffffff", // Text on secondary colors
-                    
+
                     // Custom colors for specific components
                     "table-row-bg": "#f0fdf4", // Very light green for table rows
                     "light-section": "#e8f5e9", // Light green section background
                     "sidebar-bg": "#f8fdf8", // Sidebar background
-                    
+
                     // Legacy colors for compatibility
                     primaryOld: "#134124",
                     tealColor: "#375f1f",
@@ -43,9 +43,20 @@ export default createVuetify({
         VTextField: {
             variant: "outlined",
             density: "compact",
+            color: "primary",
         },
         VBtn: {
             style: "text-transform: none;",
+            color: "primary",
+        },
+        VCard: {
+            color: "surface",
+        },
+        VDataTable: {
+            color: "primary",
+        },
+        VChip: {
+            color: "primary",
         },
     },
 });

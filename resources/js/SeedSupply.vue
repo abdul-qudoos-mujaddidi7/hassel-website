@@ -421,11 +421,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, onUnmounted, ref, watch, computed } from "vue";
+import { useI18n } from "./composables/useI18n";
 
 const loading = ref(true);
 const programs = ref([]);
 const total = ref(0);
+const { currentLanguage, onLanguageChange } = useI18n();
+let unsubscribeLang = null;
 
 const filters = ref({
     type: "",
@@ -494,6 +497,11 @@ watch(
 
 onMounted(() => {
     fetchPrograms();
+    unsubscribeLang = onLanguageChange(() => fetchPrograms());
+});
+
+onUnmounted(() => {
+    if (typeof unsubscribeLang === "function") unsubscribeLang();
 });
 
 async function fetchPrograms() {
@@ -505,6 +513,11 @@ async function fetchPrograms() {
             params.set("target_crops", filters.value.crops);
         if (filters.value.search) params.set("search", filters.value.search);
 
+        const lang =
+            localStorage.getItem("preferred_language") ||
+            currentLanguage?.value ||
+            "en";
+        params.set("lang", lang);
         console.log(
             "Fetching seed supply programs with params:",
             params.toString()

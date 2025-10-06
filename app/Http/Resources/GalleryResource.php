@@ -14,11 +14,12 @@ class GalleryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $lang = $request->get('lang', 'en');
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('title', $lang) ?? $this->title) : $this->title,
             'slug' => $this->slug,
-            'description' => $this->description,
+            'description' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('description', $lang) ?? $this->description) : $this->description,
             'cover_image' => $this->cover_image,
             'cover_image_url' => $this->cover_image_url, // Uses model accessor
             'status' => $this->status,

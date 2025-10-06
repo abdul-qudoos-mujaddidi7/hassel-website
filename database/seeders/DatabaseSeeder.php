@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
 
             // 5. Create sample interactions and data
             SampleDataSeeder::class,
+            TranslationSampleSeeder::class,
+            TranslationsForAllContentSeeder::class,
         ]);
 
         $this->command->newLine();

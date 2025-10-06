@@ -52,7 +52,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     <!-- Contact Information -->
-                    <div>
+                    <div class="order-2 lg:order-1">
                         <h2 class="heading-lg text-gray-900 mb-8">
                             Get in Touch
                         </h2>
@@ -310,7 +310,7 @@
                     </div>
 
                     <!-- Contact Form -->
-                    <div>
+                    <div class="order-1 lg:order-2">
                         <h2 class="heading-lg text-gray-900 mb-8">
                             Send us a Message
                         </h2>
@@ -695,7 +695,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import LoadingSpinner from "./components/LoadingSpinner.vue";
 import { useI18n } from "./composables/useI18n.js";
 
@@ -730,6 +730,17 @@ onMounted(() => {
         if (jobTitle) form.value.job_title = decodeURIComponent(jobTitle);
         if (jobId) form.value.job_id = jobId;
     }
+
+    // Language change handler to update placeholders/labels (static via t())
+    const handleLanguageChanged = () => {
+        // No API fetch required, but this ensures reactivity for placeholders
+        form.value = { ...form.value };
+    };
+    window.addEventListener("language:changed", handleLanguageChanged);
+
+    onUnmounted(() => {
+        window.removeEventListener("language:changed", handleLanguageChanged);
+    });
 });
 
 // Handle file upload

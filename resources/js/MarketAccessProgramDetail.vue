@@ -433,16 +433,24 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import { useI18n } from "./composables/useI18n";
 
 const route = useRoute();
 const loading = ref(true);
 const error = ref(null);
 const program = ref(null);
+const { currentLanguage, onLanguageChange } = useI18n();
+let unsubscribeLang = null;
 
 onMounted(async () => {
     await fetchProgram();
+    unsubscribeLang = onLanguageChange(() => fetchProgram());
+});
+
+onUnmounted(() => {
+    if (typeof unsubscribeLang === "function") unsubscribeLang();
 });
 
 // Watch for route changes to handle in-app navigation
@@ -464,7 +472,15 @@ async function fetchProgram() {
         const slug = route.params.idOrSlug;
         console.log("Fetching program with slug:", slug);
 
-        const res = await fetch(`/api/market-access-programs/${slug}`);
+        const lang =
+            localStorage.getItem("preferred_language") ||
+            currentLanguage?.value ||
+            "en";
+        const res = await fetch(
+            `/api/market-access-programs/${slug}?lang=${encodeURIComponent(
+                lang
+            )}`
+        );
         console.log("Response status:", res.status);
 
         if (!res.ok) {

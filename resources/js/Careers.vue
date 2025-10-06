@@ -2,7 +2,7 @@
     <div class="min-h-screen">
         <!-- Hero Section -->
         <section
-            class="relative text-white overflow-hidden min-h-[70vh] flex items-center"
+            class="relative text-white overflow-hidden min-h-[50vh] md:min-h-[70vh] flex items-center"
         >
             <div class="absolute inset-0">
                 <img
@@ -15,26 +15,26 @@
                 class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"
             ></div>
             <div
-                class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24"
+                class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24"
             >
                 <div class="text-center">
                     <h1
-                        class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fadeInUp"
+                        class="text-3xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6 animate-fadeInUp"
                     >
                         {{ t("careers.hero.title") }}
                     </h1>
                     <p
-                        class="text-xl md:text-2xl text-gray-100 mb-8 max-w-3xl mx-auto animate-fadeInUp"
+                        class="text-base md:text-xl text-gray-100 mb-6 md:mb-8 max-w-3xl mx-auto animate-fadeInUp"
                         style="animation-delay: 0.2s"
                     >
                         {{ t("careers.hero.subtitle") }}
                     </p>
                     <div class="animate-fadeInUp" style="animation-delay: 0.4s">
                         <div
-                            class="inline-flex items-center px-6 py-3 bg-green-600/20 backdrop-blur-sm rounded-full border border-green-400/30"
+                            class="inline-flex items-center px-4 py-2 md:px-6 md:py-3 bg-green-600/20 backdrop-blur-sm rounded-full border border-green-400/30"
                         >
                             <svg
-                                class="w-5 h-5 mr-2 text-green-400"
+                                class="w-4 h-4 md:w-5 md:h-5 mr-2 text-green-400"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -58,19 +58,21 @@
         <!-- Why Work With Us section removed per requirements -->
 
         <!-- Current Openings Section -->
-        <section class="p-16 bg-white">
+        <section class="pt-10 pb-16 md:p-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="heading-lg text-gray-900 mb-4">
                         Current Job Openings
                     </h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
+                    <p
+                        class="text-base md:text-xl text-gray-600 max-w-3xl mx-auto mb-4 md:mb-6"
+                    >
                         Explore opportunities and apply by email.
                     </p>
                     <button
                         @click="fetchJobs"
                         :disabled="loading"
-                        class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        class="inline-flex items-center px-4 py-2 md:px-5 md:py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm md:text-base"
                     >
                         <svg
                             v-if="!loading"
@@ -168,27 +170,27 @@
                 </div>
 
                 <!-- Jobs List -->
-                <div v-else class="space-y-6">
+                <div v-else class="space-y-5 md:space-y-6">
                     <div
                         v-for="job in jobs"
                         :key="job.id"
-                        class="rounded-professional-lg p-8 card-hover bg-white shadow-professional border border-gray-200"
+                        class="rounded-professional-lg p-5 md:p-8 card-hover bg-white shadow-professional border border-gray-200"
                     >
                         <div
-                            class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+                            class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4"
                         >
                             <div class="flex-1">
                                 <h3
-                                    class="text-xl font-semibold mb-2 text-gray-900"
+                                    class="text-lg md:text-xl font-semibold mb-1 md:mb-2 text-gray-900"
                                 >
                                     {{ job.title }}
                                 </h3>
                                 <div
-                                    class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3"
+                                    class="flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm text-gray-600 mb-2 md:mb-3"
                                 >
                                     <span class="flex items-center gap-1">
                                         <svg
-                                            class="w-4 h-4"
+                                            class="w-3.5 h-3.5 md:w-4 md:h-4"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -250,16 +252,18 @@
                                         }}
                                     </span>
                                 </div>
-                                <p class="text-gray-700 mb-4 line-clamp-3">
+                                <p
+                                    class="text-gray-700 mb-3 md:mb-4 line-clamp-3 text-sm md:text-base"
+                                >
                                     {{ job.description }}
                                 </p>
                             </div>
-                            <div class="flex flex-col gap-2">
+                            <div class="flex flex-col gap-2 w-full md:w-auto">
                                 <a
                                     :href="`/contact?subject=job_application&job_title=${encodeURIComponent(
                                         job.title
                                     )}&job_id=${job.id}`"
-                                    class="btn btn-primary"
+                                    class="btn btn-primary w-full md:w-auto text-sm md:text-base"
                                 >
                                     {{ t("careers.apply_position") }}
                                 </a>
@@ -271,12 +275,10 @@
         </section>
 
         <!-- Apply by Email Note -->
-        <section
-            class="section-padding bg-gradient-to-r from-green-600 to-emerald-600 text-white"
-        >
+        <section class="py-12 md:py-16 lg:py-20 text-white">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="heading-lg mb-4">How to Apply</h2>
-                <p class="text-lg text-green-100">
+                <p class="text-base md:text-lg text-green-100">
                     Email your CV to
                     <a
                         href="mailto:info@mountagro.com"
@@ -291,7 +293,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import axios from "axios";
 import LoadingSpinner from "./components/LoadingSpinner.vue";
 import { useI18n } from "./composables/useI18n.js";
@@ -329,5 +331,14 @@ async function fetchJobs() {
     }
 }
 
-onMounted(fetchJobs);
+onMounted(() => {
+    fetchJobs();
+    const handleLanguageChanged = () => {
+        fetchJobs();
+    };
+    window.addEventListener("language:changed", handleLanguageChanged);
+    onUnmounted(() => {
+        window.removeEventListener("language:changed", handleLanguageChanged);
+    });
+});
 </script>

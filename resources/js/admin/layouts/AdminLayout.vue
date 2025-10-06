@@ -72,7 +72,7 @@ const vCardStyle = computed(() => {
 
 /* Main Content Area */
 .v-main {
-    background-color: rgb(248, 248, 248) !important;
+    background-color: #f8fafc !important; /* Light gray surface */
     height: 100vh !important;
     min-height: 100vh !important;
     max-height: 100vh !important;

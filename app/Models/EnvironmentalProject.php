@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class EnvironmentalProject extends Model
 {
+    use \App\Models\Concerns\TranslatesFields;
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'title',
+        'description',
+        'funding_source',
+    ];
     use HasFactory;
 
     protected $fillable = [
@@ -80,17 +88,4 @@ class EnvironmentalProject extends Model
     }
 
     // Helper Methods
-    public function getTranslation($field, $language = 'en')
-    {
-        if ($language === 'en') {
-            return $this->$field;
-        }
-
-        $translation = $this->translations()
-            ->where('field_name', $field)
-            ->where('language', $language)
-            ->first();
-
-        return $translation ? $translation->content : $this->$field;
-    }
 }

@@ -11,6 +11,16 @@ use Carbon\Carbon;
 
 class TrainingProgram extends Model
 {
+    use \App\Models\Concerns\TranslatesFields;
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'title',
+        'description',
+        'program_type',
+        'location',
+        'instructor',
+    ];
     use HasFactory;
 
     protected $fillable = [
@@ -124,19 +134,6 @@ class TrainingProgram extends Model
     }
 
     // Helper Methods
-    public function getTranslation($field, $language = 'en')
-    {
-        if ($language === 'en') {
-            return $this->$field;
-        }
-
-        $translation = $this->translations()
-            ->where('field_name', $field)
-            ->where('language', $language)
-            ->first();
-
-        return $translation ? $translation->content : $this->$field;
-    }
 
     public function canRegister(): bool
     {

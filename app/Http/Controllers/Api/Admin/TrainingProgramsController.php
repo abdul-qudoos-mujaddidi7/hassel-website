@@ -7,6 +7,8 @@ use App\Http\Requests\TrainingProgramRequest;
 use App\Models\TrainingProgram;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Services\TranslationSyncService;
+use App\Http\Resources\TrainingProgramResource;
 
 class TrainingProgramsController extends Controller
 {
@@ -20,26 +22,26 @@ class TrainingProgramsController extends Controller
             $search = $request->get('search', '');
             $status = $request->get('status', '');
             $programType = $request->get('program_type', '');
-            
+
             $query = TrainingProgram::query();
-            
+
             if ($search) {
-                $query->where(function($q) use ($search) {
+                $query->where(function ($q) use ($search) {
                     $q->where('title', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%")
-                      ->orWhere('location', 'like', "%{$search}%")
-                      ->orWhere('instructor', 'like', "%{$search}%");
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('location', 'like', "%{$search}%")
+                        ->orWhere('instructor', 'like', "%{$search}%");
                 });
             }
-            
+
             if ($status) {
                 $query->where('status', $status);
             }
-            
+
             if ($programType) {
                 $query->where('program_type', $programType);
             }
-            
+
             $trainingPrograms = $query->orderBy('created_at', 'desc')
                 ->paginate($perPage);
 
@@ -70,7 +72,9 @@ class TrainingProgramsController extends Controller
     {
         try {
             $validated = $request->validated();
+            $translations = $request->input('translations', []);
             $trainingProgram = TrainingProgram::create($validated);
+            TranslationSyncService::sync($trainingProgram, $translations);
 
             return response()->json([
                 'success' => true,
@@ -89,12 +93,16 @@ class TrainingProgramsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TrainingProgram $trainingProgram): JsonResponse
+    public function show(Request $request, TrainingProgram $trainingProgram): JsonResponse
     {
         try {
+            if ($request->boolean('include_translations')) {
+                $trainingProgram->load('translations');
+            }
+
             return response()->json([
                 'success' => true,
-                'data' => $trainingProgram,
+                'data' => (new TrainingProgramResource($trainingProgram))->resolve($request),
                 'message' => 'Training program retrieved successfully'
             ]);
         } catch (\Exception $e) {
@@ -113,7 +121,9 @@ class TrainingProgramsController extends Controller
     {
         try {
             $validated = $request->validated();
+            $translations = $request->input('translations', []);
             $trainingProgram->update($validated);
+            TranslationSyncService::sync($trainingProgram, $translations);
 
             return response()->json([
                 'success' => true,
@@ -158,17 +168,17 @@ class TrainingProgramsController extends Controller
         try {
             $perPage = $request->get('perPage', 10);
             $search = $request->get('search', '');
-            
+
             $query = TrainingProgram::published();
-            
+
             if ($search) {
-                $query->where(function($q) use ($search) {
+                $query->where(function ($q) use ($search) {
                     $q->where('title', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%")
-                      ->orWhere('location', 'like', "%{$search}%");
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('location', 'like', "%{$search}%");
                 });
             }
-            
+
             $trainingPrograms = $query->orderBy('start_date', 'asc')
                 ->paginate($perPage);
 
@@ -199,7 +209,7 @@ class TrainingProgramsController extends Controller
     {
         try {
             $perPage = $request->get('perPage', 10);
-            
+
             $trainingPrograms = TrainingProgram::upcoming()
                 ->orderBy('start_date', 'asc')
                 ->paginate($perPage);

@@ -25,7 +25,11 @@
                 </v-list-item>
             </router-link>
 
-            <router-link to="/admin/beneficiaries-stats" exact @click="closeAllMenus">
+            <router-link
+                to="/admin/beneficiaries-stats"
+                exact
+                @click="closeAllMenus"
+            >
                 <v-list-item
                     active-class="active-item"
                     prepend-icon="mdi mdi-chart-line"
@@ -49,7 +53,11 @@
             </router-link>
 
             <!-- Training Programs -->
-            <router-link to="/admin/training-programs" exact @click="closeAllMenus">
+            <router-link
+                to="/admin/training-programs"
+                exact
+                @click="closeAllMenus"
+            >
                 <v-list-item
                     active-class="active-item"
                     prepend-icon="mdi-school-outline"
@@ -73,7 +81,11 @@
             </router-link>
 
             <!-- Success Stories -->
-            <router-link to="/admin/success-stories" exact @click="closeAllMenus">
+            <router-link
+                to="/admin/success-stories"
+                exact
+                @click="closeAllMenus"
+            >
                 <v-list-item
                     active-class="active-item"
                     prepend-icon="mdi-trophy-outline"
@@ -105,7 +117,10 @@
             >
                 Reports
                 <template v-slot:append>
-                    <v-icon :class="{'rotate-180': activeMenu === 'reports'}" class="transition-transform duration-300">
+                    <v-icon
+                        :class="{ 'rotate-180': activeMenu === 'reports' }"
+                        class="transition-transform duration-300"
+                    >
                         mdi-chevron-down
                     </v-icon>
                 </template>
@@ -138,7 +153,10 @@
             >
                 Settings
                 <template v-slot:append>
-                    <v-icon :class="{'rotate-180': activeMenu === 'setting'}" class="transition-transform duration-300">
+                    <v-icon
+                        :class="{ 'rotate-180': activeMenu === 'setting' }"
+                        class="transition-transform duration-300"
+                    >
                         mdi-chevron-down
                     </v-icon>
                 </template>
@@ -162,13 +180,12 @@
                 </v-list>
             </transition>
         </div>
-
     </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { useAuthRepository } from '../../stores/Auth.js';
+import { useAuthRepository } from "../../stores/Auth.js";
 
 const authStore = useAuthRepository();
 
@@ -370,7 +387,11 @@ function handleDrawerState(isOpen) {
 
 /* Active Item States */
 .active-item {
-    background: linear-gradient(135deg, rgb(var(--v-theme-primary)), rgb(var(--v-theme-secondary))) !important;
+    background: linear-gradient(
+        135deg,
+        rgb(var(--v-theme-primary)),
+        rgb(var(--v-theme-secondary))
+    ) !important;
     color: rgb(var(--v-theme-on-primary)) !important;
     font-weight: 600;
     box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.3);
@@ -383,7 +404,11 @@ function handleDrawerState(isOpen) {
 
 /* Router Link Active State */
 .router-link-active .nav-item {
-    background: linear-gradient(135deg, rgb(var(--v-theme-primary)), rgb(var(--v-theme-secondary))) !important;
+    background: linear-gradient(
+        135deg,
+        rgb(var(--v-theme-primary)),
+        rgb(var(--v-theme-secondary))
+    ) !important;
     color: rgb(var(--v-theme-on-primary)) !important;
 }
 
@@ -433,5 +458,4 @@ function handleDrawerState(isOpen) {
 .rotate-180 {
     transform: rotate(180deg);
 }
-
 </style>

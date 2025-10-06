@@ -536,6 +536,19 @@ export function useI18n() {
 
         // Update document language
         document.documentElement.lang = lang;
+
+        // Notify app to refetch data as needed
+        try {
+            window.dispatchEvent(
+                new CustomEvent("language:changed", { detail: { lang } })
+            );
+        } catch (_) {}
+    };
+
+    // Subscribe utility
+    const onLanguageChange = (handler) => {
+        window.addEventListener("language:changed", handler);
+        return () => window.removeEventListener("language:changed", handler);
     };
 
     // Load translations (simplified - no API calls)
@@ -588,5 +601,6 @@ export function useI18n() {
         setLanguage,
         loadTranslations,
         init,
+        onLanguageChange,
     };
 }

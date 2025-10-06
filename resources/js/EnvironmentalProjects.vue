@@ -374,10 +374,13 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, onUnmounted, ref, watch, computed } from "vue";
+import { useI18n } from "./composables/useI18n";
 
 const loading = ref(true);
 const projects = ref([]);
+const { currentLanguage, onLanguageChange } = useI18n();
+let unsubscribeLang = null;
 
 // Filters
 const filters = ref({
@@ -407,7 +410,14 @@ const totalImpactMetrics = computed(() => {
 });
 
 watch(filters, fetchProjects, { deep: true });
-onMounted(fetchProjects);
+onMounted(() => {
+    fetchProjects();
+    unsubscribeLang = onLanguageChange(() => fetchProjects());
+});
+
+onUnmounted(() => {
+    if (typeof unsubscribeLang === "function") unsubscribeLang();
+});
 
 async function fetchProjects() {
     loading.value = true;
@@ -417,6 +427,11 @@ async function fetchProjects() {
             params.set("project_type", filters.value.project_type);
         if (filters.value.search) params.set("search", filters.value.search);
 
+        const lang =
+            localStorage.getItem("preferred_language") ||
+            currentLanguage?.value ||
+            "en";
+        params.set("lang", lang);
         const res = await fetch(
             `/api/environmental-projects?${params.toString()}`
         );

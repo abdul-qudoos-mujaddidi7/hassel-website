@@ -14,18 +14,19 @@ class TrainingProgramResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $lang = $request->get('lang', 'en');
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('title', $lang) ?? $this->title) : $this->title,
             'slug' => $this->slug,
-            'description' => $this->description,
+            'description' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('description', $lang) ?? $this->description) : $this->description,
             'cover_image' => $this->cover_image ? asset($this->cover_image) : null,
             'thumbnail_image' => $this->thumbnail_image ? asset($this->thumbnail_image) : null,
-            'program_type' => $this->program_type,
+            'program_type' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('program_type', $lang) ?? $this->program_type) : $this->program_type,
             'program_type_display' => ucwords(str_replace('_', ' ', $this->program_type)),
             'duration' => $this->duration,
-            'location' => $this->location,
-            'instructor' => $this->instructor,
+            'location' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('location', $lang) ?? $this->location) : $this->location,
+            'instructor' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('instructor', $lang) ?? $this->instructor) : $this->instructor,
             'max_participants' => $this->max_participants,
             'start_date' => $this->start_date->toDateString(),
             'end_date' => $this->end_date->toDateString(),

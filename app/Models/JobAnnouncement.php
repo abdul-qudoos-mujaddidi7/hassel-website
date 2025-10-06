@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class JobAnnouncement extends Model
 {
-    use HasFactory;
+    use HasFactory, \App\Models\Concerns\TranslatesFields;
 
     protected $fillable = [
         'title',
@@ -26,6 +26,14 @@ class JobAnnouncement extends Model
     protected $casts = [
         'deadline' => 'date',
         'opened_at' => 'datetime',
+    ];
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'title',
+        'description',
+        'requirements',
+        'location',
     ];
 
     // Relationships
@@ -77,22 +85,9 @@ class JobAnnouncement extends Model
     {
         $this->attributes['title'] = $value;
         if (empty($this->attributes['slug'])) {
-            $this->attributes['slug'] = \Str::slug($value);
+            $this->attributes['slug'] = \Illuminate\Support\Str::slug($value);
         }
     }
 
     // Helper Methods
-    public function getTranslation($field, $language = 'en')
-    {
-        if ($language === 'en') {
-            return $this->$field;
-        }
-
-        $translation = $this->translations()
-            ->where('field_name', $field)
-            ->where('language', $language)
-            ->first();
-
-        return $translation ? $translation->content : $this->$field;
-    }
 }

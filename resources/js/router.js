@@ -24,10 +24,20 @@ const EnvironmentalProjects = () => import("./EnvironmentalProjects.vue");
 const EnvironmentalProjectDetail = () =>
     import("./EnvironmentalProjectDetail.vue");
 const NewsDetail = () => import("./NewsDetail.vue");
+const SuccessStoryDetail = () => import("./SuccessStoryDetail.vue");
 const NotFound = () => import("./NotFound.vue");
 
 const router = createRouter({
     history: createWebHistory(),
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition;
+        }
+        if (to.hash) {
+            return { el: to.hash, top: 0, behavior: "smooth" };
+        }
+        return { top: 0 };
+    },
     routes: [
         // Main Website Routes
         { path: "/", component: Home },
@@ -63,6 +73,12 @@ const router = createRouter({
         },
         { path: "/agri-tech-tools", component: AgriTechTools },
         { path: "/resources", component: Resources },
+        {
+            path: "/success-stories/:slug",
+            component: SuccessStoryDetail,
+            name: "success-story-detail",
+        },
+        { path: "/news/:slug", component: NewsDetail, name: "news-detail" },
         { path: "/careers", component: Careers },
         { path: "/contact", component: Contact },
     ],

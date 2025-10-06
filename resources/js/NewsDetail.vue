@@ -37,31 +37,30 @@
                     </svg>
                     {{ error }}
                 </div>
-                <router-link to="/resources" class="btn btn-primary">
-                    Back to Resources
-                </router-link>
             </div>
         </div>
 
         <!-- Article Content -->
-        <div v-else-if="article" class="min-h-screen">
+        <div v-else-if="article" class="min-h-screen pt-24">
             <!-- Hero Section -->
-            <section class="relative h-96 overflow-hidden">
-                <img
-                    :src="
+            <section
+                class="relative h-[500px] md:h-[600px] lg:h-[700px] bg-cover bg-center bg-no-repeat"
+                :style="{
+                    backgroundImage: `url(${
                         article.featured_image ||
                         'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=1200&h=400&fit=crop&crop=center&auto=format'
-                    "
-                    :alt="article.title"
-                    class="absolute inset-0 w-full h-full object-cover"
-                />
-                <div class="absolute inset-0 bg-black/50"></div>
+                    })`,
+                }"
+            >
                 <div
-                    class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end"
+                    class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/60"
+                ></div>
+                <div
+                    class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center"
                 >
-                    <div class="pb-12">
+                    <div class="text-center w-full">
                         <div
-                            class="flex items-center text-sm text-white/80 mb-4"
+                            class="flex items-center justify-center text-sm text-white/80 mb-4"
                         >
                             <svg
                                 class="w-4 h-4 mr-1"
@@ -173,6 +172,7 @@
                     <!-- Article Content -->
                     <div class="prose prose-lg max-w-none">
                         <div
+                            v-if="article.content || article.excerpt"
                             class="text-gray-700 leading-relaxed whitespace-pre-line"
                             v-html="
                                 formatContent(
@@ -180,6 +180,28 @@
                                 )
                             "
                         ></div>
+                        <div v-else class="text-center py-12 text-gray-500">
+                            <svg
+                                class="w-16 h-16 mx-auto mb-4 text-gray-300"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="1"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                />
+                            </svg>
+                            <p class="text-lg">
+                                No content available for this article.
+                            </p>
+                            <p class="text-sm mt-2">
+                                The article may be under review or the content
+                                is not yet published.
+                            </p>
+                        </div>
                     </div>
 
                     <!-- Article Footer -->
@@ -226,66 +248,47 @@
                 </div>
             </section>
 
-            <!-- Navigation -->
-            <section class="section-padding bg-gray-50">
-                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-center">
-                        <router-link
-                            to="/resources"
-                            class="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
-                        >
-                            <svg
-                                class="w-4 h-4 mr-2"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 19l-7-7 7-7"
-                                />
-                            </svg>
-                            Back to Resources
-                        </router-link>
-                    </div>
-                </div>
-            </section>
-
             <!-- Related Articles -->
             <section
                 v-if="relatedArticles.length > 0"
                 class="section-padding bg-white"
             >
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 class="heading-lg text-gray-900 text-center mb-8">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">
                         Related Articles
                     </h2>
-                    <div
-                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                    >
-                        <article
-                            v-for="relatedArticle in relatedArticles"
+                    <div class="space-y-3">
+                        <div
+                            v-for="relatedArticle in relatedArticles.slice(
+                                0,
+                                3
+                            )"
                             :key="relatedArticle.id"
-                            class="bg-white rounded-professional-lg overflow-hidden shadow-professional card-hover h-full flex flex-col"
+                            class="border-b border-gray-200 pb-3 last:border-b-0"
                         >
-                            <div class="flex-shrink-0">
-                                <img
-                                    :src="
-                                        relatedArticle.featured_image ||
-                                        'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=400&h=200&fit=crop&crop=center&auto=format'
-                                    "
-                                    :alt="relatedArticle.title"
-                                    class="w-full h-48 object-cover"
-                                />
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <div
-                                    class="flex items-center text-sm text-gray-500 mb-3"
-                                >
+                            <router-link
+                                :to="`/news/${
+                                    relatedArticle.slug || relatedArticle.id
+                                }`"
+                                class="block hover:bg-gray-50 p-3 rounded-lg transition-colors"
+                            >
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3
+                                            class="text-lg font-medium text-gray-900 hover:text-green-600 transition-colors"
+                                        >
+                                            {{ relatedArticle.title }}
+                                        </h3>
+                                        <p class="text-sm text-gray-500 mt-1">
+                                            {{
+                                                formatDate(
+                                                    relatedArticle.published_at
+                                                )
+                                            }}
+                                        </p>
+                                    </div>
                                     <svg
-                                        class="w-4 h-4 mr-1"
+                                        class="w-5 h-5 text-gray-400 ml-3 flex-shrink-0"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -294,57 +297,12 @@
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
                                             stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                            d="M9 5l7 7-7 7"
                                         />
                                     </svg>
-                                    {{
-                                        formatDate(relatedArticle.published_at)
-                                    }}
                                 </div>
-                                <h3
-                                    class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 h-14 flex items-start"
-                                >
-                                    {{ relatedArticle.title }}
-                                </h3>
-                                <div class="flex-grow mb-4">
-                                    <p
-                                        class="text-gray-600 line-clamp-3 leading-relaxed"
-                                    >
-                                        {{
-                                            relatedArticle.excerpt ||
-                                            relatedArticle.content?.substring(
-                                                0,
-                                                150
-                                            ) + "..."
-                                        }}
-                                    </p>
-                                </div>
-                                <div class="mt-auto">
-                                    <router-link
-                                        :to="`/news/${
-                                            relatedArticle.slug ||
-                                            relatedArticle.id
-                                        }`"
-                                        class="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
-                                    >
-                                        Read More
-                                        <svg
-                                            class="w-4 h-4 ml-1"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M9 5l7 7-7 7"
-                                            />
-                                        </svg>
-                                    </router-link>
-                                </div>
-                            </div>
-                        </article>
+                            </router-link>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -353,7 +311,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 
@@ -378,57 +336,55 @@ const fetchArticle = async () => {
         error.value = null;
 
         const slug = route.params.slug;
+        console.log("Fetching article with slug:", slug);
+
         const response = await axios.get(`/api/news/${slug}`, {
             timeout: 10000,
         });
 
-        if (response.data) {
+        console.log("Article response:", response.data);
+
+        if (response.data && response.data.news) {
+            // API returns { news: {...}, related_news: [...] }
+            article.value = response.data.news;
+            relatedArticles.value = response.data.related_news || [];
+            console.log("Article data:", article.value);
+            console.log("Article content:", article.value?.content);
+        } else if (response.data && response.data.data) {
+            article.value = response.data.data;
+            console.log("Article data:", article.value);
+            console.log("Article content:", article.value?.content);
+            await fetchRelatedArticles();
+        } else if (response.data) {
             article.value = response.data;
-            // Fetch related articles
+            console.log("Article data:", article.value);
+            console.log("Article content:", article.value?.content);
             await fetchRelatedArticles();
         } else {
             error.value = "Article not found";
+            return;
         }
     } catch (err) {
         console.error("Error fetching article:", err);
-        error.value = "Failed to load article";
 
-        // Fallback article data
-        article.value = {
-            id: 1,
-            title: "New Training Program Launched in Herat Province",
-            excerpt:
-                "Mount Agro launches comprehensive agricultural training program reaching 500 farmers in Herat, focusing on modern irrigation techniques and crop diversification.",
-            content: `Mount Agro has successfully launched a new comprehensive agricultural training program in Herat Province, reaching over 500 farmers across the region. The program focuses on modern irrigation techniques, crop diversification, and sustainable farming practices.
+        if (err.response?.status === 404) {
+            error.value = "Article not found";
+        } else if (err.response?.status >= 500) {
+            error.value = "Server error. Please try again later.";
+        } else {
+            error.value =
+                "Failed to load article. Please check your connection.";
+        }
 
-This initiative is part of our ongoing commitment to empower Afghanistan's agricultural communities through innovative solutions and comprehensive support programs. The training covers:
-
-• Modern irrigation systems and water management
-• Crop diversification strategies
-• Sustainable farming practices
-• Market access and value chain development
-• Climate-smart agriculture techniques
-
-The program has already shown promising results, with participating farmers reporting increased crop yields and improved farming efficiency. This success demonstrates the importance of providing farmers with the knowledge and tools they need to thrive in today's agricultural landscape.
-
-We are committed to expanding this program to other provinces across Afghanistan, ensuring that more farmers have access to these valuable training opportunities.`,
-            featured_image:
-                "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1200&h=400&fit=crop&crop=center&auto=format",
-            published_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-            slug: "new-training-program-launch",
-            author: "Mount Agro Editorial Team",
-            tags: ["Training", "Agriculture", "Herat Province", "Development"],
-        };
-
-        // Fetch related articles
+        article.value = null;
+        // Still try to fetch related articles even if main article fails
         await fetchRelatedArticles();
     } finally {
         loading.value = false;
     }
 };
 
-// Fetch related articles
+// Fetch related articles (only called if not already provided by main API)
 const fetchRelatedArticles = async () => {
     try {
         const response = await axios.get("/api/news", {
@@ -442,40 +398,18 @@ const fetchRelatedArticles = async () => {
             timeout: 5000,
         });
 
+        console.log("Related articles response:", response.data);
+
         if (response.data && response.data.data) {
-            relatedArticles.value = response.data.data;
+            relatedArticles.value = response.data.data.slice(0, 3);
         } else if (Array.isArray(response.data)) {
-            relatedArticles.value = response.data;
+            relatedArticles.value = response.data.slice(0, 3);
+        } else {
+            relatedArticles.value = [];
         }
     } catch (err) {
         console.error("Error fetching related articles:", err);
-        // Fallback related articles
-        relatedArticles.value = [
-            {
-                id: 2,
-                title: "AgriTech Mobile App Reaches 10,000 Users",
-                excerpt:
-                    "Our innovative mobile application providing weather forecasts, market prices, and agricultural advice has successfully reached 10,000 active users across Afghanistan.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=200&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 7 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "agritech-app-milestone",
-            },
-            {
-                id: 3,
-                title: "Women's Cooperative Program Shows Remarkable Success",
-                excerpt:
-                    "Our women's agricultural cooperative program has empowered over 200 women farmers, increasing their income by an average of 40% through collective farming and marketing initiatives.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=200&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 14 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "womens-cooperative-success",
-            },
-        ];
+        relatedArticles.value = [];
     }
 };
 
@@ -527,6 +461,13 @@ const formatDate = (dateString) => {
 // Initialize article when component mounts
 onMounted(() => {
     fetchArticle();
+    const handleLanguageChanged = () => {
+        fetchArticle();
+    };
+    window.addEventListener("language:changed", handleLanguageChanged);
+    onUnmounted(() => {
+        window.removeEventListener("language:changed", handleLanguageChanged);
+    });
 });
 </script>
 

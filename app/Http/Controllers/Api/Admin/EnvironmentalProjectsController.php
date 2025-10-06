@@ -4,31 +4,78 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Models\EnvironmentalProject;
+use App\Services\TranslationSyncService;
+use App\Http\Requests\EnvironmentalProjectRequest;
+use App\Http\Resources\EnvironmentalProjectResource;
 
 class EnvironmentalProjectsController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        return response()->json(['message' => 'Environmental Projects management - Coming soon']);
+        $perPage = $request->get('perPage', 15);
+        $search = $request->get('search', '');
+        $status = $request->get('status', '');
+
+        $query = EnvironmentalProject::query()->orderBy('created_at', 'desc');
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('funding_source', 'like', "%{$search}%");
+            });
+        }
+        if ($status) {
+            $query->where('status', $status);
+        }
+        $items = $query->paginate($perPage);
+        return response()->json([
+            'success' => true,
+            'data' => EnvironmentalProjectResource::collection($items),
+            'meta' => [
+                'total' => $items->total(),
+                'per_page' => $items->perPage(),
+                'current_page' => $items->currentPage(),
+                'last_page' => $items->lastPage(),
+            ],
+        ]);
     }
 
-    public function store(Request $request)
+    public function store(EnvironmentalProjectRequest $request): JsonResponse
     {
-        return response()->json(['message' => 'Create environmental project - Coming soon']);
+        $validated = $request->validated();
+
+        $translations = $validated['translations'] ?? [];
+        unset($validated['translations']);
+
+        $item = EnvironmentalProject::create($validated);
+        TranslationSyncService::sync($item, $translations);
+
+        return response()->json(['success' => true, 'data' => new EnvironmentalProjectResource($item)], 201);
     }
 
-    public function show($id)
+    public function show(EnvironmentalProject $environmentalProject): JsonResponse
     {
-        return response()->json(['message' => 'Show environmental project - Coming soon']);
+        return response()->json(['success' => true, 'data' => new EnvironmentalProjectResource($environmentalProject)]);
     }
 
-    public function update(Request $request, $id)
+    public function update(EnvironmentalProjectRequest $request, EnvironmentalProject $environmentalProject): JsonResponse
     {
-        return response()->json(['message' => 'Update environmental project - Coming soon']);
+        $validated = $request->validated();
+
+        $translations = $validated['translations'] ?? [];
+        unset($validated['translations']);
+
+        $environmentalProject->update($validated);
+        TranslationSyncService::sync($environmentalProject, $translations);
+
+        return response()->json(['success' => true, 'data' => new EnvironmentalProjectResource($environmentalProject)]);
     }
 
-    public function destroy($id)
+    public function destroy(EnvironmentalProject $environmentalProject): JsonResponse
     {
-        return response()->json(['message' => 'Delete environmental project - Coming soon']);
+        $environmentalProject->delete();
+        return response()->json(['success' => true]);
     }
 }

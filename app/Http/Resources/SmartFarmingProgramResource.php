@@ -14,22 +14,23 @@ class SmartFarmingProgramResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $lang = $request->get('lang', 'en');
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('name', $lang) ?? $this->name) : $this->name,
             'slug' => $this->slug,
-            'description' => $this->description,
-            'short_description' => $this->short_description,
-            'farming_type' => $this->farming_type,
+            'description' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('description', $lang) ?? $this->description) : $this->description,
+            'short_description' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('short_description', $lang) ?? $this->short_description) : $this->short_description,
+            'farming_type' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('farming_type', $lang) ?? $this->farming_type) : $this->farming_type,
             'farming_type_display' => ucwords(str_replace('_', ' ', $this->farming_type)),
-            'target_crops' => $this->target_crops,
+            'target_crops' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('target_crops', $lang) ?? $this->target_crops) : $this->target_crops,
             'formatted_target_crops' => $this->formatted_target_crops,
             'sustainability_level' => $this->sustainability_level,
             'sustainability_level_display' => $this->sustainability_level_display,
-            'implementation_guide' => $this->implementation_guide,
-            'sustainability_impact' => $this->sustainability_impact,
+            'implementation_guide' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('implementation_guide', $lang) ?? $this->implementation_guide) : $this->implementation_guide,
+            'sustainability_impact' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('sustainability_impact', $lang) ?? $this->sustainability_impact) : $this->sustainability_impact,
             'duration' => $this->duration,
-            'location' => $this->location,
+            'location' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('location', $lang) ?? $this->location) : $this->location,
             'application_deadline' => $this->application_deadline?->toDateString(),
             'application_deadline_formatted' => $this->application_deadline?->format('M d, Y'),
             'cover_image' => $this->cover_image ? asset($this->cover_image) : null,

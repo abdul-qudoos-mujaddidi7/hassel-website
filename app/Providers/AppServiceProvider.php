@@ -34,11 +34,22 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        Relation::enforceMorphMap([
+        // Use morphMap (non-enforced) so existing rows that store full class names continue working
+        Relation::morphMap([
             'user' => \App\Models\User::class,
+            'news' => \App\Models\News::class,
+            'publication' => \App\Models\Publication::class,
+            'success_story' => \App\Models\SuccessStory::class,
             'training_program' => TrainingProgram::class,
+            'agri_tech_tool' => \App\Models\AgriTechTool::class,
+            'smart_farming_program' => \App\Models\SmartFarmingProgram::class,
+            'seed_supply_program' => \App\Models\SeedSupplyProgram::class,
             'market_access_program' => MarketAccessProgram::class,
+            'environmental_project' => \App\Models\EnvironmentalProject::class,
             'community_program' => CommunityProgram::class,
+            'job_announcement' => \App\Models\JobAnnouncement::class,
+            'gallery' => \App\Models\Gallery::class,
+            'gallery_image' => \App\Models\GalleryImage::class,
         ]);
     }
 }

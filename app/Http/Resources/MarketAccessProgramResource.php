@@ -9,17 +9,18 @@ class MarketAccessProgramResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $lang = $request->get('lang', 'en');
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('title', $lang) ?? $this->title) : $this->title,
             'slug' => $this->slug,
-            'description' => $this->description,
+            'description' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('description', $lang) ?? $this->description) : $this->description,
             'cover_image' => $this->cover_image ? asset($this->cover_image) : null,
             'thumbnail_image' => $this->thumbnail_image ? asset($this->thumbnail_image) : null,
             'program_type' => $this->program_type,
             'program_type_display' => ucwords(str_replace('_', ' ', $this->program_type)),
-            'target_crops' => $this->target_crops,
-            'partner_organizations' => $this->partner_organizations,
+            'target_crops' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('target_crops', $lang) ?? $this->target_crops) : $this->target_crops,
+            'partner_organizations' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('partner_organizations', $lang) ?? $this->partner_organizations) : $this->partner_organizations,
             'status' => $this->status,
             'created_at' => $this->created_at->toDateTimeString(),
 

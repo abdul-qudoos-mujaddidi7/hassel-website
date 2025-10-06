@@ -346,17 +346,25 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import { useI18n } from "./composables/useI18n";
 
 const route = useRoute();
 const loading = ref(true);
 const error = ref(null);
 const program = ref(null);
 const heroImage = ref("/images/ourWork/ourworkhero.avif");
+const { currentLanguage, onLanguageChange } = useI18n();
+let unsubscribeLang = null;
 
 onMounted(async () => {
     await fetchProgram();
+    unsubscribeLang = onLanguageChange(() => fetchProgram());
+});
+
+onUnmounted(() => {
+    if (typeof unsubscribeLang === "function") unsubscribeLang();
 });
 
 watch(
@@ -376,7 +384,15 @@ async function fetchProgram() {
     try {
         const idOrSlug = route.params.idOrSlug;
         // Try direct endpoint first
-        let res = await fetch(`/api/community-programs/${idOrSlug}`);
+        const lang =
+            localStorage.getItem("preferred_language") ||
+            currentLanguage?.value ||
+            "en";
+        let res = await fetch(
+            `/api/community-programs/${idOrSlug}?lang=${encodeURIComponent(
+                lang
+            )}`
+        );
         if (res.ok) {
             const data = await res.json();
             const item = data?.data || data?.program || data;
@@ -388,7 +404,9 @@ async function fetchProgram() {
         }
 
         // Fallback: fetch list and find
-        const listRes = await fetch(`/api/community-programs`);
+        const listRes = await fetch(
+            `/api/community-programs?lang=${encodeURIComponent(lang)}`
+        );
         if (!listRes.ok) throw new Error("Failed to load programs");
         const listJson = await listRes.json();
         const list = Array.isArray(listJson?.data)

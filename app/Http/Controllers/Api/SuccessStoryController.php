@@ -10,35 +10,39 @@ use App\Http\Resources\SuccessStoryResource;
 
 class SuccessStoryController extends Controller
 {
-    /**
-     * Get success stories list with pagination and language support
-     */
     public function index(Request $request): JsonResponse
     {
-        $language = $request->get('lang', 'en');
+        $search = $request->get('search');
 
-        $limit = $request->get('limit', 12);
-        $stories = SuccessStory::published()
-            ->orderBy('published_at', 'desc')
-            ->when($limit, fn($q) => $q->limit($limit))
-            ->get();
+        $query = SuccessStory::published()->orderBy('published_at', 'desc');
+        $perPage = (int) ($request->get('per_page', 9));
 
-        return response()->json(SuccessStoryResource::collection($stories));
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('client_name', 'like', "%{$search}%")
+                    ->orWhere('story', 'like', "%{$search}%");
+            });
+        }
+
+        $stories = $query->paginate($perPage);
+
+        return response()->json([
+            'data' => SuccessStoryResource::collection($stories),
+            'meta' => [
+                'current_page' => $stories->currentPage(),
+                'last_page' => $stories->lastPage(),
+                'per_page' => $stories->perPage(),
+                'total' => $stories->total(),
+            ]
+        ]);
     }
 
-    /**
-     * Get single success story
-     */
-    public function show(string $slug, Request $request): JsonResponse
+    public function show(string $slug): JsonResponse
     {
-        $language = $request->get('lang', 'en');
+        $story = SuccessStory::published()->where('slug', $slug)->firstOrFail();
 
-        $story = SuccessStory::where('slug', $slug)
-            ->where('status', 'published')
-            ->firstOrFail();
-
-        // Get related success stories
-        $relatedStories = SuccessStory::published()
+        $related = SuccessStory::published()
             ->where('id', '!=', $story->id)
             ->orderBy('published_at', 'desc')
             ->limit(3)
@@ -46,7 +50,7 @@ class SuccessStoryController extends Controller
 
         return response()->json([
             'story' => new SuccessStoryResource($story),
-            'related_stories' => SuccessStoryResource::collection($relatedStories)
+            'related_stories' => SuccessStoryResource::collection($related),
         ]);
     }
 }

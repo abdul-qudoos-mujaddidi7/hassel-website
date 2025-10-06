@@ -410,11 +410,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, onUnmounted, ref, watch, computed } from "vue";
+import { useI18n } from "./composables/useI18n";
 
 const loading = ref(true);
 const programs = ref([]);
 const total = ref(0);
+const { currentLanguage, onLanguageChange } = useI18n();
+let unsubscribeLang = null;
 
 const filters = ref({
     program_type: "",
@@ -474,6 +477,14 @@ watch(
 onMounted(() => {
     fetchPrograms();
     fetchProgramTypes();
+    unsubscribeLang = onLanguageChange(() => {
+        fetchPrograms();
+        fetchProgramTypes();
+    });
+});
+
+onUnmounted(() => {
+    if (typeof unsubscribeLang === "function") unsubscribeLang();
 });
 
 async function fetchPrograms() {
@@ -484,6 +495,11 @@ async function fetchPrograms() {
             params.set("program_type", filters.value.program_type);
         if (filters.value.search) params.set("search", filters.value.search);
 
+        const lang =
+            localStorage.getItem("preferred_language") ||
+            currentLanguage?.value ||
+            "en";
+        params.set("lang", lang);
         console.log("Fetching programs with params:", params.toString());
         const res = await fetch(
             `/api/market-access-programs?${params.toString()}`
@@ -583,7 +599,13 @@ function formatProgramType(type) {
 
 async function fetchProgramTypes() {
     try {
-        const res = await fetch("/api/market-access-programs/types");
+        const lang =
+            localStorage.getItem("preferred_language") ||
+            currentLanguage?.value ||
+            "en";
+        const res = await fetch(
+            `/api/market-access-programs/types?lang=${encodeURIComponent(lang)}`
+        );
         if (!res.ok) throw new Error("Failed to load types");
         const data = await res.json();
         programTypes.value = data.types?.map((t) => t.value) || [];

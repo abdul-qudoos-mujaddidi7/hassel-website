@@ -10,6 +10,21 @@ use Illuminate\Support\Str;
 
 class SeedSupplyProgram extends Model
 {
+    use \App\Models\Concerns\TranslatesFields;
+
+    /** @var array<int, string> */
+    protected $translatable = [
+        'name',
+        'short_description',
+        'description',
+        'input_type',
+        'target_crops',
+        'distribution_centers',
+        'usage_instructions',
+        'technical_specifications',
+        'supplier',
+        'contact_info',
+    ];
     use HasFactory;
 
     protected $fillable = [
@@ -109,19 +124,6 @@ class SeedSupplyProgram extends Model
     }
 
     // Helper Methods
-    public function getTranslation($field, $language = 'en')
-    {
-        if ($language === 'en') {
-            return $this->$field;
-        }
-
-        $translation = $this->translations()
-            ->where('field_name', $field)
-            ->where('language', $language)
-            ->first();
-
-        return $translation ? $translation->content : $this->$field;
-    }
 
     public function canOrder(): bool
     {

@@ -7,6 +7,8 @@ use App\Http\Requests\NewsRequest;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Services\TranslationSyncService;
+use App\Http\Resources\NewsResource;
 
 class NewsController extends Controller
 {
@@ -19,21 +21,21 @@ class NewsController extends Controller
             $perPage = $request->get('perPage', 15);
             $search = $request->get('search', '');
             $status = $request->get('status', '');
-            
+
             $query = News::query();
-            
+
             if ($search) {
-                $query->where(function($q) use ($search) {
+                $query->where(function ($q) use ($search) {
                     $q->where('title', 'like', "%{$search}%")
-                      ->orWhere('content', 'like', "%{$search}%")
-                      ->orWhere('excerpt', 'like', "%{$search}%");
+                        ->orWhere('content', 'like', "%{$search}%")
+                        ->orWhere('excerpt', 'like', "%{$search}%");
                 });
             }
-            
+
             if ($status) {
                 $query->where('status', $status);
             }
-            
+
             $news = $query->orderBy('created_at', 'desc')
                 ->paginate($perPage);
 
@@ -64,7 +66,10 @@ class NewsController extends Controller
     {
         try {
             $validated = $request->validated();
+            $translations = $request->input('translations', []);
+
             $news = News::create($validated);
+            TranslationSyncService::sync($news, $translations);
 
             return response()->json([
                 'success' => true,
@@ -83,12 +88,16 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(News $news): JsonResponse
+    public function show(Request $request, News $news): JsonResponse
     {
         try {
+            if ($request->boolean('include_translations')) {
+                $news->load('translations');
+            }
+
             return response()->json([
                 'success' => true,
-                'data' => $news,
+                'data' => (new NewsResource($news))->resolve($request),
                 'message' => 'News article retrieved successfully'
             ]);
         } catch (\Exception $e) {
@@ -107,7 +116,9 @@ class NewsController extends Controller
     {
         try {
             $validated = $request->validated();
+            $translations = $request->input('translations', []);
             $news->update($validated);
+            TranslationSyncService::sync($news, $translations);
 
             return response()->json([
                 'success' => true,
@@ -152,17 +163,17 @@ class NewsController extends Controller
         try {
             $perPage = $request->get('perPage', 10);
             $search = $request->get('search', '');
-            
+
             $query = News::published();
-            
+
             if ($search) {
-                $query->where(function($q) use ($search) {
+                $query->where(function ($q) use ($search) {
                     $q->where('title', 'like', "%{$search}%")
-                      ->orWhere('content', 'like', "%{$search}%")
-                      ->orWhere('excerpt', 'like', "%{$search}%");
+                        ->orWhere('content', 'like', "%{$search}%")
+                        ->orWhere('excerpt', 'like', "%{$search}%");
                 });
             }
-            
+
             $news = $query->orderBy('published_at', 'desc')
                 ->paginate($perPage);
 

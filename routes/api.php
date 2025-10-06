@@ -55,6 +55,12 @@ Route::prefix('news')->name('api.news.')->group(function () {
   Route::get('/{slug}', [NewsController::class, 'show'])->name('show');
 });
 
+// Success Stories
+Route::prefix('success-stories')->name('api.success_stories.')->group(function () {
+  Route::get('/', [SuccessStoryController::class, 'index'])->name('index');
+  Route::get('/{slug}', [SuccessStoryController::class, 'show'])->name('show');
+});
+
 // Publications
 Route::prefix('publications')->name('api.publications.')->group(function () {
   Route::get('/', [PublicationController::class, 'index'])->name('index');
@@ -169,26 +175,24 @@ Route::prefix('program-registration')->name('api.program-registration.')->group(
 */
 // Admin Authentication Routes (public)
 Route::prefix('admin')->name('api.admin.')->group(function () {
-    Route::post('login', [App\Http\Controllers\Api\Admin\AuthController::class, 'login'])->name('login');
-    Route::post('logout', [App\Http\Controllers\Api\Admin\AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
+  Route::post('login', [App\Http\Controllers\Api\Admin\AuthController::class, 'login'])->name('login');
+  Route::post('logout', [App\Http\Controllers\Api\Admin\AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
 });
 
 // Protected Admin Routes
 Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->name('api.admin.')->group(function () {
-    // Dashboard
-    Route::get('/dashboard/stats', [App\Http\Controllers\Api\Admin\DashboardController::class, 'stats'])->name('dashboard.stats');
-    
-    // Content Management
-    Route::apiResource('news', App\Http\Controllers\Api\Admin\NewsController::class);
-    Route::apiResource('programs', App\Http\Controllers\Api\Admin\ProgramsController::class);
-    Route::apiResource('training-programs', App\Http\Controllers\Api\Admin\TrainingProgramsController::class);
-    Route::apiResource('agri-tech-tools', App\Http\Controllers\Api\Admin\AgriTechToolsController::class);
-    Route::apiResource('market-access-programs', App\Http\Controllers\Api\Admin\MarketAccessProgramsController::class);
-    Route::apiResource('smart-farming-programs', App\Http\Controllers\Api\Admin\SmartFarmingProgramsController::class);
-    Route::apiResource('seed-supply-programs', App\Http\Controllers\Api\Admin\SeedSupplyProgramsController::class);
-    Route::apiResource('community-programs', App\Http\Controllers\Api\Admin\CommunityProgramsController::class);
-    Route::apiResource('beneficiaries-stats', App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class);
-    Route::get('beneficiaries-stats-summary', [App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class, 'summary'])->name('beneficiaries-stats.summary');
+  // Dashboard
+  Route::get('/dashboard/stats', [App\Http\Controllers\Api\Admin\DashboardController::class, 'stats'])->name('dashboard.stats');
 
+  // Content Management
+  Route::apiResource('news', App\Http\Controllers\Api\Admin\NewsController::class);
+  Route::apiResource('programs', App\Http\Controllers\Api\Admin\ProgramsController::class);
+  Route::apiResource('training-programs', App\Http\Controllers\Api\Admin\TrainingProgramsController::class);
+  Route::apiResource('agri-tech-tools', App\Http\Controllers\Api\Admin\AgriTechToolsController::class);
+  Route::apiResource('market-access-programs', App\Http\Controllers\Api\Admin\MarketAccessProgramsController::class);
+  Route::apiResource('smart-farming-programs', App\Http\Controllers\Api\Admin\SmartFarmingProgramsController::class);
+  Route::apiResource('seed-supply-programs', App\Http\Controllers\Api\Admin\SeedSupplyProgramsController::class);
+  Route::apiResource('community-programs', App\Http\Controllers\Api\Admin\CommunityProgramsController::class);
+  Route::apiResource('beneficiaries-stats', App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class);
+  Route::get('beneficiaries-stats-summary', [App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class, 'summary'])->name('beneficiaries-stats.summary');
 });
-

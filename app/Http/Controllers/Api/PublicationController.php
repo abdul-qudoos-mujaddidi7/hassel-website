@@ -16,23 +16,36 @@ class PublicationController extends Controller
     public function index(Request $request): JsonResponse
     {
         $language = $request->get('lang', 'en');
-        $type = $request->get('type'); // filter by file_type
+        $type = $request->get('type'); // legacy support (optional)
+        $search = $request->get('search');
 
         $query = Publication::published();
 
-        // Apply file type filter if provided
+        // Apply file type filter if provided (legacy)
         if ($type) {
             $query->where('file_type', $type);
         }
 
+        // Apply search across title, description and file_type
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('file_type', 'like', "%{$search}%");
+            });
+        }
+
         $publications = $query->orderBy('published_at', 'desc')->paginate(12);
 
-        return PublicationResource::collection($publications);
+        return response()->json([
+            'data' => PublicationResource::collection($publications),
+            'meta' => [
+                'current_page' => $publications->currentPage(),
+                'last_page' => $publications->lastPage(),
+                'per_page' => $publications->perPage(),
+                'total' => $publications->total(),
+            ]
+        ]);
     }
-
-    /**
-     * Get publication types for filtering
-     */
     public function types(): JsonResponse
     {
         $types = Publication::published()
