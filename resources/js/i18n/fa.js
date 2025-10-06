@@ -215,4 +215,34 @@ export default {
     "training.detail.contact_us": "تماس با ما",
     "training.detail.related": "برنامه‌های مرتبط",
     "training.detail.view_details": "مشاهده جزئیات →",
+
+    // Resources page
+    "resources.title": "منابع",
+    "resources.subtitle":
+        "به مجموعه جامع انتشارات، پژوهش‌ها و منابع رسانه‌ای ما دسترسی پیدا کنید",
+    "resources.tabs.news": "اخبار",
+    "resources.tabs.publications": "انتشارات",
+    "resources.tabs.success_stories": "داستان‌های موفقیت",
+    "resources.news.latest": "آخرین اخبار",
+    "resources.news.desc":
+        "با جدیدترین به‌روزرسانی‌ها و اطلاعیه‌های ما همراه باشید",
+    "resources.news.empty_title": "هیچ خبرى یافت نشد",
+    "resources.news.empty_desc": "برای آخرین به‌روزرسانی‌ها بعداً مراجعه کنید",
+    "resources.publications.title": "انتشارات و منابع",
+    "resources.publications.desc":
+        "به مجموعه جامع مقالات پژوهشی، گزارش‌ها و انتشارات دسترسی پیدا کنید",
+    "resources.publications.search_placeholder":
+        "جستجو بر اساس عنوان یا نوع (مثلاً گزارش)",
+    "resources.publications.downloads": "دانلود",
+    "resources.publications.download": "دانلود",
+    "resources.publications.empty_title": "هیچ انتشاری یافت نشد",
+    "resources.publications.empty_desc":
+        "لطفاً معیارهای جستجو یا فیلتر را تغییر دهید",
+    "resources.publications.page_of": "صفحه {page} از {total}",
+    "resources.stories.title": "داستان‌های موفقیت",
+    "resources.stories.desc": "تأثیر واقعی از جامعه و مشتریان ما",
+    "resources.stories.search_placeholder":
+        "جستجو بر اساس عنوان، مشتری یا کلیدواژه‌ها",
+    "resources.stories.empty": "هیچ داستانی یافت نشد",
+    "resources.stories.load_more": "داستان‌های بیشتر",
 };

@@ -242,6 +242,36 @@ export default {
     "training.detail.related": "Related Programs",
     "training.detail.view_details": "View details →",
 
+    // Resources page
+    "resources.title": "Resources",
+    "resources.subtitle":
+        "Access our comprehensive collection of publications, research, and media resources",
+    "resources.tabs.news": "News",
+    "resources.tabs.publications": "Publications",
+    "resources.tabs.success_stories": "Success Stories",
+    "resources.news.latest": "Latest News",
+    "resources.news.desc":
+        "Stay informed with our latest updates and announcements",
+    "resources.news.empty_title": "No news articles found",
+    "resources.news.empty_desc": "Check back later for the latest updates",
+    "resources.publications.title": "Publications & Resources",
+    "resources.publications.desc":
+        "Access our comprehensive collection of research papers, reports, and publications",
+    "resources.publications.search_placeholder":
+        "Search by title or type (e.g., Report)",
+    "resources.publications.downloads": "downloads",
+    "resources.publications.download": "Download",
+    "resources.publications.empty_title": "No publications found",
+    "resources.publications.empty_desc":
+        "Try adjusting your search or filter criteria",
+    "resources.publications.page_of": "Page {page} of {total}",
+    "resources.stories.title": "Success Stories",
+    "resources.stories.desc": "Real impact from our community and clients",
+    "resources.stories.search_placeholder":
+        "Search by title, client or keywords",
+    "resources.stories.empty": "No stories found",
+    "resources.stories.load_more": "Load more stories",
+
     // Careers
     "careers.hero.title": "Join Our Team",
     "careers.hero.subtitle": "Build the future of agriculture with us",

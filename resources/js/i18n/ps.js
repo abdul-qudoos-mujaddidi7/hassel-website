@@ -214,4 +214,34 @@ export default {
     "training.detail.contact_us": "اړیکه ونیسئ",
     "training.detail.related": "اړوند پروګرامونه",
     "training.detail.view_details": "تفصیلات وګورئ →",
+
+    // Resources page
+    "resources.title": "سرچینې",
+    "resources.subtitle":
+        "زموږ د خپرونو، څیړنو او رسنیزو سرچینو جامع ټولګې ته لاسرسی",
+    "resources.tabs.news": "خبرونه",
+    "resources.tabs.publications": "انتشارات",
+    "resources.tabs.success_stories": "د بریا کیسې",
+    "resources.news.latest": "وروستي خبرونه",
+    "resources.news.desc": "له وروستیو تازه معلوماتو او اعلانونو سره خبر اوسئ",
+    "resources.news.empty_title": "هیڅ خبر ونه موندل شو",
+    "resources.news.empty_desc":
+        "وروستي تازه معلوماتو لپاره وروسته بیا کتل وکړئ",
+    "resources.publications.title": "انتشارات او سرچینې",
+    "resources.publications.desc":
+        "د څیړنیزو مقالو، رپوټونو او انتشاراتو جامع ټولګې ته لاسرسی",
+    "resources.publications.search_placeholder":
+        "د سرلیک یا ډول له مخې لټون (لکه، رپوټ)",
+    "resources.publications.downloads": "ډاونلوډونه",
+    "resources.publications.download": "ډاونلوډ",
+    "resources.publications.empty_title": "هیڅ انتشارات ونه موندل شول",
+    "resources.publications.empty_desc":
+        "مهرباني وکړئ د لټون یا فلټر معیار بدل کړئ",
+    "resources.publications.page_of": "{page} له {total} څخه پاڼه",
+    "resources.stories.title": "د بریا کیسې",
+    "resources.stories.desc": "زموږ د ټولنې او مراجعینو واقعي اغېز",
+    "resources.stories.search_placeholder":
+        "د سرلیک، مشتری یا کلیمو له مخې لټون",
+    "resources.stories.empty": "هیڅ کیسه ونه موندل شوه",
+    "resources.stories.load_more": "نورې کیسې ښکاره کړئ",
 };

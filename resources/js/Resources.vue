@@ -15,13 +15,12 @@
                     <h1
                         class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
                     >
-                        Resources
+                        {{ t("resources.title") }}
                     </h1>
                     <p
                         class="text-base md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed"
                     >
-                        Access our comprehensive collection of publications,
-                        research, and media resources
+                        {{ t("resources.subtitle") }}
                     </p>
                 </div>
             </div>
@@ -43,7 +42,7 @@
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
                                 ]"
                             >
-                                News
+                                {{ t("resources.tabs.news") }}
                             </button>
                             <button
                                 @click="activeTab = 'publications'"
@@ -54,7 +53,7 @@
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
                                 ]"
                             >
-                                Publications
+                                {{ t("resources.tabs.publications") }}
                             </button>
                             <button
                                 @click="activeTab = 'success-stories'"
@@ -65,7 +64,7 @@
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
                                 ]"
                             >
-                                Success Stories
+                                {{ t("resources.tabs.success_stories") }}
                             </button>
                         </nav>
                     </div>
@@ -75,11 +74,10 @@
                 <div v-if="activeTab === 'news'" class="space-y-12">
                     <div class="text-center">
                         <h2 class="text-3xl font-bold text-gray-900 mb-4">
-                            Latest News
+                            {{ t("resources.news.latest") }}
                         </h2>
                         <p class="text-gray-600 max-w-2xl mx-auto">
-                            Stay informed with our latest updates and
-                            announcements
+                            {{ t("resources.news.desc") }}
                         </p>
                     </div>
 
@@ -121,7 +119,9 @@
                                     <div
                                         class="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-600"
                                     ></div>
-                                    <span class="font-medium">Loading...</span>
+                                    <span class="font-medium">{{
+                                        t("common.loading")
+                                    }}</span>
                                 </div>
                             </div>
 
@@ -166,7 +166,7 @@
                                         }`"
                                         class="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm transition-colors duration-200"
                                     >
-                                        Read More
+                                        {{ t("common.read_more") }}
                                         <svg
                                             class="ml-2 w-4 h-4"
                                             fill="none"
@@ -208,10 +208,10 @@
                                 <h3
                                     class="text-lg font-medium text-gray-900 mb-2"
                                 >
-                                    No news articles found
+                                    {{ t("resources.news.empty_title") }}
                                 </h3>
                                 <p class="text-gray-500">
-                                    Check back later for the latest updates
+                                    {{ t("resources.news.empty_desc") }}
                                 </p>
                             </div>
                         </div>
@@ -231,7 +231,7 @@
                                 "
                                 class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                             >
-                                Previous
+                                {{ t("common.previous") }}
                             </button>
 
                             <div class="flex items-center space-x-1">
@@ -261,7 +261,7 @@
                                 "
                                 class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                             >
-                                Next
+                                {{ t("common.next") }}
                             </button>
                         </div>
                     </div>
@@ -274,11 +274,10 @@
                 >
                     <div class="text-center">
                         <h2 class="text-3xl font-bold text-gray-900 mb-4">
-                            Publications & Resources
+                            {{ t("resources.publications.title") }}
                         </h2>
                         <p class="text-gray-600 max-w-2xl mx-auto">
-                            Access our comprehensive collection of research
-                            papers, reports, and publications
+                            {{ t("resources.publications.desc") }}
                         </p>
                     </div>
 
@@ -291,7 +290,11 @@
                                     v-model="publicationSearch"
                                     @input="searchPublications"
                                     type="text"
-                                    placeholder="Search by title or type (e.g., Report)"
+                                    :placeholder="
+                                        t(
+                                            'resources.publications.search_placeholder'
+                                        )
+                                    "
                                     class="w-full pl-9 pr-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                 />
                                 <svg
@@ -368,7 +371,9 @@
                                     <div
                                         class="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-600"
                                     ></div>
-                                    <span class="font-medium">Loading...</span>
+                                    <span class="font-medium">{{
+                                        t("common.loading")
+                                    }}</span>
                                 </div>
                             </div>
 
@@ -476,7 +481,11 @@
                                             class="hidden md:inline"
                                         >
                                             {{ publication.download_count }}
-                                            downloads
+                                            {{
+                                                t(
+                                                    "resources.publications.downloads"
+                                                )
+                                            }}
                                         </span>
                                     </div>
 
@@ -500,7 +509,9 @@
                                                 d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                                             />
                                         </svg>
-                                        Download
+                                        {{
+                                            t("resources.publications.download")
+                                        }}
                                     </button>
                                 </div>
                             </div>
@@ -529,10 +540,12 @@
                                 <h3
                                     class="text-lg font-medium text-gray-900 mb-2"
                                 >
-                                    No publications found
+                                    {{
+                                        t("resources.publications.empty_title")
+                                    }}
                                 </h3>
                                 <p class="text-gray-500">
-                                    Try adjusting your search or filter criteria
+                                    {{ t("resources.publications.empty_desc") }}
                                 </p>
                             </div>
                         </div>
@@ -553,11 +566,15 @@
                                 :disabled="publicationsCurrentPage <= 1"
                                 class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                Previous
+                                {{ t("common.previous") }}
                             </button>
                             <span class="px-3 py-2 text-sm text-gray-700">
-                                Page {{ publicationsCurrentPage }} of
-                                {{ publicationsTotalPages }}
+                                {{
+                                    t("resources.publications.page_of", {
+                                        page: publicationsCurrentPage,
+                                        total: publicationsTotalPages,
+                                    })
+                                }}
                             </span>
                             <button
                                 @click="
@@ -571,7 +588,7 @@
                                 "
                                 class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                Next
+                                {{ t("common.next") }}
                             </button>
                         </nav>
                     </div>
@@ -585,10 +602,10 @@
                 >
                     <div class="text-center">
                         <h2 class="text-3xl font-bold text-gray-900 mb-4">
-                            Success Stories
+                            {{ t("resources.stories.title") }}
                         </h2>
                         <p class="text-gray-600 max-w-2xl mx-auto">
-                            Real impact from our community and clients
+                            {{ t("resources.stories.desc") }}
                         </p>
                     </div>
 
@@ -601,7 +618,9 @@
                                 v-model="successStoriesSearch"
                                 @input="searchSuccessStories"
                                 type="text"
-                                placeholder="Search by title, client or keywords"
+                                :placeholder="
+                                    t('resources.stories.search_placeholder')
+                                "
                                 class="w-full pl-9 pr-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                             />
                             <svg
@@ -692,7 +711,7 @@
                         </div>
 
                         <div v-else class="text-center py-12 text-gray-500">
-                            No stories found
+                            {{ t("resources.stories.empty") }}
                         </div>
                     </div>
 
@@ -708,8 +727,8 @@
                         >
                             {{
                                 successStoriesLoading
-                                    ? "Loading…"
-                                    : "Load more stories"
+                                    ? t("common.loading")
+                                    : t("resources.stories.load_more")
                             }}
                         </button>
                     </div>
@@ -782,7 +801,10 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
+import { useI18n } from "./composables/useI18n";
 import axios from "axios";
+
+const { t } = useI18n();
 
 // Initialize activeTab from URL hash or localStorage
 const getInitialTab = () => {
