@@ -8,6 +8,7 @@ use App\Models\TrainingProgram;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Services\TranslationSyncService;
+use App\Http\Resources\TrainingProgramResource;
 
 class TrainingProgramsController extends Controller
 {
@@ -92,12 +93,16 @@ class TrainingProgramsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TrainingProgram $trainingProgram): JsonResponse
+    public function show(Request $request, TrainingProgram $trainingProgram): JsonResponse
     {
         try {
+            if ($request->boolean('include_translations')) {
+                $trainingProgram->load('translations');
+            }
+
             return response()->json([
                 'success' => true,
-                'data' => $trainingProgram,
+                'data' => (new TrainingProgramResource($trainingProgram))->resolve($request),
                 'message' => 'Training program retrieved successfully'
             ]);
         } catch (\Exception $e) {

@@ -1465,6 +1465,20 @@ onMounted(async () => {
 
     // Initialize stats animation after data is loaded
     setTimeout(initializeStats, 100);
+
+    // Refetch translatable dynamic data when language changes
+    const handleLanguageChanged = () => {
+        fetchLatestNews();
+        fetchPillarCounts();
+    };
+    window.addEventListener("language:changed", handleLanguageChanged);
+
+    // Cleanup on unmount
+    const cleanup = () => {
+        window.removeEventListener("language:changed", handleLanguageChanged);
+    };
+    // Ensure cleanup is called
+    window.addEventListener("beforeunload", cleanup);
 });
 
 onUnmounted(() => {
@@ -1472,5 +1486,7 @@ onUnmounted(() => {
     stopPillarAutoSlide();
     window.removeEventListener("resize", updateCardsPerView);
     window.removeEventListener("resize", updateWindowWidth);
+    // Remove beforeunload cleanup listener (no-op if not set)
+    window.removeEventListener("beforeunload", () => {});
 });
 </script>

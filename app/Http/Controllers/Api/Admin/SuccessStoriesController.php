@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\SuccessStory;
 use App\Services\TranslationSyncService;
+use App\Http\Resources\SuccessStoryResource;
 
 class SuccessStoriesController extends Controller
 {
@@ -50,9 +51,15 @@ class SuccessStoriesController extends Controller
         return response()->json(['success' => true, 'data' => $story], 201);
     }
 
-    public function show(SuccessStory $successStory): JsonResponse
+    public function show(Request $request, SuccessStory $successStory): JsonResponse
     {
-        return response()->json(['success' => true, 'data' => $successStory]);
+        if ($request->boolean('include_translations')) {
+            $successStory->load('translations');
+        }
+        return response()->json([
+            'success' => true,
+            'data' => (new SuccessStoryResource($successStory))->resolve($request)
+        ]);
     }
 
     public function update(Request $request, SuccessStory $successStory): JsonResponse

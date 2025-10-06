@@ -156,7 +156,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 
@@ -198,6 +198,13 @@ const fetchStory = async () => {
 };
 
 onMounted(fetchStory);
+
+// Refetch when language changes
+const handleLanguageChanged = () => fetchStory();
+window.addEventListener("language:changed", handleLanguageChanged);
+onUnmounted(() => {
+    window.removeEventListener("language:changed", handleLanguageChanged);
+});
 </script>
 
 <style scoped>

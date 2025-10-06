@@ -695,7 +695,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import LoadingSpinner from "./components/LoadingSpinner.vue";
 import { useI18n } from "./composables/useI18n.js";
 
@@ -730,6 +730,17 @@ onMounted(() => {
         if (jobTitle) form.value.job_title = decodeURIComponent(jobTitle);
         if (jobId) form.value.job_id = jobId;
     }
+
+    // Language change handler to update placeholders/labels (static via t())
+    const handleLanguageChanged = () => {
+        // No API fetch required, but this ensures reactivity for placeholders
+        form.value = { ...form.value };
+    };
+    window.addEventListener("language:changed", handleLanguageChanged);
+
+    onUnmounted(() => {
+        window.removeEventListener("language:changed", handleLanguageChanged);
+    });
 });
 
 // Handle file upload

@@ -311,7 +311,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 
@@ -461,6 +461,13 @@ const formatDate = (dateString) => {
 // Initialize article when component mounts
 onMounted(() => {
     fetchArticle();
+    const handleLanguageChanged = () => {
+        fetchArticle();
+    };
+    window.addEventListener("language:changed", handleLanguageChanged);
+    onUnmounted(() => {
+        window.removeEventListener("language:changed", handleLanguageChanged);
+    });
 });
 </script>
 

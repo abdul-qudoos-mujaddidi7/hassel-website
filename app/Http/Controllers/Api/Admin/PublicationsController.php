@@ -8,6 +8,7 @@ use App\Models\Publication;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Services\TranslationSyncService;
+use App\Http\Resources\PublicationResource;
 
 class PublicationsController extends Controller
 {
@@ -90,12 +91,16 @@ class PublicationsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Publication $publication): JsonResponse
+    public function show(Request $request, Publication $publication): JsonResponse
     {
         try {
+            if ($request->boolean('include_translations')) {
+                $publication->load('translations');
+            }
+
             return response()->json([
                 'success' => true,
-                'data' => $publication,
+                'data' => (new PublicationResource($publication))->resolve($request),
                 'message' => 'Publication retrieved successfully'
             ]);
         } catch (\Exception $e) {

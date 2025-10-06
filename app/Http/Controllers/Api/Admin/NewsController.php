@@ -8,6 +8,7 @@ use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Services\TranslationSyncService;
+use App\Http\Resources\NewsResource;
 
 class NewsController extends Controller
 {
@@ -87,12 +88,16 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(News $news): JsonResponse
+    public function show(Request $request, News $news): JsonResponse
     {
         try {
+            if ($request->boolean('include_translations')) {
+                $news->load('translations');
+            }
+
             return response()->json([
                 'success' => true,
-                'data' => $news,
+                'data' => (new NewsResource($news))->resolve($request),
                 'message' => 'News article retrieved successfully'
             ]);
         } catch (\Exception $e) {

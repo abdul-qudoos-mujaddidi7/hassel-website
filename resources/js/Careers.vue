@@ -293,7 +293,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import axios from "axios";
 import LoadingSpinner from "./components/LoadingSpinner.vue";
 import { useI18n } from "./composables/useI18n.js";
@@ -331,5 +331,14 @@ async function fetchJobs() {
     }
 }
 
-onMounted(fetchJobs);
+onMounted(() => {
+    fetchJobs();
+    const handleLanguageChanged = () => {
+        fetchJobs();
+    };
+    window.addEventListener("language:changed", handleLanguageChanged);
+    onUnmounted(() => {
+        window.removeEventListener("language:changed", handleLanguageChanged);
+    });
+});
 </script>

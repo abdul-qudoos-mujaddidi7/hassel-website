@@ -781,7 +781,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import axios from "axios";
 
 // Initialize activeTab from URL hash or localStorage
@@ -1128,6 +1128,22 @@ onMounted(() => {
     } else if (activeTab.value === "success-stories") {
         fetchSuccessStories();
     }
+
+    // Refetch current tab when language changes
+    const handleLanguageChanged = () => {
+        if (activeTab.value === "news") {
+            fetchNews(newsPagination.value.currentPage || 1);
+        } else if (activeTab.value === "publications") {
+            fetchPublications(publicationsPagination.value.currentPage || 1);
+        } else if (activeTab.value === "success-stories") {
+            fetchSuccessStories(successStoriesPage.value || 1);
+        }
+    };
+    window.addEventListener("language:changed", handleLanguageChanged);
+
+    onUnmounted(() => {
+        window.removeEventListener("language:changed", handleLanguageChanged);
+    });
 });
 </script>
 
