@@ -31,7 +31,7 @@
                         <router-link
                             to="/"
                             class="text-green-200 hover:text-white transition-colors"
-                            >Home</router-link
+                            >{{ t("training.breadcrumb.home") }}</router-link
                         >
                         <svg
                             class="w-4 h-4 text-green-300"
@@ -47,7 +47,7 @@
                         <router-link
                             to="/training-programs"
                             class="text-green-200 hover:text-white transition-colors"
-                            >Training Programs</router-link
+                            >{{ t("training.title") }}</router-link
                         >
                         <svg
                             class="w-4 h-4 text-green-300"
@@ -80,7 +80,7 @@
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                                 ></path>
                             </svg>
-                            Training Program
+                            {{ t("training.detail.badge") }}
                         </div>
 
                         <h1
@@ -156,13 +156,15 @@
                             class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20"
                         >
                             <h3 class="text-xl font-bold text-white mb-6">
-                                Program Details
+                                {{ t("training.detail.program_details") }}
                             </h3>
                             <div class="space-y-4">
                                 <div
                                     class="flex justify-between items-center py-3 border-b border-white/10"
                                 >
-                                    <span class="text-green-200">Duration</span>
+                                    <span class="text-green-200">{{
+                                        t("training.detail.duration")
+                                    }}</span>
                                     <span class="text-white font-semibold">{{
                                         program?.duration || "TBD"
                                     }}</span>
@@ -170,9 +172,9 @@
                                 <div
                                     class="flex justify-between items-center py-3 border-b border-white/10"
                                 >
-                                    <span class="text-green-200"
-                                        >Max Participants</span
-                                    >
+                                    <span class="text-green-200">{{
+                                        t("training.detail.max_participants")
+                                    }}</span>
                                     <span class="text-white font-semibold">{{
                                         program?.max_participants || "Unlimited"
                                     }}</span>
@@ -180,9 +182,9 @@
                                 <div
                                     class="flex justify-between items-center py-3 border-b border-white/10"
                                 >
-                                    <span class="text-green-200"
-                                        >Instructor</span
-                                    >
+                                    <span class="text-green-200">{{
+                                        t("training.detail.instructor")
+                                    }}</span>
                                     <span class="text-white font-semibold">{{
                                         program?.instructor || "TBD"
                                     }}</span>
@@ -190,9 +192,9 @@
                                 <div
                                     class="flex justify-between items-center py-3"
                                 >
-                                    <span class="text-green-200"
-                                        >Program Type</span
-                                    >
+                                    <span class="text-green-200">{{
+                                        t("training.detail.program_type")
+                                    }}</span>
                                     <span
                                         class="text-white font-semibold capitalize"
                                         >{{
@@ -295,13 +297,12 @@
                                     <h2
                                         class="text-xl sm:text-2xl font-bold text-gray-900 mb-1"
                                     >
-                                        Program Overview
+                                        {{ t("training.detail.overview") }}
                                     </h2>
                                     <p
                                         class="text-sm sm:text-base text-gray-600"
                                     >
-                                        Comprehensive training details and
-                                        curriculum
+                                        {{ t("training.detail.overview_sub") }}
                                     </p>
                                 </div>
                             </div>
@@ -346,7 +347,11 @@
                                     <h3
                                         class="text-base sm:text-lg font-semibold text-gray-900"
                                     >
-                                        Learning Objectives
+                                        {{
+                                            t(
+                                                "training.detail.learning_objectives"
+                                            )
+                                        }}
                                     </h3>
                                 </div>
                                 <ul class="space-y-1.5 sm:space-y-2">
@@ -394,7 +399,9 @@
                                     <h3
                                         class="text-base sm:text-lg font-semibold text-gray-900"
                                     >
-                                        Course Syllabus
+                                        {{
+                                            t("training.detail.course_syllabus")
+                                        }}
                                     </h3>
                                 </div>
                                 <div
@@ -557,17 +564,16 @@
                                 <h3
                                     class="text-lg font-semibold text-gray-900 mb-2"
                                 >
-                                    Need More Information?
+                                    {{ t("training.detail.need_info") }}
                                 </h3>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Contact our team for program details and
-                                    enrollment information.
+                                    {{ t("training.detail.need_info_sub") }}
                                 </p>
                                 <router-link
                                     to="/contact"
                                     class="inline-flex items-center px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors text-sm"
                                 >
-                                    Contact Us
+                                    {{ t("training.detail.contact_us") }}
                                 </router-link>
                             </div>
                         </div>
@@ -580,7 +586,7 @@
                             <h3
                                 class="text-lg font-semibold text-gray-900 mb-4"
                             >
-                                Related Programs
+                                {{ t("training.detail.related") }}
                             </h3>
                             <div class="space-y-3">
                                 <router-link
@@ -595,7 +601,7 @@
                                         {{ r.title }}
                                     </div>
                                     <div class="text-sm text-gray-600 mt-1">
-                                        View details →
+                                        {{ t("training.detail.view_details") }}
                                     </div>
                                 </router-link>
                             </div>
@@ -617,7 +623,7 @@ const idOrSlug = ref(route.params.idOrSlug);
 const loading = ref(true);
 const program = ref(null);
 const related = ref([]);
-const { currentLanguage, onLanguageChange } = useI18n();
+const { currentLanguage, onLanguageChange, t } = useI18n();
 let unsubscribeLang = null;
 
 const dateRange = computed(() => {
