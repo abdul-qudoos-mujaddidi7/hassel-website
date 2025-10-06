@@ -275,6 +275,8 @@ export default {
     // Careers
     "careers.hero.title": "Join Our Team",
     "careers.hero.subtitle": "Build the future of agriculture with us",
+    "careers.hero.subtext":
+        "We’re looking for passionate people to help empower farmers and strengthen agricultural communities across Afghanistan.",
     "careers.current_openings": "Current Openings",
     "careers.no_jobs": "No job openings available at the moment",
     "careers.apply_position": "Apply for this Position",
@@ -288,4 +290,19 @@ export default {
     "contact.form.subject": "Subject",
     "contact.form.message": "Message",
     "contact.form.send": "Send Message",
+
+    // Careers
+    "careers.hero.badge": "Building Afghanistan's Future",
+    "careers.current_openings": "Current Job Openings",
+    "careers.openings_subtitle": "Explore opportunities and apply by email.",
+    "careers.refresh_jobs": "Refresh Open Jobs",
+    "careers.apply_position": "Apply for this Position",
+    "careers.status.open": "Open",
+    "careers.status.closed": "Closed",
+    "careers.deadline": "Deadline:",
+    "careers.how_to_apply.title": "How to Apply",
+    "careers.how_to_apply.body":
+        "Email your CV to {email} and include the job title in the subject.",
+    // Loading labels
+    "loading.jobs": "Loading open jobs...",
 };

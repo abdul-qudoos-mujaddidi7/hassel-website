@@ -63,6 +63,9 @@ export default {
     "home.pillars.community.countLabel": "برنامه",
 
     "careers.hero.title": "به تیم ما بپیوندید",
+    "careers.hero.subtitle": "با ما آیندهٔ کشاورزی را بسازید",
+    "careers.hero.subtext":
+        "ما به دنبال افراد مشتاق هستیم تا به توانمندسازی کشاورزان و تقویت جوامع کشاورزی افغانستان کمک کنند.",
     "contact.hero.title": "با ما در تماس باشید",
 
     // Stats labels
@@ -245,4 +248,20 @@ export default {
         "جستجو بر اساس عنوان، مشتری یا کلیدواژه‌ها",
     "resources.stories.empty": "هیچ داستانی یافت نشد",
     "resources.stories.load_more": "داستان‌های بیشتر",
+
+    // Careers
+    "careers.hero.badge": "ساختن آیندهٔ افغانستان",
+    "careers.current_openings": "فرصت‌های شغلی موجود",
+    "careers.openings_subtitle":
+        "فرصت‌ها را بررسی کنید و از طریق ایمیل درخواست دهید.",
+    "careers.refresh_jobs": "به‌روزرسانی فرصت‌های شغلی",
+    "careers.apply_position": "درخواست برای این موقعیت",
+    "careers.status.open": "باز",
+    "careers.status.closed": "بسته",
+    "careers.deadline": "آخرین مهلت:",
+    "careers.how_to_apply.title": "نحوهٔ درخواست",
+    "careers.how_to_apply.body":
+        "رزومهٔ خود را به {email} ایمیل کنید و عنوان شغل را در موضوع ایمیل درج نمایید.",
+    // Loading labels
+    "loading.jobs": "در حال بارگذاری فرصت‌های شغلی...",
 };

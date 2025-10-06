@@ -62,7 +62,10 @@ export default {
         "هراړخیز ټولنیز پرمختیایي نوښتونه چې په کلیوالو ځواکمنتیا، ټولنیز ګډون او د معیشت ښه والي تمرکز لري.",
     "home.pillars.community.countLabel": "پروګرامونه",
 
-    "careers.hero.title": "زموږ ټیم سره یوځای شئ",
+    "careers.hero.title": "زموږ ډلې سره یوځای شئ",
+    "careers.hero.subtitle": "له موږ سره د کرنې راتلونکی جوړ کړئ",
+    "careers.hero.subtext":
+        "موږ د داسې کسانو په لټه کې یو چې له شوقه ډک وي څو بزګران بااختیاره کړي او د افغانستان کرنیزې ټولنې پیاوړې کړي.",
     "contact.hero.title": "زموږ سره اړیکه ونیسئ",
 
     // Stats labels
@@ -244,4 +247,20 @@ export default {
         "د سرلیک، مشتری یا کلیمو له مخې لټون",
     "resources.stories.empty": "هیڅ کیسه ونه موندل شوه",
     "resources.stories.load_more": "نورې کیسې ښکاره کړئ",
+
+    // Careers
+    "careers.hero.badge": "د افغانستان راتلونکی جوړول",
+    "careers.current_openings": "د دندو اوسني فرصتونه",
+    "careers.openings_subtitle":
+        "فرصتونه وپلټئ او د ایمیل له لارې غوښتنه وکړئ.",
+    "careers.refresh_jobs": "خلاصې دندې تازه کړئ",
+    "careers.apply_position": "پر دې دنده غوښتنه وکړئ",
+    "careers.status.open": "پرانیستې",
+    "careers.status.closed": "بندې",
+    "careers.deadline": "وروستۍ نېټه:",
+    "careers.how_to_apply.title": "څنګه غوښتنه وکړو",
+    "careers.how_to_apply.body":
+        "خپل CV دې {email} ته ایمیل کړئ او د دندې عنوان په موضوع کې ولیکئ.",
+    // Loading labels
+    "loading.jobs": "پرانیستې دندې لوډ کېږي...",
 };

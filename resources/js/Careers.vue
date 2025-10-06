@@ -46,9 +46,9 @@
                                     d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"
                                 ></path>
                             </svg>
-                            <span class="text-white font-medium"
-                                >Building Afghanistan's Future</span
-                            >
+                            <span class="text-white font-medium">
+                                {{ t("careers.hero.badge") }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -62,12 +62,12 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="heading-lg text-gray-900 mb-4">
-                        Current Job Openings
+                        {{ t("careers.current_openings") }}
                     </h2>
                     <p
                         class="text-base md:text-xl text-gray-600 max-w-3xl mx-auto mb-4 md:mb-6"
                     >
-                        Explore opportunities and apply by email.
+                        {{ t("careers.openings_subtitle") }}
                     </p>
                     <button
                         @click="fetchJobs"
@@ -263,9 +263,40 @@
                                     :href="`/contact?subject=job_application&job_title=${encodeURIComponent(
                                         job.title
                                     )}&job_id=${job.id}`"
-                                    class="btn btn-primary w-full md:w-auto text-sm md:text-base"
+                                    class="btn btn-primary w-full md:w-auto text-sm md:text-base inline-flex items-center justify-center"
                                 >
-                                    {{ t("careers.apply_position") }}
+                                    <template v-if="!isRTL">
+                                        {{ t("careers.apply_position") }}
+                                        <svg
+                                            class="w-4 h-4 ml-2"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M9 5l7 7-7 7"
+                                            />
+                                        </svg>
+                                    </template>
+                                    <template v-else>
+                                        <svg
+                                            class="w-4 h-4 mr-2"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M15 19l-7-7 7-7"
+                                            />
+                                        </svg>
+                                        {{ t("careers.apply_position") }}
+                                    </template>
                                 </a>
                             </div>
                         </div>
@@ -280,16 +311,17 @@
                 <h2
                     class="heading-md mb-4 bg-brand-primary w-fit mx-auto py-2 px-4 text-white border rounded-full"
                 >
-                    How to Apply
+                    {{ t("careers.how_to_apply.title") }}
                 </h2>
-                <p class="text-base md:text-lg text-green-100">
-                    Email your CV to
-                    <a
-                        href="mailto:info@mountagro.com"
-                        class="underline font-semibold"
-                        >info@mountagro.com</a
-                    >
-                    and include the job title in the subject.
+                <p
+                    class="text-base md:text-lg text-green-100"
+                    :dir="isRTL ? 'rtl' : 'ltr'"
+                >
+                    {{
+                        t("careers.how_to_apply.body", {
+                            email: "info@mountagro.com",
+                        })
+                    }}
                 </p>
             </div>
         </section>
@@ -302,7 +334,7 @@ import axios from "axios";
 import LoadingSpinner from "./components/LoadingSpinner.vue";
 import { useI18n } from "./composables/useI18n.js";
 
-const { t } = useI18n();
+const { t, isRTL } = useI18n();
 
 const jobs = ref([]);
 const loading = ref(false);
