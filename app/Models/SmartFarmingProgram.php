@@ -113,19 +113,6 @@ class SmartFarmingProgram extends Model
     }
 
     // Helper Methods
-    public function getTranslation($field, $language = 'en')
-    {
-        if ($language === 'en') {
-            return $this->$field;
-        }
-
-        $translation = $this->translations()
-            ->where('field_name', $field)
-            ->where('language', $language)
-            ->first();
-
-        return $translation ? $translation->content : $this->$field;
-    }
 
     public function canApply(): bool
     {

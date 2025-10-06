@@ -7,6 +7,19 @@ use Illuminate\Support\Str;
 
 trait TranslatesFields
 {
+  private function normalizeLanguage(string $language): string
+  {
+    $map = [
+      'fa' => 'farsi',
+      'ps' => 'pashto',
+      'en' => 'en',
+      'farsi' => 'farsi',
+      'pashto' => 'pashto',
+    ];
+    $key = strtolower($language);
+    return $map[$key] ?? $key;
+  }
+
   /**
    * Get translated value for a field and language with fallback.
    */
@@ -19,25 +32,29 @@ trait TranslatesFields
       }
     }
 
+    // Normalize language inputs to match DB enum values
+    $normalized = $this->normalizeLanguage($language);
+    $fallbackNorm = $fallbackLanguage ? $this->normalizeLanguage($fallbackLanguage) : null;
+
     // Find translation
     $translation = Translation::query()
       ->where('model_type', static::class)
       ->where('model_id', $this->getKey())
       ->where('field_name', $fieldName)
-      ->where('language', $language)
-      ->value('value');
+      ->where('language', $normalized)
+      ->value('content');
 
     if ($translation !== null && $translation !== '') {
       return $translation;
     }
 
-    if ($fallbackLanguage && $fallbackLanguage !== $language) {
+    if ($fallbackLanguage && $fallbackNorm !== $normalized) {
       $fallback = Translation::query()
         ->where('model_type', static::class)
         ->where('model_id', $this->getKey())
         ->where('field_name', $fieldName)
-        ->where('language', $fallbackLanguage)
-        ->value('value');
+        ->where('language', $fallbackNorm)
+        ->value('content');
 
       if ($fallback !== null && $fallback !== '') {
         return $fallback;

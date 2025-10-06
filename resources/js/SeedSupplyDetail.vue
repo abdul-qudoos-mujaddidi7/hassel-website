@@ -517,17 +517,25 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 import { useRoute } from "vue-router";
+import { useI18n } from "./composables/useI18n";
 
 const route = useRoute();
 
 const loading = ref(true);
 const error = ref(null);
 const program = ref(null);
+const { currentLanguage, onLanguageChange } = useI18n();
+let unsubscribeLang = null;
 
 onMounted(() => {
     fetchProgramDetail();
+    unsubscribeLang = onLanguageChange(() => fetchProgramDetail());
+});
+
+onUnmounted(() => {
+    if (typeof unsubscribeLang === "function") unsubscribeLang();
 });
 
 // Watch for route changes to handle in-app navigation
@@ -552,7 +560,15 @@ async function fetchProgramDetail() {
         // Try to fetch by slug first (API expects slug)
         let response;
         try {
-            response = await fetch(`/api/seed-supply-programs/${idOrSlug}`);
+            const lang =
+                localStorage.getItem("preferred_language") ||
+                currentLanguage?.value ||
+                "en";
+            response = await fetch(
+                `/api/seed-supply-programs/${idOrSlug}?lang=${encodeURIComponent(
+                    lang
+                )}`
+            );
             if (response.ok) {
                 const data = await response.json();
                 program.value = formatProgram(data.data || data);
@@ -564,7 +580,13 @@ async function fetchProgramDetail() {
 
         // If direct fetch fails, try to find by slug or ID in the list
         try {
-            const listResponse = await fetch("/api/seed-supply-programs");
+            const lang =
+                localStorage.getItem("preferred_language") ||
+                currentLanguage?.value ||
+                "en";
+            const listResponse = await fetch(
+                `/api/seed-supply-programs?lang=${encodeURIComponent(lang)}`
+            );
             if (!listResponse.ok)
                 throw new Error("Failed to fetch programs list");
 

@@ -453,11 +453,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, onUnmounted, ref, watch, computed } from "vue";
+import { useI18n } from "./composables/useI18n";
 
 const loading = ref(true);
 const tools = ref([]);
 const total = ref(0);
+const { currentLanguage, onLanguageChange } = useI18n();
+let unsubscribeLang = null;
 
 const filters = ref({
     type: "",
@@ -483,6 +486,11 @@ watch(
 
 onMounted(() => {
     fetchTools();
+    unsubscribeLang = onLanguageChange(() => fetchTools());
+});
+
+onUnmounted(() => {
+    if (typeof unsubscribeLang === "function") unsubscribeLang();
 });
 
 async function fetchTools() {
@@ -494,6 +502,11 @@ async function fetchTools() {
             params.set("platform", filters.value.platform);
         if (filters.value.search) params.set("search", filters.value.search);
 
+        const lang =
+            localStorage.getItem("preferred_language") ||
+            currentLanguage?.value ||
+            "en";
+        params.set("lang", lang);
         console.log("Fetching tools with params:", params.toString());
         const res = await fetch(`/api/agri-tech-tools?${params.toString()}`);
         if (!res.ok) throw new Error("Failed to load tools");

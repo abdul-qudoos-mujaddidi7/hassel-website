@@ -544,8 +544,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch, nextTick } from "vue";
+import { ref, onMounted, onUnmounted, computed, watch, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "./composables/useI18n";
 
 const route = useRoute();
 const router = useRouter();
@@ -554,10 +555,20 @@ const loading = ref(true);
 const error = ref(null);
 const tool = ref(null);
 const relatedTools = ref([]);
+const { currentLanguage, onLanguageChange } = useI18n();
+let unsubscribeLang = null;
 
 onMounted(() => {
     fetchToolDetail();
     fetchRelatedTools();
+    unsubscribeLang = onLanguageChange(() => {
+        fetchToolDetail();
+        fetchRelatedTools();
+    });
+});
+
+onUnmounted(() => {
+    if (typeof unsubscribeLang === "function") unsubscribeLang();
 });
 
 // React to route changes so detail updates without refresh
@@ -582,7 +593,15 @@ async function fetchToolDetail() {
         // Try to fetch by slug first (API expects slug)
         let response;
         try {
-            response = await fetch(`/api/agri-tech-tools/${idOrSlug}`);
+            const lang =
+                localStorage.getItem("preferred_language") ||
+                currentLanguage?.value ||
+                "en";
+            response = await fetch(
+                `/api/agri-tech-tools/${idOrSlug}?lang=${encodeURIComponent(
+                    lang
+                )}`
+            );
             if (response.ok) {
                 const data = await response.json();
                 tool.value = formatTool(data.data || data);
@@ -594,7 +613,13 @@ async function fetchToolDetail() {
 
         // If direct fetch fails, try to find by slug or ID in the list
         try {
-            const listResponse = await fetch("/api/agri-tech-tools");
+            const lang =
+                localStorage.getItem("preferred_language") ||
+                currentLanguage?.value ||
+                "en";
+            const listResponse = await fetch(
+                `/api/agri-tech-tools?lang=${encodeURIComponent(lang)}`
+            );
             if (!listResponse.ok) throw new Error("Failed to fetch tools list");
 
             const listData = await listResponse.json();
@@ -635,7 +660,13 @@ async function fetchToolDetail() {
 
 async function fetchRelatedTools() {
     try {
-        const response = await fetch("/api/agri-tech-tools");
+        const lang =
+            localStorage.getItem("preferred_language") ||
+            currentLanguage?.value ||
+            "en";
+        const response = await fetch(
+            `/api/agri-tech-tools?lang=${encodeURIComponent(lang)}`
+        );
         if (!response.ok) throw new Error("Failed to load related tools");
 
         const data = await response.json();

@@ -608,14 +608,17 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, watch, nextTick } from "vue";
+import { onMounted, onUnmounted, ref, computed, watch, nextTick } from "vue";
 import { useRoute } from "vue-router";
+import { useI18n } from "./composables/useI18n";
 
 const route = useRoute();
 const idOrSlug = ref(route.params.idOrSlug);
 const loading = ref(true);
 const program = ref(null);
 const related = ref([]);
+const { currentLanguage, onLanguageChange } = useI18n();
+let unsubscribeLang = null;
 
 const dateRange = computed(() => {
     if (!program.value) return "";
@@ -636,6 +639,14 @@ const heroImage = computed(() => {
 onMounted(async () => {
     await fetchProgram();
     await fetchRelated();
+    unsubscribeLang = onLanguageChange(async () => {
+        await fetchProgram();
+        await fetchRelated();
+    });
+});
+
+onUnmounted(() => {
+    if (typeof unsubscribeLang === "function") unsubscribeLang();
 });
 
 // React to route changes without full page refresh
@@ -654,13 +665,21 @@ async function fetchProgram() {
     loading.value = true;
     try {
         // try slug endpoint first, then id
-        let res = await fetch(`/api/training-programs/${idOrSlug.value}`);
+        const lang =
+            localStorage.getItem("preferred_language") ||
+            currentLanguage?.value ||
+            "en";
+        let res = await fetch(
+            `/api/training-programs/${idOrSlug.value}?lang=${encodeURIComponent(
+                lang
+            )}`
+        );
         if (!res.ok) {
             // fallback: if slug route not supported, try by query
             res = await fetch(
                 `/api/training-programs?slug=${encodeURIComponent(
                     idOrSlug.value
-                )}&limit=1`
+                )}&limit=1&lang=${encodeURIComponent(lang)}`
             );
         }
         if (res.ok) {
@@ -691,8 +710,14 @@ function normalize(r) {
 
 async function fetchRelated() {
     try {
+        const lang =
+            localStorage.getItem("preferred_language") ||
+            currentLanguage?.value ||
+            "en";
         const res = await fetch(
-            `/api/training-programs?limit=4&orderBy=published_at&direction=desc`
+            `/api/training-programs?limit=4&orderBy=published_at&direction=desc&lang=${encodeURIComponent(
+                lang
+            )}`
         );
         if (!res.ok) return;
         const data = await res.json();

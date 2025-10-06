@@ -308,7 +308,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed, nextTick } from "vue";
+import { onMounted, onUnmounted, ref, watch, computed, nextTick } from "vue";
+import { useI18n } from "./composables/useI18n";
 import SkeletonLoader from "./components/SkeletonLoader.vue";
 
 const loading = ref(true);
@@ -316,6 +317,10 @@ const items = ref([]);
 const page = ref(1);
 const perPage = ref(9);
 const programsTopRef = ref(null);
+
+// i18n
+const { currentLanguage, onLanguageChange } = useI18n();
+let unsubscribeLang = null;
 
 async function scrollToTopSmooth() {
     await nextTick();
@@ -359,6 +364,14 @@ watch(page, () => {
 
 onMounted(() => {
     fetchPrograms();
+    // Refetch when language changes
+    unsubscribeLang = onLanguageChange(() => {
+        fetchPrograms();
+    });
+});
+
+onUnmounted(() => {
+    if (typeof unsubscribeLang === "function") unsubscribeLang();
 });
 
 function buildQuery() {
@@ -377,6 +390,12 @@ function buildQuery() {
     }
     if (filters.value.status) params.set("status", filters.value.status);
     if (filters.value.location) params.set("location", filters.value.location);
+    // Ensure language is sent for dynamic translations
+    const lang =
+        localStorage.getItem("preferred_language") ||
+        currentLanguage?.value ||
+        "en";
+    params.set("lang", lang);
     // Enforce status on client too in case backend ignores it
     return params.toString();
 }
