@@ -174,6 +174,15 @@ const defaultTranslations = {
         "loading.jobs": "Loading job openings...",
         "loading.programs": "Loading programs...",
         "loading.please_wait": "Please wait while we prepare the content",
+
+        // Language names
+        "english": "English",
+        "dari": "Dari",
+        "pashto": "Pashto",
+        "base_language": "Base Language",
+        "farsi_translations": "Dari Translations",
+        "pashto_translations": "Pashto Translations",
+        "clear_all": "Clear All",
     },
 
     farsi: {
@@ -336,6 +345,15 @@ const defaultTranslations = {
         "loading.jobs": "در حال بارگذاری فرصت های شغلی...",
         "loading.programs": "در حال بارگذاری برنامه ها...",
         "loading.please_wait": "لطفاً منتظر بمانید تا محتوا آماده شود",
+
+        // Language names
+        "english": "انگلیسی",
+        "dari": "دری",
+        "pashto": "پښتو",
+        "base_language": "زبان پایه",
+        "farsi_translations": "ترجمه های دری",
+        "pashto_translations": "ترجمه های پښتو",
+        "clear_all": "همه را پاک کن",
     },
 
     pashto: {
@@ -499,10 +517,30 @@ const defaultTranslations = {
         "loading.jobs": "په دندو فرصتونو بارولو کې...",
         "loading.programs": "په پروګرامونو بارولو کې...",
         "loading.please_wait": "مهرباني وکړئ انتظار وکړئ ترڅو محتوا چمتو شي",
+
+        // Language names
+        "english": "انګلیسي",
+        "dari": "دری",
+        "pashto": "پښتو",
+        "base_language": "اساسي ژبه",
+        "farsi_translations": "د دری ژبې ژباړې",
+        "pashto_translations": "د پښتو ژبې ژباړې",
+        "clear_all": "ټول پاک کړئ",
     },
 };
 
 export function useI18n() {
+    const normalizeLanguageCode = (code) => {
+        const map = {
+            farsi: "fa",
+            fa: "fa",
+            pashto: "ps",
+            ps: "ps",
+            english: "en",
+            en: "en",
+        };
+        return map[String(code || "en").toLowerCase()] || "en";
+    };
     // Get translation for a key
     const t = (key, params = {}) => {
         const translation =
@@ -595,6 +633,8 @@ export function useI18n() {
         isLoading: computed(() => isLoading.value),
         isRTL,
         supportedLanguages,
+        // Normalized API language code (en/fa/ps)
+        apiLanguage: computed(() => normalizeLanguageCode(currentLanguage.value)),
 
         // Methods
         t,
@@ -602,5 +642,8 @@ export function useI18n() {
         loadTranslations,
         init,
         onLanguageChange,
+        getApiLang: () => normalizeLanguageCode(
+            localStorage.getItem("preferred_language") || currentLanguage.value
+        ),
     };
 }

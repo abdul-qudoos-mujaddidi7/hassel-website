@@ -7,7 +7,6 @@
                     <v-avatar size="60" class="logo-avatar">
                         <img :src="logo" alt="Logo" class="logo-image" />
                     </v-avatar>
-                    <div class="logo-title">Admin Panel</div>
                 </div>
             </router-link>
         </div>
@@ -21,7 +20,7 @@
                     prepend-icon="mdi mdi-home-lightning-bolt-outline"
                     class="nav-item"
                 >
-                    Dashboard
+                    {{ $t('dashboard') }}
                 </v-list-item>
             </router-link>
 
@@ -36,7 +35,7 @@
                     value="beneficiaries-stats"
                     class="nav-item"
                 >
-                    Beneficiaries Stats
+                    {{ $t('beneficiaries_stats') }}
                 </v-list-item>
             </router-link>
 
@@ -48,7 +47,7 @@
                     value="news"
                     class="nav-item"
                 >
-                    News
+                    {{ $t('news') }}
                 </v-list-item>
             </router-link>
 
@@ -64,7 +63,7 @@
                     value="training-programs"
                     class="nav-item"
                 >
-                    Training Programs
+                    {{ $t('training_programs') }}
                 </v-list-item>
             </router-link>
 
@@ -76,7 +75,7 @@
                     value="publications"
                     class="nav-item"
                 >
-                    Publications
+                    {{ $t('publications') }}
                 </v-list-item>
             </router-link>
 
@@ -92,7 +91,7 @@
                     value="success-stories"
                     class="nav-item"
                 >
-                    Success Stories
+                    {{ $t('success_stories') }}
                 </v-list-item>
             </router-link>
 
@@ -104,7 +103,7 @@
                     value="contacts"
                     class="nav-item"
                 >
-                    Contacts
+                    {{ $t('contacts') }}
                 </v-list-item>
             </router-link>
 
@@ -115,7 +114,7 @@
                 @click="toggleMenu('reports')"
                 class="nav-item"
             >
-                Reports
+                {{ $t('reports') }}
                 <template v-slot:append>
                     <v-icon
                         :class="{ 'rotate-180': activeMenu === 'reports' }"
@@ -134,7 +133,7 @@
                         @click="closeAllMenus"
                     >
                         <v-list-item
-                            :title="item.title"
+                            :title="$t(item.title)"
                             :prepend-icon="item.icon"
                             :value="item.value"
                             active-class="active-subitem"
@@ -151,7 +150,7 @@
                 @click="toggleMenu('setting')"
                 class="nav-item"
             >
-                Settings
+                {{ $t('settings') }}
                 <template v-slot:append>
                     <v-icon
                         :class="{ 'rotate-180': activeMenu === 'setting' }"
@@ -170,7 +169,7 @@
                         @click="closeAllMenus"
                     >
                         <v-list-item
-                            :title="item.title"
+                            :title="$t(item.title)"
                             :prepend-icon="item.icon"
                             :value="item.value"
                             active-class="active-subitem"
@@ -186,7 +185,8 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useAuthRepository } from "../../stores/Auth.js";
-
+import { useI18n } from "vue-i18n";
+const { t, locale } = useI18n();
 const authStore = useAuthRepository();
 
 // Load user data from session when component mounts
@@ -280,6 +280,11 @@ const reportItems = [
 function handleDrawerState(isOpen) {
     document.body.style.overflow = isOpen ? "hidden" : "";
 }
+
+const dir = computed(() => {
+    return ["fa", "ps"].includes(locale.value) ? "rtl" : "ltr";
+});
+
 </script>
 
 <style scoped>
@@ -295,12 +300,15 @@ function handleDrawerState(isOpen) {
     color: rgb(var(--v-theme-on-surface));
     box-shadow: 3px 0 15px rgba(0, 0, 0, 0.08);
     position: relative;
+   border-right: 1px solid #e0e0e0;
 }
+
+
+
 
 /* Logo Section */
 .logo-section {
     padding: 1rem 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .logo-link {
@@ -312,8 +320,6 @@ function handleDrawerState(isOpen) {
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 8px;
-    padding: 0.5rem 1rem;
 }
 
 .logo-avatar {
@@ -345,7 +351,7 @@ function handleDrawerState(isOpen) {
 /* Navigation Section */
 .navigation-section {
     flex: 1;
-    padding: 1rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     overflow-y: auto;
 }
 
@@ -376,9 +382,9 @@ function handleDrawerState(isOpen) {
 }
 
 .nav-item:hover {
-    background-color: rgba(var(--v-theme-primary), 0.08) !important;
-    color: rgb(var(--v-theme-primary)) !important;
-    transform: translateX(4px);
+    background-color: #f3f4f6  !important;
+    /* color: rgb(var(--v-theme-primary)) !important; */
+    transform: translateX(2px);
 }
 
 .nav-item:hover .v-icon {
@@ -404,12 +410,8 @@ function handleDrawerState(isOpen) {
 
 /* Router Link Active State */
 .router-link-active .nav-item {
-    background: linear-gradient(
-        135deg,
-        rgb(var(--v-theme-primary)),
-        rgb(var(--v-theme-secondary))
-    ) !important;
-    color: rgb(var(--v-theme-on-primary)) !important;
+    background: #f4f4f5 !important;
+    color: #388e3c !important;
 }
 
 .router-link-active .nav-item .v-icon {

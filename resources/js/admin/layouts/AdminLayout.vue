@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Sidebar from "../components/Sidebar.vue";
@@ -37,13 +37,12 @@ const { locale } = useI18n();
 const drawer = ref(true);
 const rail = ref(false);
 
-// Direction for RTL support
-const dir = computed(() => {
-    if (locale.value === "fa") {
-        return "right"; // Reverse the order for Farsi
-    }
-    return "left";
+const isRtl = ref(['fa', 'ps'].includes(locale.value));
+watch(locale, (newLocale) => {
+    isRtl.value = ['fa', 'ps'].includes(newLocale);
 });
+
+const dir = computed(() => (isRtl.value ? 'right' : 'left'));
 
 // Dynamic card styling based on route
 const vCardStyle = computed(() => {

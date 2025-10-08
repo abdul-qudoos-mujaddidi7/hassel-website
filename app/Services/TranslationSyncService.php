@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Translation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class TranslationSyncService
 {
@@ -19,6 +20,12 @@ class TranslationSyncService
 
     $modelType = get_class($model);
     $modelId = $model->getKey();
+
+    // Collectors for JSON columns update on models that support it
+    $jsonCollect = [
+      'farsi' => [],
+      'pashto' => [],
+    ];
 
     foreach ($translationsByLang as $language => $fields) {
       if (!is_array($fields)) {
@@ -47,7 +54,7 @@ class TranslationSyncService
         // Upsert
         $existing = $query->first();
         if ($existing) {
-          $existing->value = $value;
+          $existing->content = $value;
           $existing->save();
         } else {
           Translation::create([
@@ -55,10 +62,40 @@ class TranslationSyncService
             'model_id' => $modelId,
             'field_name' => $fieldName,
             'language' => $language,
-            'value' => $value,
+            'content' => $value,
           ]);
         }
+
+        // Also collect for JSON columns when present on the model
+        $langKey = strtolower($language);
+        if (isset($jsonCollect[$langKey])) {
+          $jsonCollect[$langKey][$fieldName] = $value;
+        }
       }
+    }
+
+    // If model has JSON translation columns, merge and persist them
+    $didUpdateJson = false;
+    $table = method_exists($model, 'getTable') ? $model->getTable() : null;
+    if ($table && Schema::hasColumn($table, 'farsi_translations')) {
+      $existing = (array) ($model->getAttribute('farsi_translations') ?? []);
+      $merged = array_filter(array_merge($existing, $jsonCollect['farsi']), function ($v) {
+        return !($v === null || $v === '');
+      });
+      $model->setAttribute('farsi_translations', $merged);
+      $didUpdateJson = true;
+    }
+    if ($table && Schema::hasColumn($table, 'pashto_translations')) {
+      $existing = (array) ($model->getAttribute('pashto_translations') ?? []);
+      $merged = array_filter(array_merge($existing, $jsonCollect['pashto']), function ($v) {
+        return !($v === null || $v === '');
+      });
+      $model->setAttribute('pashto_translations', $merged);
+      $didUpdateJson = true;
+    }
+    if ($didUpdateJson) {
+      // Avoid touching timestamps unless necessary
+      $model->save();
     }
   }
 }

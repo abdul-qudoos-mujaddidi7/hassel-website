@@ -1,8 +1,8 @@
 <template>
     <CreateNews v-if="NewsRepository.createDialog" />
-    <div :dir="dir" class="content-card">
+    <div :dir="dir" >
         <!-- Page Header -->
-        <Header pageTitle='News Management' />
+        <Header :pageTitle='$t("news_management")' />
         <v-divider :thickness="1" class="border-opacity-100" />
         
         
@@ -21,25 +21,14 @@
                     ></v-text-field>
                 </div>
                 <div class="flex">
-                    <v-select
-                        v-model="selectedStatus"
-                        :items="NewsRepository.statusOptions"
-                        item-value="value"
-                        item-title="label"
-                        variant="outlined"
-                        density="compact"
-                        :label="$t('status')"
-                        class="mr-4"
-                        style="min-width: 150px;"
-                        @update:model-value="handleStatusFilter"
-                    ></v-select>
-                    <v-btn color="primary" class="btn btn-primary px-6">
+                    <v-btn class="action-btn-success">
                         {{ t("filter") }}
                     </v-btn>
                     &nbsp;
                     <v-btn
-                        @click="CreateDialogShow"
-                        class="btn btn-primary w-full justify-center px-6"
+                        @click.stop="CreateDialogShow"
+                        variant="flat"
+                        class="action-btn-success"
                     >
                         {{ t("create") }}
                     </v-btn>
@@ -95,6 +84,8 @@
                                             </v-chip>
                                         </td>
                                     </template>
+
+                                   
 
                                     <!-- Published Date Column -->
                                     <template v-slot:item.published_at="{ item }">
@@ -176,7 +167,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import Header from '../../components/Header.vue';
 import CreateNews from "./CreateNews.vue"; 
 import { useI18n } from "vue-i18n";
@@ -188,7 +179,7 @@ const AuthRepository = useAuthRepository();
 const NewsRepository = useNewsRepository();
 
 const dir = computed(() => {
-    return ["fa", "pa"].includes(locale.value) ? "rtl" : "ltr";
+    return ["fa", "ps"].includes(locale.value) ? "rtl" : "ltr";
 });
 
 const selectedStatus = ref('');
@@ -264,13 +255,19 @@ const getStatusColor = (status) => {
     }
 };
 
+// Helper function to get translation coverage color
+const getTranslationCoverageColor = (coverage) => {
+    if (coverage === 100) return 'success';
+    if (coverage >= 50) return 'warning';
+    return 'error';
+};
+
 // Table headers
 const headers = computed(() => [
     { title: "", key: "checkbox", align: "start", sortable: false },
     { title: t("title"), key: "title", align: "start", sortable: true },
     { title: t("status"), key: "status", align: "center", sortable: true },
     { title: t("published_date"), key: "published_at", align: "center", sortable: true },
-    { title: t("created_at"), key: "created_at", align: "center", sortable: true },
     { title: t("action"), key: "action", align: "center", sortable: false },
 ]);
 
@@ -279,6 +276,15 @@ onMounted(() => {
     NewsRepository.fetchNews({
         page: 1,
         itemsPerPage: NewsRepository.itemsPerPage,
+    });
+});
+
+// Refetch list when UI language changes (globe menu)
+watch(() => locale.value, () => {
+    NewsRepository.fetchNews({
+        page: 1,
+        itemsPerPage: NewsRepository.itemsPerPage,
+        status: selectedStatus.value,
     });
 });
 </script>

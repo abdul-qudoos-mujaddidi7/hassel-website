@@ -40,12 +40,21 @@ class PublicationsController extends Controller
                 $query->where('file_type', $fileType);
             }
 
-            $publications = $query->orderBy('created_at', 'desc')
-                ->paginate($perPage);
+            $publications = $query->orderBy('created_at', 'desc')->paginate($perPage);
+
+            // Ensure admin list includes translations and respects ?lang
+            $request->merge([
+                'include_translations' => true,
+                'lang' => $request->get('lang', 'en'),
+            ]);
+
+            $data = collect($publications->items())->map(function ($item) use ($request) {
+                return (new PublicationResource($item))->resolve($request);
+            });
 
             return response()->json([
                 'success' => true,
-                'data' => $publications->items(),
+                'data' => $data,
                 'meta' => [
                     'total' => $publications->total(),
                     'per_page' => $publications->perPage(),
@@ -71,8 +80,16 @@ class PublicationsController extends Controller
         try {
             $validated = $request->validated();
             $translations = $request->input('translations', []);
+
+            // Prepare JSON translations
+            $farsiTranslations = $translations['farsi'] ?? [];
+            $pashtoTranslations = $translations['pashto'] ?? [];
+            
+            // Add translations to validated data
+            $validated['farsi_translations'] = $farsiTranslations;
+            $validated['pashto_translations'] = $pashtoTranslations;
+
             $publication = Publication::create($validated);
-            TranslationSyncService::sync($publication, $translations);
 
             return response()->json([
                 'success' => true,
@@ -120,8 +137,16 @@ class PublicationsController extends Controller
         try {
             $validated = $request->validated();
             $translations = $request->input('translations', []);
+
+            // Prepare JSON translations
+            $farsiTranslations = $translations['farsi'] ?? [];
+            $pashtoTranslations = $translations['pashto'] ?? [];
+            
+            // Add translations to validated data
+            $validated['farsi_translations'] = $farsiTranslations;
+            $validated['pashto_translations'] = $pashtoTranslations;
+
             $publication->update($validated);
-            TranslationSyncService::sync($publication, $translations);
 
             return response()->json([
                 'success' => true,

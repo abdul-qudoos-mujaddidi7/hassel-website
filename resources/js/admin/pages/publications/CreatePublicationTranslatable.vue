@@ -1,13 +1,12 @@
 <template>
     <TranslatableForm
-        v-model="NewsRepository.createDialog"
+        v-model="PublicationsRepository.createDialog"
         :form-title="formTitle"
         :button-text="buttonText"
         :translatable-fields="translatableFields"
         :form-data="formData"
         :rules="rules"
         :saving="saving"
-        :is-edit-mode="NewsRepository.isEditMode"
         @save="handleSave"
     >
         <!-- Base Language Tab (English) -->
@@ -26,7 +25,7 @@
 
                 <v-select
                     v-model="formData.status"
-                    :items="NewsRepository.statusOptions"
+                    :items="PublicationsRepository.statusOptions"
                     variant="outlined"
                     density="compact"
                     item-value="value"
@@ -39,7 +38,7 @@
                 </v-select>
             </div>
 
-            <!-- Slug Row -->
+            <!-- Slug and File Type Row -->
             <div class="flex w-100">
                 <v-text-field
                     v-model="formData.slug"
@@ -51,28 +50,29 @@
                     persistent-hint
                 ></v-text-field>
 
-                <v-text-field
-                    v-model="formData.excerpt"
+                <v-select
+                    v-model="formData.file_type"
+                    :items="PublicationsRepository.fileTypeOptions"
                     variant="outlined"
-                    :label="$t('excerpt')"
                     density="compact"
+                    item-value="value"
+                    item-title="label"
+                    :return-object="false"
+                    :label="$t('file_type')"
                     class="pb-4 pl-2 w-50"
-                    :counter="500"
-                    :rules="[rules.maxLength]"
-                    hint="Brief description of the article"
-                    persistent-hint
-                ></v-text-field>
+                >
+                </v-select>
             </div>
 
-            <!-- Featured Image Row -->
+            <!-- File Path Row -->
             <div class="flex w-100">
                 <v-text-field
-                    v-model="formData.featured_image"
+                    v-model="formData.file_path"
                     variant="outlined"
-                    :label="$t('featured_image')"
+                    :label="$t('file_path')"
                     density="compact"
-                    class="pb-4 pr-2 w-50"
-                    hint="URL of the featured image"
+                    class="pb-4 pr-2 w-75"
+                    hint="URL or path to the file"
                     persistent-hint
                 ></v-text-field>
 
@@ -82,22 +82,39 @@
                     :label="$t('published_date')"
                     density="compact"
                     type="datetime-local"
-                    class="pb-4 pl-2 w-50"
+                    class="pb-4 pl-2 w-25"
                     v-if="formData.status === 'published'"
                 ></v-text-field>
             </div>
 
-            <!-- Content Row -->
+            <!-- File Upload Section -->
+            <div class="w-100 mb-4">
+                <v-file-input
+                    v-model="fileInput"
+                    :label="$t('upload_file')"
+                    variant="outlined"
+                    density="compact"
+                    :accept="getAcceptedFileTypes()"
+                    @change="handleFileUpload"
+                    show-size
+                    counter
+                ></v-file-input>
+                <div class="text-caption text-grey mt-1">
+                    Supported formats: PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT
+                </div>
+            </div>
+
+            <!-- Description Row -->
             <div class="w-100">
                 <v-textarea
-                    v-model="formData.content"
+                    v-model="formData.description"
                     variant="outlined"
-                    :label="$t('content')"
+                    :label="$t('description')"
                     density="compact"
                     class="pb-4"
                     :rules="[rules.required]"
-                    rows="8"
-                    hint="Main content of the news article"
+                    rows="6"
+                    hint="Detailed description of the publication"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -110,32 +127,20 @@
                 field-name="title"
                 :field-label="$t('title')"
                 language="farsi"
-                :language-label="$t('dari')"
+                :language-label="$t('farsi')"
                 :has-translation="hasTranslation('title')"
                 @clear="clearTranslation"
             />
 
             <TranslationField
-                v-model="translations.excerpt"
-                field-name="excerpt"
-                :field-label="$t('excerpt')"
+                v-model="translations.description"
+                field-name="description"
+                :field-label="$t('description')"
                 language="farsi"
-                :language-label="$t('dari')"
+                :language-label="$t('farsi')"
                 field-type="textarea"
-                :rows="3"
-                :has-translation="hasTranslation('excerpt')"
-                @clear="clearTranslation"
-            />
-
-            <TranslationField
-                v-model="translations.content"
-                field-name="content"
-                :field-label="$t('content')"
-                language="farsi"
-                :language-label="$t('dari')"
-                field-type="textarea"
-                :rows="8"
-                :has-translation="hasTranslation('content')"
+                :rows="6"
+                :has-translation="hasTranslation('description')"
                 @clear="clearTranslation"
             />
         </template>
@@ -153,26 +158,14 @@
             />
 
             <TranslationField
-                v-model="translations.excerpt"
-                field-name="excerpt"
-                :field-label="$t('excerpt')"
+                v-model="translations.description"
+                field-name="description"
+                :field-label="$t('description')"
                 language="pashto"
                 :language-label="$t('pashto')"
                 field-type="textarea"
-                :rows="3"
-                :has-translation="hasTranslation('excerpt')"
-                @clear="clearTranslation"
-            />
-
-            <TranslationField
-                v-model="translations.content"
-                field-name="content"
-                :field-label="$t('content')"
-                language="pashto"
-                :language-label="$t('pashto')"
-                field-type="textarea"
-                :rows="8"
-                :has-translation="hasTranslation('content')"
+                :rows="6"
+                :has-translation="hasTranslation('description')"
                 @clear="clearTranslation"
             />
         </template>
@@ -181,60 +174,53 @@
 
 <script setup>
 import { ref, reactive, computed, watch } from "vue";
-import { useNewsRepository } from "../../stores/NewsRepository";
+import { usePublicationsRepository } from "../../stores/PublicationsRepository";
 import { useI18n } from "vue-i18n";
 import TranslatableForm from "../../components/TranslatableForm.vue";
 import TranslationField from "../../components/TranslationField.vue";
 
 const { t } = useI18n();
 
-const NewsRepository = useNewsRepository();
-const formTitle = computed(() => NewsRepository.isEditMode ? t('update') : t('create'));
-const buttonText = computed(() => NewsRepository.isEditMode ? t('update') : t('submit'));
+const PublicationsRepository = usePublicationsRepository();
+const formTitle = computed(() => PublicationsRepository.isEditMode ? t('update') : t('create'));
+const buttonText = computed(() => PublicationsRepository.isEditMode ? t('update') : t('submit'));
 
-// Translatable fields for News model
-const translatableFields = ['title', 'excerpt', 'content'];
+// Translatable fields for Publication model
+const translatableFields = ['title', 'description'];
 
 const formData = reactive({
     id: null,
     title: '',
     slug: '',
-    excerpt: '',
-    content: '',
-    featured_image: '',
+    description: '',
+    file_path: '',
+    file_type: '',
     status: 'draft',
     published_at: null
 });
 
+// File upload
+const fileInput = ref(null);
+
 // Loading state
 const saving = ref(false);
 
-
-// Watch for changes in currentNews to populate form
-watch(() => NewsRepository.currentNews, async (newNews) => {
-    if (newNews && Object.keys(newNews).length > 0) {
-        formData.id = newNews.id;
-        formData.title = newNews.title || '';
-        formData.slug = newNews.slug || '';
-        formData.excerpt = newNews.excerpt || '';
-        formData.content = newNews.content || '';
-        formData.featured_image = newNews.featured_image || '';
-        formData.status = newNews.status || 'draft';
-        formData.published_at = newNews.published_at ? new Date(newNews.published_at).toISOString().slice(0, 16) : null;
+// Watch for changes in currentPublication to populate form
+watch(() => PublicationsRepository.currentPublication, async (newPublication) => {
+    if (newPublication && Object.keys(newPublication).length > 0) {
+        formData.id = newPublication.id;
+        formData.title = newPublication.title || '';
+        formData.slug = newPublication.slug || '';
+        formData.description = newPublication.description || '';
+        formData.file_path = newPublication.file_path || '';
+        formData.file_type = newPublication.file_type || '';
+        formData.status = newPublication.status || 'draft';
+        formData.published_at = newPublication.published_at ? new Date(newPublication.published_at).toISOString().slice(0, 16) : null;
         
-        // Set translation data immediately for the form
-        formData.translationData = {
-            ...newNews,
-            farsi_translations: newNews.farsi_translations || {},
-            pashto_translations: newNews.pashto_translations || {}
-        };
-        
-        console.log('=== FORM DATA UPDATED ===');
-        console.log('Form data:', formData);
-        console.log('Translation data:', formData.translationData);
-        console.log('Farsi translations:', formData.translationData.farsi_translations);
-        console.log('Pashto translations:', formData.translationData.pashto_translations);
-        console.log('========================');
+        // Load translations if in edit mode
+        if (PublicationsRepository.isEditMode && newPublication.id) {
+            await loadTranslations(newPublication.id);
+        }
     }
 }, { deep: true, immediate: true });
 
@@ -248,8 +234,8 @@ watch(() => formData.status, (newStatus) => {
 const rules = {
     required: (value) => !!value || "This field is required.",
     maxLength: (value) => 
-        !value || value.length <= 500 || 
-        "Excerpt must be 500 characters or less."
+        !value || value.length <= 1000 || 
+        "Description must be 1000 characters or less."
 };
 
 // Generate slug from title
@@ -264,29 +250,56 @@ const generateSlug = () => {
     }
 };
 
-// Handle save - save everything at once
-const handleSave = async (saveData) => {
+// File upload handling
+const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        // Handle file upload logic here
+        console.log('File selected:', file);
+    }
+};
+
+const getAcceptedFileTypes = () => {
+    return '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt';
+};
+
+// Load translations for edit mode
+const loadTranslations = async (publicationId) => {
+    try {
+        await PublicationsRepository.fetchPublication(publicationId);
+        const pub = PublicationsRepository.currentPublication || {};
+        formData.translationData = {
+            ...pub,
+            farsi_translations: pub.farsi_translations || {},
+            pashto_translations: pub.pashto_translations || {}
+        };
+    } catch (error) {
+        console.error('Error loading translations:', error);
+    }
+};
+
+// Handle save with translation support
+const handleSave = async (saveEvent) => {
     saving.value = true;
     try {
-        if (saveData.type === 'complete') {
-            // Save complete data with base content and translations
-            const apiData = { ...saveData.data };
-            
-            // Convert published_at to proper format if provided
-            if (apiData.published_at) {
-                apiData.published_at = new Date(apiData.published_at).toISOString();
-            } else if (apiData.status === 'published') {
-                apiData.published_at = new Date().toISOString();
-            }
+        if (saveEvent?.type !== 'complete') {
+            return;
+        }
+        const apiData = { ...saveEvent.data };
+        // Convert published_at to proper format if provided
+        if (apiData.published_at) {
+            apiData.published_at = new Date(apiData.published_at).toISOString();
+        } else if (apiData.status === 'published') {
+            apiData.published_at = new Date().toISOString();
+        }
 
-            if (NewsRepository.isEditMode) {
-                await NewsRepository.updateNews(formData.id, apiData);
-            } else {
-                await NewsRepository.createNews(apiData);
-            }
+        if (PublicationsRepository.isEditMode) {
+            await PublicationsRepository.updatePublication(formData.id, apiData);
+        } else {
+            await PublicationsRepository.createPublication(apiData);
         }
     } catch (error) {
-        console.error('Error saving news:', error);
+        console.error('Error saving publication:', error);
         // Handle error (show notification, etc.)
     } finally {
         saving.value = false;
@@ -299,4 +312,6 @@ const handleSave = async (saveData) => {
     direction: rtl;
 }
 </style>
+
+
 

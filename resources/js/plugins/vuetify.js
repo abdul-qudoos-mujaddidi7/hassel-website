@@ -13,7 +13,7 @@ export default createVuetify({
             light: {
                 colors: {
                     // Primary Greens - Main brand colors
-                    primary: "#1b5e20", // Dark green for primary actions
+                    primary: "#388e3c", // Dark green for primary actions
                     secondary: "#2e7d32", // Medium green for secondary elements
                     // Supporting Greens
                     success: "#4caf50", // Success states
@@ -30,7 +30,7 @@ export default createVuetify({
                     // Custom colors for specific components
                     "table-row-bg": "#f0fdf4", // Very light green for table rows
                     "light-section": "#e8f5e9", // Light green section background
-                    "sidebar-bg": "#f8fdf8", // Sidebar background
+                    "sidebar-bg": "#fafafa", // Sidebar background
 
                     // Legacy colors for compatibility
                     primaryOld: "#134124",

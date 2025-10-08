@@ -20,7 +20,13 @@ class NewsResource extends JsonResource
             'title' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('title', $lang) ?? $this->title) : $this->title,
             'slug' => $this->slug,
             'excerpt' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('excerpt', $lang) ?? $this->excerpt) : $this->excerpt,
-            'content' => $this->when($request->routeIs('api.news.show'), method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('content', $lang) ?? $this->content) : $this->content),
+            // Include full content for API show and all admin routes (needed for edit form)
+            'content' => $this->when(
+                $request->routeIs('api.news.show') || $request->routeIs('api.admin.*'),
+                method_exists($this->resource, 'getTranslation')
+                    ? ($this->getTranslation('content', $lang) ?? $this->content)
+                    : $this->content
+            ),
             'featured_image' => $this->featured_image,
             'featured_image_url' => $this->featured_image ? asset('storage/' . $this->featured_image) : null,
             'status' => $this->status,
@@ -33,11 +39,13 @@ class NewsResource extends JsonResource
             'is_published' => $this->is_published,
             'excerpt_limited' => $this->excerpt_limited,
 
-            // Conditional fields
-            'translations' => $this->when(
-                $request->get('include_translations'),
-                TranslationResource::collection($this->whenLoaded('translations'))
-            ),
+            // JSON translations for admin
+            'farsi_translations' => $this->when($request->get('include_translations') || $request->routeIs('api.admin.*'), $this->farsi_translations),
+            'pashto_translations' => $this->when($request->get('include_translations') || $request->routeIs('api.admin.*'), $this->pashto_translations),
+            
+            // Translation coverage for admin
+            'farsi_coverage' => $this->when($request->routeIs('api.admin.*'), $this->getTranslationCoverage('farsi')),
+            'pashto_coverage' => $this->when($request->routeIs('api.admin.*'), $this->getTranslationCoverage('pashto')),
 
             // Admin-only fields
             'admin_fields' => $this->when($request->routeIs('admin.*'), [

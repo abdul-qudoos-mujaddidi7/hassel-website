@@ -26,6 +26,8 @@ class Publication extends Model
         'file_type',
         'status',
         'published_at',
+        'farsi_translations',
+        'pashto_translations',
     ];
 
     protected $casts = [
@@ -80,6 +82,97 @@ class Publication extends Model
     }
 
     // Helper Methods
+    
+    private function normalizeLanguage(string $language): string
+    {
+        $map = [
+            'fa' => 'farsi',
+            'farsi' => 'farsi',
+            'ps' => 'pashto',
+            'pashto' => 'pashto',
+            'en' => 'en',
+        ];
+        $key = strtolower($language);
+        return $map[$key] ?? 'en';
+    }
+
+    // Accessors for JSON fields
+    public function getFarsiTranslationsAttribute($value)
+    {
+        return $value ? json_decode($value, true) : [];
+    }
+    
+    public function getPashtoTranslationsAttribute($value)
+    {
+        return $value ? json_decode($value, true) : [];
+    }
+    
+    // Mutators for JSON fields
+    public function setFarsiTranslationsAttribute($value)
+    {
+        $this->attributes['farsi_translations'] = is_array($value) ? json_encode($value) : $value;
+    }
+    
+    public function setPashtoTranslationsAttribute($value)
+    {
+        $this->attributes['pashto_translations'] = is_array($value) ? json_encode($value) : $value;
+    }
+    
+    // Get translation for a specific field and language
+    public function getTranslation($field, $language = 'farsi')
+    {
+        $lang = $this->normalizeLanguage($language);
+        if ($lang === 'en') {
+            return $this->{$field} ?? null;
+        }
+        $translations = $lang === 'farsi' ? ($this->farsi_translations ?? []) : ($this->pashto_translations ?? []);
+        return $translations[$field] ?? null;
+    }
+    
+    // Set translation for a specific field and language
+    public function setTranslation($field, $value, $language = 'farsi')
+    {
+        $translations = $language === 'farsi' ? $this->farsi_translations : $this->pashto_translations;
+        $translations = $translations ?? [];
+        $translations[$field] = $value;
+        
+        if ($language === 'farsi') {
+            $this->farsi_translations = $translations;
+        } else {
+            $this->pashto_translations = $translations;
+        }
+    }
+    
+    // Get all translations for a language
+    public function getTranslations($language = 'farsi')
+    {
+        return $language === 'farsi' ? $this->farsi_translations : $this->pashto_translations;
+    }
+    
+    // Check if a field has translation
+    public function hasTranslation($field, $language = 'farsi')
+    {
+        $translation = $this->getTranslation($field, $language);
+        return !empty($translation) && trim($translation) !== '';
+    }
+    
+    // Get translation coverage percentage for a language
+    public function getTranslationCoverage($language = 'farsi')
+    {
+        $translations = $this->getTranslations($language);
+        if (empty($translations)) return 0;
+        
+        $totalFields = count($this->translatable);
+        $translatedFields = 0;
+        
+        foreach ($this->translatable as $field) {
+            if ($this->hasTranslation($field, $language)) {
+                $translatedFields++;
+            }
+        }
+        
+        return $totalFields > 0 ? round(($translatedFields / $totalFields) * 100) : 0;
+    }
 
     private function formatBytes($bytes, $precision = 2)
     {

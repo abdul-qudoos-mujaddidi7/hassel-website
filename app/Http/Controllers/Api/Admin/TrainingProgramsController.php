@@ -42,12 +42,20 @@ class TrainingProgramsController extends Controller
                 $query->where('program_type', $programType);
             }
 
-            $trainingPrograms = $query->orderBy('created_at', 'desc')
-                ->paginate($perPage);
+            $trainingPrograms = $query->orderBy('created_at', 'desc')->paginate($perPage);
+
+            // Always include translations for admin list and respect lang
+            $request->merge([
+                'include_translations' => true,
+                'lang' => $request->get('lang', 'en'),
+            ]);
+            $data = collect($trainingPrograms->items())->map(function ($item) use ($request) {
+                return (new TrainingProgramResource($item))->resolve($request);
+            });
 
             return response()->json([
                 'success' => true,
-                'data' => $trainingPrograms->items(),
+                'data' => $data,
                 'meta' => [
                     'total' => $trainingPrograms->total(),
                     'per_page' => $trainingPrograms->perPage(),

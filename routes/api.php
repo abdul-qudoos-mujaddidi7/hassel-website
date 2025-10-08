@@ -186,6 +186,8 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->name('api.admin.'
 
   // Content Management
   Route::apiResource('news', App\Http\Controllers\Api\Admin\NewsController::class);
+  Route::apiResource('success-stories', App\Http\Controllers\Api\Admin\SuccessStoriesController::class);
+  Route::apiResource('publications', App\Http\Controllers\Api\Admin\PublicationsController::class);
   Route::apiResource('programs', App\Http\Controllers\Api\Admin\ProgramsController::class);
   Route::apiResource('training-programs', App\Http\Controllers\Api\Admin\TrainingProgramsController::class);
   Route::apiResource('agri-tech-tools', App\Http\Controllers\Api\Admin\AgriTechToolsController::class);

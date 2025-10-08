@@ -16,11 +16,32 @@ class NewsController extends Controller
     public function index(Request $request)
     {
         $language = $request->get('lang', 'en');
-        $perPage = $request->get('per_page', 9);
+        $perPage = (int) $request->get('per_page', 9);
 
-        $news = News::published()
-            ->orderBy('published_at', 'desc')
-            ->paginate($perPage);
+        // Optional status filter: published (default) | draft | active (published or draft)
+        $status = strtolower((string) $request->get('status', 'published'));
+
+        $query = News::query();
+        if ($status === 'active') {
+            $query = $query->active();
+        } elseif (in_array($status, ['published', 'draft'], true)) {
+            $query = $query->where('status', $status);
+        } else {
+            // default safeguard
+            $query = $query->published();
+        }
+
+        // Optional ordering
+        $orderBy = $request->get('orderBy', 'published_at');
+        $direction = strtolower((string) $request->get('direction', 'desc')) === 'asc' ? 'asc' : 'desc';
+
+        // Whitelist orderable columns
+        $orderable = ['published_at', 'created_at', 'title'];
+        if (!in_array($orderBy, $orderable, true)) {
+            $orderBy = 'published_at';
+        }
+
+        $news = $query->orderBy($orderBy, $direction)->paginate($perPage);
 
         return NewsResource::collection($news);
     }

@@ -36,12 +36,22 @@ class NewsController extends Controller
                 $query->where('status', $status);
             }
 
-            $news = $query->orderBy('created_at', 'desc')
-                ->paginate($perPage);
+            $news = $query->orderBy('created_at', 'desc')->paginate($perPage);
+
+            // Always include translations for admin routes; pass through lang
+            $request->merge([
+                'include_translations' => true,
+                'lang' => $request->get('lang', 'en'),
+            ]);
+
+            // Map each item through resource with current request (so lang applies)
+            $data = collect($news->items())->map(function ($item) use ($request) {
+                return (new NewsResource($item))->resolve($request);
+            });
 
             return response()->json([
                 'success' => true,
-                'data' => $news->items(),
+                'data' => $data,
                 'meta' => [
                     'total' => $news->total(),
                     'per_page' => $news->perPage(),
@@ -68,8 +78,15 @@ class NewsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
+            // Prepare JSON translations
+            $farsiTranslations = $translations['farsi'] ?? [];
+            $pashtoTranslations = $translations['pashto'] ?? [];
+            
+            // Add translations to validated data
+            $validated['farsi_translations'] = $farsiTranslations;
+            $validated['pashto_translations'] = $pashtoTranslations;
+
             $news = News::create($validated);
-            TranslationSyncService::sync($news, $translations);
 
             return response()->json([
                 'success' => true,
@@ -91,9 +108,8 @@ class NewsController extends Controller
     public function show(Request $request, News $news): JsonResponse
     {
         try {
-            if ($request->boolean('include_translations')) {
-                $news->load('translations');
-            }
+            // Always include translations for admin routes
+            $request->merge(['include_translations' => true]);
 
             return response()->json([
                 'success' => true,
@@ -117,8 +133,16 @@ class NewsController extends Controller
         try {
             $validated = $request->validated();
             $translations = $request->input('translations', []);
+
+            // Prepare JSON translations
+            $farsiTranslations = $translations['farsi'] ?? [];
+            $pashtoTranslations = $translations['pashto'] ?? [];
+            
+            // Add translations to validated data
+            $validated['farsi_translations'] = $farsiTranslations;
+            $validated['pashto_translations'] = $pashtoTranslations;
+
             $news->update($validated);
-            TranslationSyncService::sync($news, $translations);
 
             return response()->json([
                 'success' => true,

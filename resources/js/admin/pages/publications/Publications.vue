@@ -1,12 +1,12 @@
 <template>
-    <CreatePublication v-if="PublicationsRepository.createDialog" />
+    <CreatePublicationTranslatable v-if="PublicationsRepository.createDialog" />
     <div :dir="dir">
         <!-- Page Header -->
         <Header pageTitle='Publications Management' />
         <v-divider :thickness="1" class="border-opacity-100" />
         
         <!-- Main Content Card -->
-        <div class="content-card">
+        
             <!-- Search and Actions Section -->
             <div class="btn-search pt-12 pb-6">
                 <div class="text-field w-25">
@@ -22,40 +22,16 @@
                     ></v-text-field>
                 </div>
                 <div class="btn flex">
-                    <v-select
-                        v-model="selectedStatus"
-                        :items="PublicationsRepository.statusOptions"
-                        item-value="value"
-                        item-title="label"
-                        variant="outlined"
-                        density="compact"
-                        :label="$t('status')"
-                        class="mr-2"
-                        style="min-width: 120px;"
-                        @update:model-value="handleFilter"
-                    ></v-select>
-                    <v-select
-                        v-model="selectedFileType"
-                        :items="PublicationsRepository.fileTypeOptions"
-                        item-value="value"
-                        item-title="label"
-                        variant="outlined"
-                        density="compact"
-                        :label="$t('file_type')"
-                        class="mr-4"
-                        style="min-width: 150px;"
-                        @update:model-value="handleFilter"
-                    ></v-select>
-                    <v-btn variant="outlined" color="primary" class="px-6">
+                    <v-btn class="action-btn-success px-6">
                         {{ t("filter") }}
                     </v-btn>
                     &nbsp;
                     <v-btn
                         @click="CreateDialogShow"
-                        class="create-btn-gradient px-6"
+                        class="action-btn-success px-6"
                         :text="$t('create')"
                     >
-                        <v-icon>mdi-plus</v-icon>
+                        
                     </v-btn>
                 </div>
             </div>
@@ -119,6 +95,28 @@
                                             >
                                                 {{ PublicationsRepository.getStatusLabel(item.status) }}
                                             </v-chip>
+                                        </td>
+                                    </template>
+
+                                    <!-- Translation Coverage Column -->
+                                    <template v-slot:item.translations="{ item }">
+                                        <td class="py-2 pl-4">
+                                            <div class="d-flex flex-column gap-1">
+                                                <v-chip
+                                                    :color="getTranslationCoverageColor(item.farsi_coverage || 0)"
+                                                    size="x-small"
+                                                    variant="flat"
+                                                >
+                                                    FA: {{ item.farsi_coverage || 0 }}%
+                                                </v-chip>
+                                                <v-chip
+                                                    :color="getTranslationCoverageColor(item.pashto_coverage || 0)"
+                                                    size="x-small"
+                                                    variant="flat"
+                                                >
+                                                    PS: {{ item.pashto_coverage || 0 }}%
+                                                </v-chip>
+                                            </div>
                                         </td>
                                     </template>
 
@@ -207,14 +205,13 @@
                     </v-main>
                 </v-app>
             </div>
-        </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import Header from '../../components/Header.vue';
-import CreatePublication from "./CreatePublication.vue"; 
+import CreatePublicationTranslatable from "./CreatePublicationTranslatable.vue"; 
 import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
 import { usePublicationsRepository } from "../../stores/PublicationsRepository";
@@ -351,6 +348,13 @@ const getStatusColor = (status) => {
     }
 };
 
+// Helper function to get translation coverage color
+const getTranslationCoverageColor = (coverage) => {
+    if (coverage === 100) return 'success';
+    if (coverage >= 50) return 'warning';
+    return 'error';
+};
+
 const getFileName = (filePath) => {
     return filePath.split('/').pop();
 };
@@ -366,13 +370,27 @@ const headers = computed(() => [
     { title: t("action"), key: "action", align: "center", sortable: false },
 ]);
 
-// Load data on mount
+// Initial load
 onMounted(() => {
     PublicationsRepository.fetchPublications({
         page: 1,
         itemsPerPage: PublicationsRepository.itemsPerPage,
+        status: selectedStatus.value,
+        fileType: selectedFileType.value
     });
 });
+
+// Refetch when language changes
+watch(() => locale.value, () => {
+    PublicationsRepository.fetchPublications({
+        page: 1,
+        itemsPerPage: PublicationsRepository.itemsPerPage,
+        status: selectedStatus.value,
+        fileType: selectedFileType.value
+    });
+});
+
+
 </script>
 
 <style scoped>

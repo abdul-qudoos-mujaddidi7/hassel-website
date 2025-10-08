@@ -59,6 +59,16 @@ class TrainingProgramResource extends JsonResource
                 $request->get('include_translations'),
                 TranslationResource::collection($this->whenLoaded('translations'))
             ),
+
+            // JSON translations for admin and when explicitly requested
+            'farsi_translations' => $this->when(
+                $request->get('include_translations') || $request->routeIs('api.admin.*'),
+                $this->farsi_translations
+            ),
+            'pashto_translations' => $this->when(
+                $request->get('include_translations') || $request->routeIs('api.admin.*'),
+                $this->pashto_translations
+            ),
         ];
     }
 

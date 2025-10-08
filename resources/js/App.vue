@@ -6,7 +6,7 @@
     <main>
         <router-view v-slot="{ Component, route }">
             <transition name="page" mode="out-in">
-                <component :is="Component" :key="route.path" />
+                <component :is="Component" :key="route.path + '::' + currentLanguage" />
             </transition>
         </router-view>
     </main>
@@ -16,6 +16,8 @@
 
     <!-- Page Transition Loading -->
     <PageTransition />
+    
+    
 </template>
 
 <script setup>
@@ -25,7 +27,7 @@ import Footer from "./components/Footer.vue";
 import PageTransition from "./components/PageTransition.vue";
 import { useI18n } from "./composables/useI18n.js";
 
-const { init, isRTL } = useI18n();
+const { init, isRTL, currentLanguage } = useI18n();
 
 // Initialize i18n on app mount
 onMounted(async () => {

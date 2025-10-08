@@ -11,10 +11,7 @@
     --brand-cream: #fbf5df; /* light cream */
     --brand-accent: #eaaa03; /* golden accent */
 }
-.admin-layout {
-    @apply min-h-screen;
-    background-color: #f8fdf8; /* Very light green background matching Vuetify theme */
-}
+
 
 /* Professional Green Color Utilities - Updated to match Vuetify theme */
 .bg-professional-primary {
@@ -173,7 +170,6 @@
 .action-btn-success {
     background: linear-gradient(135deg, #4caf50, #388e3c) !important;
     color: white !important;
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
 
 .action-btn-success:hover {
@@ -274,24 +270,18 @@ div.v-data-table-footer {
 
 .v-table > :nth-child(1) > :nth-child(1) > :nth-child(1) > tr {
     background-color: rgba(var(--v-theme-primary), 0.08) !important;
-    border-left: 4px solid rgb(var(--v-theme-secondary)) !important;
+    border-left: none !important;
     border-bottom: 4px solid rgb(var(--v-theme-background)) !important;
     border-top: none !important;
     border-right: none !important;
 }
 
 /* Additional table row styling */
-.v-application .v-data-table .v-data-table__tr {
-    border-bottom: 4px solid rgb(var(--v-theme-background)) !important;
-    border-left: 4px solid rgb(var(--v-theme-secondary)) !important;
-    border-right: none !important;
-    border-width: 4px !important;
-    background-color: transparent !important;
-}
+
 
 .v-data-table__tr {
     border-bottom: 4px solid rgb(var(--v-theme-background));
-    border-left: 4px solid rgb(var(--v-theme-secondary)) !important;
+    border-left: none !important;
     border-right: none;
     border-width: 4px;
 }

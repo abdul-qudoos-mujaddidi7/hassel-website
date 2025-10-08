@@ -6,10 +6,10 @@
         <v-divider :thickness="1" class="border-opacity-100" />
 
         <!-- Main Content Card -->
-        <div class="content-card">
+       
             <!-- Search and Actions Section -->
-            <div class="search-actions-section">
-                <div class="text-field">
+            <div class="btn-search pt-12 pb-6">
+                <div class="text-field w-25">
                     <v-text-field
                         color="primary"
                         density="compact"
@@ -23,13 +23,14 @@
                         @input="handleSearch"
                     ></v-text-field>
                 </div>
-                <div class="btn">
-                    <v-btn variant="outlined" class="create-btn-gradient px-6">
+                <div class="flex">
+                    <v-btn class="action-btn-success" >
                         {{ t("filter") }}
                     </v-btn>
+                    &nbsp;
                     <v-btn
                         @click="CreateDialogShow"
-                        class="create-btn-gradient px-6"
+                        class="create-btn-gradient"
                         :text="$t('create')"
                     >
                     </v-btn>
@@ -188,7 +189,7 @@
                 </v-app>
             </div>
         </div>
-    </div>
+
 </template>
 
 <script setup>

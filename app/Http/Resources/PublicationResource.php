@@ -29,11 +29,13 @@ class PublicationResource extends JsonResource
             'file_size' => $this->file_size,
             'download_count' => 0, // Default to 0 since download_count field doesn't exist yet
 
-            // Translations
-            'translations' => $this->when(
-                $request->get('include_translations'),
-                TranslationResource::collection($this->whenLoaded('translations'))
-            ),
+            // JSON translations for admin
+            'farsi_translations' => $this->when($request->get('include_translations'), $this->farsi_translations),
+            'pashto_translations' => $this->when($request->get('include_translations'), $this->pashto_translations),
+            
+            // Translation coverage for admin
+            'farsi_coverage' => $this->when($request->routeIs('admin.*'), $this->getTranslationCoverage('farsi')),
+            'pashto_coverage' => $this->when($request->routeIs('admin.*'), $this->getTranslationCoverage('pashto')),
         ];
     }
 }

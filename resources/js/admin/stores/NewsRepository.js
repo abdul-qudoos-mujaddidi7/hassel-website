@@ -58,6 +58,7 @@ export let useNewsRepository = defineStore("NewsRepository", {
                     params.append("status", status);
                 }
 
+                // Axios interceptor will append the current lang automatically
                 const response = await axios.get(`news?${params}`);
 
                 console.log("API Response:", response.data);

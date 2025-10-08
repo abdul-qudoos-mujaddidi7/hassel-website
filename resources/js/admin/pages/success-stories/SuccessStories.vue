@@ -1,12 +1,12 @@
 <template>
-    <CreateSuccessStory v-if="SuccessStoriesRepository.createDialog" />
-    <div :dir="dir">
+    <CreateSuccessStoryTranslatable v-if="SuccessStoriesRepository.createDialog" />
+    <div :dir="dir" class="content-card">
         <!-- Page Header -->
         <Header pageTitle='Success Stories Management' />
         <v-divider :thickness="1" class="border-opacity-100" />
         
         <!-- Main Content Card -->
-        <div class="content-card">
+        <div >
             <!-- Search and Actions Section -->
             <div class="btn-search pt-12 pb-6">
                 <div class="text-field w-25">
@@ -22,18 +22,7 @@
                     ></v-text-field>
                 </div>
                 <div class="btn flex">
-                    <v-select
-                        v-model="selectedStatus"
-                        :items="SuccessStoriesRepository.statusOptions"
-                        item-value="value"
-                        item-title="label"
-                        variant="outlined"
-                        density="compact"
-                        :label="$t('status')"
-                        class="mr-4"
-                        style="min-width: 150px;"
-                        @update:model-value="handleStatusFilter"
-                    ></v-select>
+
                     <v-btn variant="outlined" color="primary" class="px-6">
                         {{ t("filter") }}
                     </v-btn>
@@ -180,7 +169,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import Header from '../../components/Header.vue';
-import CreateSuccessStory from "./CreateSuccessStory.vue"; 
+import CreateSuccessStoryTranslatable from "./CreateSuccessStoryTranslatable.vue"; 
 import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
 import { useSuccessStoriesRepository } from "../../stores/SuccessStoriesRepository";

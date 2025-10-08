@@ -883,6 +883,9 @@ const fetchNews = async (page = 1) => {
             params: {
                 page: page,
                 per_page: newsPagination.value.perPage,
+                status: "published",
+                orderBy: "published_at",
+                direction: "desc",
             },
         });
 
@@ -909,6 +912,44 @@ const fetchNews = async (page = 1) => {
                 totalPages: 1,
                 totalItems: data.length,
                 perPage: 6,
+            };
+        }
+
+        // Fallback: if no localized news returned, retry with English directly (bypass interceptor)
+        if (!news.value || news.value.length === 0) {
+            try {
+                const origin = window.location.origin;
+                const params = new URLSearchParams();
+                params.set("per_page", String(newsPagination.value.perPage));
+                params.set("page", String(page));
+                params.set("status", "published");
+                params.set("orderBy", "published_at");
+                params.set("direction", "desc");
+                params.set("lang", "en");
+                const resEn = await fetch(`${origin}/api/news?${params.toString()}`);
+                if (resEn.ok) {
+                    const dataEn = await resEn.json();
+                    if (dataEn?.data?.length) {
+                        news.value = dataEn.data;
+                        newsPagination.value = {
+                            currentPage: dataEn.meta?.current_page || page,
+                            totalPages: dataEn.meta?.last_page || 1,
+                            totalItems: dataEn.meta?.total || 0,
+                            perPage: dataEn.meta?.per_page || 6,
+                        };
+                    }
+                }
+            } catch (_) {}
+        }
+
+        // Last-resort UI fallback (if API has no items at all)
+        if (!news.value || news.value.length === 0) {
+            news.value = [];
+            newsPagination.value = {
+                currentPage: 1,
+                totalPages: 1,
+                totalItems: 0,
+                perPage: newsPagination.value.perPage,
             };
         }
     } catch (error) {
@@ -1059,6 +1100,37 @@ const fetchPublications = async (page = 1) => {
                 totalItems: data.length,
                 perPage: 12,
             };
+        }
+
+        // Fallback: if no localized publications returned, retry with English directly (bypass interceptor)
+        if (!publications.value || publications.value.length === 0) {
+            try {
+                const origin = window.location.origin;
+                const params = new URLSearchParams();
+                params.set("page", String(page));
+                params.set(
+                    "per_page",
+                    String(publicationsPagination.value.perPage)
+                );
+                if (publicationSearch.value)
+                    params.set("search", publicationSearch.value);
+                params.set("lang", "en");
+                const resEn = await fetch(
+                    `${origin}/api/publications?${params.toString()}`
+                );
+                if (resEn.ok) {
+                    const dataEn = await resEn.json();
+                    if (dataEn?.data?.length) {
+                        publications.value = dataEn.data;
+                        publicationsPagination.value = {
+                            currentPage: dataEn.meta?.current_page || page,
+                            totalPages: dataEn.meta?.last_page || 1,
+                            totalItems: dataEn.meta?.total || 0,
+                            perPage: dataEn.meta?.per_page || 12,
+                        };
+                    }
+                }
+            } catch (_) {}
         }
     } catch (error) {
         console.error("Error fetching publications:", error);

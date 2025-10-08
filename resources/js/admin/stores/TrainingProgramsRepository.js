@@ -410,7 +410,7 @@ export let useTrainingProgramsRepository = defineStore(
                     description: "",
                     cover_image: "",
                     thumbnail_image: "",
-                    program_type: "",
+                    program_type: this.programTypeOptions[0]?.value || "agricultural_training",
                     duration: "",
                     location: "",
                     instructor: "",
@@ -423,3 +423,9 @@ export let useTrainingProgramsRepository = defineStore(
         },
     }
 );
+
+
+
+
+
+

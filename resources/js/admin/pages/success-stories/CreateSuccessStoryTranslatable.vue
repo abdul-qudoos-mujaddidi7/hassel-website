@@ -1,13 +1,13 @@
 <template>
     <TranslatableForm
-        v-model="NewsRepository.createDialog"
+        v-model="SuccessStoriesRepository.createDialog"
         :form-title="formTitle"
         :button-text="buttonText"
         :translatable-fields="translatableFields"
         :form-data="formData"
         :rules="rules"
         :saving="saving"
-        :is-edit-mode="NewsRepository.isEditMode"
+        :is-edit-mode="SuccessStoriesRepository.isEditMode"
         @save="handleSave"
     >
         <!-- Base Language Tab (English) -->
@@ -26,7 +26,7 @@
 
                 <v-select
                     v-model="formData.status"
-                    :items="NewsRepository.statusOptions"
+                    :items="SuccessStoriesRepository.statusOptions"
                     variant="outlined"
                     density="compact"
                     item-value="value"
@@ -39,7 +39,7 @@
                 </v-select>
             </div>
 
-            <!-- Slug Row -->
+            <!-- Slug and Client Name Row -->
             <div class="flex w-100">
                 <v-text-field
                     v-model="formData.slug"
@@ -52,22 +52,18 @@
                 ></v-text-field>
 
                 <v-text-field
-                    v-model="formData.excerpt"
+                    v-model="formData.client_name"
                     variant="outlined"
-                    :label="$t('excerpt')"
+                    :label="$t('client_name')"
                     density="compact"
                     class="pb-4 pl-2 w-50"
-                    :counter="500"
-                    :rules="[rules.maxLength]"
-                    hint="Brief description of the article"
-                    persistent-hint
                 ></v-text-field>
             </div>
 
-            <!-- Featured Image Row -->
+            <!-- Featured Image and Published At Row -->
             <div class="flex w-100">
                 <v-text-field
-                    v-model="formData.featured_image"
+                    v-model="formData.image"
                     variant="outlined"
                     :label="$t('featured_image')"
                     density="compact"
@@ -77,27 +73,27 @@
                 ></v-text-field>
 
                 <v-text-field
+                    v-if="formData.status === 'published'"
                     v-model="formData.published_at"
                     variant="outlined"
                     :label="$t('published_date')"
                     density="compact"
                     type="datetime-local"
                     class="pb-4 pl-2 w-50"
-                    v-if="formData.status === 'published'"
                 ></v-text-field>
             </div>
 
-            <!-- Content Row -->
+            <!-- Story Row -->
             <div class="w-100">
                 <v-textarea
-                    v-model="formData.content"
+                    v-model="formData.story"
                     variant="outlined"
                     :label="$t('content')"
                     density="compact"
                     class="pb-4"
                     :rules="[rules.required]"
                     rows="8"
-                    hint="Main content of the news article"
+                    hint="Main content of the success story"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -114,28 +110,24 @@
                 :has-translation="hasTranslation('title')"
                 @clear="clearTranslation"
             />
-
             <TranslationField
-                v-model="translations.excerpt"
-                field-name="excerpt"
-                :field-label="$t('excerpt')"
+                v-model="translations.client_name"
+                field-name="client_name"
+                :field-label="$t('client_name')"
                 language="farsi"
                 :language-label="$t('dari')"
-                field-type="textarea"
-                :rows="3"
-                :has-translation="hasTranslation('excerpt')"
+                :has-translation="hasTranslation('client_name')"
                 @clear="clearTranslation"
             />
-
             <TranslationField
-                v-model="translations.content"
-                field-name="content"
+                v-model="translations.story"
+                field-name="story"
                 :field-label="$t('content')"
                 language="farsi"
                 :language-label="$t('dari')"
                 field-type="textarea"
                 :rows="8"
-                :has-translation="hasTranslation('content')"
+                :has-translation="hasTranslation('story')"
                 @clear="clearTranslation"
             />
         </template>
@@ -151,105 +143,81 @@
                 :has-translation="hasTranslation('title')"
                 @clear="clearTranslation"
             />
-
             <TranslationField
-                v-model="translations.excerpt"
-                field-name="excerpt"
-                :field-label="$t('excerpt')"
+                v-model="translations.client_name"
+                field-name="client_name"
+                :field-label="$t('client_name')"
                 language="pashto"
                 :language-label="$t('pashto')"
-                field-type="textarea"
-                :rows="3"
-                :has-translation="hasTranslation('excerpt')"
+                :has-translation="hasTranslation('client_name')"
                 @clear="clearTranslation"
             />
-
             <TranslationField
-                v-model="translations.content"
-                field-name="content"
+                v-model="translations.story"
+                field-name="story"
                 :field-label="$t('content')"
                 language="pashto"
                 :language-label="$t('pashto')"
                 field-type="textarea"
                 :rows="8"
-                :has-translation="hasTranslation('content')"
+                :has-translation="hasTranslation('story')"
                 @clear="clearTranslation"
             />
         </template>
     </TranslatableForm>
+    
 </template>
 
 <script setup>
 import { ref, reactive, computed, watch } from "vue";
-import { useNewsRepository } from "../../stores/NewsRepository";
+import { useSuccessStoriesRepository } from "../../stores/SuccessStoriesRepository";
 import { useI18n } from "vue-i18n";
 import TranslatableForm from "../../components/TranslatableForm.vue";
 import TranslationField from "../../components/TranslationField.vue";
-
 const { t } = useI18n();
 
-const NewsRepository = useNewsRepository();
-const formTitle = computed(() => NewsRepository.isEditMode ? t('update') : t('create'));
-const buttonText = computed(() => NewsRepository.isEditMode ? t('update') : t('submit'));
+const SuccessStoriesRepository = useSuccessStoriesRepository();
+const formTitle = computed(() => SuccessStoriesRepository.isEditMode ? t('update') : t('create'));
+const buttonText = computed(() => SuccessStoriesRepository.isEditMode ? t('update') : t('submit'));
+const saving = ref(false);
 
-// Translatable fields for News model
-const translatableFields = ['title', 'excerpt', 'content'];
+// Translatable fields for SuccessStory model
+const translatableFields = ['title', 'client_name', 'story'];
 
 const formData = reactive({
     id: null,
     title: '',
     slug: '',
-    excerpt: '',
-    content: '',
-    featured_image: '',
+    client_name: '',
+    story: '',
+    image: '',
     status: 'draft',
     published_at: null
 });
 
-// Loading state
-const saving = ref(false);
+// Populate form on edit
+watch(() => SuccessStoriesRepository.currentSuccessStory, (newStory) => {
+    if (newStory && Object.keys(newStory).length > 0) {
+        formData.id = newStory.id;
+        formData.title = newStory.title || '';
+        formData.slug = newStory.slug || '';
+        formData.client_name = newStory.client_name || '';
+        formData.story = newStory.story || '';
+        formData.image = newStory.image || '';
+        formData.status = newStory.status || 'draft';
+        formData.published_at = newStory.published_at ? new Date(newStory.published_at).toISOString().slice(0, 16) : null;
 
-
-// Watch for changes in currentNews to populate form
-watch(() => NewsRepository.currentNews, async (newNews) => {
-    if (newNews && Object.keys(newNews).length > 0) {
-        formData.id = newNews.id;
-        formData.title = newNews.title || '';
-        formData.slug = newNews.slug || '';
-        formData.excerpt = newNews.excerpt || '';
-        formData.content = newNews.content || '';
-        formData.featured_image = newNews.featured_image || '';
-        formData.status = newNews.status || 'draft';
-        formData.published_at = newNews.published_at ? new Date(newNews.published_at).toISOString().slice(0, 16) : null;
-        
-        // Set translation data immediately for the form
+        // Provide translationData so TranslatableForm loads JSON translations
         formData.translationData = {
-            ...newNews,
-            farsi_translations: newNews.farsi_translations || {},
-            pashto_translations: newNews.pashto_translations || {}
+            ...newStory,
+            farsi_translations: newStory.farsi_translations || {},
+            pashto_translations: newStory.pashto_translations || {}
         };
-        
-        console.log('=== FORM DATA UPDATED ===');
-        console.log('Form data:', formData);
-        console.log('Translation data:', formData.translationData);
-        console.log('Farsi translations:', formData.translationData.farsi_translations);
-        console.log('Pashto translations:', formData.translationData.pashto_translations);
-        console.log('========================');
     }
 }, { deep: true, immediate: true });
 
-// Watch for status changes to set published_at
-watch(() => formData.status, (newStatus) => {
-    if (newStatus === 'published' && !formData.published_at) {
-        formData.published_at = new Date().toISOString().slice(0, 16);
-    }
-});
-
 const rules = {
     required: (value) => !!value || "This field is required.",
-    maxLength: (value) => 
-        !value || value.length <= 500 || 
-        "Excerpt must be 500 characters or less."
 };
 
 // Generate slug from title
@@ -264,30 +232,25 @@ const generateSlug = () => {
     }
 };
 
-// Handle save - save everything at once
-const handleSave = async (saveData) => {
+// Handle save from TranslatableForm - save everything at once
+const handleSave = async ({ data }) => {
     saving.value = true;
     try {
-        if (saveData.type === 'complete') {
-            // Save complete data with base content and translations
-            const apiData = { ...saveData.data };
-            
-            // Convert published_at to proper format if provided
-            if (apiData.published_at) {
-                apiData.published_at = new Date(apiData.published_at).toISOString();
-            } else if (apiData.status === 'published') {
-                apiData.published_at = new Date().toISOString();
-            }
-
-            if (NewsRepository.isEditMode) {
-                await NewsRepository.updateNews(formData.id, apiData);
-            } else {
-                await NewsRepository.createNews(apiData);
-            }
+        const apiData = { ...data };
+        // Normalize published_at
+        if (apiData.status === 'published') {
+            apiData.published_at = apiData.published_at
+                ? new Date(apiData.published_at).toISOString()
+                : new Date().toISOString();
+        } else {
+            apiData.published_at = null;
         }
-    } catch (error) {
-        console.error('Error saving news:', error);
-        // Handle error (show notification, etc.)
+
+        if (SuccessStoriesRepository.isEditMode) {
+            await SuccessStoriesRepository.updateSuccessStory(formData.id, apiData);
+        } else {
+            await SuccessStoriesRepository.createSuccessStory(apiData);
+        }
     } finally {
         saving.value = false;
     }
@@ -299,4 +262,6 @@ const handleSave = async (saveData) => {
     direction: rtl;
 }
 </style>
+
+
 
