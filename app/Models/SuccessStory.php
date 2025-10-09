@@ -74,6 +74,19 @@ class SuccessStory extends Model
 
     // Helper Methods
     
+    private function normalizeLanguage(string $language): string
+    {
+        $map = [
+            'fa' => 'farsi',
+            'farsi' => 'farsi',
+            'ps' => 'pashto',
+            'pashto' => 'pashto',
+            'en' => 'en',
+        ];
+        $key = strtolower($language);
+        return $map[$key] ?? 'en';
+    }
+
     // Accessors for JSON fields
     public function getFarsiTranslationsAttribute($value)
     {
@@ -99,13 +112,18 @@ class SuccessStory extends Model
     // Get translation for a specific field and language
     public function getTranslation($field, $language = 'farsi')
     {
-        $translations = $language === 'farsi' ? $this->farsi_translations : $this->pashto_translations;
+        $lang = $this->normalizeLanguage($language);
+        if ($lang === 'en') {
+            return $this->{$field} ?? null;
+        }
+        $translations = $lang === 'farsi' ? ($this->farsi_translations ?? []) : ($this->pashto_translations ?? []);
         return $translations[$field] ?? null;
     }
     
     // Set translation for a specific field and language
     public function setTranslation($field, $value, $language = 'farsi')
     {
+        $language = $this->normalizeLanguage($language);
         $translations = $language === 'farsi' ? $this->farsi_translations : $this->pashto_translations;
         $translations = $translations ?? [];
         $translations[$field] = $value;
@@ -120,6 +138,7 @@ class SuccessStory extends Model
     // Get all translations for a language
     public function getTranslations($language = 'farsi')
     {
+        $language = $this->normalizeLanguage($language);
         return $language === 'farsi' ? $this->farsi_translations : $this->pashto_translations;
     }
     

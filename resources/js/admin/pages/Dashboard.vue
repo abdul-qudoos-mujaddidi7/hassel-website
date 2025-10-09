@@ -1,189 +1,60 @@
 <template>
-  <div class="space-y-6">
-    <!-- Stats Cards Row -->
+   <Header :pageTitle='$t("dashboard")' />
+  <div class="space-y-8">
+    <!-- KPIs: clean, square cards with left accent bar -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <!-- Profit Card -->
-      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-              <i class="text-2xl text-blue-600">📈</i>
-            </div>
+      <div v-for="k in kpis" :key="k.label" class="bg-white border border-gray-200 p-5 relative">
+        <div class="absolute left-0 top-0 h-full w-1 bg-emerald-600"></div>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gray-100 flex items-center justify-center text-gray-600">
+            <v-icon size="22">{{ k.icon }}</v-icon>
           </div>
-          <div class="ml-4">
-            <p class="text-sm font-medium text-gray-500">Profit</p>
-            <p class="text-2xl font-semibold text-gray-900">17392.83</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Expense Card -->
-      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-              <i class="text-2xl text-yellow-600">💰</i>
-            </div>
-          </div>
-          <div class="ml-4">
-            <p class="text-sm font-medium text-gray-500">Expense</p>
-            <p class="text-2xl font-semibold text-gray-900">13090.17</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sales Card -->
-      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-              <i class="text-2xl text-purple-600">🛒</i>
-            </div>
-          </div>
-          <div class="ml-4">
-            <p class="text-sm font-medium text-gray-500">Sales</p>
-            <p class="text-2xl font-semibold text-gray-900">30483.00</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Patients Card -->
-      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-              <i class="text-2xl text-gray-600">👥</i>
-            </div>
-          </div>
-          <div class="ml-4">
-            <p class="text-sm font-medium text-gray-500">Patients</p>
-            <p class="text-2xl font-semibold text-gray-900">2</p>
+          <div>
+            <p class="text-sm text-gray-500">{{ k.label }}</p>
+            <p class="text-2xl font-semibold text-gray-900">{{ k.value ?? '—' }}</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Charts Section -->
+    <!-- Content lists only (no charts) -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <!-- Income vs Expense Chart -->
-      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">This Year Income Vs Expense</h3>
-        <div class="h-64 flex items-end justify-between space-x-2">
-          <!-- Chart bars would go here -->
-          <div class="flex-1 bg-gray-200 rounded-t h-32 flex items-end">
-            <div class="w-full bg-blue-600 rounded-t h-24"></div>
-          </div>
-          <div class="flex-1 bg-gray-200 rounded-t h-8 flex items-end">
-            <div class="w-full bg-gray-400 rounded-t h-4"></div>
-          </div>
-          <div class="flex-1 bg-gray-200 rounded-t h-16 flex items-end">
-            <div class="w-full bg-blue-600 rounded-t h-12"></div>
-          </div>
-          <div class="flex-1 bg-gray-200 rounded-t h-20 flex items-end">
-            <div class="w-full bg-blue-600 rounded-t h-16"></div>
-          </div>
-          <div class="flex-1 bg-gray-200 rounded-t h-32 flex items-end">
-            <div class="w-full bg-blue-600 rounded-t h-24"></div>
-          </div>
+      <div class="bg-white border border-gray-200">
+        <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+          <h3 class="text-base font-semibold text-gray-900">Latest News</h3>
+          <a href="/admin/news" class="text-sm text-emerald-700 hover:underline">View all</a>
         </div>
-        <div class="flex justify-center mt-4 space-x-4">
-          <div class="flex items-center">
-            <div class="w-3 h-3 bg-gray-400 rounded mr-2"></div>
-            <span class="text-sm text-gray-600">Income</span>
-          </div>
-          <div class="flex items-center">
-            <div class="w-3 h-3 bg-blue-600 rounded mr-2"></div>
-            <span class="text-sm text-gray-600">Expenses</span>
+        <div class="p-5 max-h-96 overflow-y-auto pr-1">
+          <div v-for="n in latest.news" :key="n.id" class="py-2 flex items-center justify-between border-b border-gray-100 last:border-0">
+            <span class="text-gray-900 font-medium truncate">{{ n.title }}</span>
+            <span class="text-sm text-gray-500 ml-4 whitespace-nowrap">{{ formatDate(n.published_date || n.published_at) }}</span>
           </div>
         </div>
       </div>
-
-      <!-- Profit Chart -->
-      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">Profit: 17392.83</h3>
-        <div class="h-64 flex items-center justify-center">
-          <div class="text-center">
-            <div class="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-              <i class="text-4xl text-gray-400">📊</i>
+      <div class="space-y-6">
+        <div class="bg-white border border-gray-200">
+          <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="text-base font-semibold text-gray-900">Latest Publications</h3>
+            <a href="/admin/publications" class="text-sm text-emerald-700 hover:underline">View all</a>
+          </div>
+          <div class="p-5 max-h-44 overflow-y-auto pr-1">
+            <div v-for="p in latest.publications" :key="p.id" class="py-2 flex items-center justify-between border-b border-gray-100 last:border-0">
+              <span class="text-gray-900 font-medium truncate">{{ p.title }}</span>
+              <span class="text-sm text-gray-500 ml-4 whitespace-nowrap">{{ (p.file_type && p.file_type.toUpperCase) ? p.file_type.toUpperCase() : '—' }}</span>
             </div>
-            <p class="text-gray-500">Chart visualization would go here</p>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Bottom Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <!-- Expenses Breakdown -->
-      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-medium text-gray-900">AFG 13090.17 Expenses Based on Amount and Percentage</h3>
-          <div class="flex space-x-2">
-            <button class="px-3 py-1 bg-blue-600 text-white text-xs rounded-full">THIS YEAR</button>
-            <button class="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">THIS MONTH</button>
-            <button class="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">TODAY</button>
+        <div class="bg-white border border-gray-200">
+          <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="text-base font-semibold text-gray-900">Latest Success Stories</h3>
+            <a href="/admin/success-stories" class="text-sm text-emerald-700 hover:underline">View all</a>
           </div>
-        </div>
-        
-        <div class="space-y-4">
-          <div class="flex items-center justify-between">
-            <div class="flex-1">
-              <p class="text-sm font-medium text-gray-900">Isabell Goodwin(AFG 321.00)</p>
-              <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
-                <div class="bg-blue-600 h-2 rounded-full" style="width: 2.45%"></div>
-              </div>
+          <div class="p-5 max-h-44 overflow-y-auto pr-1">
+            <div v-for="s in latest.successStories" :key="s.id" class="py-2 flex items-center justify-between border-b border-gray-100 last:border-0">
+              <span class="text-gray-900 font-medium truncate">{{ s.title }}</span>
+              <span class="text-sm text-gray-500 ml-4 whitespace-nowrap">{{ formatDate(s.published_date || s.published_at) }}</span>
             </div>
-            <span class="text-sm text-gray-500 ml-4">2.45%</span>
           </div>
-          
-          <div class="flex items-center justify-between">
-            <div class="flex-1">
-              <p class="text-sm font-medium text-gray-900">Pearline Wyman (AFG 123.00)</p>
-              <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
-                <div class="bg-blue-600 h-2 rounded-full" style="width: 0.94%"></div>
-              </div>
-            </div>
-            <span class="text-sm text-gray-500 ml-4">0.94%</span>
-          </div>
-          
-          <div class="flex items-center justify-between">
-            <div class="flex-1">
-              <p class="text-sm font-medium text-gray-900">Prof. Iliana Price MD (AFG 21.00)</p>
-              <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
-                <div class="bg-blue-600 h-2 rounded-full" style="width: 0.16%"></div>
-              </div>
-            </div>
-            <span class="text-sm text-gray-500 ml-4">0.16%</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Upcoming Appointments -->
-      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">Upcoming Appointment</h3>
-        
-        <div class="overflow-hidden">
-          <table class="min-w-full">
-            <thead class="bg-blue-50">
-              <tr>
-                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
-                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr>
-                <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Jackson Silva</td>
-                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">19:28:00</td>
-                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">+1 (505) 276-6676</td>
-              </tr>
-              <tr class="bg-gray-50">
-                <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Winifred Warren</td>
-                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">23:03:00</td>
-                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">+1 (832) 937-1216</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
@@ -191,13 +62,91 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import { useAuthRepository } from '../../stores/Auth.js';
+import { ref, reactive, onMounted, computed } from 'vue';
+import axios from '../../../axios.js';
+import Header from '../components/Header.vue';
 
-const authStore = useAuthRepository();
-
-onMounted(() => {
-  // Load dashboard data
-  console.log('Dashboard loaded');
+const stats = reactive({
+  news: { total: 0, published: 0, draft: 0 },
+  publications: { total: 0, published: 0, draft: 0 },
+  successStories: { total: 0, published: 0 },
+  training: { total: 0, active: 0 },
 });
+
+const latest = reactive({ news: [], publications: [], successStories: [] });
+
+// Removed charts; keep lightweight lists only
+
+function formatDate(d) {
+  if (!d) return '—';
+  try {
+    const dt = new Date(d);
+    return dt.toLocaleDateString();
+  } catch { return d; }
+}
+
+async function fetchAdminStats() {
+  try {
+    const { data } = await axios.get('dashboard/stats');
+    const s = data?.data || {};
+    stats.news.total = s.news?.total ?? stats.news.total;
+    stats.news.published = s.news?.published ?? stats.news.published;
+    stats.news.draft = s.news?.draft ?? stats.news.draft;
+    stats.publications.total = s.publications?.total ?? stats.publications.total;
+    stats.publications.published = s.publications?.published ?? stats.publications.published;
+    stats.publications.draft = s.publications?.draft ?? stats.publications.draft;
+    stats.successStories.total = s.success_stories?.total ?? stats.successStories.total;
+    stats.successStories.published = s.success_stories?.published ?? stats.successStories.published;
+    stats.training.total = s.training_programs?.total ?? stats.training.total;
+    stats.training.active = s.training_programs?.active ?? stats.training.active;
+  } catch (_) {
+    // Fallback: compute counts using public endpoints meta.total
+    try {
+      const [n, p, s, t] = await Promise.all([
+        axios.get('/api/news?per_page=1'),
+        axios.get('/api/publications?per_page=1'),
+        axios.get('/api/success-stories?per_page=1'),
+        axios.get('/api/training-programs?per_page=1'),
+      ]);
+      stats.news.total = n?.data?.meta?.total ?? 0;
+      stats.publications.total = p?.data?.meta?.total ?? 0;
+      stats.successStories.total = s?.data?.meta?.total ?? 0;
+      stats.training.total = t?.data?.meta?.total ?? 0;
+    } catch {}
+  }
+}
+
+async function fetchLatest() {
+  try {
+    const [n, p, s] = await Promise.all([
+      axios.get('/api/news?per_page=5'),
+      axios.get('/api/publications?per_page=5'),
+      axios.get('/api/success-stories?per_page=5'),
+    ]);
+    latest.news = n?.data?.data || n?.data || [];
+    latest.publications = p?.data?.data || p?.data || [];
+    latest.successStories = s?.data?.data || s?.data || [];
+  } catch (e) {
+    console.error('Failed to load latest content', e);
+  }
+}
+
+onMounted(async () => {
+  await Promise.all([fetchAdminStats(), fetchLatest()]);
+});
+// UI computed helpers
+const kpis = computed(() => [
+  { icon: 'mdi-newspaper-variant-outline', label: 'News (published)', value: stats.news.published },
+  { icon: 'mdi-book-outline', label: 'Publications (published)', value: stats.publications.published },
+  { icon: 'mdi-trophy-outline', label: 'Success Stories (published)', value: stats.successStories.published },
+  { icon: 'mdi-school-outline', label: 'Training (active)', value: stats.training.active },
+]);
+
+const newsTotal = computed(() => Math.max((stats.news.published || 0) + (stats.news.draft || 0), 1));
+const newsPubWidth = computed(() => `${Math.round(((stats.news.published || 0) / newsTotal.value) * 100)}%`);
+const newsDraftWidth = computed(() => `${Math.round(((stats.news.draft || 0) / newsTotal.value) * 100)}%`);
+
+const pubTotal = computed(() => Math.max((stats.publications.published || 0) + (stats.publications.draft || 0), 1));
+const pubPubWidth = computed(() => `${Math.round(((stats.publications.published || 0) / pubTotal.value) * 100)}%`);
+const pubDraftWidth = computed(() => `${Math.round(((stats.publications.draft || 0) / pubTotal.value) * 100)}%`);
 </script>

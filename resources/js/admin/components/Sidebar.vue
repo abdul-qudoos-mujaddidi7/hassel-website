@@ -298,9 +298,8 @@ const dir = computed(() => {
     background: rgb(var(--v-theme-sidebar-bg));
     overflow: hidden;
     color: rgb(var(--v-theme-on-surface));
-    box-shadow: 3px 0 15px rgba(0, 0, 0, 0.08);
     position: relative;
-   border-right: 1px solid #e0e0e0;
+   
 }
 
 
@@ -382,7 +381,7 @@ const dir = computed(() => {
 }
 
 .nav-item:hover {
-    background-color: #f3f4f6  !important;
+    background-color: #f4f4f5  !important;
     /* color: rgb(var(--v-theme-primary)) !important; */
     transform: translateX(2px);
 }

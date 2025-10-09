@@ -27,6 +27,9 @@ class SuccessStoryController extends Controller
 
         $stories = $query->paginate($perPage);
 
+        // Pass through current lang so the resource resolves correct translations
+        $request->merge(['lang' => $request->get('lang', 'en')]);
+
         return response()->json([
             'data' => SuccessStoryResource::collection($stories),
             'meta' => [

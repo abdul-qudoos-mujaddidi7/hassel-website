@@ -1,5 +1,5 @@
 <template>
-    <v-layout class="admin-layout">
+    <v-layout class="rounded rounded-md side">
         <v-navigation-drawer
             v-model="drawer"
             :rail="rail"
@@ -11,11 +11,12 @@
             <sidebar :dir="isRtl ? 'rtl' : 'ltr'" />
         </v-navigation-drawer>
 
-        <v-main class="d-flex flex-col">
+        <v-main class="d-flex flex-col" style="min-height: 300px">
             <v-card
                 variant="flat"
+                elevation="1"
                 :style="vCardStyle"
-                class="main-content-card"
+                 class="min-h-screen d-flex flex-col m-4 ml-4 py-4 px-4 rounded-xl"
             >
                 <router-view></router-view>
             </v-card>
@@ -47,57 +48,42 @@ const dir = computed(() => (isRtl.value ? 'right' : 'left'));
 // Dynamic card styling based on route
 const vCardStyle = computed(() => {
     console.log(route.path);
-    return route.path === "/admin/dashboard"
-        ? "background-color:#f8f8f8"
+    return route.path === "/admin"
+        ? "background-color:#fafafa"
         : "background-color:white";
 });
 </script>
 
 <style scoped>
 /* Admin Layout - Full Height */
-.admin-layout {
-    height: 100vh !important;
-    min-height: 100vh !important;
-    max-height: 100vh !important;
-    overflow: hidden;
-}
+
 
 /* Navigation Drawer - Full Height */
 .sideBar {
-    height: 100vh !important;
+  
     min-height: 100vh !important;
     max-height: 100vh !important;
 }
 
 /* Main Content Area */
 .v-main {
-    background-color: #f8fafc !important; /* Light gray surface */
-    height: 100vh !important;
+    background-color: #fafafa !important; /* Light gray surface */
     min-height: 100vh !important;
     max-height: 100vh !important;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
-/* Main Content Card */
-.main-content-card {
-    height: 100vh !important;
-    min-height: 100vh !important;
-    max-height: 100vh !important;
-    margin: 0 !important;
-    border-radius: 0 !important;
-    overflow-y: auto;
-    padding: 1rem;
-}
+
 
 /* Hide all scrollbars */
 .scrollable-content {
     max-height: 80vh;
     overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    /* direction: ltr; */
 }
 
 .scrollable-content::-webkit-scrollbar {
-    display: none; /* WebKit browsers */
+    width: 4px;
+    display: none;
 }
 </style>

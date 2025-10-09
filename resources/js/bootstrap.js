@@ -9,7 +9,7 @@ if (token) {
     window.axios.defaults.headers.common["X-CSRF-TOKEN"] = token.content;
 }
 
-// Append/normalize ?lang to all API requests (public/admin)
+// Append/normalize ?lang to public API requests (website only)
 try {
     axios.interceptors.request.use((config) => {
         // Only append to same-origin API requests
@@ -17,6 +17,18 @@ try {
             (config.url || "").startsWith("/api") ||
             (config.baseURL || "").includes("/api");
         if (isApi) {
+            // Determine if this is an admin API call; if so, do not send language
+            const url = String(config.url || "");
+            const base = String(config.baseURL || "");
+            const isAdminApi =
+                url.includes("/api/admin") ||
+                base.includes("/api/admin") ||
+                (typeof window !== "undefined" && window.location.pathname.startsWith("/admin"));
+
+            if (isAdminApi) {
+                return config;
+            }
+
             // Start with a clean param bag and copy only defined values
             const params = new URLSearchParams();
             const original = config.params || {};
@@ -30,25 +42,12 @@ try {
                     params.set(key, value);
                 }
             });
-            // Determine if this is an admin API call
-            const url = String(config.url || "");
-            const base = String(config.baseURL || "");
-            const isAdminApi =
-                url.includes("/api/admin") ||
-                base.includes("/api/admin") ||
-                (typeof window !== "undefined" && window.location.pathname.startsWith("/admin"));
-
             // Decide language source with precedence:
             // 1) Explicit lang in request params (respect caller)
-            // 2) Admin preference for admin APIs
-            // 3) Website preference for public APIs (fallback to legacy 'locale')
+            // 2) Website preference for public APIs (fallback to legacy 'locale')
             let raw = params.get("lang");
             if (!raw) {
-                raw = isAdminApi
-                    ? (localStorage.getItem("admin_preferred_language") ||
-                       sessionStorage.getItem("admin_preferred_language") ||
-                       "en")
-                    : (localStorage.getItem("preferred_language") ||
+                raw = (localStorage.getItem("preferred_language") ||
                        localStorage.getItem("locale") ||
                        "en");
             }

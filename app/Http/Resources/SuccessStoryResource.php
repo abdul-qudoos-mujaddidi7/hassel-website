@@ -25,6 +25,10 @@ class SuccessStoryResource extends JsonResource
 
             // Computed attributes
             'is_published' => $this->is_published,
+
+            // Admin-only: include raw JSON translations when requested
+            'farsi_translations' => $this->when($request->get('include_translations') || $request->routeIs('api.admin.*'), $this->farsi_translations),
+            'pashto_translations' => $this->when($request->get('include_translations') || $request->routeIs('api.admin.*'), $this->pashto_translations),
         ];
     }
 }

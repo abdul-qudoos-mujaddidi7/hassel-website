@@ -1,5 +1,5 @@
 <template>
-    <v-card :dir="isRtl ? 'rtl' : 'ltr'" :elevation="0" class="rounded-xl">
+    <v-card :dir="isRtl ? 'rtl' : 'ltr'" :elevation="0">
         <template v-slot:prepend>
             <h1 class="header-title">
                 {{ $t(pageTitle) }}
@@ -12,12 +12,10 @@
                 <v-menu transition="scale-transition">
                     <template #activator="{ props }">
                         <v-btn
-                            :icon="$t('mdi-web')"
-                            flat
-                            class="icon bg-head mx-4"
-                            size="small"
-                            height="4.7vh"
-                            width="4.7vh"
+                            icon="mdi-web"
+                            variant="text"
+                            density="comfortable"
+                            class="lang-btn mx-2"
                             v-bind="props"
                             :title="$t('language_switcher')"
                         ></v-btn>
@@ -53,16 +51,14 @@
                 <v-menu transition="scale-transition" offset="8">
                     <template #activator="{ props }">
                         <v-btn
-                            flat
+                            variant="text"
                             class="profile-btn"
                             v-bind="props"
                             :title="user.name"
-                            size="large"
                         >
-                            <v-avatar size="40" class="profile-avatar">
+                            <v-avatar size="36" class="profile-avatar">
                                 <img :src="user.photo" :alt="user.name" />
                             </v-avatar>
-                            <span class="profile-name ml-3">{{ user.name }}</span>
                         </v-btn>
                     </template>
 
@@ -168,6 +164,9 @@ const handleLogout = async () => {
     border: 1px solid rgba(var(--v-theme-outline), 0.2) !important;
 }
 
+.lang-btn .v-icon { color: #6b7280 !important; }
+.lang-btn:hover .v-icon { color: rgb(var(--v-theme-primary)) !important; }
+
 .icon .v-icon {
     color: rgb(var(--v-theme-on-surface)) !important;
     font-weight: bold;
@@ -205,16 +204,7 @@ const handleLogout = async () => {
 }
 
 /* Profile Button Styles */
-.profile-btn {
-    border-radius: 8px !important;
-    background: transparent !important;
-    color: rgb(var(--v-theme-on-surface)) !important;
-    transition: all 0.3s ease !important;
-    text-transform: none !important;
-    font-weight: 500 !important;
-    padding: 8px 16px !important;
-    min-height: 48px !important;
-}
+.profile-btn { background: transparent !important; padding: 0 !important; min-height: auto !important; }
 
 .profile-btn:hover {
     background: rgba(var(--v-theme-primary), 0.08) !important;
@@ -223,10 +213,7 @@ const handleLogout = async () => {
     box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.15) !important;
 }
 
-.profile-avatar {
-    border: 2px solid rgb(var(--v-theme-on-primary)) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-}
+.profile-avatar { border: 1px solid #e5e7eb !important; box-shadow: none !important; }
 
 .profile-avatar-large {
     border: 3px solid rgb(var(--v-theme-primary)) !important;

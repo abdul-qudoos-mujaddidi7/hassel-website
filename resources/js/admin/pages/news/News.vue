@@ -55,26 +55,24 @@
                                 >
                                     <!-- Title Column -->
                                     <template v-slot:item.title="{ item }">
-                                        <td class="py-2 pl-4">
-                                            <div class="d-flex align-center">
-                                                <v-avatar
-                                                    v-if="item.featured_image"
-                                                    size="40"
-                                                    class="mr-3"
-                                                >
-                                                    <v-img :src="item.featured_image" :alt="item.title"></v-img>
-                                                </v-avatar>
-                                                <div>
-                                                    <div class="font-weight-medium">{{ item.title }}</div>
-                                                    <div class="text-caption text-grey">{{ item.excerpt }}</div>
-                                                </div>
+                                        <div class="py-2 pl-4 d-flex align-center">
+                                            <v-avatar
+                                                v-if="item.featured_image"
+                                                size="40"
+                                                class="mr-3"
+                                            >
+                                                <v-img :src="item.featured_image" :alt="item.title"></v-img>
+                                            </v-avatar>
+                                            <div>
+                                                <div class="font-weight-medium">{{ item.title }}</div>
+                                                <div class="text-caption text-grey">{{ item.excerpt }}</div>
                                             </div>
-                                        </td>
+                                        </div>
                                     </template>
 
                                     <!-- Status Column -->
                                     <template v-slot:item.status="{ item }">
-                                        <td class="py-2 pl-4">
+                                        <div class="py-2 pl-4">
                                             <v-chip
                                                 :color="getStatusColor(item.status)"
                                                 size="small"
@@ -82,18 +80,8 @@
                                             >
                                                 {{ NewsRepository.getStatusLabel(item.status) }}
                                             </v-chip>
-                                        </td>
+                                        </div>
                                     </template>
-
-                                   
-
-                                    <!-- Published Date Column -->
-                                    <template v-slot:item.published_at="{ item }">
-                                        <td class="py-2 pl-4">
-                                            <span>{{ NewsRepository.formatDate(item.published_at) }}</span>
-                                        </td>
-                                    </template>
-
                                     <!-- Checkbox for selecting rows -->
                                     <template v-slot:item.checkbox="{ item }">
                                         <v-checkbox
