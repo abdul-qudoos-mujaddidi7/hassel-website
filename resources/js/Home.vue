@@ -60,20 +60,38 @@
                             to="/contact"
                             class="btn btn-cta inline-flex items-center justify-center text-xs px-3 py-2 md:text-lg md:px-8 md:py-4 rounded-md"
                         >
-                            Contact Us
-                            <svg
-                                class="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                />
-                            </svg>
+                            <template v-if="!isRTL">
+                                {{ t("home.hero.contact") }}
+                                <svg
+                                    class="w-5 h-5 ml-2"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                    />
+                                </svg>
+                            </template>
+                            <template v-else>
+                                <svg
+                                    class="w-5 h-5 mr-2"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M7 8l-4 4m0 0l4 4m-4-4h18"
+                                    />
+                                </svg>
+                                {{ t("home.hero.contact") }}
+                            </template>
                         </router-link>
                         <!-- About link removed; consolidated into Home -->
                     </div>
@@ -104,16 +122,12 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="heading-lg text-green-600 mb-6">
-                        Welcome to Mount Agro
+                        {{ t("home.welcome.title") }}
                     </h2>
                     <p
                         class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
                     >
-                        Empowering Afghanistan's agricultural communities
-                        through innovative microfinance solutions, comprehensive
-                        training programs, and sustainable development
-                        initiatives. We are committed to building stronger, more
-                        resilient farming communities across the nation.
+                        {{ t("home.welcome.body") }}
                     </p>
                 </div>
 
@@ -134,18 +148,10 @@
                 >
                     <div class="self-start">
                         <p class="text-xl text-gray-600 leading-relaxed">
-                            Mount Agro Microfinance Institution is a leading
-                            financial services provider dedicated to
-                            transforming Afghanistan's agricultural sector
-                            through innovative microfinance solutions and
-                            comprehensive support programs.
+                            {{ t("home.about.p1") }}
                         </p>
                         <p class="text-lg text-gray-600 leading-relaxed">
-                            Since our establishment, we have been committed to
-                            empowering farmers, agricultural entrepreneurs, and
-                            rural communities by providing accessible financial
-                            services, technical training, and market linkage
-                            opportunities.
+                            {{ t("home.about.p2") }}
                         </p>
                     </div>
                     <div class="space-y-6">
@@ -194,7 +200,7 @@
                             0
                         </div>
                         <div class="text-gray-600 font-medium">
-                            Beneficiaries
+                            {{ t("home.stats.beneficiaries") }}
                         </div>
                     </div>
 
@@ -226,7 +232,7 @@
                             0
                         </div>
                         <div class="text-gray-600 font-medium">
-                            Programs Completed
+                            {{ t("home.stats.programs_completed") }}
                         </div>
                     </div>
 
@@ -258,7 +264,7 @@
                             0
                         </div>
                         <div class="text-gray-600 font-medium">
-                            Provinces Reached
+                            {{ t("home.stats.provinces_reached") }}
                         </div>
                     </div>
 
@@ -290,7 +296,7 @@
                             0
                         </div>
                         <div class="text-gray-600 font-medium">
-                            Cooperatives Formed
+                            {{ t("home.stats.cooperatives_formed") }}
                         </div>
                     </div>
                 </div>
@@ -302,10 +308,10 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-10 md:mb-12">
                     <h2 class="heading-lg text-green-600 mb-4">
-                        Our Foundation
+                        {{ t("home.foundation.title") }}
                     </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Built on strong principles that guide everything we do
+                        {{ t("home.foundation.subtitle") }}
                     </p>
                 </div>
 
@@ -339,13 +345,10 @@
                             </svg>
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">
-                            Vision
+                            {{ t("home.foundation.vision.title") }}
                         </h3>
                         <p class="text-gray-700 leading-relaxed">
-                            To be the leading microfinance institution
-                            empowering Afghanistan's agricultural communities
-                            through innovative financial solutions and
-                            sustainable development programs.
+                            {{ t("home.foundation.vision.body") }}
                         </p>
                     </div>
 
@@ -371,13 +374,10 @@
                             </svg>
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">
-                            Mission
+                            {{ t("home.foundation.mission.title") }}
                         </h3>
                         <p class="text-gray-700 leading-relaxed">
-                            We provide accessible microfinance services,
-                            agricultural training, and technical support to help
-                            farmers increase productivity, improve livelihoods,
-                            and build resilient communities.
+                            {{ t("home.foundation.mission.body") }}
                         </p>
                     </div>
 
@@ -403,13 +403,10 @@
                             </svg>
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-4">
-                            Values
+                            {{ t("home.foundation.values.title") }}
                         </h3>
                         <p class="text-gray-700 leading-relaxed">
-                            Integrity, transparency, community focus, and
-                            sustainable development guide our commitment to
-                            serving Afghanistan's agricultural sector with
-                            excellence and trust.
+                            {{ t("home.foundation.values.body") }}
                         </p>
                     </div>
                 </div>
@@ -421,14 +418,12 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="heading-lg text-green-600 mb-6">
-                        Our Business Pillars
+                        {{ t("home.pillars.title") }}
                     </h2>
                     <p
                         class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
                     >
-                        Seven core pillars that drive our mission to transform
-                        Afghanistan's agricultural landscape through
-                        comprehensive support and innovative solutions.
+                        {{ t("home.pillars.subtitle") }}
                     </p>
                 </div>
 
@@ -562,9 +557,40 @@
                                     <div class="mt-auto">
                                         <router-link
                                             :to="pillar.route"
-                                            class="btn btn-primary w-full justify-center"
+                                            class="btn btn-primary w-full justify-center inline-flex items-center"
                                         >
-                                            Learn More
+                                            <template v-if="!isRTL">
+                                                {{ t("common.view_details") }}
+                                                <svg
+                                                    class="w-4 h-4 ml-2"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M9 5l7 7-7 7"
+                                                    />
+                                                </svg>
+                                            </template>
+                                            <template v-else>
+                                                <svg
+                                                    class="w-4 h-4 mr-2"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M15 19l-7-7 7-7"
+                                                    />
+                                                </svg>
+                                                {{ t("common.view_details") }}
+                                            </template>
                                         </router-link>
                                     </div>
                                 </div>
@@ -596,12 +622,10 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="heading-lg text-green-600 mb-6">
-                        Latest News & Updates
+                        {{ t("home.news.title") }}
                     </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Stay informed about our latest programs, success
-                        stories, and developments in Afghanistan's agricultural
-                        sector.
+                        {{ t("home.news.subtitle") }}
                     </p>
                 </div>
 
@@ -678,20 +702,38 @@
                                     :to="`/news/${article.slug || article.id}`"
                                     class="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
                                 >
-                                    Read More
-                                    <svg
-                                        class="w-4 h-4 ml-1"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 5l7 7-7 7"
-                                        />
-                                    </svg>
+                                    <template v-if="!isRTL">
+                                        {{ t("home.news.read_more") }}
+                                        <svg
+                                            class="w-4 h-4 ml-1"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M9 5l7 7-7 7"
+                                            />
+                                        </svg>
+                                    </template>
+                                    <template v-else>
+                                        <svg
+                                            class="w-4 h-4 mr-1"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M15 19l-7-7 7-7"
+                                            />
+                                        </svg>
+                                        {{ t("home.news.read_more") }}
+                                    </template>
                                 </router-link>
                             </div>
                         </div>
@@ -714,8 +756,7 @@
                         {{ t("home.partners.title") }}
                     </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Working together with government institutions, NGOs, and
-                        private sector partners to maximize our impact.
+                        {{ t("home.partners.subtitle") }}
                     </p>
                 </div>
 
@@ -780,10 +821,10 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
                     <h2 class="heading-lg text-green-600 mb-4">
-                        Leadership Team
+                        {{ t("home.leadership.title") }}
                     </h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Meet the experienced professionals guiding our mission.
+                        {{ t("home.leadership.subtitle") }}
                     </p>
                 </div>
 
@@ -799,11 +840,10 @@
                         <h3
                             class="text-lg font-semibold mb-1 text-brand-primary"
                         >
-                            CEO & Founder
+                            {{ t("home.leadership.ceo_title") }}
                         </h3>
                         <p class="text-brand-secondary text-sm">
-                            Strategic leadership, partnerships, and
-                            organizational growth.
+                            {{ t("home.leadership.ceo_desc") }}
                         </p>
                     </div>
                     <div
@@ -817,11 +857,10 @@
                         <h3
                             class="text-lg font-semibold mb-1 text-brand-primary"
                         >
-                            Director, Programs
+                            {{ t("home.leadership.programs_title") }}
                         </h3>
                         <p class="text-brand-secondary text-sm">
-                            Design and delivery of training, market, and
-                            community programs.
+                            {{ t("home.leadership.programs_desc") }}
                         </p>
                     </div>
                     <div
@@ -835,11 +874,10 @@
                         <h3
                             class="text-lg font-semibold mb-1 text-brand-primary"
                         >
-                            Director, Finance
+                            {{ t("home.leadership.finance_title") }}
                         </h3>
                         <p class="text-brand-secondary text-sm">
-                            Financial stewardship and responsible microfinance
-                            operations.
+                            {{ t("home.leadership.finance_desc") }}
                         </p>
                     </div>
                 </div>
@@ -850,34 +888,50 @@
         <section class="section-padding text-white">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="heading-lg mb-6 text-green-600">
-                    Ready to Transform Agricultural Communities?
+                    {{ t("home.cta.title") }}
                 </h2>
                 <div class="max-w-3xl mx-auto">
                     <p class="text-xl text-green-100 mb-8">
-                        Join us in our mission to empower farmers and strengthen
-                        Afghanistan's agricultural sector through innovative
-                        microfinance solutions.
+                        {{ t("home.cta.body") }}
                     </p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <router-link
                         to="/contact"
-                        class="btn btn-cta text-lg px-8 py-4"
+                        class="btn btn-cta text-lg px-8 py-4 inline-flex items-center"
                     >
-                        Get Started
-                        <svg
-                            class="w-5 h-5 ml-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
-                        </svg>
+                        <template v-if="!isRTL">
+                            {{ t("home.cta.get_started") }}
+                            <svg
+                                class="w-5 h-5 ml-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                />
+                            </svg>
+                        </template>
+                        <template v-else>
+                            <svg
+                                class="w-5 h-5 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M7 8l-4 4m0 0l4 4m-4-4h18"
+                                />
+                            </svg>
+                            {{ t("home.cta.get_started") }}
+                        </template>
                     </router-link>
                     <!-- About link removed; consolidated into Home -->
                 </div>
@@ -891,7 +945,7 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import axios from "axios";
 import { useI18n } from "./composables/useI18n.js";
 
-const { t } = useI18n();
+const { t, isRTL } = useI18n();
 
 // Hero slider state
 const currentSlide = ref(0);

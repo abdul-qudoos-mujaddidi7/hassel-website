@@ -34,7 +34,7 @@
                         <router-link
                             to="/"
                             class="text-green-200 hover:text-white transition-colors"
-                            >Home</router-link
+                            >{{ t("agritech.breadcrumb.home") }}</router-link
                         >
                         <svg
                             class="w-4 h-4 text-green-300"
@@ -67,22 +67,19 @@
                                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                             ></path>
                         </svg>
-                        Technology Solutions
+                        {{ t("agritech.badge") }}
                     </div>
 
                     <h1
                         class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
                     >
-                        Agri-Tech Tools
+                        {{ t("agritech.title") }}
                     </h1>
 
                     <p
                         class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
-                        Discover innovative agricultural technology solutions
-                        designed to enhance farming practices, increase
-                        productivity, and support sustainable agriculture across
-                        Afghanistan.
+                        {{ t("agritech.subtitle") }}
                     </p>
 
                     <!-- Quick Stats -->
@@ -92,30 +89,32 @@
                                 {{ totalTools }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Available Tools
+                                {{ t("agritech.stats.tools") }}
                             </div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-white">
                                 {{ uniquePlatforms }}
                             </div>
-                            <div class="text-green-200 text-sm">Platforms</div>
+                            <div class="text-green-200 text-sm">
+                                {{ t("agritech.stats.platforms") }}
+                            </div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-white">
                                 100%
                             </div>
                             <div class="text-green-200 text-sm">
-                                Free Access
+                                {{ t("agritech.stats.free") }}
                             </div>
                         </div>
                     </div>
 
                     <!-- Scroll Indicator -->
                     <div class="flex flex-col items-center">
-                        <span class="text-green-200 text-sm mb-2"
-                            >Explore all tools below</span
-                        >
+                        <span class="text-green-200 text-sm mb-2">{{
+                            t("agritech.scroll")
+                        }}</span>
                         <svg
                             class="w-6 h-6 text-green-300 animate-bounce"
                             fill="none"
@@ -139,7 +138,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-gray-900">
-                        Filter Tools
+                        {{ t("agritech.filters.title") }}
                     </h2>
                     <button
                         @click="resetFilters"
@@ -158,7 +157,7 @@
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                             ></path>
                         </svg>
-                        Reset Filters
+                        {{ t("agritech.filters.reset") }}
                     </button>
                 </div>
 
@@ -169,17 +168,25 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Tool Type</label
+                            >{{ t("agritech.filters.type") }}</label
                         >
                         <select
                             v-model="filters.type"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
-                            <option value="">All Types</option>
-                            <option value="mobile_app">Mobile App</option>
-                            <option value="web_tool">Web Tool</option>
+                            <option value="">
+                                {{ t("agritech.filters.type_all") }}
+                            </option>
+                            <option value="mobile_app">
+                                {{ t("agritech.filters.type_mobile_app") }}
+                            </option>
+                            <option value="web_tool">
+                                {{ t("agritech.filters.type_web_tool") }}
+                            </option>
                             <option value="desktop_software">
-                                Desktop Software
+                                {{
+                                    t("agritech.filters.type_desktop_software")
+                                }}
                             </option>
                         </select>
                     </div>
@@ -188,13 +195,15 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Platform</label
+                            >{{ t("agritech.filters.platform") }}</label
                         >
                         <select
                             v-model="filters.platform"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
-                            <option value="">All Platforms</option>
+                            <option value="">
+                                {{ t("agritech.filters.platform_all") }}
+                            </option>
                             <option value="Android">Android</option>
                             <option value="iOS">iOS</option>
                             <option value="Web">Web</option>
@@ -206,13 +215,15 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Search</label
+                            >{{ t("agritech.filters.search") }}</label
                         >
                         <div class="relative">
                             <input
                                 v-model="filters.search"
                                 type="text"
-                                placeholder="Search tools..."
+                                :placeholder="
+                                    t('agritech.filters.search_placeholder')
+                                "
                                 class="w-full border border-gray-300 rounded-lg px-4 py-3 pl-10 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                             />
                             <svg
@@ -236,9 +247,9 @@
                         <div
                             class="w-full bg-gray-50 rounded-lg px-4 py-3 text-sm text-gray-600"
                         >
-                            <span class="font-medium"
-                                >{{ total }} tools found</span
-                            >
+                            <span class="font-medium">{{
+                                t("agritech.results.count", { count: total })
+                            }}</span>
                         </div>
                     </div>
                 </div>
@@ -288,17 +299,16 @@
                             </svg>
                         </div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            No Tools Found
+                            {{ t("agritech.empty.title") }}
                         </h3>
                         <p class="text-gray-600 mb-6">
-                            No tools match your current filters. Try adjusting
-                            your search criteria.
+                            {{ t("agritech.empty.body") }}
                         </p>
                         <button
                             @click="resetFilters"
                             class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
                         >
-                            Clear Filters
+                            {{ t("agritech.empty.clear") }}
                         </button>
                     </div>
 
@@ -386,22 +396,40 @@
                             <div class="flex gap-2">
                                 <router-link
                                     :to="`/agri-tech/${tool.slug || tool.id}`"
-                                    class="flex-1 bg-brand-primary text-white font-semibold py-2 px-4 rounded-lg hover:opacity-90 transition-colors text-sm text-center"
+                                    class="flex-1 bg-brand-primary text-white font-semibold py-2 px-4 rounded-lg hover:opacity-90 transition-colors text-sm text-center inline-flex items-center justify-center"
                                 >
-                                    <svg
-                                        class="w-4 h-4 inline mr-2"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        ></path>
-                                    </svg>
-                                    View Details
+                                    <template v-if="!isRTL">
+                                        {{ t("common.view_details") }}
+                                        <svg
+                                            class="w-4 h-4 ml-2"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M9 5l7 7-7 7"
+                                            ></path>
+                                        </svg>
+                                    </template>
+                                    <template v-else>
+                                        <svg
+                                            class="w-4 h-4 mr-2"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M15 19l-7-7 7-7"
+                                            ></path>
+                                        </svg>
+                                        {{ t("common.view_details") }}
+                                    </template>
                                 </router-link>
                                 <button
                                     v-if="tool.download_url"
@@ -421,7 +449,7 @@
                                             d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                                         ></path>
                                     </svg>
-                                    Download
+                                    {{ t("agritech.download") }}
                                 </button>
                                 <button
                                     v-else
@@ -441,7 +469,7 @@
                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                                         ></path>
                                     </svg>
-                                    Coming Soon
+                                    {{ t("agritech.coming_soon") }}
                                 </button>
                             </div>
                         </div>
@@ -459,7 +487,7 @@ import { useI18n } from "./composables/useI18n";
 const loading = ref(true);
 const tools = ref([]);
 const total = ref(0);
-const { currentLanguage, onLanguageChange } = useI18n();
+const { currentLanguage, onLanguageChange, t, isRTL } = useI18n();
 let unsubscribeLang = null;
 
 const filters = ref({

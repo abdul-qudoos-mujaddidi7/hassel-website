@@ -34,7 +34,7 @@
                         <router-link
                             to="/"
                             class="text-green-200 hover:text-white transition-colors"
-                            >Home</router-link
+                            >{{ t("market.breadcrumb.home") }}</router-link
                         >
                         <svg
                             class="w-4 h-4 text-green-300"
@@ -67,21 +67,19 @@
                                 d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm8 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V8z"
                             ></path>
                         </svg>
-                        Market Solutions
+                        {{ t("market.badge") }}
                     </div>
 
                     <h1
                         class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
                     >
-                        Market Access Programs
+                        {{ t("market.title") }}
                     </h1>
 
                     <p
                         class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
-                        Connect with markets, enhance value chains, and build
-                        sustainable partnerships to maximize your agricultural
-                        potential and income opportunities.
+                        {{ t("market.subtitle") }}
                     </p>
 
                     <!-- Quick Stats -->
@@ -91,30 +89,32 @@
                                 {{ totalPrograms }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Active Programs
+                                {{ t("market.stats.active") }}
                             </div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-white">
                                 {{ uniqueCrops }}
                             </div>
-                            <div class="text-green-200 text-sm">Crop Types</div>
+                            <div class="text-green-200 text-sm">
+                                {{ t("market.stats.crops") }}
+                            </div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-white">
                                 {{ partnerCount }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Partner Organizations
+                                {{ t("market.stats.partners") }}
                             </div>
                         </div>
                     </div>
 
                     <!-- Scroll Indicator -->
                     <div class="flex flex-col items-center">
-                        <span class="text-green-200 text-sm mb-2"
-                            >Explore programs below</span
-                        >
+                        <span class="text-green-200 text-sm mb-2">{{
+                            t("market.scroll")
+                        }}</span>
                         <svg
                             class="w-6 h-6 text-green-300 animate-bounce"
                             fill="none"
@@ -138,7 +138,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-gray-900">
-                        Filter Programs
+                        {{ t("market.filters.title") }}
                     </h2>
                     <button
                         @click="resetFilters"
@@ -157,7 +157,7 @@
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                             ></path>
                         </svg>
-                        Reset Filters
+                        {{ t("market.filters.reset") }}
                     </button>
                 </div>
 
@@ -168,13 +168,15 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Program Type</label
+                            >{{ t("market.filters.type") }}</label
                         >
                         <select
                             v-model="filters.program_type"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
-                            <option value="">All Types</option>
+                            <option value="">
+                                {{ t("market.filters.type_all") }}
+                            </option>
                             <option
                                 v-for="type in programTypes"
                                 :key="type"
@@ -189,13 +191,15 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Search</label
+                            >{{ t("market.filters.search") }}</label
                         >
                         <div class="relative">
                             <input
                                 v-model="filters.search"
                                 type="text"
-                                placeholder="Search programs..."
+                                :placeholder="
+                                    t('market.filters.search_placeholder')
+                                "
                                 class="w-full border border-gray-300 rounded-lg px-4 py-3 pl-10 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                             />
                             <svg
@@ -219,9 +223,9 @@
                         <div
                             class="w-full bg-gray-50 rounded-lg px-4 py-3 text-sm text-gray-600"
                         >
-                            <span class="font-medium"
-                                >{{ total }} programs found</span
-                            >
+                            <span class="font-medium">{{
+                                t("market.results.count", { count: total })
+                            }}</span>
                         </div>
                     </div>
                 </div>
@@ -271,17 +275,16 @@
                             </svg>
                         </div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            No Programs Found
+                            {{ t("market.empty.title") }}
                         </h3>
                         <p class="text-gray-600 mb-6">
-                            No programs match your current filters. Try
-                            adjusting your search criteria.
+                            {{ t("market.empty.body") }}
                         </p>
                         <button
                             @click="resetFilters"
                             class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
                         >
-                            Clear Filters
+                            {{ t("market.empty.clear") }}
                         </button>
                     </div>
 
@@ -377,28 +380,40 @@
                                     :to="`/market-access/${
                                         program.slug || program.id
                                     }`"
-                                    class="w-full bg-brand-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-brand-secondary transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md block"
+                                    class="w-full bg-brand-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-brand-secondary transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md block inline-flex items-center justify-center"
                                 >
-                                    <svg
-                                        class="w-4 h-4 inline mr-2"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                        ></path>
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                                        ></path>
-                                    </svg>
-                                    View Details
+                                    <template v-if="!isRTL">
+                                        {{ t("common.view_details") }}
+                                        <svg
+                                            class="w-4 h-4 ml-2"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M9 5l7 7-7 7"
+                                            ></path>
+                                        </svg>
+                                    </template>
+                                    <template v-else>
+                                        <svg
+                                            class="w-4 h-4 mr-2"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M15 19l-7-7 7-7"
+                                            ></path>
+                                        </svg>
+                                        {{ t("common.view_details") }}
+                                    </template>
                                 </router-link>
                             </div>
                         </div>
@@ -416,7 +431,7 @@ import { useI18n } from "./composables/useI18n";
 const loading = ref(true);
 const programs = ref([]);
 const total = ref(0);
-const { currentLanguage, onLanguageChange } = useI18n();
+const { currentLanguage, onLanguageChange, t, isRTL } = useI18n();
 let unsubscribeLang = null;
 
 const filters = ref({
@@ -620,7 +635,7 @@ async function fetchProgramTypes() {
 }
 
 function formatCrops(crops) {
-    if (!crops) return "Various";
+    if (!crops) return t("market.meta.various");
     if (typeof crops === "string") {
         try {
             const parsed = JSON.parse(crops);
@@ -634,26 +649,28 @@ function formatCrops(crops) {
     if (Array.isArray(crops)) {
         return crops.slice(0, 2).join(", ");
     }
-    return "Various";
+    return t("market.meta.various");
 }
 
 function formatPartners(partners) {
-    if (!partners) return "Multiple";
+    if (!partners) return t("market.meta.multiple");
     if (typeof partners === "string") {
         try {
             const parsed = JSON.parse(partners);
             return Array.isArray(parsed)
-                ? `${parsed.length} Partners`
+                ? t("market.meta.partners_count", { count: parsed.length })
                 : partners;
         } catch {
             return partners.split(",").length > 1
-                ? `${partners.split(",").length} Partners`
+                ? t("market.meta.partners_count", {
+                      count: partners.split(",").length,
+                  })
                 : partners;
         }
     }
     if (Array.isArray(partners)) {
-        return `${partners.length} Partners`;
+        return t("market.meta.partners_count", { count: partners.length });
     }
-    return "Multiple";
+    return t("market.meta.multiple");
 }
 </script>
