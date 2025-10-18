@@ -559,6 +559,11 @@ const { currentLanguage, onLanguageChange } = useI18n();
 let unsubscribeLang = null;
 
 onMounted(() => {
+    // Ensure page starts at top on initial mount
+    try {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    } catch (_) {}
+
     fetchToolDetail();
     fetchRelatedTools();
     unsubscribeLang = onLanguageChange(() => {

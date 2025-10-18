@@ -1,4 +1,7 @@
 import { ref, computed } from "vue";
+import en from "../i18n/en.js";
+import fa from "../i18n/fa.js";
+import ps from "../i18n/ps.js";
 
 // Current language state
 const currentLanguage = ref("en");
@@ -12,8 +15,9 @@ export const supportedLanguages = [
     { code: "pashto", name: "Pashto", nativeName: "پښتو" },
 ];
 
-// Default translations (fallback)
+// Static translations loaded from separate files
 const defaultTranslations = {
+<<<<<<< HEAD
     en: {
         // Navigation
         "nav.home": "Home",
@@ -527,6 +531,11 @@ const defaultTranslations = {
         "pashto_translations": "د پښتو ژبې ژباړې",
         "clear_all": "ټول پاک کړئ",
     },
+=======
+    en,
+    farsi: fa,
+    pashto: ps,
+>>>>>>> 15a37af4eea63251d165c0125060c22dde13c098
 };
 
 export function useI18n() {
@@ -574,6 +583,9 @@ export function useI18n() {
 
         // Update document language
         document.documentElement.lang = lang;
+        // Direction: set RTL for Farsi/Pashto
+        const isRtl = ["farsi", "pashto"].includes(lang);
+        document.documentElement.dir = isRtl ? "rtl" : "ltr";
 
         // Notify app to refetch data as needed
         try {

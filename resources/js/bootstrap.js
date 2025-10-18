@@ -72,3 +72,30 @@ try {
 } catch (_) {
     // no-op
 }
+
+// Ensure native fetch() also appends ?lang for /api requests
+try {
+    const originalFetch = window.fetch?.bind(window);
+    if (typeof originalFetch === "function") {
+        window.fetch = async (input, init) => {
+            try {
+                let urlString =
+                    typeof input === "string" ? input : input?.url || "";
+                if (urlString.startsWith("/api")) {
+                    const url = new URL(urlString, window.location.origin);
+                    const current =
+                        localStorage.getItem("preferred_language") || "en";
+                    if (!url.searchParams.has("lang")) {
+                        url.searchParams.set("lang", current);
+                    }
+                    urlString = url.toString();
+                }
+                return await originalFetch(urlString, init);
+            } catch {
+                return await originalFetch(input, init);
+            }
+        };
+    }
+} catch (_) {
+    // no-op
+}
