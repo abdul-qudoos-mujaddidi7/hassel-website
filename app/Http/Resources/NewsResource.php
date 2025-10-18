@@ -42,10 +42,8 @@ class NewsResource extends JsonResource
             // JSON translations for admin
             'farsi_translations' => $this->when($request->get('include_translations') || $request->routeIs('api.admin.*'), $this->farsi_translations),
             'pashto_translations' => $this->when($request->get('include_translations') || $request->routeIs('api.admin.*'), $this->pashto_translations),
-            
-            // Translation coverage for admin
-            'farsi_coverage' => $this->when($request->routeIs('api.admin.*'), $this->getTranslationCoverage('farsi')),
-            'pashto_coverage' => $this->when($request->routeIs('api.admin.*'), $this->getTranslationCoverage('pashto')),
+
+            // Translation coverage for admin (removed - method not available)
 
             // Admin-only fields
             'admin_fields' => $this->when($request->routeIs('admin.*'), [
