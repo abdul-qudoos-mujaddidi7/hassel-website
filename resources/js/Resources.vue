@@ -433,7 +433,7 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <div class="ml-3 flex-1 min-w-0">
+                                        <div class="ml-3 rtl:ml-0 rtl:mr-3 flex-1 min-w-0">
                                             <div
                                                 class="flex items-center justify-between"
                                             >
@@ -441,7 +441,7 @@
                                                     class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
                                                 >
                                                     {{
-                                                        publication.file_type_display
+                                                        t(`file_type.${publication.file_type}`)
                                                     }}
                                                 </span>
                                                 <span
@@ -701,7 +701,7 @@
                                         v-if="story.client_name"
                                         class="text-sm text-gray-600 mb-2 md:mb-3"
                                     >
-                                        Client: {{ story.client_name }}
+                                        {{ t("resources.stories.client_label") }}: {{ story.client_name }}
                                     </div>
                                     <p class="text-gray-700 mb-3 md:mb-5">
                                         {{ story.story_excerpt }}
@@ -804,7 +804,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import { useI18n } from "./composables/useI18n";
 import axios from "axios";
 
-const { t } = useI18n();
+const { t, apiLanguage, getApiLang } = useI18n();
 
 // Initialize activeTab from URL hash or localStorage
 const getInitialTab = () => {
@@ -908,6 +908,7 @@ const fetchNews = async (page = 1) => {
                 status: "published",
                 orderBy: "published_at",
                 direction: "desc",
+                lang: getApiLang(),
             },
         });
 
@@ -1029,6 +1030,7 @@ const fetchSuccessStories = async (page = 1) => {
                 page,
                 per_page: 3,
                 search: successStoriesSearch.value || undefined,
+                lang: getApiLang(),
             },
         });
         const data = response.data;
@@ -1072,6 +1074,7 @@ const loadMoreSuccessStories = async () => {
                 page: next,
                 per_page: 3,
                 search: successStoriesSearch.value || undefined,
+                lang: getApiLang(),
             },
         });
         const data = response.data;
@@ -1101,6 +1104,7 @@ const fetchPublications = async (page = 1) => {
                 page: page,
                 per_page: publicationsPagination.value.perPage,
                 search: publicationSearch.value || undefined,
+                lang: getApiLang(),
             },
         });
 
@@ -1136,7 +1140,7 @@ const fetchPublications = async (page = 1) => {
                 );
                 if (publicationSearch.value)
                     params.set("search", publicationSearch.value);
-                params.set("lang", "en");
+                params.set("lang", getApiLang());
                 const resEn = await fetch(
                     `${origin}/api/publications?${params.toString()}`
                 );

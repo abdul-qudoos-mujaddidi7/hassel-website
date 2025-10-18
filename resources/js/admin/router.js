@@ -8,6 +8,7 @@ const NewsManagement = () => import("./pages/news/News.vue");
 const TrainingProgramsManagement = () => import("./pages/training/TrainingPrograms.vue");
 const PublicationsManagement = () => import("./pages/publications/Publications.vue");
 const SuccessStoriesManagement = () => import("./pages/success-stories/SuccessStories.vue");
+const JobAnnouncementsManagement = () => import("./pages/job-announcements/JobAnnouncements.vue");
 const BeneficiariesStats = () => import("./pages/states/BeneficiariesStats.vue");
 const AdminLogin = () => import("./pages/auth/AdminLogin.vue");
 
@@ -39,6 +40,7 @@ const router = createRouter({
                 { path: "training-programs", name: "admin.training-programs", component: TrainingProgramsManagement, meta: { title: "Training Programs" } },
                 { path: "publications", name: "admin.publications", component: PublicationsManagement, meta: { title: "Publications" } },
                 { path: "success-stories", name: "admin.success-stories", component: SuccessStoriesManagement, meta: { title: "Success Stories" } },
+                { path: "job-announcements", name: "admin.job-announcements", component: JobAnnouncementsManagement, meta: { title: "Job Announcements" } },
                 // Statistics Routes
                 { path: "beneficiaries-stats", name: "admin.beneficiaries-stats", component: BeneficiariesStats, meta: { title: "Beneficiaries Statistics" } },
             ]

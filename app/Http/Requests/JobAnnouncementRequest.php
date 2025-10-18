@@ -29,12 +29,12 @@ class JobAnnouncementRequest extends FormRequest
             'requirements' => 'nullable|string',
             'responsibilities' => 'nullable|string',
             'location' => 'required|string|max:255',
-            'employment_type' => 'required|in:full_time,part_time,contract,internship',
-            'experience_level' => 'required|in:entry,mid,senior,executive',
             'salary_range' => 'nullable|string|max:100',
-            'application_deadline' => 'required|date|after:today',
-            'status' => 'required|in:draft,published,closed',
+            'deadline' => 'required|date|after:today',
+            'status' => 'required|in:draft,published,closed,open',
             'published_at' => 'nullable|date',
+            'farsi_translations' => 'nullable|array',
+            'pashto_translations' => 'nullable|array',
         ];
 
         // For update requests, make fields sometimes required

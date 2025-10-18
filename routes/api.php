@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\PublicationController;
 use App\Http\Controllers\Api\SuccessStoryController;
+use App\Http\Controllers\Api\JobAnnouncementController;
 use App\Http\Controllers\Api\RfpRfqController;
 use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\JobController;
@@ -59,6 +60,12 @@ Route::prefix('news')->name('api.news.')->group(function () {
 Route::prefix('success-stories')->name('api.success_stories.')->group(function () {
   Route::get('/', [SuccessStoryController::class, 'index'])->name('index');
   Route::get('/{slug}', [SuccessStoryController::class, 'show'])->name('show');
+});
+
+// Job Announcements
+Route::prefix('job-announcements')->name('api.job_announcements.')->group(function () {
+  Route::get('/', [JobAnnouncementController::class, 'index'])->name('index');
+  Route::get('/{slug}', [JobAnnouncementController::class, 'show'])->name('show');
 });
 
 // Publications
@@ -187,6 +194,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->name('api.admin.'
   // Content Management
   Route::apiResource('news', App\Http\Controllers\Api\Admin\NewsController::class);
   Route::apiResource('success-stories', App\Http\Controllers\Api\Admin\SuccessStoriesController::class);
+  Route::apiResource('job-announcements', App\Http\Controllers\Api\Admin\JobAnnouncementController::class);
   Route::apiResource('publications', App\Http\Controllers\Api\Admin\PublicationsController::class);
   Route::apiResource('programs', App\Http\Controllers\Api\Admin\ProgramsController::class);
   Route::apiResource('training-programs', App\Http\Controllers\Api\Admin\TrainingProgramsController::class);

@@ -46,7 +46,8 @@
       "password_required": "پټنوم اړین دی",
       "password_min": "پټنوم باید لږ تر لږه 6 توري وي"
     },
-    "news_management": "خبرونه مدیریت"
+    "news_management": "خبرونه مدیریت",
+    "job_announcements": "د دندو اعلانات"
   }
   
   

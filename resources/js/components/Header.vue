@@ -14,6 +14,7 @@
                             height="112"
                             decoding="async"
                             fetchpriority="high"
+                            
                             class="w-24 h-24 md:w-28 md:h-28 rounded-lg object-contain"
                         />
                     </router-link>
@@ -36,7 +37,7 @@
                     >
                         <component
                             :is="item.icon"
-                            class="block w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200 mt-px"
+                            class="block w-4 h-4 mr-2 rtl:mr-0 rtl:ml-2 group-hover:scale-110 transition-transform duration-200 mt-px"
                         />
                         <span>{{ item.name }}</span>
                     </router-link>
@@ -52,7 +53,7 @@
                         >
                             <span>{{ t("nav.programs") }}</span>
                             <svg
-                                class="w-4 h-4 ml-1"
+                                class="w-4 h-4 ml-1 rtl:ml-0 rtl:mr-1"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -232,7 +233,7 @@
                                 $route.path === item.path,
                         }"
                     >
-                        <component :is="item.icon" class="w-5 h-5 mr-3" />
+                        <component :is="item.icon" class="w-5 h-5 mr-3 rtl:mr-0 rtl:ml-3" />
                         <span class="font-medium">{{ item.name }}</span>
                     </router-link>
 

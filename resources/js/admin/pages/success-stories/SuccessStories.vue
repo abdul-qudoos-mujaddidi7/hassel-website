@@ -1,12 +1,12 @@
 <template>
     <CreateSuccessStoryTranslatable v-if="SuccessStoriesRepository.createDialog" />
-    <div :dir="dir" class="content-card">
+    <div :dir="dir" >
         <!-- Page Header -->
         <Header pageTitle='Success Stories Management' />
         <v-divider :thickness="1" class="border-opacity-100" />
         
         <!-- Main Content Card -->
-        <div >
+       
             <!-- Search and Actions Section -->
             <div class="btn-search pt-12 pb-6">
                 <div class="text-field w-25">
@@ -163,7 +163,7 @@
                 </v-app>
             </div>
         </div>
-    </div>
+    
 </template>
 
 <script setup>

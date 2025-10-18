@@ -27,7 +27,7 @@ body {
 
 /* Table styles */
 
-/* Hide scrollbars globally */
+/* Hide scrollbars but keep scrolling functionality */
 * {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -123,7 +123,7 @@ div.v-data-table-footer {
     flex: 0 1 auto;
     height: 100%;
     max-width: 100%;
-    overflow-y: hidden !important;
+    overflow-y: auto;
 }
 
 /* Custom shadows and effects */

@@ -1,12 +1,12 @@
 <template>
-    <v-layout class="rounded rounded-md side">
+    <v-layout>
         <v-navigation-drawer
             v-model="drawer"
             :rail="rail"
             permanent
             floating
             :location="dir"
-            class="sideBar bg-lightSectionBg"
+            class="sideBar"
         >
             <sidebar :dir="isRtl ? 'rtl' : 'ltr'" />
         </v-navigation-drawer>
@@ -16,7 +16,7 @@
                 variant="flat"
                 elevation="1"
                 :style="vCardStyle"
-                 class="min-h-screen d-flex flex-col m-4 ml-4 py-4 px-4 rounded-xl"
+                 class="d-flex flex-col ml-4 py-4 px-4 "
             >
                 <router-view></router-view>
             </v-card>
@@ -63,19 +63,20 @@ const vCardStyle = computed(() => {
   
     min-height: 100vh !important;
     max-height: 100vh !important;
+    overflow-y: auto;
 }
 
 /* Main Content Area */
 .v-main {
     background-color: #fafafa !important; /* Light gray surface */
     min-height: 100vh !important;
-    max-height: 100vh !important;
     overflow-y: auto;
+   
 }
 
 
 
-/* Hide all scrollbars */
+/* Scrollable content with visible scrollbars */
 .scrollable-content {
     max-height: 80vh;
     overflow-y: auto;
@@ -83,7 +84,24 @@ const vCardStyle = computed(() => {
 }
 
 .scrollable-content::-webkit-scrollbar {
-    width: 4px;
-    display: none;
+    width: 8px;
 }
+
+.scrollable-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+
+
+
 </style>

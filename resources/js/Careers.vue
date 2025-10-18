@@ -262,7 +262,7 @@
                                 <a
                                     :href="`/contact?subject=job_application&job_title=${encodeURIComponent(
                                         job.title
-                                    )}&job_id=${job.id}`"
+                                    )}&job_id=${job.id}#contact-form`"
                                     class="btn btn-primary w-full md:w-auto text-sm md:text-base inline-flex items-center justify-center"
                                 >
                                     <template v-if="!isRTL">
@@ -305,26 +305,7 @@
             </div>
         </section>
 
-        <!-- Apply by Email Note -->
-        <section class="py-12 md:py-16 lg:py-20">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2
-                    class="heading-md mb-4 bg-brand-primary w-fit mx-auto py-2 px-4 text-white border rounded-full"
-                >
-                    {{ t("careers.how_to_apply.title") }}
-                </h2>
-                <p
-                    class="text-base md:text-lg text-green-100"
-                    :dir="isRTL ? 'rtl' : 'ltr'"
-                >
-                    {{
-                        t("careers.how_to_apply.body", {
-                            email: "info@mountagro.com",
-                        })
-                    }}
-                </p>
-            </div>
-        </section>
+        
     </div>
 </template>
 
@@ -334,7 +315,7 @@ import axios from "axios";
 import LoadingSpinner from "./components/LoadingSpinner.vue";
 import { useI18n } from "./composables/useI18n.js";
 
-const { t, isRTL } = useI18n();
+const { t, isRTL, getApiLang } = useI18n();
 
 const jobs = ref([]);
 const loading = ref(false);
@@ -346,15 +327,18 @@ async function fetchJobs() {
         error.value = "";
         console.log("Fetching open jobs...");
 
-        const res = await axios.get("/api/jobs", {
-            params: { status: "open" },
+        const res = await axios.get("/api/job-announcements", {
+            params: { 
+                status: "open",
+                lang: getApiLang()
+            },
             timeout: 7000,
         });
 
         console.log("API Response:", res.data);
 
-        // Handle the response - API returns array directly
-        const list = Array.isArray(res.data) ? res.data : [];
+        // Handle the response - API returns paginated response with data property
+        const list = res.data.data || [];
         jobs.value = list.filter(Boolean);
 
         console.log(`Loaded ${jobs.value.length} open jobs`);

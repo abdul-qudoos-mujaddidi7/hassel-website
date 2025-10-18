@@ -17,21 +17,25 @@ class DatabaseSeeder extends Seeder
         // Seed in logical order
         $this->call([
             // 1. Create admin users first
-            AdminUserSeeder::class,
+        AdminUserSeeder::class,
 
             // 2. Create featured content
-            NewsSeeder::class,
-
+        NewsSeeder::class,
             // 3. Create all other content
-            ContentSeeder::class,
+        ContentSeeder::class,
 
             // 4. Create business pillar content
-            BusinessPillarSeeder::class,
+        BusinessPillarSeeder::class,
+        // 5. Create success stories with translations
+        SuccessStorySeeder::class,
 
-            // 5. Create sample interactions and data
-            SampleDataSeeder::class,
-            TranslationSampleSeeder::class,
-            TranslationsForAllContentSeeder::class,
+        // 6. Create publications with translations
+        PublicationSeeder::class,
+
+        // 7. Create sample interactions and data
+        SampleDataSeeder::class,
+            
+        TranslationsForAllContentSeeder::class,
         ]);
 
         $this->command->newLine();
@@ -41,8 +45,8 @@ class DatabaseSeeder extends Seeder
         $this->command->line('📊 Summary of created content:');
         $this->command->line('👥 Users: 5 (1 admin, 4 editors/staff)');
         $this->command->line('📰 News: 23 articles (18 published, 5 draft)');
-        $this->command->line('📚 Publications: 22 documents (19 published, 3 draft)');
-        $this->command->line('🏆 Success Stories: 14 stories (12 published, 2 draft)');
+        $this->command->line('📚 Publications: 22 documents (19 published, 3 draft) with full translations');
+        $this->command->line('🏆 Success Stories: 21 stories (21 published with full translations)');
         $this->command->line('💼 Job Announcements: 16 positions (8 open, 8 closed)');
         $this->command->line('📋 RFP/RFQ: 10 listings (4 open, 6 closed)');
         $this->command->line('🖼️ Galleries: 5 galleries with 35+ images');

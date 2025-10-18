@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, watch, onBeforeUnmount } from "vue";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import PageTransition from "./components/PageTransition.vue";
@@ -29,20 +29,30 @@ import { useI18n } from "./composables/useI18n.js";
 
 const { init, isRTL, currentLanguage } = useI18n();
 
-// Initialize i18n on app mount
+function applyDirection() {
+    const html = document.documentElement;
+    const body = document.body;
+    const dir = isRTL.value ? "rtl" : "ltr";
+    const lang = isRTL.value ? (currentLanguage.value === "farsi" ? "fa" : "ps") : "en";
+    
+    html.setAttribute("dir", dir);
+    html.setAttribute("lang", lang);
+    body.classList.toggle("rtl", isRTL.value);
+    body.classList.toggle("ltr", !isRTL.value);
+}
+
+// Initialize i18n then apply direction
 onMounted(async () => {
     await init();
+    applyDirection();
+    // Also react to runtime language changes (from language switcher)
+    window.addEventListener("language:changed", applyDirection);
+});
 
-    // Apply RTL direction only for specific languages
-    // Don't change the entire document direction as it breaks layout
-    const body = document.body;
-    if (isRTL.value) {
-        body.classList.add("rtl");
-        body.classList.remove("ltr");
-    } else {
-        body.classList.add("ltr");
-        body.classList.remove("rtl");
-    }
+watch(() => isRTL.value, applyDirection);
+
+onBeforeUnmount(() => {
+    window.removeEventListener("language:changed", applyDirection);
 });
 </script>
 
@@ -69,33 +79,5 @@ onMounted(async () => {
     transform: translateY(0);
 }
 
-/* RTL Support - Only apply to specific elements, not the entire page */
-.rtl .text-right {
-    text-align: right;
-}
-
-.rtl .text-left {
-    text-align: right;
-}
-
-.rtl .ml-2 {
-    margin-left: 0;
-    margin-right: 0.5rem;
-}
-
-.rtl .mr-2 {
-    margin-right: 0;
-    margin-left: 0.5rem;
-}
-
-/* Keep the main layout intact */
-body {
-    direction: ltr;
-}
-
-/* Only specific RTL elements */
-.rtl .rtl-text {
-    direction: rtl;
-    text-align: right;
-}
+/* RTL Support is now handled in app.css with comprehensive utilities */
 </style>

@@ -100,7 +100,7 @@
 
             <!-- Slide Indicators -->
             <div
-                class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20"
+                class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-20"
             >
                 <button
                     v-for="(slide, index) in heroSlides"
@@ -136,7 +136,7 @@
         </section>
 
         <!-- About Us Section (moved here) -->
-        <section class="section-padding bg-white">
+        <section class="section-padding bg-white about-section">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
                     <h2 class="heading-lg text-green-600 mb-16">
@@ -146,15 +146,15 @@
                 <div
                     class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
                 >
-                    <div class="self-start">
-                        <p class="text-xl text-gray-600 leading-relaxed">
+                    <div class="self-start rtl:order-2 ltr:order-1">
+                        <p class="text-xl text-gray-600 leading-relaxed rtl:text-justify ltr:text-justify mb-6">
                             {{ t("home.about.p1") }}
                         </p>
-                        <p class="text-lg text-gray-600 leading-relaxed">
+                        <p class="text-lg text-gray-600 leading-relaxed rtl:text-justify ltr:text-justify">
                             {{ t("home.about.p2") }}
                         </p>
                     </div>
-                    <div class="space-y-6">
+                    <div class="space-y-6 rtl:order-1 ltr:order-2">
                         <img
                             :src="'/images/about/who_we_are_1.avif'"
                             alt="Mount Agro field operations"
@@ -473,9 +473,9 @@
                         <div
                             class="flex transition-transform duration-500 ease-in-out"
                             :style="{
-                                transform: `translateX(-${
-                                    currentPillarSlide * (100 / cardsPerView)
-                                }%)`,
+                                transform: isRTL 
+                                    ? `translateX(${currentPillarSlide * (100 / cardsPerView)}%)`
+                                    : `translateX(-${currentPillarSlide * (100 / cardsPerView)}%)`,
                             }"
                         >
                             <!-- Show cards in sequence: 1-2-3-4-5-6-7-1-2-3-4-5-6-7 for seamless loop -->
@@ -599,7 +599,7 @@
                     </div>
 
                     <!-- Slide Indicators -->
-                    <div class="flex justify-center mt-8 space-x-3">
+                    <div class="flex justify-center mt-8 gap-2">
                         <button
                             v-for="index in totalSlides"
                             :key="index"
@@ -1187,7 +1187,6 @@ const nextPillarSlide = () => {
 
     // When we reach the end, reset to beginning without animation
     if (currentPillarSlide.value >= totalSlides.value) {
-        // Immediately reset to beginning without transition
         const slider = document.querySelector(".flex.transition-transform");
         if (slider) {
             slider.style.transition = "none";

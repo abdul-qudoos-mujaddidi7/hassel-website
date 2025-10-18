@@ -46,7 +46,8 @@
       "password_required": "رمز عبور الزامی است",
       "password_min": "رمز عبور باید حداقل 6 کاراکتر باشد"
     },
-    "news_management": "مدیریت اخبار"
+    "news_management": "مدیریت اخبار",
+    "job_announcements": "اعلانات شغلی"
   }
   
   

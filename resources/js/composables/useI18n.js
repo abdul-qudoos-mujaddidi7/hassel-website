@@ -17,7 +17,6 @@ export const supportedLanguages = [
 
 // Static translations loaded from separate files
 const defaultTranslations = {
-<<<<<<< HEAD
     en: {
         // Navigation
         "nav.home": "Home",
@@ -142,6 +141,8 @@ const defaultTranslations = {
         "contact.form.sending": "Sending...",
         "contact.form.success": "Message sent successfully!",
         "contact.form.error": "Failed to send message. Please try again.",
+        "contact.message_placeholder": "Please describe your inquiry in detail...",
+        "contact.job_message_placeholder": "Please provide any additional information about your application...",
 
         // Job application
         "job_application.title": "Job Application",
@@ -165,6 +166,15 @@ const defaultTranslations = {
         "footer.quick_links": "Quick Links",
         "footer.contact_info": "Contact Information",
         "footer.copyright": "All rights reserved.",
+        "footer.programs": "Programs",
+        "footer.contact": "Contact",
+        "footer.company_tagline": "Professional solutions for modern challenges. We build tomorrow's technology today.",
+        "footer.address": "123 Business Street",
+        "footer.city_state": "City, State 12345",
+        "footer.phone": "Phone: (555) 123-4567",
+        "footer.email": "Email: info@mountagro.com",
+        "footer.privacy_policy": "Privacy Policy",
+        "footer.terms_of_service": "Terms of Service",
 
         // Error pages
         "error.404.title": "Page Not Found",
@@ -187,6 +197,12 @@ const defaultTranslations = {
         "farsi_translations": "Dari Translations",
         "pashto_translations": "Pashto Translations",
         "clear_all": "Clear All",
+
+        // Resources page
+        "resources.stories.client_label": "Client",
+
+        // Job Announcements
+        "job_announcements": "Job Announcements",
     },
 
     farsi: {
@@ -336,6 +352,15 @@ const defaultTranslations = {
         "footer.quick_links": "لینک های سریع",
         "footer.contact_info": "اطلاعات تماس",
         "footer.copyright": "تمام حقوق محفوظ است.",
+        "footer.programs": "برنامه ها",
+        "footer.contact": "تماس",
+        "footer.company_tagline": "راه حل های حرفه ای برای چالش های مدرن. ما فناوری فردا را امروز می سازیم.",
+        "footer.address": "خیابان تجاری 123",
+        "footer.city_state": "شهر، استان 12345",
+        "footer.phone": "تلفن: (555) 123-4567",
+        "footer.email": "ایمیل: info@mountagro.com",
+        "footer.privacy_policy": "سیاست حریم خصوصی",
+        "footer.terms_of_service": "شرایط خدمات",
 
         // Error pages
         "error.404.title": "صفحه یافت نشد",
@@ -358,7 +383,14 @@ const defaultTranslations = {
         "farsi_translations": "ترجمه های دری",
         "pashto_translations": "ترجمه های پښتو",
         "clear_all": "همه را پاک کن",
-    },
+
+        // Resources page
+        "resources.stories.client_label": "مشتری",
+
+        // Job Announcements
+        "job_announcements": "آگهی های شغلی",
+        "news_management": "مدیریت خبرها",
+        },
 
     pashto: {
         // Navigation
@@ -508,6 +540,15 @@ const defaultTranslations = {
         "footer.quick_links": "د ژر لینکونه",
         "footer.contact_info": "د اړیکو معلومات",
         "footer.copyright": "ټول حقونه ساتل شوي.",
+        "footer.programs": "پروګرامونه",
+        "footer.contact": "اړیکه",
+        "footer.company_tagline": "د نن ورځې د ستونزو لپاره مسلکي حل لارې. موږ د راتلونکي تخنیک نن جوړوو.",
+        "footer.address": "د سوداګرۍ کوڅه 123",
+        "footer.city_state": "ښار، ولایت 12345",
+        "footer.phone": "تلیفون: (555) 123-4567",
+        "footer.email": "بریښنالیک: info@mountagro.com",
+        "footer.privacy_policy": "د محرمیت پالیسي",
+        "footer.terms_of_service": "د خدماتو شرطونه",
 
         // Error pages
         "error.404.title": "پاڼه ونه موندل شوه",
@@ -530,12 +571,16 @@ const defaultTranslations = {
         "farsi_translations": "د دری ژبې ژباړې",
         "pashto_translations": "د پښتو ژبې ژباړې",
         "clear_all": "ټول پاک کړئ",
+
+        // Resources page
+        "resources.stories.client_label": "مشتری",
+
+        // Job Announcements
+        "job_announcements": "د دندو اعلانات",
     },
-=======
     en,
     farsi: fa,
     pashto: ps,
->>>>>>> 15a37af4eea63251d165c0125060c22dde13c098
 };
 
 export function useI18n() {
@@ -558,7 +603,6 @@ export function useI18n() {
             defaultTranslations.en[key] ||
             key;
 
-        // Debug logging removed
 
         // Replace parameters in translation
         return Object.keys(params).reduce((str, param) => {
@@ -581,11 +625,14 @@ export function useI18n() {
         // Load translations for the language
         await loadTranslations(lang);
 
-        // Update document language
-        document.documentElement.lang = lang;
-        // Direction: set RTL for Farsi/Pashto
+        // Update document language and direction
+        document.documentElement.lang = normalizeLanguageCode(lang);
         const isRtl = ["farsi", "pashto"].includes(lang);
         document.documentElement.dir = isRtl ? "rtl" : "ltr";
+        
+        // Add/remove RTL class to body
+        document.body.classList.toggle('rtl', isRtl);
+        document.body.classList.toggle('ltr', !isRtl);
 
         // Notify app to refetch data as needed
         try {
@@ -601,12 +648,17 @@ export function useI18n() {
         return () => window.removeEventListener("language:changed", handler);
     };
 
-    // Load translations (simplified - no API calls)
+    // Load translations (simplified - external files already included in defaultTranslations)
     const loadTranslations = async (lang) => {
         isLoading.value = true;
-        // Use default translations directly
-        translations.value[lang] =
-            defaultTranslations[lang] || defaultTranslations.en;
+        try {
+            // Use default translations directly (external files already included)
+            translations.value[lang] = defaultTranslations[lang] || defaultTranslations.en;
+        } catch (error) {
+            console.error(`Failed to load translations for ${lang}:`, error);
+            // Fallback to default translations
+            translations.value[lang] = defaultTranslations[lang] || defaultTranslations.en;
+        }
         isLoading.value = false;
     };
 
@@ -632,10 +684,9 @@ export function useI18n() {
         );
     });
 
-    // Check if RTL language (temporarily disabled to prevent layout issues)
+    // Check if RTL language
     const isRTL = computed(() => {
-        return false; // Disable RTL for now to prevent layout issues
-        // return ["farsi", "pashto"].includes(currentLanguage.value);
+        return ["farsi", "pashto"].includes(currentLanguage.value);
     });
 
     return {

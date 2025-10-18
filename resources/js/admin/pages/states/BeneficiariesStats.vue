@@ -1,9 +1,9 @@
 <template>
     <CreateBeneficiariesStats v-if="BeneficiariesRepository.createDialog" />
     <div :dir="dir">
-        <!-- Page Header -->
-        <Header pageTitle="Beneficiaries Statistics" />
+        <Header :pageTitle='$t("beneficiaries_stats")' />
         <v-divider :thickness="1" class="border-opacity-100" />
+      
 
         <!-- Main Content Card -->
        

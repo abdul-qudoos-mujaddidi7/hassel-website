@@ -1,15 +1,7 @@
 <template>
     <div class="min-h-screen">
         <!-- Hero Section -->
-        <section class="relative text-white overflow-hidden">
-            <!-- Background Image -->
-            <div class="absolute inset-0">
-                <img
-                    :src="'/images/about/contact-hero.avif'"
-                    alt="Contact Us"
-                    class="w-full h-full object-cover"
-                />
-            </div>
+        <section class="relative text-white overflow-hidden" style="background-image: url('/images/home/contact.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
             <!-- Overlay -->
             <div class="absolute inset-0 bg-black/60"></div>
 
@@ -23,7 +15,7 @@
                         {{ t("contact.hero.title") }}
                     </h1>
                     <p
-                        class="text-xl md:text-2xl text-green-100 mb-8 max-w-3xl mx-auto animate-fadeInUp"
+                        class="text-xl md:text-2xl  mb-8 max-w-3xl mx-auto animate-fadeInUp"
                         style="animation-delay: 0.2s"
                     >
                         {{ t("contact.hero.subtitle") }}
@@ -32,11 +24,7 @@
                         class="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp"
                         style="animation-delay: 0.35s"
                     >
-                        <a
-                            href="#contact-form"
-                            class="btn btn-secondary px-8 py-4 text-lg"
-                            >{{ t("contact.hero.send_message") }}</a
-                        >
+                       
                         <a
                             href="tel:+93701234567"
                             class="btn btn-cta px-8 py-4 text-lg"
@@ -54,7 +42,7 @@
                     <!-- Contact Information -->
                     <div class="order-2 lg:order-1">
                         <h2 class="heading-lg text-gray-900 mb-8">
-                            Get in Touch
+                            {{ t("contact.get_in_touch") }}
                         </h2>
                         <div class="space-y-8">
                             <div class="flex items-start gap-4">
@@ -85,12 +73,12 @@
                                     <h3
                                         class="text-xl font-semibold mb-2 text-gray-900"
                                     >
-                                        Head Office
+                                        {{ t("contact.head_office") }}
                                     </h3>
                                     <p class="text-gray-600">
-                                        123 Business Street<br />
-                                        San Francisco, CA 94105<br />
-                                        United States
+                                        {{ t("contact.address_line1") }}<br />
+                                        {{ t("contact.address_line2") }}<br />
+                                        {{ t("contact.address_line3") }}
                                     </p>
                                 </div>
                             </div>
@@ -117,11 +105,11 @@
                                     <h3
                                         class="text-xl font-semibold mb-2 text-gray-900"
                                     >
-                                        Phone
+                                        {{ t("contact.phone") }}
                                     </h3>
                                     <p class="text-gray-600">
-                                        +1 (555) 123-4567<br />
-                                        +1 (555) 987-6543
+                                        {{ t("contact.phone_line1") }}<br />
+                                        {{ t("contact.phone_line2") }}
                                     </p>
                                 </div>
                             </div>
@@ -148,11 +136,11 @@
                                     <h3
                                         class="text-xl font-semibold mb-2 text-gray-900"
                                     >
-                                        Email
+                                        {{ t("contact.email") }}
                                     </h3>
                                     <p class="text-gray-600">
-                                        info@mountagro.com<br />
-                                        support@mountagro.com
+                                        {{ t("contact.email_line1") }}<br />
+                                        {{ t("contact.email_line2") }}
                                     </p>
                                 </div>
                             </div>
@@ -179,12 +167,12 @@
                                     <h3
                                         class="text-xl font-semibold mb-2 text-gray-900"
                                     >
-                                        Business Hours
+                                        {{ t("contact.business_hours") }}
                                     </h3>
                                     <p class="text-gray-600">
-                                        Monday - Friday: 9:00 AM - 6:00 PM<br />
-                                        Saturday: 10:00 AM - 4:00 PM<br />
-                                        Sunday: Closed
+                                        {{ t("contact.hours_line1") }}<br />
+                                        {{ t("contact.hours_line2") }}<br />
+                                        {{ t("contact.hours_line3") }}
                                     </p>
                                 </div>
                             </div>
@@ -195,7 +183,7 @@
                             <h3
                                 class="text-xl font-semibold mb-6 text-gray-900"
                             >
-                                Follow Us
+                                {{ t("contact.follow_us") }}
                             </h3>
                             <div class="flex flex-wrap gap-4">
                                 <!-- Facebook -->
@@ -312,7 +300,7 @@
                     <!-- Contact Form -->
                     <div class="order-1 lg:order-2">
                         <h2 class="heading-lg text-gray-900 mb-8">
-                            Send us a Message
+                            {{ t("contact.send_message") }}
                         </h2>
                         <form @submit.prevent="submitForm" class="space-y-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -320,7 +308,7 @@
                                     <label
                                         for="firstName"
                                         class="block text-sm font-medium text-gray-700 mb-2"
-                                        >First Name *</label
+                                        >{{ t("contact.first_name") }} *</label
                                     >
                                     <input
                                         type="text"
@@ -334,7 +322,7 @@
                                     <label
                                         for="lastName"
                                         class="block text-sm font-medium text-gray-700 mb-2"
-                                        >Last Name *</label
+                                        >{{ t("contact.last_name") }} *</label
                                     >
                                     <input
                                         type="text"
@@ -350,7 +338,7 @@
                                 <label
                                     for="email"
                                     class="block text-sm font-medium text-gray-700 mb-2"
-                                    >Email *</label
+                                    >{{ t("contact.email") }} *</label
                                 >
                                 <input
                                     type="email"
@@ -365,7 +353,7 @@
                                 <label
                                     for="phone"
                                     class="block text-sm font-medium text-gray-700 mb-2"
-                                    >Phone</label
+                                    >{{ t("contact.phone") }}</label
                                 >
                                 <input
                                     type="tel"
@@ -379,7 +367,7 @@
                                 <label
                                     for="subject"
                                     class="block text-sm font-medium text-gray-700 mb-2"
-                                    >Subject *</label
+                                    >{{ t("contact.subject") }} *</label
                                 >
                                 <select
                                     id="subject"
@@ -387,26 +375,26 @@
                                     required
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                                 >
-                                    <option value="">Select a subject</option>
+                                    <option value="">{{ t("contact.select_subject") }}</option>
                                     <option value="job_application">
-                                        Job Application
+                                        {{ t("contact.job_application") }}
                                     </option>
                                     <option value="general_inquiry">
-                                        General Inquiry
+                                        {{ t("contact.general_inquiry") }}
                                     </option>
                                     <option value="project_discussion">
-                                        Project Discussion
+                                        {{ t("contact.project_discussion") }}
                                     </option>
                                     <option value="technical_support">
-                                        Technical Support
+                                        {{ t("contact.technical_support") }}
                                     </option>
                                     <option value="partnership">
-                                        Partnership
+                                        {{ t("contact.partnership") }}
                                     </option>
                                     <option value="media_inquiry">
-                                        Media Inquiry
+                                        {{ t("contact.media_inquiry") }}
                                     </option>
-                                    <option value="other">Other</option>
+                                    <option value="other">{{ t("contact.other") }}</option>
                                 </select>
                             </div>
 
@@ -418,7 +406,7 @@
                                 <h3
                                     class="text-base font-semibold text-green-800"
                                 >
-                                    Job Application Details
+                                    {{ t("contact.job_application_details") }}
                                 </h3>
 
                                 <div>
@@ -426,7 +414,7 @@
                                         for="job_title"
                                         class="block text-sm font-medium text-gray-700 mb-2"
                                     >
-                                        Job Title *
+                                        {{ t("contact.job_title") }} *
                                     </label>
                                     <input
                                         type="text"
@@ -443,7 +431,7 @@
                                         for="location"
                                         class="block text-sm font-medium text-gray-700 mb-2"
                                     >
-                                        Your Location
+                                        {{ t("contact.your_location") }}
                                     </label>
                                     <input
                                         type="text"
@@ -459,7 +447,7 @@
                                         for="cover_letter"
                                         class="block text-sm font-medium text-gray-700 mb-2"
                                     >
-                                        Cover Letter *
+                                        {{ t("contact.cover_letter") }} *
                                     </label>
                                     <textarea
                                         id="cover_letter"
@@ -476,7 +464,7 @@
                                         for="cv_file"
                                         class="block text-sm font-medium text-gray-700 mb-1"
                                     >
-                                        CV/Resume Upload
+                                        {{ t("contact.cv_resume_upload") }}
                                     </label>
                                     <input
                                         type="file"
@@ -495,7 +483,7 @@
                                 <label
                                     for="message"
                                     class="block text-sm font-medium text-gray-700 mb-2"
-                                    >Message *</label
+                                    >{{ t("contact.message") }} *</label
                                 >
                                 <textarea
                                     id="message"
@@ -505,8 +493,8 @@
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                                     :placeholder="
                                         form.subject === 'job_application'
-                                            ? 'Please provide any additional information about your application...'
-                                            : 'Please describe your inquiry in detail...'
+                                            ? t('contact.job_message_placeholder')
+                                            : t('contact.message_placeholder')
                                     "
                                 ></textarea>
                             </div>
@@ -520,7 +508,7 @@
                                     v-if="isSubmitting"
                                     type="button"
                                     size="small"
-                                    message="Sending..."
+                                    :message="t('contact.sending')"
                                 />
                                 <template v-else>
                                     <svg
@@ -536,7 +524,7 @@
                                             d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
                                         />
                                     </svg>
-                                    Send Message
+                                    {{ t("contact.send") }}
                                 </template>
                             </button>
                         </form>
@@ -561,136 +549,18 @@
                                     />
                                 </svg>
                                 <span class="font-medium"
-                                    >Message sent successfully!</span
+                                    >{{ t("contact.success_title") }}</span
                                 >
                             </div>
                             <p class="text-sm mt-1">
-                                Thank you for contacting us. We'll get back to
-                                you within 24 hours.
+                                {{ t("contact.success_message") }}
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Regional Offices Section -->
-        <section class="section-padding bg-gradient-bg-organic">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-lg text-gray-900 mb-4">Our Offices</h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Visit us at one of our locations or reach out to our
-                        regional teams
-                    </p>
-                </div>
-
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                >
-                    <div
-                        v-for="office in regionalOffices"
-                        :key="office.id"
-                        class="rounded-professional-lg p-8 card-hover bg-white shadow-professional"
-                    >
-                        <h3 class="text-xl font-semibold gradient-text mb-4">
-                            {{ office.city }}
-                        </h3>
-                        <div class="space-y-3 text-gray-600">
-                            <p class="flex items-center">
-                                <svg
-                                    class="w-4 h-4 mr-3 text-green-600"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                    />
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                    />
-                                </svg>
-                                {{ office.address }}
-                            </p>
-                            <p class="flex items-center">
-                                <svg
-                                    class="w-4 h-4 mr-3 text-green-600"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                                    />
-                                </svg>
-                                {{ office.phone }}
-                            </p>
-                            <p class="flex items-center">
-                                <svg
-                                    class="w-4 h-4 mr-3 text-green-600"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                    />
-                                </svg>
-                                {{ office.email }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section
-            class="section-padding bg-gradient-to-r from-green-600 to-emerald-600 text-white"
-        >
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="heading-lg mb-6">Ready to Get Started?</h2>
-                <p class="text-xl text-green-100 mb-8">
-                    Let's discuss how we can help transform your business with
-                    our technology solutions.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <router-link
-                        to="/our-work"
-                        class="btn btn-cta text-lg px-8 py-4"
-                    >
-                        View Our Work
-                        <svg
-                            class="w-5 h-5 ml-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
-                        </svg>
-                    </router-link>
-                    <!-- About link removed; consolidated into Home -->
-                </div>
-            </div>
-        </section>
+            
     </div>
 </template>
 

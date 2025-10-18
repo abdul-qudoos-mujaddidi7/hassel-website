@@ -25,6 +25,7 @@ const EnvironmentalProjectDetail = () =>
     import("./EnvironmentalProjectDetail.vue");
 const NewsDetail = () => import("./NewsDetail.vue");
 const SuccessStoryDetail = () => import("./SuccessStoryDetail.vue");
+const RTLTest = () => import("./pages/RTLTest.vue");
 const NotFound = () => import("./NotFound.vue");
 
 const router = createRouter({
@@ -81,6 +82,7 @@ const router = createRouter({
         { path: "/news/:slug", component: NewsDetail, name: "news-detail" },
         { path: "/careers", component: Careers },
         { path: "/contact", component: Contact },
+        { path: "/rtl-test", component: RTLTest },
     ],
 });
 

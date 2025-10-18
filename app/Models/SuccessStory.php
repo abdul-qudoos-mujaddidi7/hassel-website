@@ -60,7 +60,10 @@ class SuccessStory extends Model
 
     public function getStoryExcerptAttribute(): string
     {
-        return substr(strip_tags($this->story), 0, 200) . '...';
+        // Get the current language from the request or default to English
+        $lang = request()->get('lang', 'en');
+        $story = $this->getTranslation('story', $lang) ?? $this->story;
+        return substr(strip_tags($story), 0, 200) . '...';
     }
 
     // Mutators

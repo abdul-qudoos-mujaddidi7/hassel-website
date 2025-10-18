@@ -46,7 +46,8 @@
       "password_required": "Password is required",
       "password_min": "Password must be at least 6 characters"
     },
-    "news_management": "News Management"
+    "news_management": "News Management",
+    "job_announcements": "Job Announcements"
     
   }
   

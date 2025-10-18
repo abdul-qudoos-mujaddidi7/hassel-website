@@ -95,6 +95,22 @@
                 </v-list-item>
             </router-link>
 
+            <!-- Job Announcements -->
+            <router-link
+                to="/admin/job-announcements"
+                exact
+                @click="closeAllMenus"
+            >
+                <v-list-item
+                    active-class="active-item"
+                    prepend-icon="mdi-briefcase-outline"
+                    value="job-announcements"
+                    class="nav-item"
+                >
+                    {{ $t('job_announcements') }}
+                </v-list-item>
+            </router-link>
+
             <!-- Contacts -->
             <router-link to="/admin/contacts" exact @click="closeAllMenus">
                 <v-list-item
@@ -400,7 +416,18 @@ const dir = computed(() => {
     color: rgb(var(--v-theme-on-primary)) !important;
     font-weight: 600;
     box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.3);
-    border-left: 4px solid rgb(var(--v-theme-accent));
+    position: relative;
+}
+
+.active-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: rgb(var(--v-theme-accent));
+    border-radius: 0 2px 2px 0;
 }
 
 .active-item .v-icon {
@@ -411,10 +438,21 @@ const dir = computed(() => {
 .router-link-active .nav-item {
     background: #f4f4f5 !important;
     color: #388e3c !important;
+    position: relative;
+}
+
+.router-link-active .nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #388e3c;
 }
 
 .router-link-active .nav-item .v-icon {
-    color: rgb(var(--v-theme-on-primary)) !important;
+    color: #388e3c !important;
 }
 
 /* Submenus */
@@ -442,6 +480,19 @@ const dir = computed(() => {
     background-color: rgb(var(--v-theme-accent)) !important;
     color: rgb(var(--v-theme-on-primary)) !important;
     font-weight: 500;
+    border-left: 3px solid rgb(var(--v-theme-primary)) !important;
+    position: relative;
+}
+
+.active-subitem::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: rgb(var(--v-theme-primary));
+ 
 }
 
 /* Menu Transitions */

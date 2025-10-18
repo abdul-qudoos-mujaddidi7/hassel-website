@@ -3,23 +3,26 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Company Info -->
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center mb-4">
+                <div>
+                   
                         <img
-                            :src="'/mountagro-logo.jpg'"
+                            :src="'/mountagro-logo.png'"
                             alt="Mount Agro Logo"
-                            class="w-10 h-10 rounded-lg object-contain"
+                            width="90"
+                            height="90"
+                            decoding="async"
+                            fetchpriority="high"
+                            class="rounded-full object-contain  bg-white p-2"
                         />
-                        <span class="ml-3 text-xl font-bold">Mount Agro</span>
-                    </div>
+                       
+               
                     <p class="text-brand-cream mb-4 max-w-md">
-                        Professional solutions for modern challenges. We build
-                        tomorrow's technology today.
+                        {{ t("footer.company_tagline") }}
                     </p>
-                    <div class="flex space-x-4">
+                    <div class="flex space-x-4 rtl:space-x-6 ltr:space-x-4">
                         <a
                             href="#"
-                            class="text-brand-cream hover:text-white transition-colors"
+                            class="text-brand-cream hover:text-white transition-colors rtl:ml-2 ltr:mr-2"
                         >
                             <span class="sr-only">LinkedIn</span>
                             <svg
@@ -34,7 +37,7 @@
                         </a>
                         <a
                             href="#"
-                            class="text-brand-cream hover:text-white transition-colors"
+                            class="text-brand-cream hover:text-white transition-colors rtl:ml-2 ltr:mr-2"
                         >
                             <span class="sr-only">Twitter</span>
                             <svg
@@ -52,34 +55,34 @@
 
                 <!-- Quick Links -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <h3 class="text-lg font-semibold mb-4">{{ t("footer.quick_links") }}</h3>
                     <ul class="space-y-2">
                         <li>
                             <router-link
                                 to="/"
                                 class="text-brand-cream hover:text-white transition-colors"
-                                >Home</router-link
+                                >{{ t("nav.home") }}</router-link
                             >
                         </li>
                         <li>
                             <router-link
                                 to="/resources"
                                 class="text-brand-cream hover:text-white transition-colors"
-                                >Resources</router-link
+                                >{{ t("nav.resources") }}</router-link
                             >
                         </li>
                         <li>
                             <router-link
                                 to="/careers"
                                 class="text-brand-cream hover:text-white transition-colors"
-                                >Careers</router-link
+                                >{{ t("nav.careers") }}</router-link
                             >
                         </li>
                         <li>
                             <router-link
                                 to="/contact"
                                 class="text-brand-cream hover:text-white transition-colors"
-                                >Contact</router-link
+                                >{{ t("nav.contact") }}</router-link
                             >
                         </li>
                     </ul>
@@ -87,55 +90,55 @@
 
                 <!-- Programs Column -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Programs</h3>
+                    <h3 class="text-lg font-semibold mb-4">{{ t("footer.programs") }}</h3>
                     <ul class="space-y-2">
                         <li>
                             <router-link
                                 to="/training-programs"
                                 class="text-brand-cream hover:text-white transition-colors"
-                                >Training Programs</router-link
+                                >{{ t("nav.training") }}</router-link
                             >
                         </li>
                         <li>
                             <router-link
                                 to="/agri-tech-tools"
                                 class="text-brand-cream hover:text-white transition-colors"
-                                >Agri-Tech Tools</router-link
+                                >{{ t("nav.agri_tech") }}</router-link
                             >
                         </li>
                         <li>
                             <router-link
                                 to="/smart-farming"
                                 class="text-brand-cream hover:text-white transition-colors"
-                                >Smart & Sustainable Farming</router-link
+                                >{{ t("nav.smart_farming") }}</router-link
                             >
                         </li>
                         <li>
                             <router-link
                                 to="/seed-supply"
                                 class="text-brand-cream hover:text-white transition-colors"
-                                >Seed & Input Supply Chain</router-link
+                                >{{ t("nav.seed_supply") }}</router-link
                             >
                         </li>
                         <li>
                             <router-link
                                 to="/market-access"
                                 class="text-brand-cream hover:text-white transition-colors"
-                                >Market Access Programs</router-link
+                                >{{ t("nav.market_access") }}</router-link
                             >
                         </li>
                         <li>
                             <router-link
                                 to="/environmental-projects"
                                 class="text-brand-cream hover:text-white transition-colors"
-                                >Environmental Projects</router-link
+                                >{{ t("nav.environmental") }}</router-link
                             >
                         </li>
                         <li>
                             <router-link
                                 to="/community-programs"
                                 class="text-brand-cream hover:text-white transition-colors"
-                                >Community Programs</router-link
+                                >{{ t("nav.community") }}</router-link
                             >
                         </li>
                     </ul>
@@ -143,12 +146,12 @@
 
                 <!-- Contact Info -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <h3 class="text-lg font-semibold mb-4">{{ t("footer.contact") }}</h3>
                     <div class="space-y-2 text-brand-cream">
-                        <p>123 Business Street</p>
-                        <p>City, State 12345</p>
-                        <p>Phone: (555) 123-4567</p>
-                        <p>Email: info@mountagro.com</p>
+                        <p>{{ t("footer.address") }}</p>
+                        <p>{{ t("footer.city_state") }}</p>
+                        <p>{{ t("footer.phone") }}</p>
+                        <p>{{ t("footer.email") }}</p>
                     </div>
                 </div>
             </div>
@@ -158,18 +161,18 @@
                     class="flex flex-col md:flex-row justify-between items-center"
                 >
                     <p class="text-brand-cream text-sm">
-                        © {{ currentYear }} Mount Agro. All rights reserved.
+                        © {{ currentYear }} Mount Agro. {{ t("footer.copyright") }}
                     </p>
                     <div class="flex space-x-6 mt-4 md:mt-0">
                         <a
                             href="#"
                             class="text-brand-cream hover:text-white text-sm transition-colors"
-                            >Privacy Policy</a
+                            >{{ t("footer.privacy_policy") }}</a
                         >
                         <a
                             href="#"
                             class="text-brand-cream hover:text-white text-sm transition-colors"
-                            >Terms of Service</a
+                            >{{ t("footer.terms_of_service") }}</a
                         >
                     </div>
                 </div>
@@ -180,6 +183,8 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "../composables/useI18n";
 
+const { t } = useI18n();
 const currentYear = computed(() => new Date().getFullYear());
 </script>

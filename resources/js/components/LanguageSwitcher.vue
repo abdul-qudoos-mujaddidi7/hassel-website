@@ -39,7 +39,7 @@
             <!-- Dropdown Menu -->
             <div
                 v-if="isOpen"
-                class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50"
+                class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 rtl:right-auto rtl:left-0"
                 @click.stop
             >
                 <div class="py-1">
@@ -53,15 +53,12 @@
                                 currentLanguage === lang.code,
                         }"
                     >
-                        <span class="flex-1 text-left">{{
+                        <span class="flex-1 rtl:text-right text-left">{{
                             lang.nativeName
-                        }}</span>
-                        <span class="text-xs text-gray-500 ml-2">{{
-                            lang.name
                         }}</span>
                         <svg
                             v-if="currentLanguage === lang.code"
-                            class="w-4 h-4 ml-2 text-brand-primary"
+                            class="w-4 h-4 ml-2 rtl:ml-0 rtl:mr-2 text-brand-primary"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                         >

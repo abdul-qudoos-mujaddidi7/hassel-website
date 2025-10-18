@@ -563,3 +563,180 @@ html {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+/* Text justification for better paragraph alignment */
+.text-justify {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+}
+
+/* RTL text justification */
+html[dir="rtl"] .text-justify {
+    text-align: justify;
+    text-justify: inter-word;
+    direction: rtl;
+    word-spacing: 0.05em;
+    letter-spacing: 0.01em;
+}
+
+/* LTR text justification */
+html[dir="ltr"] .text-justify {
+    text-align: justify;
+    text-justify: inter-word;
+    direction: ltr;
+    word-spacing: 0.1em;
+    letter-spacing: 0.005em;
+}
+
+/* Better line spacing for justified text */
+.text-justify p {
+    line-height: 1.7;
+    word-spacing: inherit;
+}
+
+/* RTL-specific paragraph improvements - only for About Us section */
+html[dir="rtl"] .about-section p {
+    text-align: justify;
+    text-justify: inter-word;
+    word-spacing: 0.05em;
+    line-height: 1.7;
+}
+
+/* LTR-specific paragraph improvements - only for About Us section */
+html[dir="ltr"] .about-section p {
+    text-align: justify;
+    text-justify: inter-word;
+    word-spacing: 0.1em;
+    line-height: 1.7;
+}
+
+/* Additional paragraph alignment improvements - only for About Us section */
+.about-section p {
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+/* Foundation section cards text justification */
+.foundation-section p {
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.7;
+}
+
+/* RTL foundation section improvements */
+html[dir="rtl"] .foundation-section p {
+    text-align: justify;
+    text-justify: inter-word;
+    direction: rtl;
+    word-spacing: 0.05em;
+    letter-spacing: 0.01em;
+    line-height: 1.7;
+}
+
+/* LTR foundation section improvements */
+html[dir="ltr"] .foundation-section p {
+    text-align: justify;
+    text-justify: inter-word;
+    direction: ltr;
+    word-spacing: 0.1em;
+    letter-spacing: 0.005em;
+    line-height: 1.7;
+}
+
+/* Better text flow for justified text - only for About Us section */
+.about-section .text-justify {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* RTL text flow improvements - only for About Us section */
+html[dir="rtl"] .about-section .text-justify {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    unicode-bidi: embed;
+}
+
+/* LTR text flow improvements - only for About Us section */
+html[dir="ltr"] .about-section .text-justify {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Better text flow for justified text - foundation section */
+.foundation-section .text-justify {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* RTL text flow improvements - foundation section */
+html[dir="rtl"] .foundation-section .text-justify {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    unicode-bidi: embed;
+}
+
+/* LTR text flow improvements - foundation section */
+html[dir="ltr"] .foundation-section .text-justify {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Pillars section cards text justification */
+.pillars-section p {
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.7;
+}
+
+/* RTL pillars section improvements */
+html[dir="rtl"] .pillars-section p {
+    text-align: justify;
+    text-justify: inter-word;
+    direction: rtl;
+    word-spacing: 0.05em;
+    letter-spacing: 0.01em;
+    line-height: 1.7;
+}
+
+/* LTR pillars section improvements */
+html[dir="ltr"] .pillars-section p {
+    text-align: justify;
+    text-justify: inter-word;
+    direction: ltr;
+    word-spacing: 0.1em;
+    letter-spacing: 0.005em;
+    line-height: 1.7;
+}
+
+/* Better text flow for justified text - pillars section */
+.pillars-section .text-justify {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* RTL text flow improvements - pillars section */
+html[dir="rtl"] .pillars-section .text-justify {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    unicode-bidi: embed;
+}
+
+/* LTR text flow improvements - pillars section */
+html[dir="ltr"] .pillars-section .text-justify {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
