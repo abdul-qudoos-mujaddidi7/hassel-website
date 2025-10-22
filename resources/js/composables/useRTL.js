@@ -104,8 +104,7 @@ export function useRTL() {
 
     // RTL-aware language code
     const languageCode = computed(() => {
-        return currentLanguage.value === 'farsi' ? 'fa' : 
-               currentLanguage.value === 'pashto' ? 'ps' : 'en';
+        return currentLanguage.value;
     });
 
     // RTL-aware font family
@@ -276,6 +275,8 @@ export function useRTL() {
         gridClasses,
     };
 }
+
+
 
 
 

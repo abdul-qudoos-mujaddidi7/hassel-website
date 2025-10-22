@@ -33,7 +33,7 @@ function applyDirection() {
     const html = document.documentElement;
     const body = document.body;
     const dir = isRTL.value ? "rtl" : "ltr";
-    const lang = isRTL.value ? (currentLanguage.value === "farsi" ? "fa" : "ps") : "en";
+    const lang = currentLanguage.value;
     
     html.setAttribute("dir", dir);
     html.setAttribute("lang", lang);

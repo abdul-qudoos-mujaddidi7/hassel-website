@@ -30,6 +30,7 @@
                             class="btn btn-cta px-8 py-4 text-lg"
                             >{{ t("contact.hero.call_now") }}</a
                         >
+                       
                     </div>
                 </div>
             </div>
@@ -573,6 +574,15 @@ const { t } = useI18n();
 
 const isSubmitting = ref(false);
 const showSuccess = ref(false);
+
+// Debug function to test loader
+const testLoader = () => {
+    if (typeof window !== 'undefined' && window.testLoader) {
+        window.testLoader();
+    } else {
+        console.log('Test loader function not available');
+    }
+};
 
 const form = ref({
     firstName: "",

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isLoading" class="page-loader-overlay">
+    <div v-if="isLoading" class="page-loader-overlay" :style="{ zIndex: 9999 }">
         <div class="flex-col gap-6 w-full flex items-center justify-center">
             <!-- Double Spinner Loader -->
             <div
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, watch } from "vue";
 
 const props = defineProps({
     isLoading: {
@@ -56,6 +56,14 @@ const props = defineProps({
         default: 0,
         validator: (value) => value >= 0 && value <= 100,
     },
+});
+
+// Debug: Watch for isLoading changes
+watch(() => props.isLoading, (newValue) => {
+    console.log('PageLoader isLoading changed:', newValue);
+    if (newValue) {
+        console.log('PageLoader showing with message:', props.message);
+    }
 });
 </script>
 
@@ -104,28 +112,28 @@ const props = defineProps({
     animation: spin 0.8s linear infinite reverse;
 }
 
-/* Ensure brand colors are properly applied */
+/* Ensure brand colors are properly applied with fallbacks */
 .text-brand-primary {
-    color: var(--brand-primary) !important;
+    color: var(--brand-primary, #134124) !important;
 }
 
 .text-brand-secondary {
-    color: var(--brand-secondary) !important;
+    color: var(--brand-secondary, #375f1f) !important;
 }
 
 .border-t-brand-primary {
-    border-top-color: var(--brand-primary) !important;
+    border-top-color: var(--brand-primary, #134124) !important;
 }
 
 .border-t-brand-secondary {
-    border-top-color: var(--brand-secondary) !important;
+    border-top-color: var(--brand-secondary, #375f1f) !important;
 }
 
 .from-brand-secondary {
-    --tw-gradient-from: var(--brand-secondary) var(--tw-gradient-from-position);
+    --tw-gradient-from: var(--brand-secondary, #375f1f) var(--tw-gradient-from-position);
 }
 
 .to-brand-primary {
-    --tw-gradient-to: var(--brand-primary) var(--tw-gradient-to-position);
+    --tw-gradient-to: var(--brand-primary, #134124) var(--tw-gradient-to-position);
 }
 </style>

@@ -11,8 +11,8 @@ const isLoading = ref(false);
 // Supported languages
 export const supportedLanguages = [
     { code: "en", name: "English", nativeName: "English" },
-    { code: "farsi", name: "Farsi", nativeName: "دری" },
-    { code: "pashto", name: "Pashto", nativeName: "پښتو" },
+    { code: "fa", name: "Farsi", nativeName: "دری" },
+    { code: "ps", name: "Pashto", nativeName: "پښتو" },
 ];
 
 // Static translations loaded from separate files
@@ -579,8 +579,8 @@ const defaultTranslations = {
         "job_announcements": "د دندو اعلانات",
     },
     en,
-    farsi: fa,
-    pashto: ps,
+    fa: fa,
+    ps: ps,
 };
 
 export function useI18n() {
@@ -617,17 +617,19 @@ export function useI18n() {
             return;
         }
 
-        currentLanguage.value = lang;
+        // Normalize the language code
+        const normalizedLang = normalizeLanguageCode(lang);
+        currentLanguage.value = normalizedLang;
 
         // Store in localStorage
         localStorage.setItem("preferred_language", lang);
 
         // Load translations for the language
-        await loadTranslations(lang);
+        await loadTranslations(normalizedLang);
 
         // Update document language and direction
-        document.documentElement.lang = normalizeLanguageCode(lang);
-        const isRtl = ["farsi", "pashto"].includes(lang);
+        document.documentElement.lang = normalizedLang;
+        const isRtl = ["fa", "ps"].includes(normalizedLang);
         document.documentElement.dir = isRtl ? "rtl" : "ltr";
         
         // Add/remove RTL class to body
@@ -637,7 +639,7 @@ export function useI18n() {
         // Notify app to refetch data as needed
         try {
             window.dispatchEvent(
-                new CustomEvent("language:changed", { detail: { lang } })
+                new CustomEvent("language:changed", { detail: { lang: normalizedLang } })
             );
         } catch (_) {}
     };
@@ -686,7 +688,7 @@ export function useI18n() {
 
     // Check if RTL language
     const isRTL = computed(() => {
-        return ["farsi", "pashto"].includes(currentLanguage.value);
+        return ["fa", "ps"].includes(currentLanguage.value);
     });
 
     return {

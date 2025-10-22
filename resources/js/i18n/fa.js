@@ -356,4 +356,32 @@ export default {
         "رزومهٔ خود را به {email} ایمیل کنید و عنوان شغل را در موضوع ایمیل درج نمایید.",
     // Loading labels
     "loading.jobs": "در حال بارگذاری فرصت‌های شغلی...",
+    
+    // Loader translations
+    "loader.home": "در حال بارگذاری صفحه اصلی...",
+    "loader.our_work": "در حال بارگذاری کارهای ما...",
+    "loader.training_programs": "در حال بارگذاری برنامه‌های آموزشی...",
+    "loader.agri_tech": "در حال بارگذاری فناوری کشاورزی...",
+    "loader.market_access": "در حال بارگذاری برنامه‌های دسترسی به بازار...",
+    "loader.smart_farming": "در حال بارگذاری راه‌حل‌های کشاورزی هوشمند...",
+    "loader.seed_supply": "در حال بارگذاری اطلاعات تامین بذر...",
+    "loader.community_programs": "در حال بارگذاری برنامه‌های جامعه...",
+    "loader.environmental_projects": "در حال بارگذاری پروژه‌های محیط زیستی...",
+    "loader.resources": "در حال بارگذاری منابع...",
+    "loader.careers": "در حال بارگذاری فرصت‌های شغلی...",
+    "loader.contact": "در حال بارگذاری اطلاعات تماس...",
+    "loader.default": "در حال بارگذاری صفحه...",
+    "loader.sub_home": "در حال کشف راه‌حل‌های کشاورزی...",
+    "loader.sub_our_work": "در حال بررسی تأثیر ما...",
+    "loader.sub_training_programs": "در حال آماده‌سازی محتوای آموزشی...",
+    "loader.sub_agri_tech": "در حال بارگذاری ابزارهای نوآورانه...",
+    "loader.sub_market_access": "در حال دسترسی به فرصت‌های بازار...",
+    "loader.sub_smart_farming": "در حال اتصال به راه‌حل‌های هوشمند...",
+    "loader.sub_seed_supply": "در حال آماده‌سازی اطلاعات بذر...",
+    "loader.sub_community_programs": "در حال بارگذاری ابتکارات جامعه...",
+    "loader.sub_environmental_projects": "در حال دسترسی به داده‌های محیط زیستی...",
+    "loader.sub_resources": "در حال جمع‌آوری منابع...",
+    "loader.sub_careers": "در حال آماده‌سازی اطلاعات شغلی...",
+    "loader.sub_contact": "در حال بارگذاری جزئیات تماس...",
+    "loader.sub_default": "لطفاً صبر کنید تا محتوا را آماده کنیم"
 };

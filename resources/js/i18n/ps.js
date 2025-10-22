@@ -356,4 +356,32 @@ export default {
         "خپل CV دې {email} ته ایمیل کړئ او د دندې عنوان په موضوع کې ولیکئ.",
     // Loading labels
     "loading.jobs": "پرانیستې دندې لوډ کېږي...",
+    
+    // Loader translations
+    "loader.home": "د کور پاڼه لوډ کېږي...",
+    "loader.our_work": "زموږ کار لوډ کېږي...",
+    "loader.training_programs": "د روزنې پروګرامونه لوډ کېږي...",
+    "loader.agri_tech": "د کرنې ټکنالوژي لوډ کېږي...",
+    "loader.market_access": "د بازار د لاسرسي پروګرامونه لوډ کېږي...",
+    "loader.smart_farming": "د پاملرنې کرنې حللارې لوډ کېږي...",
+    "loader.seed_supply": "د تخم د ورکړې معلومات لوډ کېږي...",
+    "loader.community_programs": "د ټولنې پروګرامونه لوډ کېږي...",
+    "loader.environmental_projects": "د چاپیریال پروژې لوډ کېږي...",
+    "loader.resources": "سرچینې لوډ کېږي...",
+    "loader.careers": "د دندو فرصتونه لوډ کېږي...",
+    "loader.contact": "د اړیکو معلومات لوډ کېږي...",
+    "loader.default": "پاڼه لوډ کېږي...",
+    "loader.sub_home": "د کرنې حللارې کشف کېږي...",
+    "loader.sub_our_work": "زموږ اغېز څیړل کېږي...",
+    "loader.sub_training_programs": "د روزنې محتوا چمتو کېږي...",
+    "loader.sub_agri_tech": "نوښتګر وسایل لوډ کېږي...",
+    "loader.sub_market_access": "د بازار فرصتونه لاسرسی کېږي...",
+    "loader.sub_smart_farming": "د پاملرنې حللارو سره اړیکه کېږي...",
+    "loader.sub_seed_supply": "د تخم معلومات چمتو کېږي...",
+    "loader.sub_community_programs": "د ټولنې نوښتونه لوډ کېږي...",
+    "loader.sub_environmental_projects": "د چاپیریال ډیټا ته لاسرسی کېږي...",
+    "loader.sub_resources": "سرچینې راټولېږي...",
+    "loader.sub_careers": "د دندو معلومات چمتو کېږي...",
+    "loader.sub_contact": "د اړیکو جزئیات لوډ کېږي...",
+    "loader.sub_default": "مهرباني وکړئ انتظار وکړئ ترڅو محتوا چمتو شي"
 };

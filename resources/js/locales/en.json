@@ -47,7 +47,35 @@
       "password_min": "Password must be at least 6 characters"
     },
     "news_management": "News Management",
-    "job_announcements": "Job Announcements"
+    "job_announcements": "Job Announcements",
+    "loader": {
+        "home": "Loading home page...",
+        "our_work": "Loading our work...",
+        "training_programs": "Loading training programs...",
+        "agri_tech": "Loading agricultural technology...",
+        "market_access": "Loading market access programs...",
+        "smart_farming": "Loading smart farming solutions...",
+        "seed_supply": "Loading seed supply information...",
+        "community_programs": "Loading community programs...",
+        "environmental_projects": "Loading environmental projects...",
+        "resources": "Loading resources...",
+        "careers": "Loading career opportunities...",
+        "contact": "Loading contact information...",
+        "default": "Loading page...",
+        "sub_home": "Discovering agricultural solutions...",
+        "sub_our_work": "Exploring our impact...",
+        "sub_training_programs": "Preparing educational content...",
+        "sub_agri_tech": "Loading innovative tools...",
+        "sub_market_access": "Accessing market opportunities...",
+        "sub_smart_farming": "Connecting to smart solutions...",
+        "sub_seed_supply": "Preparing seed information...",
+        "sub_community_programs": "Loading community initiatives...",
+        "sub_environmental_projects": "Accessing environmental data...",
+        "sub_resources": "Gathering resources...",
+        "sub_careers": "Preparing career information...",
+        "sub_contact": "Loading contact details...",
+        "sub_default": "Please wait while we prepare the content"
+    }
     
   }
   

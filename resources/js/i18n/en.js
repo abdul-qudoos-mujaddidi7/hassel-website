@@ -379,4 +379,32 @@ export default {
         "Email your CV to {email} and include the job title in the subject.",
     // Loading labels
     "loading.jobs": "Loading open jobs...",
+    
+    // Loader translations
+    "loader.home": "Loading home page...",
+    "loader.our_work": "Loading our work...",
+    "loader.training_programs": "Loading training programs...",
+    "loader.agri_tech": "Loading agricultural technology...",
+    "loader.market_access": "Loading market access programs...",
+    "loader.smart_farming": "Loading smart farming solutions...",
+    "loader.seed_supply": "Loading seed supply information...",
+    "loader.community_programs": "Loading community programs...",
+    "loader.environmental_projects": "Loading environmental projects...",
+    "loader.resources": "Loading resources...",
+    "loader.careers": "Loading career opportunities...",
+    "loader.contact": "Loading contact information...",
+    "loader.default": "Loading page...",
+    "loader.sub_home": "Discovering agricultural solutions...",
+    "loader.sub_our_work": "Exploring our impact...",
+    "loader.sub_training_programs": "Preparing educational content...",
+    "loader.sub_agri_tech": "Loading innovative tools...",
+    "loader.sub_market_access": "Accessing market opportunities...",
+    "loader.sub_smart_farming": "Connecting to smart solutions...",
+    "loader.sub_seed_supply": "Preparing seed information...",
+    "loader.sub_community_programs": "Loading community initiatives...",
+    "loader.sub_environmental_projects": "Accessing environmental data...",
+    "loader.sub_resources": "Gathering resources...",
+    "loader.sub_careers": "Preparing career information...",
+    "loader.sub_contact": "Loading contact details...",
+    "loader.sub_default": "Please wait while we prepare the content"
 };
