@@ -46,11 +46,15 @@ class SeedSupplyProgram extends Model
         'cover_image',
         'thumbnail_image',
         'status',
+        'farsi_translations',
+        'pashto_translations',
     ];
 
     protected $casts = [
         'target_crops' => 'array',
         'distribution_centers' => 'array',
+        'farsi_translations' => 'array',
+        'pashto_translations' => 'array',
     ];
 
     // Relationships

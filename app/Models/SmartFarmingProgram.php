@@ -42,12 +42,16 @@ class SmartFarmingProgram extends Model
         'cover_image',
         'thumbnail_image',
         'status',
+        'farsi_translations',
+        'pashto_translations',
     ];
 
     protected $casts = [
         'target_crops' => 'array',
         'application_deadline' => 'date',
         'sustainability_level' => 'integer',
+        'farsi_translations' => 'array',
+        'pashto_translations' => 'array',
     ];
 
     // Relationships

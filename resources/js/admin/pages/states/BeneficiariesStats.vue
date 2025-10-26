@@ -1,7 +1,7 @@
 <template>
     <CreateBeneficiariesStats v-if="BeneficiariesRepository.createDialog" />
     <div :dir="dir">
-        <Header :pageTitle='$t("beneficiaries_stats")' />
+        <Header :pageTitle="$t('beneficiaries_stats_management')" />
         <v-divider :thickness="1" class="border-opacity-100" />
       
 

@@ -1,12 +1,12 @@
 <template>
-    <CreatePublicationTranslatable v-if="PublicationsRepository.createDialog" />
-    <div :dir="dir">
+    <CreateSeedSupplyProgramTranslatable v-if="SeedSupplyProgramsRepository.createDialog" />
+    <div :dir="dir" >
         <!-- Page Header -->
-        <Header :pageTitle="$t('publications_management')" />
+        <Header :pageTitle="$t('seed_supply_programs_management')" />
         <v-divider :thickness="1" class="border-opacity-100" />
         
         <!-- Main Content Card -->
-        
+       
             <!-- Search and Actions Section -->
             <div class="btn-search pt-12 pb-6">
                 <div class="text-field w-25">
@@ -17,21 +17,22 @@
                         :label="$t('search')"
                         append-inner-icon="mdi-magnify"
                         hide-details
-                        v-model="PublicationsRepository.publicationsSearch"
+                        v-model="SeedSupplyProgramsRepository.seedSupplyProgramsSearch"
                         @input="handleSearch"
                     ></v-text-field>
                 </div>
                 <div class="btn flex">
-                    <v-btn class="action-btn-success px-6">
+
+                    <v-btn variant="outlined" color="primary" class="px-6">
                         {{ t("filter") }}
                     </v-btn>
                     &nbsp;
                     <v-btn
                         @click="CreateDialogShow"
-                        class="action-btn-success px-6"
+                        class="create-btn-gradient px-6"
                         :text="$t('create')"
                     >
-                        
+                        <v-icon>mdi-plus</v-icon>
                     </v-btn>
                 </div>
             </div>
@@ -45,42 +46,49 @@
                                 <v-data-table-server
                                     :dir="dir"
                                     theme="cursor-pointer"
-                                    v-model:items-per-page="PublicationsRepository.itemsPerPage"
+                                    v-model:items-per-page="SeedSupplyProgramsRepository.itemsPerPage"
                                     :headers="headers"
-                                    :items-length="PublicationsRepository.totalItems"
-                                    :items="PublicationsRepository.publications"
-                                    :loading="PublicationsRepository.loading"
+                                    :items-length="SeedSupplyProgramsRepository.totalItems"
+                                    :items="SeedSupplyProgramsRepository.seedSupplyPrograms"
+                                    :loading="SeedSupplyProgramsRepository.loading"
                                     @update:options="handleTableUpdate"
                                     hover
                                     class="w-100 mx-auto"
                                 >
-                                    <!-- Title Column -->
-                                    <template v-slot:item.title="{ item }">
+                                    <!-- No data slot -->
+                                    <template v-slot:no-data>
+                                        <div class="text-center pa-4">
+                                            {{ $t('no_data_available') }}
+                                        </div>
+                                    </template>
+                                    <!-- Name Column -->
+                                    <template v-slot:item.name="{ item }">
                                         <td class="py-2 pl-4">
                                             <div class="d-flex align-center">
-                                                <v-icon
-                                                    :icon="getFileIcon(item.file_type)"
-                                                    size="24"
+                                                <v-avatar
+                                                    v-if="item.cover_image"
+                                                    size="40"
                                                     class="mr-3"
-                                                    :color="getFileColor(item.file_type)"
-                                                ></v-icon>
+                                                >
+                                                    <v-img :src="item.cover_image" :alt="item.name"></v-img>
+                                                </v-avatar>
                                                 <div>
-                                                    <div class="font-weight-medium">{{ item.title }}</div>
-                                                    <div class="text-caption text-grey">{{ item.description?.substring(0, 50) }}...</div>
+                                                    <div class="font-weight-medium">{{ item.name }}</div>
+                                                    <div class="text-caption text-grey">{{ item.input_type }}</div>
                                                 </div>
                                             </div>
                                         </td>
                                     </template>
 
-                                    <!-- File Type Column -->
-                                    <template v-slot:item.file_type="{ item }">
+                                    <!-- Input Type Column -->
+                                    <template v-slot:item.input_type="{ item }">
                                         <td class="py-2 pl-4">
                                             <v-chip
-                                                :color="getFileTypeColor(item.file_type)"
+                                                color="primary"
                                                 size="small"
-                                                variant="flat"
+                                                variant="outlined"
                                             >
-                                                {{ PublicationsRepository.getFileTypeLabel(item.file_type) }}
+                                                {{ getInputTypeLabel(item.input_type) }}
                                             </v-chip>
                                         </td>
                                     </template>
@@ -93,48 +101,28 @@
                                                 size="small"
                                                 variant="flat"
                                             >
-                                                {{ PublicationsRepository.getStatusLabel(item.status) }}
+                                                {{ SeedSupplyProgramsRepository.getStatusLabel(item.status) }}
                                             </v-chip>
                                         </td>
                                     </template>
 
-                                    <!-- Translation Coverage Column -->
-                                    <template v-slot:item.translations="{ item }">
+                                    <!-- Availability Column -->
+                                    <template v-slot:item.availability="{ item }">
                                         <td class="py-2 pl-4">
-                                            <div class="d-flex flex-column gap-1">
-                                                <v-chip
-                                                    :color="getTranslationCoverageColor(item.farsi_coverage || 0)"
-                                                    size="x-small"
-                                                    variant="flat"
-                                                >
-                                                    FA: {{ item.farsi_coverage || 0 }}%
-                                                </v-chip>
-                                                <v-chip
-                                                    :color="getTranslationCoverageColor(item.pashto_coverage || 0)"
-                                                    size="x-small"
-                                                    variant="flat"
-                                                >
-                                                    PS: {{ item.pashto_coverage || 0 }}%
-                                                </v-chip>
-                                            </div>
+                                            <v-chip
+                                                :color="getAvailabilityColor(item.availability)"
+                                                size="small"
+                                                variant="flat"
+                                            >
+                                                {{ item.availability }}
+                                            </v-chip>
                                         </td>
                                     </template>
 
-                                    <!-- File Path Column -->
-                                    <template v-slot:item.file_path="{ item }">
+                                    <!-- Quality Grade Column -->
+                                    <template v-slot:item.quality_grade="{ item }">
                                         <td class="py-2 pl-4">
-                                            <div v-if="item.file_path" class="d-flex align-center">
-                                                <v-icon icon="mdi-file" size="16" class="mr-2"></v-icon>
-                                                <span class="text-caption">{{ getFileName(item.file_path) }}</span>
-                                            </div>
-                                            <span v-else class="text-grey">No file</span>
-                                        </td>
-                                    </template>
-
-                                    <!-- Published Date Column -->
-                                    <template v-slot:item.published_at="{ item }">
-                                        <td class="py-2 pl-4">
-                                            <span>{{ PublicationsRepository.formatDate(item.published_at) }}</span>
+                                            <span>{{ getQualityGradeLabel(item.quality_grade) }}</span>
                                         </td>
                                     </template>
 
@@ -168,12 +156,13 @@
                                                     </v-list-item-title>
 
                                                     <v-list-item-title
-                                                        v-if="item.file_path"
-                                                        @click="downloadFile(item)"
+                                                        @click="toggleStatus(item)"
                                                         class="cursor-pointer d-flex gap-3 pb-3"
                                                     >
-                                                        <v-icon color="blue">mdi-download</v-icon>
-                                                        Download
+                                                        <v-icon :color="item.status === 'published' ? 'orange' : 'green'">
+                                                            {{ item.status === 'published' ? 'mdi-eye-off' : 'mdi-eye' }}
+                                                        </v-icon>
+                                                        {{ item.status === 'published' ? 'Unpublish' : 'Publish' }}
                                                     </v-list-item-title>
 
                                                     <v-list-item-title
@@ -205,59 +194,56 @@
                     </v-main>
                 </v-app>
             </div>
-    </div>
+        </div>
+    
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted } from "vue";
 import Header from '../../components/Header.vue';
-import CreatePublicationTranslatable from "./CreatePublicationTranslatable.vue"; 
+import CreateSeedSupplyProgramTranslatable from "./CreateSeedSupplyProgramTranslatable.vue"; 
 import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
-import { usePublicationsRepository } from "../../stores/PublicationsRepository";
+import { useSeedSupplyProgramsRepository } from "../../stores/SeedSupplyProgramsRepository";
 import { useAuthRepository } from "../../../stores/Auth.js";
 
 const AuthRepository = useAuthRepository();
-const PublicationsRepository = usePublicationsRepository();
+const SeedSupplyProgramsRepository = useSeedSupplyProgramsRepository();
 
 const dir = computed(() => {
     return ["fa", "pa"].includes(locale.value) ? "rtl" : "ltr";
 });
 
 const selectedStatus = ref('');
-const selectedFileType = ref('');
 
 // Search handling with debounce
 let searchTimeout;
 const handleSearch = () => {
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
-        PublicationsRepository.fetchPublications({
+        SeedSupplyProgramsRepository.fetchSeedSupplyPrograms({
             page: 1,
-            itemsPerPage: PublicationsRepository.itemsPerPage,
-            status: selectedStatus.value,
-            fileType: selectedFileType.value
+            itemsPerPage: SeedSupplyProgramsRepository.itemsPerPage,
+            status: selectedStatus.value
         });
     }, 500);
 };
 
-// Filter handler
-const handleFilter = () => {
-    PublicationsRepository.fetchPublications({
+// Status filter handler
+const handleStatusFilter = () => {
+    SeedSupplyProgramsRepository.fetchSeedSupplyPrograms({
         page: 1,
-        itemsPerPage: PublicationsRepository.itemsPerPage,
-        status: selectedStatus.value,
-        fileType: selectedFileType.value
+        itemsPerPage: SeedSupplyProgramsRepository.itemsPerPage,
+        status: selectedStatus.value
     });
 };
 
 // Table update handler
 const handleTableUpdate = (options) => {
-    PublicationsRepository.fetchPublications({
+    SeedSupplyProgramsRepository.fetchSeedSupplyPrograms({
         page: options.page,
         itemsPerPage: options.itemsPerPage,
-        status: selectedStatus.value,
-        fileType: selectedFileType.value
+        status: selectedStatus.value
     });
 };
 
@@ -265,132 +251,89 @@ const handleTableUpdate = (options) => {
 const selectedIds = ref([]);
 const sendSelectedIds = () => {
     if (selectedIds.value.length > 0) {
-        PublicationsRepository.bulkDeletePublications(selectedIds.value);
+        SeedSupplyProgramsRepository.bulkDeleteSeedSupplyPrograms(selectedIds.value);
         selectedIds.value = [];
     }
 };
 
 // Dialog management
 const CreateDialogShow = () => {
-    PublicationsRepository.resetCurrentPublication();
-    PublicationsRepository.isEditMode = false;
-    PublicationsRepository.createDialog = true;
+    SeedSupplyProgramsRepository.resetCurrentSeedSupplyProgram();
+    SeedSupplyProgramsRepository.isEditMode = false;
+    SeedSupplyProgramsRepository.createDialog = true;
 };
 
 const edit = (item) => {
-    PublicationsRepository.isEditMode = true;
-    PublicationsRepository.currentPublication = { ...item };
-    PublicationsRepository.createDialog = true;
+    SeedSupplyProgramsRepository.isEditMode = true;
+    SeedSupplyProgramsRepository.currentSeedSupplyProgram = { ...item };
+    SeedSupplyProgramsRepository.createDialog = true;
 };
 
 const deleteItem = async (item) => {
-    await PublicationsRepository.deletePublication(item.id);
+    await SeedSupplyProgramsRepository.deleteSeedSupplyProgram(item.id);
 };
 
-const downloadFile = (item) => {
-    if (item.file_path) {
-        window.open(item.file_path, '_blank');
-    }
+const toggleStatus = async (item) => {
+    await SeedSupplyProgramsRepository.toggleStatus(item.id);
 };
 
-// Helper functions
-const getFileIcon = (fileType) => {
-    const iconMap = {
-        'pdf': 'mdi-file-pdf-box',
-        'doc': 'mdi-file-word-box',
-        'docx': 'mdi-file-word-box',
-        'xls': 'mdi-file-excel-box',
-        'xlsx': 'mdi-file-excel-box',
-        'ppt': 'mdi-file-powerpoint-box',
-        'pptx': 'mdi-file-powerpoint-box',
-        'txt': 'mdi-file-document-outline',
-        'other': 'mdi-file-outline'
-    };
-    return iconMap[fileType] || 'mdi-file-outline';
-};
-
-const getFileColor = (fileType) => {
-    const colorMap = {
-        'pdf': 'red',
-        'doc': 'blue',
-        'docx': 'blue',
-        'xls': 'green',
-        'xlsx': 'green',
-        'ppt': 'orange',
-        'pptx': 'orange',
-        'txt': 'grey',
-        'other': 'grey'
-    };
-    return colorMap[fileType] || 'grey';
-};
-
-const getFileTypeColor = (fileType) => {
-    const colorMap = {
-        'pdf': 'red',
-        'doc': 'blue',
-        'docx': 'blue',
-        'xls': 'green',
-        'xlsx': 'green',
-        'ppt': 'orange',
-        'pptx': 'orange',
-        'txt': 'grey',
-        'other': 'grey'
-    };
-    return colorMap[fileType] || 'primary';
-};
-
+// Helper function to get status color
 const getStatusColor = (status) => {
     switch (status) {
         case 'published': return 'success';
         case 'draft': return 'warning';
-        case 'archived': return 'grey';
+        case 'ongoing': return 'info';
+        case 'completed': return 'primary';
+        case 'cancelled': return 'error';
         default: return 'primary';
     }
 };
 
-// Helper function to get translation coverage color
-const getTranslationCoverageColor = (coverage) => {
-    if (coverage === 100) return 'success';
-    if (coverage >= 50) return 'warning';
-    return 'error';
+// Helper function to get availability color
+const getAvailabilityColor = (availability) => {
+    switch (availability) {
+        case 'In Stock': return 'success';
+        case 'Limited': return 'warning';
+        case 'Out of Stock': return 'error';
+        case 'Pre-order': return 'info';
+        default: return 'primary';
+    }
 };
 
-const getFileName = (filePath) => {
-    return filePath.split('/').pop();
+// Helper function to get input type label
+const getInputTypeLabel = (type) => {
+    const typeOption = SeedSupplyProgramsRepository.inputTypeOptions.find(
+        (t) => t.value === type
+    );
+    return typeOption ? typeOption.label : type;
+};
+
+// Helper function to get quality grade label
+const getQualityGradeLabel = (grade) => {
+    const gradeOption = SeedSupplyProgramsRepository.qualityGradeOptions.find(
+        (g) => g.value === grade
+    );
+    return gradeOption ? gradeOption.label : grade;
 };
 
 // Table headers
 const headers = computed(() => [
     { title: "", key: "checkbox", align: "start", sortable: false },
-    { title: t("title"), key: "title", align: "start", sortable: true },
-    { title: t("file_type"), key: "file_type", align: "center", sortable: true },
+    { title: t("name"), key: "name", align: "start", sortable: true },
+    { title: t("input_type"), key: "input_type", align: "center", sortable: true },
     { title: t("status"), key: "status", align: "center", sortable: true },
-    { title: t("file_path"), key: "file_path", align: "center", sortable: false },
-    { title: t("published_date"), key: "published_at", align: "center", sortable: true },
+    { title: t("availability"), key: "availability", align: "center", sortable: true },
+    { title: t("quality_grade"), key: "quality_grade", align: "center", sortable: true },
     { title: t("action"), key: "action", align: "center", sortable: false },
 ]);
 
-// Initial load
+// Load data on mount
 onMounted(() => {
-    PublicationsRepository.fetchPublications({
+    SeedSupplyProgramsRepository.fetchSeedSupplyPrograms({
         page: 1,
-        itemsPerPage: PublicationsRepository.itemsPerPage,
-        status: selectedStatus.value,
-        fileType: selectedFileType.value
+        itemsPerPage: SeedSupplyProgramsRepository.itemsPerPage,
     });
 });
-
-// Refetch when language changes
-watch(() => locale.value, () => {
-    PublicationsRepository.fetchPublications({
-        page: 1,
-        itemsPerPage: PublicationsRepository.itemsPerPage,
-        status: selectedStatus.value,
-        fileType: selectedFileType.value
-    });
-});
-
-
 </script>
 
 <style scoped>
@@ -467,4 +410,3 @@ watch(() => locale.value, () => {
     }
 }
 </style>
-

@@ -27,9 +27,12 @@ class MarketAccessProgramRequest extends FormRequest
             'description' => 'required|string',
             'cover_image' => 'nullable|string|max:255',
             'thumbnail_image' => 'nullable|string|max:255',
-            'program_type' => 'required|in:market_linkage,value_chain,export_support,cooperative_development',
-            'target_crops' => 'nullable|json',
-            'partner_organizations' => 'nullable|json',
+            'program_type' => 'required|in:market_linkage,value_chain,export,cooperative_development',
+            'target_crops' => 'nullable|array',
+            'target_crops.*' => 'string',
+            'partner_organizations' => 'nullable|array',
+            'partner_organizations.*' => 'string',
+            'location' => 'nullable|string|max:255',
             'status' => 'required|in:draft,published,archived',
         ];
     }
@@ -41,8 +44,8 @@ class MarketAccessProgramRequest extends FormRequest
             'description.required' => 'A program description is required.',
             'program_type.required' => 'Please select a program type.',
             'program_type.in' => 'Invalid program type selected.',
-            'target_crops.json' => 'Target crops must be in valid JSON format.',
-            'partner_organizations.json' => 'Partner organizations must be in valid JSON format.',
+            'target_crops.array' => 'Target crops must be an array.',
+            'partner_organizations.array' => 'Partner organizations must be an array.',
         ];
     }
 
@@ -52,7 +55,8 @@ class MarketAccessProgramRequest extends FormRequest
             $this->merge(['slug' => \Illuminate\Support\Str::slug($this->title)]);
         }
 
-        // Convert arrays to JSON if needed
+        // Convert arrays to JSON for storage in the database
+        // Arrays are now accepted in validation rules, but we need to convert them to JSON for database storage
         if ($this->target_crops && is_array($this->target_crops)) {
             $this->merge(['target_crops' => json_encode($this->target_crops)]);
         }

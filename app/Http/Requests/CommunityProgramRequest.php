@@ -25,9 +25,10 @@ class CommunityProgramRequest extends FormRequest
                 Rule::unique('community_programs', 'slug')->ignore($programId)
             ],
             'description' => 'required|string',
-            'program_type' => 'required|in:capacity_building,financial_literacy,leadership,entrepreneurship,cooperative',
+            'program_type' => 'required|in:capacity_building,financial_literacy,leadership,entrepreneurship,cooperative,education',
             'target_group' => 'required|in:women,youth,cooperatives,farmers,all',
-            'partner_organizations' => 'nullable|json',
+            'partner_organizations' => 'nullable|array',
+            'partner_organizations.*' => 'string',
             'status' => 'required|in:draft,published,archived',
             'featured_image' => 'nullable|string|max:255',
             'cover_image' => 'nullable|string|max:255',
@@ -44,7 +45,7 @@ class CommunityProgramRequest extends FormRequest
             'program_type.in' => 'Invalid program type selected.',
             'target_group.required' => 'Please select a target group.',
             'target_group.in' => 'Invalid target group selected.',
-            'partner_organizations.json' => 'Partner organizations must be in valid JSON format.',
+            'partner_organizations.array' => 'Partner organizations must be an array.',
         ];
     }
 

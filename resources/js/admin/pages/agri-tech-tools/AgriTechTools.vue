@@ -1,12 +1,12 @@
 <template>
-    <CreatePublicationTranslatable v-if="PublicationsRepository.createDialog" />
-    <div :dir="dir">
+    <CreateAgriTechToolTranslatable v-if="AgriTechToolsRepository.createDialog" />
+    <div :dir="dir" >
         <!-- Page Header -->
-        <Header :pageTitle="$t('publications_management')" />
+        <Header :pageTitle="$t('agri_tech_tools_management')" />
         <v-divider :thickness="1" class="border-opacity-100" />
         
         <!-- Main Content Card -->
-        
+       
             <!-- Search and Actions Section -->
             <div class="btn-search pt-12 pb-6">
                 <div class="text-field w-25">
@@ -17,21 +17,22 @@
                         :label="$t('search')"
                         append-inner-icon="mdi-magnify"
                         hide-details
-                        v-model="PublicationsRepository.publicationsSearch"
+                        v-model="AgriTechToolsRepository.agriTechToolsSearch"
                         @input="handleSearch"
                     ></v-text-field>
                 </div>
                 <div class="btn flex">
-                    <v-btn class="action-btn-success px-6">
+
+                    <v-btn variant="outlined" color="primary" class="px-6">
                         {{ t("filter") }}
                     </v-btn>
                     &nbsp;
                     <v-btn
                         @click="CreateDialogShow"
-                        class="action-btn-success px-6"
+                        class="create-btn-gradient px-6"
                         :text="$t('create')"
                     >
-                        
+                        <v-icon>mdi-plus</v-icon>
                     </v-btn>
                 </div>
             </div>
@@ -45,42 +46,62 @@
                                 <v-data-table-server
                                     :dir="dir"
                                     theme="cursor-pointer"
-                                    v-model:items-per-page="PublicationsRepository.itemsPerPage"
+                                    v-model:items-per-page="AgriTechToolsRepository.itemsPerPage"
                                     :headers="headers"
-                                    :items-length="PublicationsRepository.totalItems"
-                                    :items="PublicationsRepository.publications"
-                                    :loading="PublicationsRepository.loading"
+                                    :items-length="AgriTechToolsRepository.totalItems"
+                                    :items="AgriTechToolsRepository.agriTechTools"
+                                    :loading="AgriTechToolsRepository.loading"
                                     @update:options="handleTableUpdate"
                                     hover
                                     class="w-100 mx-auto"
                                 >
-                                    <!-- Title Column -->
-                                    <template v-slot:item.title="{ item }">
+                                    <!-- No data slot -->
+                                    <template v-slot:no-data>
+                                        <div class="text-center pa-4">
+                                            {{ $t('no_data_available') }}
+                                        </div>
+                                    </template>
+                                    <!-- Name Column -->
+                                    <template v-slot:item.name="{ item }">
                                         <td class="py-2 pl-4">
                                             <div class="d-flex align-center">
-                                                <v-icon
-                                                    :icon="getFileIcon(item.file_type)"
-                                                    size="24"
+                                                <v-avatar
+                                                    v-if="item.cover_image"
+                                                    size="40"
                                                     class="mr-3"
-                                                    :color="getFileColor(item.file_type)"
-                                                ></v-icon>
+                                                >
+                                                    <v-img :src="item.cover_image" :alt="item.name"></v-img>
+                                                </v-avatar>
                                                 <div>
-                                                    <div class="font-weight-medium">{{ item.title }}</div>
-                                                    <div class="text-caption text-grey">{{ item.description?.substring(0, 50) }}...</div>
+                                                    <div class="font-weight-medium">{{ item.name }}</div>
+                                                    <div class="text-caption text-grey">{{ item.category }}</div>
                                                 </div>
                                             </div>
                                         </td>
                                     </template>
 
-                                    <!-- File Type Column -->
-                                    <template v-slot:item.file_type="{ item }">
+                                    <!-- Category Column -->
+                                    <template v-slot:item.category="{ item }">
                                         <td class="py-2 pl-4">
                                             <v-chip
-                                                :color="getFileTypeColor(item.file_type)"
+                                                color="primary"
+                                                size="small"
+                                                variant="outlined"
+                                            >
+                                                {{ getCategoryLabel(item.category) }}
+                                            </v-chip>
+                                        </td>
+                                    </template>
+
+                                    <!-- Technology Level Column -->
+                                    <template v-slot:item.technology_level="{ item }">
+                                        <td class="py-2 pl-4">
+                                            <v-chip
+                                                :color="getTechnologyLevelColor(item.technology_level)"
                                                 size="small"
                                                 variant="flat"
                                             >
-                                                {{ PublicationsRepository.getFileTypeLabel(item.file_type) }}
+                                                {{ getTechnologyLevelLabel(item.technology_level) }}
                                             </v-chip>
                                         </td>
                                     </template>
@@ -93,48 +114,28 @@
                                                 size="small"
                                                 variant="flat"
                                             >
-                                                {{ PublicationsRepository.getStatusLabel(item.status) }}
+                                                {{ AgriTechToolsRepository.getStatusLabel(item.status) }}
                                             </v-chip>
                                         </td>
                                     </template>
 
-                                    <!-- Translation Coverage Column -->
-                                    <template v-slot:item.translations="{ item }">
+                                    <!-- Availability Column -->
+                                    <template v-slot:item.availability="{ item }">
                                         <td class="py-2 pl-4">
-                                            <div class="d-flex flex-column gap-1">
-                                                <v-chip
-                                                    :color="getTranslationCoverageColor(item.farsi_coverage || 0)"
-                                                    size="x-small"
-                                                    variant="flat"
-                                                >
-                                                    FA: {{ item.farsi_coverage || 0 }}%
-                                                </v-chip>
-                                                <v-chip
-                                                    :color="getTranslationCoverageColor(item.pashto_coverage || 0)"
-                                                    size="x-small"
-                                                    variant="flat"
-                                                >
-                                                    PS: {{ item.pashto_coverage || 0 }}%
-                                                </v-chip>
-                                            </div>
+                                            <v-chip
+                                                :color="getAvailabilityColor(item.availability)"
+                                                size="small"
+                                                variant="flat"
+                                            >
+                                                {{ getAvailabilityLabel(item.availability) }}
+                                            </v-chip>
                                         </td>
                                     </template>
 
-                                    <!-- File Path Column -->
-                                    <template v-slot:item.file_path="{ item }">
+                                    <!-- Price Range Column -->
+                                    <template v-slot:item.price_range="{ item }">
                                         <td class="py-2 pl-4">
-                                            <div v-if="item.file_path" class="d-flex align-center">
-                                                <v-icon icon="mdi-file" size="16" class="mr-2"></v-icon>
-                                                <span class="text-caption">{{ getFileName(item.file_path) }}</span>
-                                            </div>
-                                            <span v-else class="text-grey">No file</span>
-                                        </td>
-                                    </template>
-
-                                    <!-- Published Date Column -->
-                                    <template v-slot:item.published_at="{ item }">
-                                        <td class="py-2 pl-4">
-                                            <span>{{ PublicationsRepository.formatDate(item.published_at) }}</span>
+                                            <span>{{ item.price_range || 'N/A' }}</span>
                                         </td>
                                     </template>
 
@@ -168,12 +169,13 @@
                                                     </v-list-item-title>
 
                                                     <v-list-item-title
-                                                        v-if="item.file_path"
-                                                        @click="downloadFile(item)"
+                                                        @click="toggleStatus(item)"
                                                         class="cursor-pointer d-flex gap-3 pb-3"
                                                     >
-                                                        <v-icon color="blue">mdi-download</v-icon>
-                                                        Download
+                                                        <v-icon :color="item.status === 'published' ? 'orange' : 'green'">
+                                                            {{ item.status === 'published' ? 'mdi-eye-off' : 'mdi-eye' }}
+                                                        </v-icon>
+                                                        {{ item.status === 'published' ? 'Unpublish' : 'Publish' }}
                                                     </v-list-item-title>
 
                                                     <v-list-item-title
@@ -205,59 +207,56 @@
                     </v-main>
                 </v-app>
             </div>
-    </div>
+        </div>
+    
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted } from "vue";
 import Header from '../../components/Header.vue';
-import CreatePublicationTranslatable from "./CreatePublicationTranslatable.vue"; 
+import CreateAgriTechToolTranslatable from "./CreateAgriTechToolTranslatable.vue"; 
 import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
-import { usePublicationsRepository } from "../../stores/PublicationsRepository";
+import { useAgriTechToolsRepository } from "../../stores/AgriTechToolsRepository";
 import { useAuthRepository } from "../../../stores/Auth.js";
 
 const AuthRepository = useAuthRepository();
-const PublicationsRepository = usePublicationsRepository();
+const AgriTechToolsRepository = useAgriTechToolsRepository();
 
 const dir = computed(() => {
     return ["fa", "pa"].includes(locale.value) ? "rtl" : "ltr";
 });
 
 const selectedStatus = ref('');
-const selectedFileType = ref('');
 
 // Search handling with debounce
 let searchTimeout;
 const handleSearch = () => {
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
-        PublicationsRepository.fetchPublications({
+        AgriTechToolsRepository.fetchAgriTechTools({
             page: 1,
-            itemsPerPage: PublicationsRepository.itemsPerPage,
-            status: selectedStatus.value,
-            fileType: selectedFileType.value
+            itemsPerPage: AgriTechToolsRepository.itemsPerPage,
+            status: selectedStatus.value
         });
     }, 500);
 };
 
-// Filter handler
-const handleFilter = () => {
-    PublicationsRepository.fetchPublications({
+// Status filter handler
+const handleStatusFilter = () => {
+    AgriTechToolsRepository.fetchAgriTechTools({
         page: 1,
-        itemsPerPage: PublicationsRepository.itemsPerPage,
-        status: selectedStatus.value,
-        fileType: selectedFileType.value
+        itemsPerPage: AgriTechToolsRepository.itemsPerPage,
+        status: selectedStatus.value
     });
 };
 
 // Table update handler
 const handleTableUpdate = (options) => {
-    PublicationsRepository.fetchPublications({
+    AgriTechToolsRepository.fetchAgriTechTools({
         page: options.page,
         itemsPerPage: options.itemsPerPage,
-        status: selectedStatus.value,
-        fileType: selectedFileType.value
+        status: selectedStatus.value
     });
 };
 
@@ -265,132 +264,109 @@ const handleTableUpdate = (options) => {
 const selectedIds = ref([]);
 const sendSelectedIds = () => {
     if (selectedIds.value.length > 0) {
-        PublicationsRepository.bulkDeletePublications(selectedIds.value);
+        AgriTechToolsRepository.bulkDeleteAgriTechTools(selectedIds.value);
         selectedIds.value = [];
     }
 };
 
 // Dialog management
 const CreateDialogShow = () => {
-    PublicationsRepository.resetCurrentPublication();
-    PublicationsRepository.isEditMode = false;
-    PublicationsRepository.createDialog = true;
+    AgriTechToolsRepository.resetCurrentAgriTechTool();
+    AgriTechToolsRepository.isEditMode = false;
+    AgriTechToolsRepository.createDialog = true;
 };
 
 const edit = (item) => {
-    PublicationsRepository.isEditMode = true;
-    PublicationsRepository.currentPublication = { ...item };
-    PublicationsRepository.createDialog = true;
+    AgriTechToolsRepository.isEditMode = true;
+    AgriTechToolsRepository.currentAgriTechTool = { ...item };
+    AgriTechToolsRepository.createDialog = true;
 };
 
 const deleteItem = async (item) => {
-    await PublicationsRepository.deletePublication(item.id);
+    await AgriTechToolsRepository.deleteAgriTechTool(item.id);
 };
 
-const downloadFile = (item) => {
-    if (item.file_path) {
-        window.open(item.file_path, '_blank');
-    }
+const toggleStatus = async (item) => {
+    await AgriTechToolsRepository.toggleStatus(item.id);
 };
 
-// Helper functions
-const getFileIcon = (fileType) => {
-    const iconMap = {
-        'pdf': 'mdi-file-pdf-box',
-        'doc': 'mdi-file-word-box',
-        'docx': 'mdi-file-word-box',
-        'xls': 'mdi-file-excel-box',
-        'xlsx': 'mdi-file-excel-box',
-        'ppt': 'mdi-file-powerpoint-box',
-        'pptx': 'mdi-file-powerpoint-box',
-        'txt': 'mdi-file-document-outline',
-        'other': 'mdi-file-outline'
-    };
-    return iconMap[fileType] || 'mdi-file-outline';
-};
-
-const getFileColor = (fileType) => {
-    const colorMap = {
-        'pdf': 'red',
-        'doc': 'blue',
-        'docx': 'blue',
-        'xls': 'green',
-        'xlsx': 'green',
-        'ppt': 'orange',
-        'pptx': 'orange',
-        'txt': 'grey',
-        'other': 'grey'
-    };
-    return colorMap[fileType] || 'grey';
-};
-
-const getFileTypeColor = (fileType) => {
-    const colorMap = {
-        'pdf': 'red',
-        'doc': 'blue',
-        'docx': 'blue',
-        'xls': 'green',
-        'xlsx': 'green',
-        'ppt': 'orange',
-        'pptx': 'orange',
-        'txt': 'grey',
-        'other': 'grey'
-    };
-    return colorMap[fileType] || 'primary';
-};
-
+// Helper function to get status color
 const getStatusColor = (status) => {
     switch (status) {
         case 'published': return 'success';
         case 'draft': return 'warning';
-        case 'archived': return 'grey';
+        case 'available': return 'success';
+        case 'unavailable': return 'error';
+        case 'maintenance': return 'warning';
         default: return 'primary';
     }
 };
 
-// Helper function to get translation coverage color
-const getTranslationCoverageColor = (coverage) => {
-    if (coverage === 100) return 'success';
-    if (coverage >= 50) return 'warning';
-    return 'error';
+// Helper function to get availability color
+const getAvailabilityColor = (availability) => {
+    switch (availability) {
+        case 'available': return 'success';
+        case 'limited': return 'warning';
+        case 'unavailable': return 'error';
+        case 'coming_soon': return 'info';
+        default: return 'primary';
+    }
 };
 
-const getFileName = (filePath) => {
-    return filePath.split('/').pop();
+// Helper function to get technology level color
+const getTechnologyLevelColor = (level) => {
+    switch (level) {
+        case 'basic': return 'success';
+        case 'intermediate': return 'warning';
+        case 'advanced': return 'orange';
+        case 'cutting_edge': return 'error';
+        default: return 'primary';
+    }
+};
+
+// Helper function to get category label
+const getCategoryLabel = (category) => {
+    const categoryOption = AgriTechToolsRepository.categoryOptions.find(
+        (c) => c.value === category
+    );
+    return categoryOption ? categoryOption.label : category;
+};
+
+// Helper function to get technology level label
+const getTechnologyLevelLabel = (level) => {
+    const levelOption = AgriTechToolsRepository.technologyLevelOptions.find(
+        (l) => l.value === level
+    );
+    return levelOption ? levelOption.label : level;
+};
+
+// Helper function to get availability label
+const getAvailabilityLabel = (availability) => {
+    const availabilityOption = AgriTechToolsRepository.availabilityOptions.find(
+        (a) => a.value === availability
+    );
+    return availabilityOption ? availabilityOption.label : availability;
 };
 
 // Table headers
 const headers = computed(() => [
     { title: "", key: "checkbox", align: "start", sortable: false },
-    { title: t("title"), key: "title", align: "start", sortable: true },
-    { title: t("file_type"), key: "file_type", align: "center", sortable: true },
+    { title: t("name"), key: "name", align: "start", sortable: true },
+    { title: t("category"), key: "category", align: "center", sortable: true },
+    { title: t("technology_level"), key: "technology_level", align: "center", sortable: true },
     { title: t("status"), key: "status", align: "center", sortable: true },
-    { title: t("file_path"), key: "file_path", align: "center", sortable: false },
-    { title: t("published_date"), key: "published_at", align: "center", sortable: true },
+    { title: t("availability"), key: "availability", align: "center", sortable: true },
+    { title: t("price_range"), key: "price_range", align: "center", sortable: true },
     { title: t("action"), key: "action", align: "center", sortable: false },
 ]);
 
-// Initial load
+// Load data on mount
 onMounted(() => {
-    PublicationsRepository.fetchPublications({
+    AgriTechToolsRepository.fetchAgriTechTools({
         page: 1,
-        itemsPerPage: PublicationsRepository.itemsPerPage,
-        status: selectedStatus.value,
-        fileType: selectedFileType.value
+        itemsPerPage: AgriTechToolsRepository.itemsPerPage,
     });
 });
-
-// Refetch when language changes
-watch(() => locale.value, () => {
-    PublicationsRepository.fetchPublications({
-        page: 1,
-        itemsPerPage: PublicationsRepository.itemsPerPage,
-        status: selectedStatus.value,
-        fileType: selectedFileType.value
-    });
-});
-
-
 </script>
 
 <style scoped>
@@ -467,4 +443,3 @@ watch(() => locale.value, () => {
     }
 }
 </style>
-

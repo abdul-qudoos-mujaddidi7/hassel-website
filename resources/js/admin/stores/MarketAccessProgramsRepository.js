@@ -5,8 +5,8 @@ import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
-export let useTrainingProgramsRepository = defineStore(
-    "TrainingProgramsRepository",
+export let useMarketAccessProgramsRepository = defineStore(
+    "MarketAccessProgramsRepository",
     {
         state() {
             return {
@@ -20,10 +20,10 @@ export let useTrainingProgramsRepository = defineStore(
                 itemsPerPage: ref(5),
                 createDialog: ref(false),
 
-                // Training Programs data
-                trainingPrograms: reactive([]),
-                trainingProgramsSearch: ref(""),
-                currentTrainingProgram: reactive({}),
+                // Market Access Programs data
+                marketAccessPrograms: reactive([]),
+                marketAccessProgramsSearch: ref(""),
+                currentMarketAccessProgram: reactive({}),
 
                 // Status options for dropdowns
                 statusOptions: reactive([
@@ -36,11 +36,22 @@ export let useTrainingProgramsRepository = defineStore(
 
                 // Program type options
                 programTypeOptions: reactive([
-                    { value: "workshop", label: "Workshop" },
-                    { value: "seminar", label: "Seminar" },
-                    { value: "course", label: "Course" },
-                    { value: "training", label: "Training" },
+                    { value: "export", label: "Export" },
+                    { value: "local_market", label: "Local Market" },
+                    { value: "value_chain", label: "Value Chain" },
                     { value: "certification", label: "Certification" },
+                    { value: "quality_control", label: "Quality Control" },
+                ]),
+
+                // Target crops options
+                targetCropsOptions: reactive([
+                    { value: "wheat", label: "Wheat" },
+                    { value: "rice", label: "Rice" },
+                    { value: "corn", label: "Corn" },
+                    { value: "vegetables", label: "Vegetables" },
+                    { value: "fruits", label: "Fruits" },
+                    { value: "herbs", label: "Herbs" },
+                    { value: "legumes", label: "Legumes" },
                 ]),
             };
         },
@@ -57,8 +68,8 @@ export let useTrainingProgramsRepository = defineStore(
                 return `${year}-${month}-${day}`;
             },
 
-            // Fetch all training programs with pagination
-            async fetchTrainingPrograms({
+            // Fetch all market access programs with pagination
+            async fetchMarketAccessPrograms({
                 page = 1,
                 itemsPerPage = 5,
                 status = "",
@@ -68,7 +79,7 @@ export let useTrainingProgramsRepository = defineStore(
                     const params = new URLSearchParams({
                         page: page,
                         perPage: itemsPerPage,
-                        search: this.trainingProgramsSearch,
+                        search: this.marketAccessProgramsSearch,
                     });
 
                     if (status) {
@@ -76,16 +87,16 @@ export let useTrainingProgramsRepository = defineStore(
                     }
 
                     const response = await axios.get(
-                        `training-programs?${params}`
+                        `market-access-programs?${params}`
                     );
 
                     console.log("API Response:", response.data);
 
                     if (response.data.success) {
-                        this.trainingPrograms = response.data.data || [];
+                        this.marketAccessPrograms = response.data.data || [];
                         this.totalItems = response.data.meta?.total || 0;
                     } else {
-                        this.trainingPrograms = [];
+                        this.marketAccessPrograms = [];
                         this.totalItems = 0;
                         toast.error(
                             response.data.message || "Failed to fetch data",
@@ -101,13 +112,13 @@ export let useTrainingProgramsRepository = defineStore(
                     console.error("API Error:", err);
                     console.error("Error Response:", err.response?.data);
 
-                    this.trainingPrograms = [];
+                    this.marketAccessPrograms = [];
                     this.totalItems = 0;
                     this.loading = false;
 
                     const errorMessage =
                         err.response?.data?.message ||
-                        "Failed to fetch training programs";
+                        "Failed to fetch market access programs";
                     toast.error(errorMessage, {
                         position: "top-right",
                         autoClose: 3000,
@@ -120,19 +131,19 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Fetch single training program by ID
-            async fetchTrainingProgram(id) {
+            // Fetch single market access program by ID
+            async fetchMarketAccessProgram(id) {
                 this.loading = true;
                 try {
-                    const response = await axios.get(`training-programs/${id}`, {
+                    const response = await axios.get(`market-access-programs/${id}`, {
                         params: { include_translations: 1 },
                     });
-                    this.currentTrainingProgram = response.data.data;
+                    this.currentMarketAccessProgram = response.data.data;
                     this.loading = false;
                 } catch (err) {
                     console.error(err);
                     this.loading = false;
-                    toast.error("Failed to fetch training program", {
+                    toast.error("Failed to fetch market access program", {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -144,15 +155,15 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Create new training program
-            async createTrainingProgram(formData) {
+            // Create new market access program
+            async createMarketAccessProgram(formData) {
                 try {
                     const response = await axios.post(
-                        "training-programs",
+                        "market-access-programs",
                         formData
                     );
                     this.createDialog = false;
-                    toast.success("Training program created successfully!", {
+                    toast.success("Market access program created successfully!", {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -163,7 +174,7 @@ export let useTrainingProgramsRepository = defineStore(
                     });
 
                     // Refresh the list
-                    this.fetchTrainingPrograms({
+                    this.fetchMarketAccessPrograms({
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
@@ -171,7 +182,7 @@ export let useTrainingProgramsRepository = defineStore(
                     console.error(err);
                     const errorMessage =
                         err.response?.data?.message ||
-                        "Failed to create training program. Please try again.";
+                        "Failed to create market access program. Please try again.";
                     toast.error(errorMessage, {
                         position: "top-right",
                         autoClose: 3000,
@@ -184,16 +195,16 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Update existing training program
-            async updateTrainingProgram(id, formData) {
+            // Update existing market access program
+            async updateMarketAccessProgram(id, formData) {
                 try {
                     const response = await axios.put(
-                        `training-programs/${id}`,
+                        `market-access-programs/${id}`,
                         formData
                     );
                     this.createDialog = false;
                     this.isEditMode = false;
-                    toast.success("Training program updated successfully!", {
+                    toast.success("Market access program updated successfully!", {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -204,7 +215,7 @@ export let useTrainingProgramsRepository = defineStore(
                     });
 
                     // Refresh the list
-                    this.fetchTrainingPrograms({
+                    this.fetchMarketAccessPrograms({
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
@@ -212,7 +223,7 @@ export let useTrainingProgramsRepository = defineStore(
                     console.error(err);
                     const errorMessage =
                         err.response?.data?.message ||
-                        "Failed to update training program. Please try again.";
+                        "Failed to update market access program. Please try again.";
                     toast.error(errorMessage, {
                         position: "top-right",
                         autoClose: 3000,
@@ -225,11 +236,11 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Delete training program
-            async deleteTrainingProgram(id) {
+            // Delete market access program
+            async deleteMarketAccessProgram(id) {
                 try {
-                    await axios.delete(`training-programs/${id}`);
-                    toast.success("Training program deleted successfully!", {
+                    await axios.delete(`market-access-programs/${id}`);
+                    toast.success("Market access program deleted successfully!", {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -240,7 +251,7 @@ export let useTrainingProgramsRepository = defineStore(
                     });
 
                     // Refresh the list
-                    this.fetchTrainingPrograms({
+                    this.fetchMarketAccessPrograms({
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
@@ -248,7 +259,7 @@ export let useTrainingProgramsRepository = defineStore(
                     console.error(err);
                     const errorMessage =
                         err.response?.data?.message ||
-                        "Failed to delete training program. Please try again.";
+                        "Failed to delete market access program. Please try again.";
                     toast.error(errorMessage, {
                         position: "top-right",
                         autoClose: 3000,
@@ -261,16 +272,16 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Bulk delete training programs
-            async bulkDeleteTrainingPrograms(ids) {
+            // Bulk delete market access programs
+            async bulkDeleteMarketAccessPrograms(ids) {
                 try {
                     const deletePromises = ids.map((id) =>
-                        axios.delete(`training-programs/${id}`)
+                        axios.delete(`market-access-programs/${id}`)
                     );
                     await Promise.all(deletePromises);
 
                     toast.success(
-                        `${ids.length} training programs deleted successfully!`,
+                        `${ids.length} market access programs deleted successfully!`,
                         {
                             position: "top-right",
                             autoClose: 3000,
@@ -283,14 +294,14 @@ export let useTrainingProgramsRepository = defineStore(
                     );
 
                     // Refresh the list
-                    this.fetchTrainingPrograms({
+                    this.fetchMarketAccessPrograms({
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
                 } catch (err) {
                     console.error(err);
                     toast.error(
-                        "Failed to delete selected training programs. Please try again.",
+                        "Failed to delete selected market access programs. Please try again.",
                         {
                             position: "top-right",
                             autoClose: 3000,
@@ -308,10 +319,10 @@ export let useTrainingProgramsRepository = defineStore(
             async toggleStatus(id) {
                 try {
                     const response = await axios.post(
-                        `training-programs/${id}/toggle-status`
+                        `market-access-programs/${id}/toggle-status`
                     );
                     toast.success(
-                        "Training program status updated successfully!",
+                        "Market access program status updated successfully!",
                         {
                             position: "top-right",
                             autoClose: 3000,
@@ -324,7 +335,7 @@ export let useTrainingProgramsRepository = defineStore(
                     );
 
                     // Refresh the list
-                    this.fetchTrainingPrograms({
+                    this.fetchMarketAccessPrograms({
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
@@ -332,7 +343,7 @@ export let useTrainingProgramsRepository = defineStore(
                     console.error(err);
                     const errorMessage =
                         err.response?.data?.message ||
-                        "Failed to update training program status. Please try again.";
+                        "Failed to update market access program status. Please try again.";
                     toast.error(errorMessage, {
                         position: "top-right",
                         autoClose: 3000,
@@ -345,17 +356,17 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Get published training programs
-            async getPublishedTrainingPrograms({ page = 1, itemsPerPage = 10 }) {
+            // Get published market access programs
+            async getPublishedMarketAccessPrograms({ page = 1, itemsPerPage = 10 }) {
                 try {
                     const params = new URLSearchParams({
                         page: page,
                         perPage: itemsPerPage,
-                        search: this.trainingProgramsSearch,
+                        search: this.marketAccessProgramsSearch,
                     });
 
                     const response = await axios.get(
-                        `training-programs/published?${params}`
+                        `market-access-programs/published?${params}`
                     );
                     return response.data;
                 } catch (err) {
@@ -378,22 +389,19 @@ export let useTrainingProgramsRepository = defineStore(
                 return new Date(date).toLocaleDateString();
             },
 
-            // Reset current training program
-            resetCurrentTrainingProgram() {
-                this.currentTrainingProgram = {
+            // Reset current market access program
+            resetCurrentMarketAccessProgram() {
+                this.currentMarketAccessProgram = {
                     id: null,
                     title: "",
                     slug: "",
                     description: "",
                     cover_image: "",
                     thumbnail_image: "",
-                    program_type: "workshop",
-                    duration: "",
+                    program_type: "export",
+                    target_crops: [],
                     location: "",
-                    instructor: "",
-                    max_participants: null,
-                    start_date: null,
-                    end_date: null,
+                    partner_organizations: [],
                     status: "draft",
                 };
             },

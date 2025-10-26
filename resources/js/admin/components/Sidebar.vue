@@ -1,5 +1,5 @@
 <template>
-    <div class="sidebar-container">
+    <div class="sidebar-container" :dir="dir">
         <!-- Logo Section -->
         <div class="logo-section">
             <router-link to="/admin/dashboard" class="logo-link">
@@ -51,21 +51,132 @@
                 </v-list-item>
             </router-link>
 
-            <!-- Training Programs -->
-            <router-link
-                to="/admin/training-programs"
-                exact
-                @click="closeAllMenus"
+            <!-- Programs Section -->
+            <v-list-item
+                active-class="active-item"
+                prepend-icon="mdi-format-list-bulleted"
+                value="programs"
+                @click="toggleMenu('programs')"
+                class="nav-item"
             >
-                <v-list-item
-                    active-class="active-item"
-                    prepend-icon="mdi-school-outline"
-                    value="training-programs"
-                    class="nav-item"
-                >
-                    {{ $t('training_programs') }}
-                </v-list-item>
-            </router-link>
+                {{ $t('programs') }}
+                <template v-slot:append>
+                    <v-icon
+                        :class="{ 'rotate-180': activeMenu === 'programs' }"
+                        class="transition-transform duration-300"
+                    >
+                        mdi-chevron-down
+                    </v-icon>
+                </template>
+            </v-list-item>
+            <transition name="slide-fade">
+                <v-list v-if="activeMenu === 'programs'" class="submenu programs-submenu">
+                    <!-- Training Programs -->
+                    <router-link
+                        to="/admin/training-programs"
+                        exact
+                    >
+                        <v-list-item
+                            active-class="active-subitem"
+                            prepend-icon="mdi mdi-circle-medium"
+                            value="training-programs"
+                            class="submenu-item"
+                        >
+                            {{ $t('training_programs') }}
+                        </v-list-item>
+                    </router-link>
+
+                    <!-- Smart Farming Programs -->
+                    <router-link
+                        to="/admin/smart-farming-programs"
+                        exact
+                    >
+                        <v-list-item
+                            active-class="active-subitem"
+                            prepend-icon="mdi mdi-circle-medium"
+                            value="smart-farming-programs"
+                            class="submenu-item"
+                        >
+                            {{ $t('smart_farming_programs') }}
+                        </v-list-item>
+                    </router-link>
+
+                    <!-- Seed Supply Programs -->
+                    <router-link
+                        to="/admin/seed-supply-programs"
+                        exact
+                    >
+                        <v-list-item
+                            active-class="active-subitem"
+                            prepend-icon="mdi mdi-circle-medium"
+                            value="seed-supply-programs"
+                            class="submenu-item"
+                        >
+                            {{ $t('seed_supply_programs') }}
+                        </v-list-item>
+                    </router-link>
+
+                    <!-- Market Access Programs -->
+                    <router-link
+                        to="/admin/market-access-programs"
+                        exact
+                    >
+                        <v-list-item
+                            active-class="active-subitem"
+                            prepend-icon="mdi mdi-circle-medium"
+                            value="market-access-programs"
+                            class="submenu-item"
+                        >
+                            {{ $t('market_access_programs') }}
+                        </v-list-item>
+                    </router-link>
+
+                    <!-- Environmental Projects -->
+                    <router-link
+                        to="/admin/environmental-projects"
+                        exact
+                    >
+                        <v-list-item
+                            active-class="active-subitem"
+                            prepend-icon="mdi mdi-circle-medium"
+                            value="environmental-projects"
+                            class="submenu-item"
+                        >
+                            {{ $t('environmental_projects') }}
+                        </v-list-item>
+                    </router-link>
+
+                    <!-- Community Programs -->
+                    <router-link
+                        to="/admin/community-programs"
+                        exact
+                    >
+                        <v-list-item
+                            active-class="active-subitem"
+                            prepend-icon="mdi mdi-circle-medium"
+                            value="community-programs"
+                            class="submenu-item"
+                        >
+                            {{ $t('community_programs') }}
+                        </v-list-item>
+                    </router-link>
+
+                    <!-- Agri-Tech Tools -->
+                    <router-link
+                        to="/admin/agri-tech-tools"
+                        exact
+                    >
+                        <v-list-item
+                            active-class="active-subitem"
+                            prepend-icon="mdi mdi-circle-medium"
+                            value="agri-tech-tools"
+                            class="submenu-item"
+                        >
+                            {{ $t('agri_tech_tools') }}
+                        </v-list-item>
+                    </router-link>
+                </v-list>
+            </transition>
 
             <!-- Publications -->
             <router-link to="/admin/publications" exact @click="closeAllMenus">
@@ -123,95 +234,52 @@
                 </v-list-item>
             </router-link>
 
-            <v-list-item
-                active-class="active-item"
-                prepend-icon="mdi-finance"
-                value="Reports"
-                @click="toggleMenu('reports')"
-                class="nav-item"
-            >
-                {{ $t('reports') }}
-                <template v-slot:append>
-                    <v-icon
-                        :class="{ 'rotate-180': activeMenu === 'reports' }"
-                        class="transition-transform duration-300"
-                    >
-                        mdi-chevron-down
-                    </v-icon>
-                </template>
-            </v-list-item>
-            <transition name="slide-fade">
-                <v-list v-if="activeMenu === 'reports'" class="submenu">
-                    <router-link
-                        v-for="item in reportItems"
-                        :key="item.to"
-                        :to="item.to"
-                        @click="closeAllMenus"
-                    >
-                        <v-list-item
-                            :title="$t(item.title)"
-                            :prepend-icon="item.icon"
-                            :value="item.value"
-                            active-class="active-subitem"
-                            class="submenu-item"
-                        />
-                    </router-link>
-                </v-list>
-            </transition>
-
-            <v-list-item
-                active-class="active-item"
-                prepend-icon="mdi-cog-outline"
-                value="Setting"
-                @click="toggleMenu('setting')"
-                class="nav-item"
-            >
-                {{ $t('settings') }}
-                <template v-slot:append>
-                    <v-icon
-                        :class="{ 'rotate-180': activeMenu === 'setting' }"
-                        class="transition-transform duration-300"
-                    >
-                        mdi-chevron-down
-                    </v-icon>
-                </template>
-            </v-list-item>
-            <transition name="slide-fade">
-                <v-list v-if="activeMenu === 'setting'" class="submenu">
-                    <router-link
-                        v-for="item in settingItems"
-                        :key="item.to"
-                        :to="item.to"
-                        @click="closeAllMenus"
-                    >
-                        <v-list-item
-                            :title="$t(item.title)"
-                            :prepend-icon="item.icon"
-                            :value="item.value"
-                            active-class="active-subitem"
-                            class="submenu-item"
-                        />
-                    </router-link>
-                </v-list>
-            </transition>
+            
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { useAuthRepository } from "../../stores/Auth.js";
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 const { t, locale } = useI18n();
 const authStore = useAuthRepository();
+const route = useRoute();
 
 // Load user data from session when component mounts
 onMounted(() => {
     authStore.loadFromSession();
+    // Check if current route is a program page and open Programs menu
+    checkProgramRoute();
 });
+
 const logo = "https://via.placeholder.com/150"; // replace with your logo
 
 const activeMenu = ref(null);
+
+// Check if current route is a program page
+const checkProgramRoute = () => {
+    const programRoutes = [
+        '/admin/training-programs',
+        '/admin/smart-farming-programs', 
+        '/admin/seed-supply-programs',
+        '/admin/market-access-programs',
+        '/admin/environmental-projects',
+        '/admin/community-programs',
+        '/admin/agri-tech-tools'
+    ];
+    
+    if (programRoutes.includes(route.path)) {
+        activeMenu.value = 'programs';
+    }
+};
+
+// Watch for route changes to auto-open Programs menu
+watch(() => route.path, () => {
+    checkProgramRoute();
+});
 
 const toggleMenu = (menu) => {
     // If clicking the same menu, toggle it
@@ -227,71 +295,7 @@ const closeAllMenus = () => {
     activeMenu.value = null;
 };
 
-const settingItems = [
-    {
-        to: "/admin/systemSetting",
-        title: "System Settings",
-        icon: "mdi mdi-circle-medium",
-        value: "system",
-    },
-    {
-        to: "/admin/moneyAcc",
-        title: "Money Account",
-        icon: "mdi mdi-circle-medium",
-        value: "moneyAcc",
-    },
-    {
-        to: "/admin/rolePermissions",
-        title: "Role & Permissions",
-        icon: "mdi mdi-circle-medium",
-        value: "roles",
-    },
-    {
-        to: "/admin/service",
-        title: "Service",
-        icon: "mdi mdi-circle-medium",
-        value: "service",
-    },
-    {
-        to: "/admin/dental-types",
-        title: "Dental Types",
-        icon: "mdi mdi-circle-medium",
-        value: "Dental",
-    },
-];
 
-const reportItems = [
-    {
-        to: "/admin/profitLoss",
-        title: "Profit & Loss",
-        icon: "mdi mdi-circle-medium",
-        value: "profit",
-    },
-    {
-        to: "/admin/patientsReport",
-        title: "Patients Report",
-        icon: "mdi mdi-circle-medium",
-        value: "patientsReport",
-    },
-    {
-        to: "/admin/categoryReport",
-        title: "Expense Category",
-        icon: "mdi mdi-circle-medium",
-        value: "catReport",
-    },
-    {
-        to: "/admin/productReport",
-        title: "Expense Product",
-        icon: "mdi mdi-circle-medium",
-        value: "expenseProReport",
-    },
-    {
-        to: "/admin/serviceReport",
-        title: "Service Report",
-        icon: "mdi mdi-circle-medium",
-        value: "serviceReport",
-    },
-];
 
 function handleDrawerState(isOpen) {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -374,18 +378,9 @@ const dir = computed(() => {
     width: 4px;
 }
 
-.navigation-section::-webkit-scrollbar-track {
-    background: transparent;
-}
 
-.navigation-section::-webkit-scrollbar-thumb {
-    background: rgb(var(--v-theme-accent));
-    border-radius: 4px;
-}
 
-.navigation-section::-webkit-scrollbar-thumb:hover {
-    background: rgb(var(--v-theme-secondary));
-}
+
 
 /* Navigation Items */
 .nav-item {
@@ -396,9 +391,15 @@ const dir = computed(() => {
     position: relative;
 }
 
-.nav-item:hover {
+/* RTL languages (Dari, Pashto) - move left on hover */
+[dir="rtl"] .nav-item:hover {
     background-color: #f4f4f5  !important;
-    /* color: rgb(var(--v-theme-primary)) !important; */
+    transform: translateX(-2px);
+}
+
+/* LTR languages (English) - move right on hover */
+[dir="ltr"] .nav-item:hover {
+    background-color: #f4f4f5  !important;
     transform: translateX(2px);
 }
 
@@ -422,11 +423,21 @@ const dir = computed(() => {
 .active-item::before {
     content: '';
     position: absolute;
-    left: 0;
     top: 0;
     bottom: 0;
     width: 4px;
     background: rgb(var(--v-theme-accent));
+}
+
+/* RTL languages (Dari, Pashto) - border on right */
+[dir="rtl"] .active-item::before {
+    right: 0;
+    border-radius: 2px 0 0 2px;
+}
+
+/* LTR languages (English) - border on left */
+[dir="ltr"] .active-item::before {
+    left: 0;
     border-radius: 0 2px 2px 0;
 }
 
@@ -444,11 +455,22 @@ const dir = computed(() => {
 .router-link-active .nav-item::before {
     content: '';
     position: absolute;
-    left: 0;
     top: 0;
     bottom: 0;
     width: 4px;
     background: #388e3c;
+}
+
+/* RTL languages (Dari, Pashto) - border on right */
+[dir="rtl"] .router-link-active .nav-item::before {
+    right: 0;
+    border-radius: 2px 0 0 2px;
+}
+
+/* LTR languages (English) - border on left */
+[dir="ltr"] .router-link-active .nav-item::before {
+    left: 0;
+    border-radius: 0 2px 2px 0;
 }
 
 .router-link-active .nav-item .v-icon {
@@ -456,43 +478,84 @@ const dir = computed(() => {
 }
 
 /* Submenus */
-.submenu {
+[dir="rtl"] .submenu {
+    padding-right: 1.5rem;
+}
+
+[dir="ltr"] .submenu {
     padding-left: 1.5rem;
+}
+
+.submenu {
     margin: 0.25rem 0;
 }
 
 .submenu-item {
     border-radius: 6px !important;
-    margin: 2px 0 !important;
-    padding-left: 0.5rem !important;
     font-size: 0.9rem;
     transition: all 0.2s ease;
-    color: rgb(var(--v-theme-on-surface-variant)) !important;
+    color: rgb(var(--v-theme-on-surface)) !important;
+    font-weight: 490;
 }
 
-.submenu-item:hover {
-    background-color: rgba(var(--v-theme-accent), 0.2) !important;
-    color: rgb(var(--v-theme-primary)) !important;
+[dir="rtl"] .submenu-item {
+    padding-right: 0.5rem !important;
+}
+
+[dir="ltr"] .submenu-item {
+    padding-left: 0.5rem !important;
+}
+
+
+
+
+/* Submenu hover - conditional based on direction */
+/* RTL languages (Dari, Pashto) - move left on hover */
+[dir="rtl"] .submenu-item:hover {
+    background-color: #f4f4f5 !important;
+    transform: translateX(-2px);
+}
+
+/* LTR languages (English) - move right on hover */
+[dir="ltr"] .submenu-item:hover {
+    background-color: #f4f4f5 !important;
     transform: translateX(2px);
 }
 
+.submenu-item:hover .v-icon {
+    color: rgb(var(--v-theme-primary)) !important;
+}
+
+/* Submenu active - exact copy from parent router-link-active .nav-item */
 .active-subitem {
-    background-color: rgb(var(--v-theme-accent)) !important;
-    color: rgb(var(--v-theme-on-primary)) !important;
-    font-weight: 500;
-    border-left: 3px solid rgb(var(--v-theme-primary)) !important;
+    background: #f4f4f5 !important;
+    color: #388e3c !important;
     position: relative;
 }
 
 .active-subitem::before {
     content: '';
     position: absolute;
-    left: 0;
     top: 0;
     bottom: 0;
-    width: 3px;
-    background: rgb(var(--v-theme-primary));
- 
+    width: 4px;
+    background: #388e3c;
+}
+
+/* RTL languages (Dari, Pashto) - border on right */
+[dir="rtl"] .active-subitem::before {
+    right: 0;
+    border-radius: 2px 0 0 2px;
+}
+
+/* LTR languages (English) - border on left */
+[dir="ltr"] .active-subitem::before {
+    left: 0;
+    border-radius: 0 2px 2px 0;
+}
+
+.active-subitem .v-icon {
+    color: #388e3c !important;
 }
 
 /* Menu Transitions */

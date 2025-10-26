@@ -31,11 +31,15 @@ class MarketAccessProgram extends Model
         'location',
         'partner_organizations',
         'status',
+        'farsi_translations',
+        'pashto_translations',
     ];
 
     protected $casts = [
         'target_crops' => 'array',
         'partner_organizations' => 'array',
+        'farsi_translations' => 'array',
+        'pashto_translations' => 'array',
     ];
 
     // Relationships

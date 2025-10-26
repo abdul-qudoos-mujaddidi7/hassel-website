@@ -32,10 +32,14 @@ class CommunityProgram extends Model
         'featured_image',
         'cover_image',
         'thumbnail_image',
+        'farsi_translations',
+        'pashto_translations',
     ];
 
     protected $casts = [
         'partner_organizations' => 'array',
+        'farsi_translations' => 'array',
+        'pashto_translations' => 'array',
     ];
 
     // Relationships

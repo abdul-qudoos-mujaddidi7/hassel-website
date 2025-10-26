@@ -2,7 +2,7 @@
     <CreateSuccessStoryTranslatable v-if="SuccessStoriesRepository.createDialog" />
     <div :dir="dir" >
         <!-- Page Header -->
-        <Header pageTitle='Success Stories Management' />
+        <Header :pageTitle="$t('success_stories_management')" />
         <v-divider :thickness="1" class="border-opacity-100" />
         
         <!-- Main Content Card -->

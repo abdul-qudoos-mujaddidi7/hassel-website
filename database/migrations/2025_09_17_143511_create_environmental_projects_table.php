@@ -16,11 +16,23 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->longText('description');
+            $table->string('cover_image')->nullable();
+            $table->string('thumbnail_image')->nullable();
             $table->string('project_type')->nullable(); // e.g., 'conservation', 'reforestation', 'water_management'
-            $table->json('impact_metrics')->nullable(); // array of metrics like trees planted, water saved, etc.
             $table->string('location')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->decimal('budget', 15, 2)->nullable();
+            $table->string('impact_level')->nullable(); // low, medium, high, critical
+            $table->longText('objectives')->nullable();
+            $table->longText('methodology')->nullable();
+            $table->longText('expected_outcomes')->nullable();
+            $table->json('partner_organizations')->nullable();
+            $table->json('impact_metrics')->nullable(); // array of metrics like trees planted, water saved, etc.
             $table->string('funding_source')->nullable();
-            $table->enum('status', ['draft', 'published', 'ongoing', 'completed', 'archived'])->default('draft');
+            $table->enum('status', ['draft', 'published', 'ongoing', 'completed', 'cancelled'])->default('draft');
+            $table->json('farsi_translations')->nullable();
+            $table->json('pashto_translations')->nullable();
             $table->timestamps();
         });
     }

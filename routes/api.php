@@ -203,6 +203,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->name('api.admin.'
   Route::apiResource('smart-farming-programs', App\Http\Controllers\Api\Admin\SmartFarmingProgramsController::class);
   Route::apiResource('seed-supply-programs', App\Http\Controllers\Api\Admin\SeedSupplyProgramsController::class);
   Route::apiResource('community-programs', App\Http\Controllers\Api\Admin\CommunityProgramsController::class);
+  Route::apiResource('environmental-projects', App\Http\Controllers\Api\Admin\EnvironmentalProjectsController::class);
   Route::apiResource('beneficiaries-stats', App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class);
   Route::get('beneficiaries-stats-summary', [App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class, 'summary'])->name('beneficiaries-stats.summary');
 });

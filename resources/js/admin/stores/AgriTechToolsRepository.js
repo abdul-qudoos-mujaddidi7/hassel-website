@@ -5,8 +5,8 @@ import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
-export let useTrainingProgramsRepository = defineStore(
-    "TrainingProgramsRepository",
+export let useAgriTechToolsRepository = defineStore(
+    "AgriTechToolsRepository",
     {
         state() {
             return {
@@ -20,27 +20,43 @@ export let useTrainingProgramsRepository = defineStore(
                 itemsPerPage: ref(5),
                 createDialog: ref(false),
 
-                // Training Programs data
-                trainingPrograms: reactive([]),
-                trainingProgramsSearch: ref(""),
-                currentTrainingProgram: reactive({}),
+                // Agri-Tech Tools data
+                agriTechTools: reactive([]),
+                agriTechToolsSearch: ref(""),
+                currentAgriTechTool: reactive({}),
 
                 // Status options for dropdowns
                 statusOptions: reactive([
                     { value: "draft", label: "Draft" },
                     { value: "published", label: "Published" },
-                    { value: "ongoing", label: "Ongoing" },
-                    { value: "completed", label: "Completed" },
-                    { value: "cancelled", label: "Cancelled" },
+                    { value: "available", label: "Available" },
+                    { value: "unavailable", label: "Unavailable" },
+                    { value: "maintenance", label: "Maintenance" },
                 ]),
 
-                // Program type options
-                programTypeOptions: reactive([
-                    { value: "workshop", label: "Workshop" },
-                    { value: "seminar", label: "Seminar" },
-                    { value: "course", label: "Course" },
-                    { value: "training", label: "Training" },
-                    { value: "certification", label: "Certification" },
+                // Tool type options
+                toolTypeOptions: reactive([
+                    { value: "mobile_app", label: "Mobile App" },
+                    { value: "web_platform", label: "Web Platform" },
+                    { value: "hardware", label: "Hardware" },
+                    { value: "software", label: "Software" },
+                    { value: "sensor", label: "Sensor" },
+                ]),
+
+                // Technology level options
+                technologyLevelOptions: reactive([
+                    { value: "basic", label: "Basic" },
+                    { value: "intermediate", label: "Intermediate" },
+                    { value: "advanced", label: "Advanced" },
+                    { value: "cutting_edge", label: "Cutting Edge" },
+                ]),
+
+                // Availability options
+                availabilityOptions: reactive([
+                    { value: "available", label: "Available" },
+                    { value: "limited", label: "Limited" },
+                    { value: "unavailable", label: "Unavailable" },
+                    { value: "coming_soon", label: "Coming Soon" },
                 ]),
             };
         },
@@ -57,8 +73,8 @@ export let useTrainingProgramsRepository = defineStore(
                 return `${year}-${month}-${day}`;
             },
 
-            // Fetch all training programs with pagination
-            async fetchTrainingPrograms({
+            // Fetch all agri-tech tools with pagination
+            async fetchAgriTechTools({
                 page = 1,
                 itemsPerPage = 5,
                 status = "",
@@ -68,7 +84,7 @@ export let useTrainingProgramsRepository = defineStore(
                     const params = new URLSearchParams({
                         page: page,
                         perPage: itemsPerPage,
-                        search: this.trainingProgramsSearch,
+                        search: this.agriTechToolsSearch,
                     });
 
                     if (status) {
@@ -76,16 +92,16 @@ export let useTrainingProgramsRepository = defineStore(
                     }
 
                     const response = await axios.get(
-                        `training-programs?${params}`
+                        `agri-tech-tools?${params}`
                     );
 
                     console.log("API Response:", response.data);
 
                     if (response.data.success) {
-                        this.trainingPrograms = response.data.data || [];
+                        this.agriTechTools = response.data.data || [];
                         this.totalItems = response.data.meta?.total || 0;
                     } else {
-                        this.trainingPrograms = [];
+                        this.agriTechTools = [];
                         this.totalItems = 0;
                         toast.error(
                             response.data.message || "Failed to fetch data",
@@ -101,13 +117,13 @@ export let useTrainingProgramsRepository = defineStore(
                     console.error("API Error:", err);
                     console.error("Error Response:", err.response?.data);
 
-                    this.trainingPrograms = [];
+                    this.agriTechTools = [];
                     this.totalItems = 0;
                     this.loading = false;
 
                     const errorMessage =
                         err.response?.data?.message ||
-                        "Failed to fetch training programs";
+                        "Failed to fetch agri-tech tools";
                     toast.error(errorMessage, {
                         position: "top-right",
                         autoClose: 3000,
@@ -120,19 +136,19 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Fetch single training program by ID
-            async fetchTrainingProgram(id) {
+            // Fetch single agri-tech tool by ID
+            async fetchAgriTechTool(id) {
                 this.loading = true;
                 try {
-                    const response = await axios.get(`training-programs/${id}`, {
+                    const response = await axios.get(`agri-tech-tools/${id}`, {
                         params: { include_translations: 1 },
                     });
-                    this.currentTrainingProgram = response.data.data;
+                    this.currentAgriTechTool = response.data.data;
                     this.loading = false;
                 } catch (err) {
                     console.error(err);
                     this.loading = false;
-                    toast.error("Failed to fetch training program", {
+                    toast.error("Failed to fetch agri-tech tool", {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -144,15 +160,15 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Create new training program
-            async createTrainingProgram(formData) {
+            // Create new agri-tech tool
+            async createAgriTechTool(formData) {
                 try {
                     const response = await axios.post(
-                        "training-programs",
+                        "agri-tech-tools",
                         formData
                     );
                     this.createDialog = false;
-                    toast.success("Training program created successfully!", {
+                    toast.success("Agri-tech tool created successfully!", {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -163,7 +179,7 @@ export let useTrainingProgramsRepository = defineStore(
                     });
 
                     // Refresh the list
-                    this.fetchTrainingPrograms({
+                    this.fetchAgriTechTools({
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
@@ -171,7 +187,7 @@ export let useTrainingProgramsRepository = defineStore(
                     console.error(err);
                     const errorMessage =
                         err.response?.data?.message ||
-                        "Failed to create training program. Please try again.";
+                        "Failed to create agri-tech tool. Please try again.";
                     toast.error(errorMessage, {
                         position: "top-right",
                         autoClose: 3000,
@@ -184,16 +200,16 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Update existing training program
-            async updateTrainingProgram(id, formData) {
+            // Update existing agri-tech tool
+            async updateAgriTechTool(id, formData) {
                 try {
                     const response = await axios.put(
-                        `training-programs/${id}`,
+                        `agri-tech-tools/${id}`,
                         formData
                     );
                     this.createDialog = false;
                     this.isEditMode = false;
-                    toast.success("Training program updated successfully!", {
+                    toast.success("Agri-tech tool updated successfully!", {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -204,7 +220,7 @@ export let useTrainingProgramsRepository = defineStore(
                     });
 
                     // Refresh the list
-                    this.fetchTrainingPrograms({
+                    this.fetchAgriTechTools({
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
@@ -212,7 +228,7 @@ export let useTrainingProgramsRepository = defineStore(
                     console.error(err);
                     const errorMessage =
                         err.response?.data?.message ||
-                        "Failed to update training program. Please try again.";
+                        "Failed to update agri-tech tool. Please try again.";
                     toast.error(errorMessage, {
                         position: "top-right",
                         autoClose: 3000,
@@ -225,11 +241,11 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Delete training program
-            async deleteTrainingProgram(id) {
+            // Delete agri-tech tool
+            async deleteAgriTechTool(id) {
                 try {
-                    await axios.delete(`training-programs/${id}`);
-                    toast.success("Training program deleted successfully!", {
+                    await axios.delete(`agri-tech-tools/${id}`);
+                    toast.success("Agri-tech tool deleted successfully!", {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -240,7 +256,7 @@ export let useTrainingProgramsRepository = defineStore(
                     });
 
                     // Refresh the list
-                    this.fetchTrainingPrograms({
+                    this.fetchAgriTechTools({
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
@@ -248,7 +264,7 @@ export let useTrainingProgramsRepository = defineStore(
                     console.error(err);
                     const errorMessage =
                         err.response?.data?.message ||
-                        "Failed to delete training program. Please try again.";
+                        "Failed to delete agri-tech tool. Please try again.";
                     toast.error(errorMessage, {
                         position: "top-right",
                         autoClose: 3000,
@@ -261,16 +277,16 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Bulk delete training programs
-            async bulkDeleteTrainingPrograms(ids) {
+            // Bulk delete agri-tech tools
+            async bulkDeleteAgriTechTools(ids) {
                 try {
                     const deletePromises = ids.map((id) =>
-                        axios.delete(`training-programs/${id}`)
+                        axios.delete(`agri-tech-tools/${id}`)
                     );
                     await Promise.all(deletePromises);
 
                     toast.success(
-                        `${ids.length} training programs deleted successfully!`,
+                        `${ids.length} agri-tech tools deleted successfully!`,
                         {
                             position: "top-right",
                             autoClose: 3000,
@@ -283,14 +299,14 @@ export let useTrainingProgramsRepository = defineStore(
                     );
 
                     // Refresh the list
-                    this.fetchTrainingPrograms({
+                    this.fetchAgriTechTools({
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
                 } catch (err) {
                     console.error(err);
                     toast.error(
-                        "Failed to delete selected training programs. Please try again.",
+                        "Failed to delete selected agri-tech tools. Please try again.",
                         {
                             position: "top-right",
                             autoClose: 3000,
@@ -308,10 +324,10 @@ export let useTrainingProgramsRepository = defineStore(
             async toggleStatus(id) {
                 try {
                     const response = await axios.post(
-                        `training-programs/${id}/toggle-status`
+                        `agri-tech-tools/${id}/toggle-status`
                     );
                     toast.success(
-                        "Training program status updated successfully!",
+                        "Agri-tech tool status updated successfully!",
                         {
                             position: "top-right",
                             autoClose: 3000,
@@ -324,7 +340,7 @@ export let useTrainingProgramsRepository = defineStore(
                     );
 
                     // Refresh the list
-                    this.fetchTrainingPrograms({
+                    this.fetchAgriTechTools({
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
@@ -332,7 +348,7 @@ export let useTrainingProgramsRepository = defineStore(
                     console.error(err);
                     const errorMessage =
                         err.response?.data?.message ||
-                        "Failed to update training program status. Please try again.";
+                        "Failed to update agri-tech tool status. Please try again.";
                     toast.error(errorMessage, {
                         position: "top-right",
                         autoClose: 3000,
@@ -345,17 +361,17 @@ export let useTrainingProgramsRepository = defineStore(
                 }
             },
 
-            // Get published training programs
-            async getPublishedTrainingPrograms({ page = 1, itemsPerPage = 10 }) {
+            // Get published agri-tech tools
+            async getPublishedAgriTechTools({ page = 1, itemsPerPage = 10 }) {
                 try {
                     const params = new URLSearchParams({
                         page: page,
                         perPage: itemsPerPage,
-                        search: this.trainingProgramsSearch,
+                        search: this.agriTechToolsSearch,
                     });
 
                     const response = await axios.get(
-                        `training-programs/published?${params}`
+                        `agri-tech-tools/published?${params}`
                     );
                     return response.data;
                 } catch (err) {
@@ -378,22 +394,26 @@ export let useTrainingProgramsRepository = defineStore(
                 return new Date(date).toLocaleDateString();
             },
 
-            // Reset current training program
-            resetCurrentTrainingProgram() {
-                this.currentTrainingProgram = {
+            // Reset current agri-tech tool
+            resetCurrentAgriTechTool() {
+                this.currentAgriTechTool = {
                     id: null,
-                    title: "",
+                    name: "",
                     slug: "",
                     description: "",
+                    short_description: "",
+                    category: "sensors",
+                    technology_level: "basic",
+                    features: "",
+                    specifications: "",
+                    usage_instructions: "",
+                    maintenance_requirements: "",
+                    availability: "available",
+                    price_range: "",
+                    supplier: "",
+                    contact_info: "",
                     cover_image: "",
                     thumbnail_image: "",
-                    program_type: "workshop",
-                    duration: "",
-                    location: "",
-                    instructor: "",
-                    max_participants: null,
-                    start_date: null,
-                    end_date: null,
                     status: "draft",
                 };
             },

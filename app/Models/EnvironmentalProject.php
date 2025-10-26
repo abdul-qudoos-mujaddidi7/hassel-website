@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Str;
 
 class EnvironmentalProject extends Model
 {
@@ -14,6 +15,9 @@ class EnvironmentalProject extends Model
     protected $translatable = [
         'title',
         'description',
+        'objectives',
+        'methodology',
+        'expected_outcomes',
         'funding_source',
     ];
     use HasFactory;
@@ -25,8 +29,16 @@ class EnvironmentalProject extends Model
         'cover_image',
         'thumbnail_image',
         'project_type',
-        'impact_metrics',
         'location',
+        'start_date',
+        'end_date',
+        'budget',
+        'impact_level',
+        'objectives',
+        'methodology',
+        'expected_outcomes',
+        'partner_organizations',
+        'impact_metrics',
         'funding_source',
         'status',
         'farsi_translations',
@@ -35,6 +47,9 @@ class EnvironmentalProject extends Model
 
     protected $casts = [
         'impact_metrics' => 'array',
+        'partner_organizations' => 'array',
+        'start_date' => 'date',
+        'end_date' => 'date',
         'farsi_translations' => 'array',
         'pashto_translations' => 'array',
     ];
@@ -87,7 +102,7 @@ class EnvironmentalProject extends Model
     {
         $this->attributes['title'] = $value;
         if (empty($this->attributes['slug'])) {
-            $this->attributes['slug'] = \Str::slug($value);
+            $this->attributes['slug'] = Str::slug($value);
         }
     }
 

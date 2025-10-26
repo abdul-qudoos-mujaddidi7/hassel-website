@@ -13,7 +13,12 @@ class AgriTechTool extends Model
     /** @var array<int, string> */
     protected $translatable = [
         'name',
+        'short_description',
         'description',
+        'features',
+        'specifications',
+        'usage_instructions',
+        'maintenance_requirements',
     ];
     use HasFactory;
 
@@ -21,18 +26,31 @@ class AgriTechTool extends Model
         'name',
         'slug',
         'description',
+        'short_description',
         'cover_image',
         'thumbnail_image',
         'tool_type',
         'features',
+        'specifications',
+        'usage_instructions',
+        'maintenance_requirements',
+        'technology_level',
+        'availability',
+        'price_range',
+        'supplier',
+        'contact_info',
         'download_link',
         'platform',
         'version',
         'status',
+        'farsi_translations',
+        'pashto_translations',
     ];
 
     protected $casts = [
         'features' => 'array',
+        'farsi_translations' => 'array',
+        'pashto_translations' => 'array',
     ];
 
     // Relationships
@@ -94,7 +112,12 @@ class AgriTechTool extends Model
             'linux' => 'Linux',
         ];
 
-        return $platforms[strtolower($this->platform)] ?? $this->platform;
+        $platform = $this->platform ?? '';
+        if (empty($platform)) {
+            return '';
+        }
+
+        return $platforms[strtolower($platform)] ?? $platform;
     }
 
     // Mutators
@@ -108,11 +131,11 @@ class AgriTechTool extends Model
 
     public function setFeaturesAttribute($value)
     {
-        if (is_string($value)) {
-            $value = array_filter(array_map('trim', explode('\n', $value)));
+        if (is_array($value)) {
+            $this->attributes['features'] = json_encode($value);
+        } else {
+            $this->attributes['features'] = $value;
         }
-
-        $this->attributes['features'] = json_encode($value);
     }
 
     // Helper Methods

@@ -51,10 +51,13 @@ class TranslationSyncService
           continue;
         }
 
+        // Convert arrays to JSON strings for storage in the translations table
+        $content = is_array($value) ? json_encode($value) : $value;
+
         // Upsert
         $existing = $query->first();
         if ($existing) {
-          $existing->content = $value;
+          $existing->content = $content;
           $existing->save();
         } else {
           Translation::create([
@@ -62,13 +65,14 @@ class TranslationSyncService
             'model_id' => $modelId,
             'field_name' => $fieldName,
             'language' => $language,
-            'content' => $value,
+            'content' => $content,
           ]);
         }
 
         // Also collect for JSON columns when present on the model
         $langKey = strtolower($language);
         if (isset($jsonCollect[$langKey])) {
+          // Store original value for JSON columns (arrays are fine here)
           $jsonCollect[$langKey][$fieldName] = $value;
         }
       }

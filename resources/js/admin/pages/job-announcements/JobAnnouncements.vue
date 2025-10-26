@@ -2,7 +2,7 @@
     <CreateJobAnnouncement v-if="JobAnnouncementRepository.createDialog" />
     <div :dir="dir" >
         <!-- Page Header -->
-        <Header :pageTitle='$t("job_announcements")' />
+        <Header :pageTitle="$t('job_announcements_management')" />
         <v-divider :thickness="1" class="border-opacity-100" />
         
         

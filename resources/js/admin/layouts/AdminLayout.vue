@@ -16,7 +16,10 @@
                 variant="flat"
                 elevation="1"
                 :style="vCardStyle"
-                 class="d-flex flex-col ml-4 py-4 px-4 "
+                :class="[
+                    'd-flex flex-col py-4 px-4',
+                    isRtl ? 'mr-4' : 'ml-4'
+                ]"
             >
                 <router-view></router-view>
             </v-card>
@@ -100,8 +103,6 @@ const vCardStyle = computed(() => {
 .scrollable-content::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
 }
-
-
 
 
 </style>
