@@ -34,12 +34,6 @@ return new class extends Migration
             $table->json('farsi_translations')->nullable()->after('instructor');
             $table->json('pashto_translations')->nullable()->after('farsi_translations');
         });
-
-        // Environmental Projects table
-        Schema::table('environmental_projects', function (Blueprint $table) {
-            $table->json('farsi_translations')->nullable()->after('funding_source');
-            $table->json('pashto_translations')->nullable()->after('farsi_translations');
-        });
     }
 
     /**
