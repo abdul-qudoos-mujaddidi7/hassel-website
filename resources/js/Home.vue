@@ -1,8 +1,8 @@
 <template>
-    <div class="min-h-screen">
+    <div>
         <!-- Hero Section with 5 Images Slider -->
         <section
-            class="relative min-h-[70vh] md:h-screen overflow-hidden text-white"
+            class="relative h-[80vh] sm:h-[60vh] md:h-[87vh] max-h-screen overflow-hidden text-white"
         >
             <!-- Image Slider Background -->
             <div class="absolute inset-0">
@@ -33,14 +33,12 @@
                 class="absolute inset-0 bg-gradient-to-br from-green-800 via-green-700 to-green-600 -z-10"
             ></div>
 
-            <div
-                class="relative flex items-center justify-center min-h-screen z-10"
-            >
+            <div class="relative flex items-center justify-center h-full z-10">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <!-- Dynamic Hero Content -->
                     <div v-if="heroSlides[currentSlide]" class="mb-8">
                         <h1
-                            class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fadeInUp"
+                            class="heading-hero font-bold mb-6 animate-fadeInUp"
                         >
                             {{ heroSlides[currentSlide].title }}
                         </h1>
@@ -147,10 +145,14 @@
                     class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
                 >
                     <div class="self-start rtl:order-2 ltr:order-1">
-                        <p class="text-xl text-gray-600 leading-relaxed rtl:text-justify ltr:text-justify mb-6">
+                        <p
+                            class="text-xl text-gray-600 leading-relaxed rtl:text-justify ltr:text-justify mb-6"
+                        >
                             {{ t("home.about.p1") }}
                         </p>
-                        <p class="text-lg text-gray-600 leading-relaxed rtl:text-justify ltr:text-justify">
+                        <p
+                            class="text-lg text-gray-600 leading-relaxed rtl:text-justify ltr:text-justify"
+                        >
                             {{ t("home.about.p2") }}
                         </p>
                     </div>
@@ -473,9 +475,15 @@
                         <div
                             class="flex transition-transform duration-500 ease-in-out"
                             :style="{
-                                transform: isRTL 
-                                    ? `translateX(${currentPillarSlide * (100 / cardsPerView)}%)`
-                                    : `translateX(-${currentPillarSlide * (100 / cardsPerView)}%)`,
+                                transform: isRTL
+                                    ? `translateX(${
+                                          currentPillarSlide *
+                                          (100 / cardsPerView)
+                                      }%)`
+                                    : `translateX(-${
+                                          currentPillarSlide *
+                                          (100 / cardsPerView)
+                                      }%)`,
                             }"
                         >
                             <!-- Show cards in sequence: 1-2-3-4-5-6-7-1-2-3-4-5-6-7 for seamless loop -->

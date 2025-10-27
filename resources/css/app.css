@@ -17,10 +17,13 @@
 }
 
 /* Global base overrides */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
-html, body {
-    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+html,
+body {
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI,
+        Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol";
     color: #111827;
 }
 .shadow-professional {
@@ -476,30 +479,78 @@ html {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Professional Section Spacing */
+/* Professional Section Spacing - responsive and smaller on mobile to avoid large gaps */
 .section-padding {
-    padding: 5rem 0;
+    /* Mobile-first: smaller padding to avoid large whitespace on phones */
+    padding: 1.5rem 0;
 }
 
-/* Enhanced Typography */
+@media (min-width: 640px) {
+    .section-padding {
+        padding: 2.5rem 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .section-padding {
+        padding: 4rem 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .section-padding {
+        padding: 5rem 0;
+    }
+}
+
+/* Mobile fixes: reduce heading and paragraph spacing inside sections to avoid large vertical gaps */
+@media (max-width: 639px) {
+    .section-padding .heading-lg,
+    .section-padding h2 {
+        margin-bottom: 0.75rem !important;
+    }
+
+    .about-section p {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+
+    /* tighten general paragraph spacing inside section-padding areas */
+    .section-padding p {
+        margin-bottom: 0.9rem;
+    }
+}
+
+/* Enhanced Typography (responsive using clamp) */
 .heading-xl {
-    font-size: 3.5rem;
+    /* scales smoothly between ~36px and 56px */
+    font-size: clamp(2.25rem, 4.8vw, 3.5rem);
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.025em;
 }
 
 .heading-lg {
-    font-size: 2.5rem;
+    /* scales smoothly between ~24px and 40px */
+    font-size: clamp(1.5rem, 3.2vw, 2.5rem);
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.025em;
 }
 
 .heading-md {
-    font-size: 2rem;
+    /* scales smoothly between ~20px and 32px */
+    font-size: clamp(1.25rem, 2.4vw, 2rem);
     font-weight: 600;
     line-height: 1.3;
+}
+
+/* Hero headline utility - use on page H1s for smoother, larger scaling */
+.heading-hero {
+    font-size: clamp(1.75rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
 }
 
 /* Professional Shadows */
