@@ -479,46 +479,9 @@ html {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Professional Section Spacing - responsive and smaller on mobile to avoid large gaps */
+/* Professional Section Spacing */
 .section-padding {
-    /* Mobile-first: smaller padding to avoid large whitespace on phones */
-    padding: 1.5rem 0;
-}
-
-@media (min-width: 640px) {
-    .section-padding {
-        padding: 2.5rem 0;
-    }
-}
-
-@media (min-width: 768px) {
-    .section-padding {
-        padding: 4rem 0;
-    }
-}
-
-@media (min-width: 1024px) {
-    .section-padding {
-        padding: 5rem 0;
-    }
-}
-
-/* Mobile fixes: reduce heading and paragraph spacing inside sections to avoid large vertical gaps */
-@media (max-width: 639px) {
-    .section-padding .heading-lg,
-    .section-padding h2 {
-        margin-bottom: 0.75rem !important;
-    }
-
-    .about-section p {
-        margin-bottom: 1rem;
-        line-height: 1.6;
-    }
-
-    /* tighten general paragraph spacing inside section-padding areas */
-    .section-padding p {
-        margin-bottom: 0.9rem;
-    }
+    padding: 5rem 0;
 }
 
 /* Enhanced Typography (responsive using clamp) */

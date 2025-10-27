@@ -315,7 +315,8 @@ export default {
     "contact.send": "Send",
     "contact.sending": "Sending...",
     "contact.success_title": "Message Sent!",
-    "contact.success_message": "Thank you for your message. We'll get back to you soon.",
+    "contact.success_message":
+        "Thank you for your message. We'll get back to you soon.",
     "contact.address_line1": "123 Agriculture Street",
     "contact.address_line2": "Kabul, Afghanistan",
     "contact.address_line3": "Postal Code: 1001",
@@ -327,7 +328,8 @@ export default {
     "contact.hours_line2": "Saturday: 10:00 AM - 4:00 PM",
     "contact.hours_line3": "Sunday: Closed",
     "contact.message_placeholder": "Please describe your inquiry in detail...",
-    "contact.job_message_placeholder": "Please provide any additional information about your application...",
+    "contact.job_message_placeholder":
+        "Please provide any additional information about your application...",
     "contact.form.name": "Full Name",
     "contact.form.email": "Email Address",
     "contact.form.phone": "Phone Number",
@@ -339,7 +341,8 @@ export default {
     "contact.form.error": "Failed to send message. Please try again.",
 
     // Footer
-    "footer.company_tagline": "Empowering agricultural communities for a sustainable future",
+    "footer.company_tagline":
+        "Empowering agricultural communities for a sustainable future",
     "footer.quick_links": "Quick Links",
     "footer.programs": "Programs",
     "footer.contact": "Contact",
@@ -379,7 +382,7 @@ export default {
         "Email your CV to {email} and include the job title in the subject.",
     // Loading labels
     "loading.jobs": "Loading open jobs...",
-    
+
     // Loader translations
     "loader.home": "Loading home page...",
     "loader.our_work": "Loading our work...",
@@ -406,5 +409,5 @@ export default {
     "loader.sub_resources": "Gathering resources...",
     "loader.sub_careers": "Preparing career information...",
     "loader.sub_contact": "Loading contact details...",
-    "loader.sub_default": "Please wait while we prepare the content"
+    "loader.sub_default": "Please wait while we prepare the content",
 };
