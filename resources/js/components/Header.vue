@@ -8,7 +8,7 @@
                 <div class="flex-shrink-0">
                     <router-link to="/" class="flex items-center">
                         <img
-                            :src="'/mountagro-logo.png'"
+                            :src="'/mountagro-logo.jpg'"
                             alt="Mount Agro Logo"
                             width="112"
                             height="112"
@@ -189,7 +189,7 @@
                 >
                     <div class="flex items-center">
                         <img
-                            :src="'/mountagro-logo.png'"
+                            :src="'/mountagro-logo.jpg'"
                             alt="Mount Agro Logo"
                             width="80"
                             height="80"

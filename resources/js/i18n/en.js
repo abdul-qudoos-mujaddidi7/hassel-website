@@ -3,13 +3,20 @@ export default {
     "nav.home": "Home",
     "nav.work": "Our Work",
     "nav.programs": "Programs",
-    "nav.training": "Training Programs",
-    "nav.agri_tech": "Agri-Tech Tools",
-    "nav.market_access": "Market Access",
-    "nav.smart_farming": "Smart Farming",
-    "nav.seed_supply": "Seed Supply",
-    "nav.community": "Community Programs",
-    "nav.environmental": "Environmental Projects",
+    // "nav.training": "Training Programs",
+    // "nav.agri_tech": "Agri-Tech Tools",
+    // "nav.market_access": "Market Access",
+    // "nav.smart_farming": "Smart Farming",
+    // "nav.seed_supply": "Seed Supply",
+    // "nav.community": "Community Programs",
+    // "nav.environmental": "Environmental Projects",
+    "nav.community": "Cold Storage Facilities",
+    "nav.training": "Capacity Building & Training",
+    "nav.agri_tech": "Adoption of New Technologies",
+    "nav.market_access": "Market Linkages & Access Support",
+    "nav.smart_farming": "Modern Irrigation Systems",
+    "nav.seed_supply": "Improved Agricultural Inputs",
+    "nav.environmental": "Sustainability & Awareness Programs",
     "nav.resources": "Resources",
     "nav.careers": "Careers",
     "nav.contact": "Contact",
@@ -55,9 +62,9 @@ export default {
     // About section
     "home.about.title": "About Us",
     "home.about.p1":
-        "Mount Agro Microfinance Institution is a leading financial services provider dedicated to transforming Afghanistan's agricultural sector through innovative microfinance solutions and comprehensive support programs.",
+        "Mount Agro is an agricultural development organization committed to empowering farmers and strengthening rural communities through innovation, education, and sustainable practices. We believe that agriculture is more than cultivation — it is the heart of community growth, economic stability, and environmental care. Our work focuses on improving productivity, promoting modern techniques, and ensuring that every farmer has the opportunity to thrive with dignity and independence.",
     "home.about.p2":
-        "Since our establishment, we have been committed to empowering farmers, agricultural entrepreneurs, and rural communities by providing accessible financial services, technical training, and market linkage opportunities.",
+        "Through collaboration with local stakeholders and development partners, Mount Agro continues to bring meaningful change to the agricultural sector. We aim to create a future where farming is efficient, sustainable, and rewarding for all, while preserving the natural balance that sustains life.",
 
     // Home business pillars
     "home.pillars.training.title": "Training Programs",
@@ -101,13 +108,13 @@ export default {
         "Built on strong principles that guide everything we do",
     "home.foundation.vision.title": "Vision",
     "home.foundation.vision.body":
-        "To be the leading microfinance institution empowering Afghanistan's agricultural communities through innovative financial solutions and sustainable development programs.",
+        "Our vision is to create a prosperous, self-reliant agricultural sector where every farmer has access to knowledge, technology, and fair markets. Mount Agro strives to build a sustainable future in which agriculture becomes a source of growth, dignity, and stability for communities across the nation.",
     "home.foundation.mission.title": "Mission",
     "home.foundation.mission.body":
-        "We provide accessible microfinance services, agricultural training, and technical support to help farmers increase productivity, improve livelihoods, and build resilient communities.",
+        "Mount Agro’s mission is to empower farmers and rural communities by promoting modern agricultural technologies, providing high-quality seeds, practical training, and sustainable farming practices. Through these initiatives, we aim to strengthen food security, improve livelihoods, and preserve environmental balance for future generations.",
     "home.foundation.values.title": "Values",
     "home.foundation.values.body":
-        "Integrity, transparency, community focus, and sustainable development guide our commitment to serving Afghanistan's agricultural sector with excellence and trust.",
+        "At Mount Agro, we are guided by a strong commitment to sustainability, innovation, and community empowerment. We believe in transparency, integrity, and collaboration as the foundation of our work. By prioritizing quality, inclusiveness, and environmental care, we continue to foster trust, productivity, and long-term progress in every project we undertake.",
 
     // Business pillars section intro
     "home.pillars.title": "Our Business Pillars",
@@ -317,13 +324,13 @@ export default {
     "contact.success_title": "Message Sent!",
     "contact.success_message":
         "Thank you for your message. We'll get back to you soon.",
-    "contact.address_line1": "123 Agriculture Street",
+    "contact.address_line1": " Street 1, Karte Chahar, House 5",
     "contact.address_line2": "Kabul, Afghanistan",
-    "contact.address_line3": "Postal Code: 1001",
-    "contact.phone_line1": "+93 70 123 4567",
+    "contact.address_line3": "Postal Code: 100613-36-31",
+    "contact.phone_line1": "+93 70 576 3628",
     "contact.phone_line2": "+1 (555) 987-6543",
-    "contact.email_line1": "info@mountagro.com",
-    "contact.email_line2": "support@mountagro.com",
+    "contact.email_line1": "mountagro.af@gmail.com",
+    // "contact.email_line2": "support@mountagro.com",
     "contact.hours_line1": "Monday - Friday: 9:00 AM - 6:00 PM",
     "contact.hours_line2": "Saturday: 10:00 AM - 4:00 PM",
     "contact.hours_line3": "Sunday: Closed",
