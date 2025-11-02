@@ -47,9 +47,9 @@
                                 clip-rule="evenodd"
                             ></path>
                         </svg>
-                        <span class="text-white font-medium"
-                            >Market Access Programs</span
-                        >
+                        <span class="text-white font-medium">{{
+                            t("market.title")
+                        }}</span>
                     </div>
                 </nav>
 
@@ -317,7 +317,13 @@
                                         ></path>
                                     </svg>
                                     <p class="text-green-600 font-medium">
-                                        {{ program.program_type || "Program" }}
+                                        {{
+                                            program.program_type
+                                                ? formatProgramType(
+                                                      program.program_type
+                                                  )
+                                                : t("market.meta.program")
+                                        }}
                                     </p>
                                 </div>
                             </div>
@@ -371,7 +377,7 @@
                                     :to="`/market-access/${
                                         program.slug || program.id
                                     }`"
-                                    class="w-full bg-brand-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-brand-secondary transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md block inline-flex items-center justify-center"
+                                    class="w-full bg-brand-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-brand-secondary transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md inline-flex items-center justify-center"
                                 >
                                     <template v-if="!isRTL">
                                         {{ t("common.view_details") }}

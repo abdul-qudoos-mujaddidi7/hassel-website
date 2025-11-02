@@ -278,6 +278,28 @@ export default {
     "market.meta.various": "گوناگون",
     "market.meta.multiple": "متعدد",
     "market.meta.partners_count": "{count} شریک",
+    "market.meta.program": "برنامه",
+
+    // Market Access Program Detail
+    "market.detail.loading": "در حال بارگذاری جزئیات برنامه...",
+    "market.detail.error.title": "برنامه یافت نشد",
+    "market.detail.error.back": "بازگشت به برنامه‌ها",
+    "market.detail.target_crops": "محصولات هدف",
+    "market.detail.location": "موقعیت",
+    "market.detail.partners": "همکاران",
+    "market.detail.learn_more": "بیشتر بدانید",
+    "market.detail.overview": "نمای کلی برنامه",
+    "market.detail.partner_organizations": "سازمان‌های همکار",
+    "market.detail.quick_info": "اطلاعات سریع",
+    "market.detail.program_type": "نوع",
+    "market.detail.need_info": "نیاز به اطلاعات بیشتر؟",
+    "market.detail.need_info_sub":
+        "اطلاعات تفصیلی درباره این برنامه دسترسی به بازار دریافت کنید و ببینید چگونه می‌تواند به کسب‌وکار کشاورزی شما کمک کند.",
+    "market.detail.contact_us": "دریافت اطلاعات",
+    "market.detail.need_help": "نیاز به کمک دارید؟",
+    "market.detail.need_help_sub":
+        "برای اطلاعات بیشتر درباره این برنامه با تیم ما تماس بگیرید.",
+    "market.detail.contact_link": "تماس با ما",
 
     // Training Programs (list)
     "training.breadcrumb.home": "خانه",

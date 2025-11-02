@@ -206,6 +206,28 @@ export default {
     "market.meta.various": "Various",
     "market.meta.multiple": "Multiple",
     "market.meta.partners_count": "{count} Partners",
+    "market.meta.program": "Program",
+
+    // Market Access Program Detail
+    "market.detail.loading": "Loading program details...",
+    "market.detail.error.title": "Program Not Found",
+    "market.detail.error.back": "Back to Programs",
+    "market.detail.target_crops": "Target Crops",
+    "market.detail.location": "Location",
+    "market.detail.partners": "Partners",
+    "market.detail.learn_more": "Learn More",
+    "market.detail.overview": "Program Overview",
+    "market.detail.partner_organizations": "Partner Organizations",
+    "market.detail.quick_info": "Quick Information",
+    "market.detail.program_type": "Type",
+    "market.detail.need_info": "Need More Information?",
+    "market.detail.need_info_sub":
+        "Get detailed information about this market access program and how it can benefit your agricultural business.",
+    "market.detail.contact_us": "Get Information",
+    "market.detail.need_help": "Need Help?",
+    "market.detail.need_help_sub":
+        "Contact our team for more information about this program.",
+    "market.detail.contact_link": "Contact Us",
 
     // Training Programs (list)
     "training.breadcrumb.home": "Home",

@@ -285,6 +285,28 @@ export default {
     "market.meta.various": "ګوناګون",
     "market.meta.multiple": "متعدد",
     "market.meta.partners_count": "{count} شریکان",
+    "market.meta.program": "پروګرام",
+
+    // Market Access Program Detail
+    "market.detail.loading": "د پروګرام جزئیات لوډ کېږي...",
+    "market.detail.error.title": "پروګرام ونه موندل شو",
+    "market.detail.error.back": "پروګرامونو ته بیرته",
+    "market.detail.target_crops": "د هدف محصولات",
+    "market.detail.location": "ځای",
+    "market.detail.partners": "شریکان",
+    "market.detail.learn_more": "نور زده کړئ",
+    "market.detail.overview": "د پروګرام لنډیز",
+    "market.detail.partner_organizations": "د شریک سازمانونه",
+    "market.detail.quick_info": "د ژر معلومات",
+    "market.detail.program_type": "ډول",
+    "market.detail.need_info": "نور معلومات غواړئ؟",
+    "market.detail.need_info_sub":
+        "د دې د بازار د لاسرسي پروګرام په اړه تفصيلي معلومات ترلاسه کړئ او وګورئ چې څنګه کولی شي ستاسو د کرنیزو سوداګرۍ ګټه وکړي.",
+    "market.detail.contact_us": "معلومات ترلاسه کړئ",
+    "market.detail.need_help": "مرسته غواړئ؟",
+    "market.detail.need_help_sub":
+        "د دې پروګرام په اړه نورو معلوماتو لپاره زموږ ټیم سره اړیکه ونیسئ.",
+    "market.detail.contact_link": "موږ سره اړیکه",
 
     // Training Programs (list)
     "training.breadcrumb.home": "کور",
