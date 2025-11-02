@@ -9,7 +9,9 @@
                 <div
                     class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"
                 ></div>
-                <p class="text-gray-600">Loading program details...</p>
+                <p class="text-gray-600">
+                    {{ t("seedsupply.detail.loading") }}
+                </p>
             </div>
         </div>
 
@@ -37,7 +39,7 @@
                     </svg>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-2">
-                    Program Not Found
+                    {{ t("seedsupply.detail.error.title") }}
                 </h2>
                 <p class="text-gray-600 mb-6">{{ error }}</p>
                 <router-link
@@ -57,7 +59,7 @@
                             d="M10 19l-7-7m0 0l7-7m-7 7h18"
                         ></path>
                     </svg>
-                    Back to Programs
+                    {{ t("seedsupply.detail.error.back") }}
                 </router-link>
             </div>
         </div>
@@ -103,7 +105,9 @@
                             <router-link
                                 to="/"
                                 class="text-green-200 hover:text-white transition-colors"
-                                >Home</router-link
+                                >{{
+                                    t("seedsupply.breadcrumb.home")
+                                }}</router-link
                             >
                             <svg
                                 class="w-4 h-4 text-green-300"
@@ -119,7 +123,7 @@
                             <router-link
                                 to="/seed-supply"
                                 class="text-green-200 hover:text-white transition-colors"
-                                >Seed & Input Supply Chain</router-link
+                                >{{ t("seedsupply.title") }}</router-link
                             >
                             <svg
                                 class="w-4 h-4 text-green-300"
@@ -185,7 +189,7 @@
                                     {{ program.quality_grade }}
                                 </div>
                                 <div class="text-green-200 text-xs sm:text-sm">
-                                    Quality Grade
+                                    {{ t("seedsupply.detail.quality_grade") }}
                                 </div>
                             </div>
                             <div
@@ -198,7 +202,7 @@
                                     {{ program.availability }}
                                 </div>
                                 <div class="text-green-200 text-xs sm:text-sm">
-                                    Availability
+                                    {{ t("seedsupply.detail.availability") }}
                                 </div>
                             </div>
                             <div v-if="program.price_range" class="text-center">
@@ -208,7 +212,7 @@
                                     {{ program.price_range }}
                                 </div>
                                 <div class="text-green-200 text-xs sm:text-sm">
-                                    Price Range
+                                    {{ t("seedsupply.detail.price_range") }}
                                 </div>
                             </div>
                         </div>
@@ -232,7 +236,7 @@
                                         d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                                     ></path>
                                 </svg>
-                                Learn More
+                                {{ t("seedsupply.detail.learn_more") }}
                             </router-link>
                         </div>
                     </div>
@@ -252,7 +256,7 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-4"
                                 >
-                                    Product Overview
+                                    {{ t("seedsupply.detail.overview") }}
                                 </h2>
                                 <div
                                     class="prose prose-lg max-w-none text-gray-600"
@@ -274,7 +278,7 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-4"
                                 >
-                                    Target Crops
+                                    {{ t("seedsupply.detail.target_crops") }}
                                 </h2>
                                 <div class="flex flex-wrap gap-3">
                                     <span
@@ -297,7 +301,11 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-4"
                                 >
-                                    Technical Specifications
+                                    {{
+                                        t(
+                                            "seedsupply.detail.technical_specifications"
+                                        )
+                                    }}
                                 </h2>
                                 <div
                                     class="prose prose-lg max-w-none text-gray-600"
@@ -316,7 +324,11 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-4"
                                 >
-                                    Usage Instructions
+                                    {{
+                                        t(
+                                            "seedsupply.detail.usage_instructions"
+                                        )
+                                    }}
                                 </h2>
                                 <div
                                     class="prose prose-lg max-w-none text-gray-600"
@@ -333,7 +345,11 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-4"
                                 >
-                                    Distribution Centers
+                                    {{
+                                        t(
+                                            "seedsupply.detail.distribution_centers"
+                                        )
+                                    }}
                                 </h2>
                                 <div class="flex flex-wrap gap-3">
                                     <span
@@ -358,14 +374,16 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
                                 >
-                                    Product Details
+                                    {{ t("seedsupply.detail.program_details") }}
                                 </h3>
                                 <div class="space-y-4">
                                     <div
                                         v-if="program.input_type"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600">Type</span>
+                                        <span class="text-gray-600">{{
+                                            t("seedsupply.detail.input_type")
+                                        }}</span>
                                         <span class="text-gray-900 font-medium">
                                             {{
                                                 formatInputType(
@@ -378,9 +396,9 @@
                                         v-if="program.quality_grade"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600"
-                                            >Quality Grade</span
-                                        >
+                                        <span class="text-gray-600">{{
+                                            t("seedsupply.detail.quality_grade")
+                                        }}</span>
                                         <span class="text-gray-900 font-medium">
                                             {{ program.quality_grade }}
                                         </span>
@@ -389,9 +407,9 @@
                                         v-if="program.availability"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600"
-                                            >Availability</span
-                                        >
+                                        <span class="text-gray-600">{{
+                                            t("seedsupply.detail.availability")
+                                        }}</span>
                                         <span
                                             class="text-green-600 font-medium"
                                         >
@@ -402,9 +420,9 @@
                                         v-if="program.price_range"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600"
-                                            >Price Range</span
-                                        >
+                                        <span class="text-gray-600">{{
+                                            t("seedsupply.detail.price_range")
+                                        }}</span>
                                         <span class="text-gray-900 font-medium">
                                             {{ program.price_range }}
                                         </span>
@@ -413,9 +431,9 @@
                                         v-if="program.shelf_life"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600"
-                                            >Shelf Life</span
-                                        >
+                                        <span class="text-gray-600">{{
+                                            t("seedsupply.detail.shelf_life")
+                                        }}</span>
                                         <span class="text-gray-900 font-medium">
                                             {{ program.shelf_life }}
                                         </span>
@@ -430,12 +448,10 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-2"
                                 >
-                                    Need More Information?
+                                    {{ t("seedsupply.detail.need_info") }}
                                 </h3>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Get detailed information about this quality
-                                    input and how it can benefit your farming
-                                    operations.
+                                    {{ t("seedsupply.detail.need_info_sub") }}
                                 </p>
 
                                 <router-link
@@ -455,7 +471,7 @@
                                             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                                         ></path>
                                     </svg>
-                                    Get Information
+                                    {{ t("seedsupply.detail.contact_us") }}
                                 </router-link>
                             </div>
 
@@ -466,12 +482,14 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
                                 >
-                                    Contact Information
+                                    {{ t("seedsupply.detail.contact_info") }}
                                 </h3>
                                 <div class="space-y-3 text-sm">
                                     <div v-if="program.supplier" class="mb-3">
                                         <div class="text-gray-500 text-xs mb-1">
-                                            Supplier
+                                            {{
+                                                t("seedsupply.detail.supplier")
+                                            }}
                                         </div>
                                         <div class="text-gray-900 font-medium">
                                             {{ program.supplier }}
@@ -526,7 +544,7 @@ const route = useRoute();
 const loading = ref(true);
 const error = ref(null);
 const program = ref(null);
-const { currentLanguage, onLanguageChange } = useI18n();
+const { currentLanguage, onLanguageChange, t } = useI18n();
 let unsubscribeLang = null;
 
 onMounted(() => {
@@ -657,14 +675,14 @@ function formatProgram(rawProgram) {
 }
 
 function formatInputType(type) {
-    if (!type) return "Product";
+    if (!type) return t("seedsupply.detail.input_type");
     return String(type)
         .replace(/_/g, " ")
         .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 function formatCrops(crops) {
-    if (!crops) return "Various";
+    if (!crops) return t("seedsupply.meta.various");
     if (typeof crops === "string") {
         try {
             const parsed = JSON.parse(crops);
@@ -676,7 +694,7 @@ function formatCrops(crops) {
     if (Array.isArray(crops)) {
         return crops.join(", ");
     }
-    return "Various";
+    return t("seedsupply.meta.various");
 }
 
 function getCropList(crops) {
