@@ -500,6 +500,98 @@ export default {
     "seedsupply.detail.loading": "Loading program details...",
     "seedsupply.detail.contact_info": "Contact Information",
 
+    // Community Programs (list)
+    "community.breadcrumb.home": "Home",
+    "community.badge": "Community Development",
+    "community.title": "Community Programs",
+    "community.subtitle":
+        "Strengthen communities through targeted development initiatives, capacity building, and sustainable partnerships that create lasting positive impact.",
+    "community.stats.active": "Active Programs",
+    "community.stats.target_groups": "Target Groups",
+    "community.stats.partners": "Partner Organizations",
+    "community.scroll": "Explore programs below",
+    "community.filters.title": "Filter Programs",
+    "community.filters.reset": "Reset Filters",
+    "community.filters.program_type": "Program Type",
+    "community.filters.program_type_all": "All Types",
+    "community.filters.target_group": "Target Group",
+    "community.filters.target_group_all": "All Groups",
+    "community.filters.search": "Search",
+    "community.filters.search_placeholder": "Search programs...",
+    "community.results.count": "{count} programs found",
+    "community.empty.title": "No Programs Found",
+    "community.empty.body":
+        "No programs match your current filters. Try adjusting your search criteria.",
+    "community.empty.clear": "Clear Filters",
+    "community.meta.program": "Program",
+    "community.meta.partners": "Partners",
+    "community.meta.general_community": "General Community",
+
+    // Community Program Detail
+    "community.detail.badge": "Community Development",
+    "community.detail.quick_info": "Quick Information",
+    "community.detail.program_type": "Type",
+    "community.detail.location": "Location",
+    "community.detail.target_group": "Target Group",
+    "community.detail.partners": "Partners",
+    "community.detail.overview": "Program Overview",
+    "community.detail.no_description":
+        "No description available for this program.",
+    "community.detail.partner_organizations": "Partner Organizations",
+    "community.detail.no_partners":
+        "No partner organizations listed for this program.",
+    "community.detail.need_info": "Need More Information?",
+    "community.detail.need_info_sub":
+        "Get detailed information about this community program and how you can participate.",
+    "community.detail.contact_us": "Get Information",
+    "community.detail.error.title": "Program Not Found",
+    "community.detail.error.back": "Back to Programs",
+    "community.detail.loading": "Loading program details...",
+
+    // Environmental Projects (list)
+    "environmental.breadcrumb.home": "Home",
+    "environmental.badge": "Environmental Stewardship",
+    "environmental.title": "Environmental Projects",
+    "environmental.subtitle":
+        "Protect ecosystems and promote sustainability through evidence-based, community-driven projects.",
+    "environmental.stats.active": "Active Projects",
+    "environmental.stats.funding_sources": "Funding Sources",
+    "environmental.stats.impact_metrics": "Impact Metrics",
+    "environmental.scroll": "Explore projects below",
+    "environmental.filters.title": "Filter Projects",
+    "environmental.filters.reset": "Reset Filters",
+    "environmental.filters.project_type": "Project Type",
+    "environmental.filters.project_type_all": "All Types",
+    "environmental.filters.search": "Search",
+    "environmental.filters.search_placeholder": "Search projects...",
+    "environmental.results.count": "{count} projects found",
+    "environmental.empty.title": "No Projects Found",
+    "environmental.empty.body":
+        "No projects match your current filters. Try adjusting your search.",
+    "environmental.empty.clear": "Clear Filters",
+    "environmental.meta.environmental": "Environmental",
+    "environmental.meta.metrics": "Metrics",
+    "environmental.meta.not_specified": "Not specified",
+    "environmental.meta.unknown": "Unknown",
+    "environmental.meta.na": "N/A",
+
+    // Environmental Project Detail
+    "environmental.detail.badge": "Environmental Stewardship",
+    "environmental.detail.quick_info": "Quick Information",
+    "environmental.detail.project_type": "Type",
+    "environmental.detail.status": "Status",
+    "environmental.detail.funding": "Funding",
+    "environmental.detail.funding_source": "Funding Source",
+    "environmental.detail.impact_metrics": "Impact Metrics",
+    "environmental.detail.overview": "Overview",
+    "environmental.detail.no_description":
+        "No description provided for this project.",
+    "environmental.detail.no_metrics":
+        "No impact metrics provided for this project.",
+    "environmental.detail.error.title": "Project Not Found",
+    "environmental.detail.error.back": "Back to Projects",
+    "environmental.detail.loading": "Loading project...",
+
     // Loader translations
     "loader.home": "Loading home page...",
     "loader.our_work": "Loading our work...",

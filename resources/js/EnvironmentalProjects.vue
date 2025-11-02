@@ -33,7 +33,9 @@
                         <router-link
                             to="/"
                             class="text-green-200 hover:text-white transition-colors"
-                            >Home</router-link
+                            >{{
+                                t("environmental.breadcrumb.home")
+                            }}</router-link
                         >
                         <svg
                             class="w-4 h-4 text-green-300"
@@ -46,9 +48,9 @@
                                 clip-rule="evenodd"
                             />
                         </svg>
-                        <span class="text-white font-medium"
-                            >Environmental Projects</span
-                        >
+                        <span class="text-white font-medium">{{
+                            t("environmental.title")
+                        }}</span>
                     </div>
                 </nav>
 
@@ -58,20 +60,19 @@
                         class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-500/20 text-green-100 border border-green-400/30 mb-6"
                     >
                         <span class="text-white">
-                            Environmental Stewardship
+                            {{ t("environmental.badge") }}
                         </span>
                     </div>
 
                     <h1
                         class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
                     >
-                        Environmental Projects
+                        {{ t("environmental.title") }}
                     </h1>
                     <p
                         class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
-                        Protect ecosystems and promote sustainability through
-                        evidence-based, community-driven projects.
+                        {{ t("environmental.subtitle") }}
                     </p>
 
                     <!-- Quick Stats -->
@@ -81,7 +82,7 @@
                                 {{ totalProjects }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Active Projects
+                                {{ t("environmental.stats.active") }}
                             </div>
                         </div>
                         <div class="text-center">
@@ -89,7 +90,7 @@
                                 {{ uniqueFundingSources }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Funding Sources
+                                {{ t("environmental.stats.funding_sources") }}
                             </div>
                         </div>
                         <div class="text-center">
@@ -97,16 +98,16 @@
                                 {{ totalImpactMetrics }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Impact Metrics
+                                {{ t("environmental.stats.impact_metrics") }}
                             </div>
                         </div>
                     </div>
 
                     <!-- Scroll Indicator -->
                     <div class="flex flex-col items-center">
-                        <span class="text-green-200 text-sm mb-2"
-                            >Explore projects below</span
-                        >
+                        <span class="text-green-200 text-sm mb-2">{{
+                            t("environmental.scroll")
+                        }}</span>
                         <svg
                             class="w-6 h-6 text-green-300 animate-bounce"
                             fill="none"
@@ -130,7 +131,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-gray-900">
-                        Filter Projects
+                        {{ t("environmental.filters.title") }}
                     </h2>
                     <button
                         @click="resetFilters"
@@ -149,7 +150,7 @@
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                             />
                         </svg>
-                        Reset Filters
+                        {{ t("environmental.filters.reset") }}
                     </button>
                 </div>
 
@@ -160,13 +161,19 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Project Type</label
+                            >{{
+                                t("environmental.filters.project_type")
+                            }}</label
                         >
                         <select
                             v-model="filters.project_type"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
-                            <option value="">All Types</option>
+                            <option value="">
+                                {{
+                                    t("environmental.filters.project_type_all")
+                                }}
+                            </option>
                             <option
                                 v-for="type in projectTypeOptions"
                                 :key="type"
@@ -181,13 +188,17 @@
                     <div class="relative sm:col-span-2 lg:col-span-1">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Search</label
+                            >{{ t("environmental.filters.search") }}</label
                         >
                         <div class="relative">
                             <input
                                 v-model="filters.search"
                                 type="text"
-                                placeholder="Search projects..."
+                                :placeholder="
+                                    t(
+                                        'environmental.filters.search_placeholder'
+                                    )
+                                "
                                 class="w-full border border-gray-300 rounded-lg px-4 py-3 pl-10 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                             />
                             <svg
@@ -252,17 +263,16 @@
                             </svg>
                         </div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            No Projects Found
+                            {{ t("environmental.empty.title") }}
                         </h3>
                         <p class="text-gray-600 mb-6">
-                            No projects match your current filters. Try
-                            adjusting your search.
+                            {{ t("environmental.empty.body") }}
                         </p>
                         <button
                             @click="resetFilters"
                             class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
                         >
-                            Clear Filters
+                            {{ t("environmental.empty.clear") }}
                         </button>
                     </div>
 
@@ -304,7 +314,11 @@
                                         />
                                     </svg>
                                     <p class="text-green-600 font-medium">
-                                        Environmental
+                                        {{
+                                            t(
+                                                "environmental.meta.environmental"
+                                            )
+                                        }}
                                     </p>
                                 </div>
                             </div>
@@ -341,10 +355,8 @@
                                         project.impact_metrics.length
                                     "
                                     class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
-                                    >{{
-                                        project.impact_metrics.length
-                                    }}
-                                    Metrics</span
+                                    >{{ project.impact_metrics.length }}
+                                    {{ t("environmental.meta.metrics") }}</span
                                 >
                             </div>
 
@@ -355,7 +367,7 @@
                                         project.slug || project.id
                                     }`"
                                     class="w-full bg-brand-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-brand-secondary transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md block"
-                                    >View Details</router-link
+                                    >{{ t("common.view_details") }}</router-link
                                 >
                             </div>
                         </div>
@@ -372,7 +384,7 @@ import { useI18n } from "./composables/useI18n";
 
 const loading = ref(true);
 const projects = ref([]);
-const { currentLanguage, onLanguageChange } = useI18n();
+const { currentLanguage, onLanguageChange, t } = useI18n();
 let unsubscribeLang = null;
 
 // Filters

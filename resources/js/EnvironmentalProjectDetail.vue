@@ -8,7 +8,9 @@
                 <div
                     class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"
                 ></div>
-                <p class="text-gray-600">Loading project...</p>
+                <p class="text-gray-600">
+                    {{ t("environmental.detail.loading") }}
+                </p>
             </div>
         </div>
 
@@ -18,13 +20,13 @@
         >
             <div class="text-center max-w-md mx-auto px-4">
                 <h2 class="text-2xl font-bold text-gray-900 mb-2">
-                    Project Not Found
+                    {{ t("environmental.detail.error.title") }}
                 </h2>
                 <p class="text-gray-600 mb-6">{{ error }}</p>
                 <router-link
                     to="/environmental-projects"
                     class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
-                    >Back to Projects</router-link
+                    >{{ t("environmental.detail.error.back") }}</router-link
                 >
             </div>
         </div>
@@ -49,7 +51,9 @@
                             <router-link
                                 to="/"
                                 class="text-green-200 hover:text-white transition-colors"
-                                >Home</router-link
+                                >{{
+                                    t("environmental.breadcrumb.home")
+                                }}</router-link
                             >
                             <svg
                                 class="w-4 h-4 text-green-300"
@@ -65,7 +69,7 @@
                             <router-link
                                 to="/environmental-projects"
                                 class="text-green-200 hover:text-white transition-colors"
-                                >Environmental Projects</router-link
+                                >{{ t("environmental.title") }}</router-link
                             >
                             <svg
                                 class="w-4 h-4 text-green-300"
@@ -111,7 +115,7 @@
                         >
                             {{
                                 project.description ||
-                                "No description available."
+                                t("environmental.detail.no_description")
                             }}
                         </p>
 
@@ -119,10 +123,15 @@
                         <div class="flex flex-wrap justify-center gap-6 mb-8">
                             <div class="text-center">
                                 <div class="text-2xl font-bold text-white">
-                                    {{ project.funding_source || "N/A" }}
+                                    {{
+                                        project.funding_source ||
+                                        t("environmental.meta.na")
+                                    }}
                                 </div>
                                 <div class="text-green-200 text-sm">
-                                    Funding Source
+                                    {{
+                                        t("environmental.detail.funding_source")
+                                    }}
                                 </div>
                             </div>
                             <div class="text-center">
@@ -135,7 +144,9 @@
                                     }}
                                 </div>
                                 <div class="text-green-200 text-sm">
-                                    Impact Metrics
+                                    {{
+                                        t("environmental.detail.impact_metrics")
+                                    }}
                                 </div>
                             </div>
                         </div>
@@ -153,13 +164,15 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-6"
                                 >
-                                    Overview
+                                    {{ t("environmental.detail.overview") }}
                                 </h2>
                                 <div class="prose max-w-none">
                                     <p class="text-gray-600 leading-relaxed">
                                         {{
                                             project.description ||
-                                            "No description provided for this project."
+                                            t(
+                                                "environmental.detail.no_description"
+                                            )
                                         }}
                                     </p>
                                 </div>
@@ -172,7 +185,9 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-6"
                                 >
-                                    Impact Metrics
+                                    {{
+                                        t("environmental.detail.impact_metrics")
+                                    }}
                                 </h2>
                                 <template
                                     v-if="
@@ -194,8 +209,9 @@
                                     <div
                                         class="p-6 bg-gray-50 border border-gray-200 rounded-xl text-center text-gray-600"
                                     >
-                                        No impact metrics provided for this
-                                        project.
+                                        {{
+                                            t("environmental.detail.no_metrics")
+                                        }}
                                     </div>
                                 </template>
                             </div>
@@ -207,13 +223,17 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
                                 >
-                                    Quick Information
+                                    {{ t("environmental.detail.quick_info") }}
                                 </h3>
                                 <div class="space-y-4">
                                     <div
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600">Type</span>
+                                        <span class="text-gray-600">{{
+                                            t(
+                                                "environmental.detail.project_type"
+                                            )
+                                        }}</span>
                                         <span
                                             class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full"
                                             >{{
@@ -221,34 +241,39 @@
                                                     ? formatProjectType(
                                                           project.project_type
                                                       )
-                                                    : "Not specified"
+                                                    : t(
+                                                          "environmental.meta.not_specified"
+                                                      )
                                             }}</span
                                         >
                                     </div>
                                     <div
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600"
-                                            >Status</span
-                                        >
+                                        <span class="text-gray-600">{{
+                                            t("environmental.detail.status")
+                                        }}</span>
                                         <span
                                             class="text-gray-900 font-medium"
                                             >{{
-                                                project.status || "Unknown"
+                                                project.status ||
+                                                t("environmental.meta.unknown")
                                             }}</span
                                         >
                                     </div>
                                     <div
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600"
-                                            >Funding</span
-                                        >
+                                        <span class="text-gray-600">{{
+                                            t("environmental.detail.funding")
+                                        }}</span>
                                         <span
                                             class="text-gray-900 font-medium"
                                             >{{
                                                 project.funding_source ||
-                                                "Not specified"
+                                                t(
+                                                    "environmental.meta.not_specified"
+                                                )
                                             }}</span
                                         >
                                     </div>
@@ -265,12 +290,14 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import { useI18n } from "./composables/useI18n";
 
 const route = useRoute();
 const loading = ref(true);
 const error = ref(null);
 const project = ref(null);
 const heroImage = ref("/images/ourWork/ourworkhero.avif");
+const { currentLanguage, t } = useI18n();
 
 onMounted(fetchProject);
 
@@ -289,7 +316,15 @@ async function fetchProject() {
     error.value = null;
     try {
         const idOrSlug = route.params.idOrSlug;
-        let res = await fetch(`/api/environmental-projects/${idOrSlug}`);
+        const lang =
+            localStorage.getItem("preferred_language") ||
+            currentLanguage?.value ||
+            "en";
+        let res = await fetch(
+            `/api/environmental-projects/${idOrSlug}?lang=${encodeURIComponent(
+                lang
+            )}`
+        );
         if (res.ok) {
             const data = await res.json();
             const item = data?.data || data?.project || data;
@@ -299,7 +334,9 @@ async function fetchProject() {
                 project.value.cover_image || "/images/ourWork/ourworkhero.avif";
             return;
         }
-        const listRes = await fetch("/api/environmental-projects");
+        const listRes = await fetch(
+            `/api/environmental-projects?lang=${encodeURIComponent(lang)}`
+        );
         if (!listRes.ok) throw new Error("Failed to load projects");
         const listJson = await listRes.json();
         const list = Array.isArray(listJson?.data)

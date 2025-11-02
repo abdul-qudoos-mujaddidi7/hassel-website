@@ -34,7 +34,7 @@
                         <router-link
                             to="/"
                             class="text-green-200 hover:text-white transition-colors"
-                            >Home</router-link
+                            >{{ t("community.breadcrumb.home") }}</router-link
                         >
                         <svg
                             class="w-4 h-4 text-green-300"
@@ -47,9 +47,9 @@
                                 clip-rule="evenodd"
                             ></path>
                         </svg>
-                        <span class="text-white font-medium"
-                            >Community Programs</span
-                        >
+                        <span class="text-white font-medium">{{
+                            t("community.title")
+                        }}</span>
                     </div>
                 </nav>
 
@@ -58,21 +58,21 @@
                     <div
                         class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-500/20 text-green-100 border border-green-400/30 mb-6"
                     >
-                        <span class="text-white"> Community Development</span>
+                        <span class="text-white">{{
+                            t("community.badge")
+                        }}</span>
                     </div>
 
                     <h1
                         class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
                     >
-                        Community Programs
+                        {{ t("community.title") }}
                     </h1>
 
                     <p
                         class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
-                        Strengthen communities through targeted development
-                        initiatives, capacity building, and sustainable
-                        partnerships that create lasting positive impact.
+                        {{ t("community.subtitle") }}
                     </p>
 
                     <!-- Quick Stats -->
@@ -82,7 +82,7 @@
                                 {{ totalPrograms }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Active Programs
+                                {{ t("community.stats.active") }}
                             </div>
                         </div>
                         <div class="text-center">
@@ -90,7 +90,7 @@
                                 {{ uniqueTargetGroups }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Target Groups
+                                {{ t("community.stats.target_groups") }}
                             </div>
                         </div>
                         <div class="text-center">
@@ -98,16 +98,16 @@
                                 {{ partnerCount }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Partner Organizations
+                                {{ t("community.stats.partners") }}
                             </div>
                         </div>
                     </div>
 
                     <!-- Scroll Indicator -->
                     <div class="flex flex-col items-center">
-                        <span class="text-green-200 text-sm mb-2"
-                            >Explore programs below</span
-                        >
+                        <span class="text-green-200 text-sm mb-2">{{
+                            t("community.scroll")
+                        }}</span>
                         <svg
                             class="w-6 h-6 text-green-300 animate-bounce"
                             fill="none"
@@ -131,7 +131,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-gray-900">
-                        Filter Programs
+                        {{ t("community.filters.title") }}
                     </h2>
                     <button
                         @click="resetFilters"
@@ -150,7 +150,7 @@
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                             ></path>
                         </svg>
-                        Reset Filters
+                        {{ t("community.filters.reset") }}
                     </button>
                 </div>
 
@@ -161,13 +161,15 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Program Type</label
+                            >{{ t("community.filters.program_type") }}</label
                         >
                         <select
                             v-model="filters.program_type"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
-                            <option value="">All Types</option>
+                            <option value="">
+                                {{ t("community.filters.program_type_all") }}
+                            </option>
                             <option
                                 v-for="type in programTypeOptions"
                                 :key="type"
@@ -182,13 +184,15 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Target Group</label
+                            >{{ t("community.filters.target_group") }}</label
                         >
                         <select
                             v-model="filters.target_group"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
-                            <option value="">All Groups</option>
+                            <option value="">
+                                {{ t("community.filters.target_group_all") }}
+                            </option>
                             <option
                                 v-for="group in targetGroupOptions"
                                 :key="group"
@@ -203,13 +207,15 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Search</label
+                            >{{ t("community.filters.search") }}</label
                         >
                         <div class="relative">
                             <input
                                 v-model="filters.search"
                                 type="text"
-                                placeholder="Search programs..."
+                                :placeholder="
+                                    t('community.filters.search_placeholder')
+                                "
                                 class="w-full border border-gray-300 rounded-lg px-4 py-3 pl-10 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                             />
                             <svg
@@ -274,17 +280,16 @@
                             </svg>
                         </div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            No Programs Found
+                            {{ t("community.empty.title") }}
                         </h3>
                         <p class="text-gray-600 mb-6">
-                            No programs match your current filters. Try
-                            adjusting your search criteria.
+                            {{ t("community.empty.body") }}
                         </p>
                         <button
                             @click="resetFilters"
                             class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
                         >
-                            Clear Filters
+                            {{ t("community.empty.clear") }}
                         </button>
                     </div>
 
@@ -326,7 +331,13 @@
                                         ></path>
                                     </svg>
                                     <p class="text-green-600 font-medium">
-                                        {{ program.program_type || "Program" }}
+                                        {{
+                                            program.program_type
+                                                ? formatProgramType(
+                                                      program.program_type
+                                                  )
+                                                : t("community.meta.program")
+                                        }}
                                     </p>
                                 </div>
                             </div>
@@ -400,7 +411,7 @@
                                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                                         ></path>
                                     </svg>
-                                    View Details
+                                    {{ t("common.view_details") }}
                                 </router-link>
                             </div>
                         </div>
@@ -418,7 +429,7 @@ import { useI18n } from "./composables/useI18n";
 const loading = ref(true);
 const programs = ref([]);
 const total = ref(0);
-const { currentLanguage, onLanguageChange } = useI18n();
+const { currentLanguage, onLanguageChange, t } = useI18n();
 let unsubscribeLang = null;
 
 const filters = ref({
@@ -585,19 +596,20 @@ function formatTargetGroup(group) {
 
 function formatPartners(partners) {
     if (!partners) return "";
+    const partnersLabel = t("community.meta.partners");
     if (typeof partners === "string") {
         try {
             const parsed = JSON.parse(partners);
             return Array.isArray(parsed)
-                ? parsed.length + " Partners"
-                : "Partners";
+                ? parsed.length + " " + partnersLabel
+                : partnersLabel;
         } catch {
-            return partners.split(",").length + " Partners";
+            return partners.split(",").length + " " + partnersLabel;
         }
     }
     if (Array.isArray(partners)) {
-        return partners.length + " Partners";
+        return partners.length + " " + partnersLabel;
     }
-    return "Partners";
+    return partnersLabel;
 }
 </script>

@@ -483,6 +483,98 @@ export default {
     "seedsupply.detail.loading": "د پروګرام جزئیات لوډ کېږي...",
     "seedsupply.detail.contact_info": "د اړیکو معلومات",
 
+    // Community Programs (list)
+    "community.breadcrumb.home": "کور",
+    "community.badge": "د ټولنې پراختیا",
+    "community.title": "د ټولنې پروګرامونه",
+    "community.subtitle":
+        "د هدف لرونکو پراختیایي نوښتونو، د ظرفیت جوړولو او دوامدارو شریکونو له لارې ټولنې پیاوړې کړئ چې د اوږدمهاله مثبت اغېز رامنځته کوي.",
+    "community.stats.active": "فعال پروګرامونه",
+    "community.stats.target_groups": "د هدف ګروپونه",
+    "community.stats.partners": "د شریک سازمانونه",
+    "community.scroll": "د پروګرامونو لاندې وګورئ",
+    "community.filters.title": "پروګرامونه فلټر کړئ",
+    "community.filters.reset": "فلټرونه بیا تنظیم کړئ",
+    "community.filters.program_type": "د پروګرام ډول",
+    "community.filters.program_type_all": "ټول ډولونه",
+    "community.filters.target_group": "د هدف ګروپ",
+    "community.filters.target_group_all": "ټول ګروپونه",
+    "community.filters.search": "لټون",
+    "community.filters.search_placeholder": "پروګرامونه ولټوئ...",
+    "community.results.count": "{count} پروګرامونه وموندل شول",
+    "community.empty.title": "هیڅ پروګرام ونه موندل شو",
+    "community.empty.body":
+        "ستاسو د اوسني فلټرونو له مخې کوم پروګرام نشته. مهرباني وکړئ لټون بدل کړئ.",
+    "community.empty.clear": "فلټرونه پاک کړئ",
+    "community.meta.program": "پروګرام",
+    "community.meta.partners": "شریکان",
+    "community.meta.general_community": "عمومي ټولنه",
+
+    // Community Program Detail
+    "community.detail.badge": "د ټولنې پراختیا",
+    "community.detail.quick_info": "د ژر معلومات",
+    "community.detail.program_type": "ډول",
+    "community.detail.location": "ځای",
+    "community.detail.target_group": "د هدف ګروپ",
+    "community.detail.partners": "شریکان",
+    "community.detail.overview": "د پروګرام لنډیز",
+    "community.detail.no_description":
+        "د دې پروګرام لپاره هیڅ توضیحات شتون نلري.",
+    "community.detail.partner_organizations": "د شریک سازمانونه",
+    "community.detail.no_partners":
+        "د دې پروګرام لپاره هیڅ شریک سازمان لیست شوی نه دی.",
+    "community.detail.need_info": "نور معلومات غواړئ؟",
+    "community.detail.need_info_sub":
+        "د دې د ټولنې پروګرام په اړه تفصيلي معلومات ترلاسه کړئ او وګورئ چې څنګه کولی شئ برخه واخلئ.",
+    "community.detail.contact_us": "معلومات ترلاسه کړئ",
+    "community.detail.error.title": "پروګرام ونه موندل شو",
+    "community.detail.error.back": "پروګرامونو ته بیرته",
+    "community.detail.loading": "د پروګرام جزئیات لوډ کېږي...",
+
+    // Environmental Projects (list)
+    "environmental.breadcrumb.home": "کور",
+    "environmental.badge": "د چاپیریال ساتنه",
+    "environmental.title": "د چاپیریال پروژې",
+    "environmental.subtitle":
+        "د دلیلو پر بنسټ او د ټولنې لخوا اداره شوي پروژو له لارې د چاپیریال ساتنه او د پایداری ترویج.",
+    "environmental.stats.active": "فعال پروژې",
+    "environmental.stats.funding_sources": "د مالي سرچینې",
+    "environmental.stats.impact_metrics": "د اغېز سنجشونه",
+    "environmental.scroll": "د پروژو لاندې وګورئ",
+    "environmental.filters.title": "پروژې فلټر کړئ",
+    "environmental.filters.reset": "فلټرونه بیا تنظیم کړئ",
+    "environmental.filters.project_type": "د پروژې ډول",
+    "environmental.filters.project_type_all": "ټول ډولونه",
+    "environmental.filters.search": "لټون",
+    "environmental.filters.search_placeholder": "پروژې ولټوئ...",
+    "environmental.results.count": "{count} پروژې وموندل شوې",
+    "environmental.empty.title": "هیڅ پروژه ونه موندل شوه",
+    "environmental.empty.body":
+        "ستاسو د اوسني فلټرونو له مخې کومه پروژه نشته. مهرباني وکړئ لټون بدل کړئ.",
+    "environmental.empty.clear": "فلټرونه پاک کړئ",
+    "environmental.meta.environmental": "چاپیریال",
+    "environmental.meta.metrics": "سنجشونه",
+    "environmental.meta.not_specified": "مشخص شوی نه دی",
+    "environmental.meta.unknown": "نامعلوم",
+    "environmental.meta.na": "په لاس کې نشته",
+
+    // Environmental Project Detail
+    "environmental.detail.badge": "د چاپیریال ساتنه",
+    "environmental.detail.quick_info": "د ژر معلومات",
+    "environmental.detail.project_type": "ډول",
+    "environmental.detail.status": "وضعیت",
+    "environmental.detail.funding": "مالي",
+    "environmental.detail.funding_source": "د مالي سرچینه",
+    "environmental.detail.impact_metrics": "د اغېز سنجشونه",
+    "environmental.detail.overview": "لنډیز",
+    "environmental.detail.no_description":
+        "د دې پروژې لپاره هیڅ توضیحات ورکړل شوي نه دي.",
+    "environmental.detail.no_metrics":
+        "د دې پروژې لپاره هیڅ د اغېز سنجشونه ورکړل شوي نه دي.",
+    "environmental.detail.error.title": "پروژه ونه موندل شوه",
+    "environmental.detail.error.back": "پروژو ته بیرته",
+    "environmental.detail.loading": "پروژه لوډ کېږي...",
+
     // Loader translations
     "loader.home": "د کور پاڼه لوډ کېږي...",
     "loader.our_work": "زموږ کار لوډ کېږي...",

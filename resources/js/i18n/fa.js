@@ -476,6 +476,98 @@ export default {
     "seedsupply.detail.loading": "در حال بارگذاری جزئیات برنامه...",
     "seedsupply.detail.contact_info": "اطلاعات تماس",
 
+    // Community Programs (list)
+    "community.breadcrumb.home": "خانه",
+    "community.badge": "توسعه جامعه",
+    "community.title": "برنامه های جامعه",
+    "community.subtitle":
+        "تقویت جوامع از طریق ابتکارات توسعه هدفمند، توانمندسازی و مشارکت‌های پایدار که تأثیر مثبت ماندگار ایجاد می‌کنند.",
+    "community.stats.active": "برنامه‌های فعال",
+    "community.stats.target_groups": "گروه‌های هدف",
+    "community.stats.partners": "سازمان‌های همکار",
+    "community.scroll": "برنامه‌ها را در پایین بررسی کنید",
+    "community.filters.title": "فیلتر برنامه‌ها",
+    "community.filters.reset": "بازنشانی فیلترها",
+    "community.filters.program_type": "نوع برنامه",
+    "community.filters.program_type_all": "همه انواع",
+    "community.filters.target_group": "گروه هدف",
+    "community.filters.target_group_all": "همه گروه‌ها",
+    "community.filters.search": "جستجو",
+    "community.filters.search_placeholder": "جستجوی برنامه‌ها...",
+    "community.results.count": "{count} برنامه پیدا شد",
+    "community.empty.title": "هیچ برنامه‌ای یافت نشد",
+    "community.empty.body":
+        "هیچ برنامه‌ای مطابق با فیلترهای شما نیست. لطفاً معیارهای جستجو را تغییر دهید.",
+    "community.empty.clear": "حذف فیلترها",
+    "community.meta.program": "برنامه",
+    "community.meta.partners": "همکاران",
+    "community.meta.general_community": "جامعه عمومی",
+
+    // Community Program Detail
+    "community.detail.badge": "توسعه جامعه",
+    "community.detail.quick_info": "اطلاعات سریع",
+    "community.detail.program_type": "نوع",
+    "community.detail.location": "موقعیت",
+    "community.detail.target_group": "گروه هدف",
+    "community.detail.partners": "همکاران",
+    "community.detail.overview": "نمای کلی برنامه",
+    "community.detail.no_description":
+        "هیچ توضیحی برای این برنامه در دسترس نیست.",
+    "community.detail.partner_organizations": "سازمان‌های همکار",
+    "community.detail.no_partners":
+        "هیچ سازمان همکاری برای این برنامه فهرست نشده است.",
+    "community.detail.need_info": "نیاز به اطلاعات بیشتر؟",
+    "community.detail.need_info_sub":
+        "اطلاعات تفصیلی درباره این برنامه جامعه و نحوه مشارکت در آن دریافت کنید.",
+    "community.detail.contact_us": "دریافت اطلاعات",
+    "community.detail.error.title": "برنامه یافت نشد",
+    "community.detail.error.back": "بازگشت به برنامه‌ها",
+    "community.detail.loading": "در حال بارگذاری جزئیات برنامه...",
+
+    // Environmental Projects (list)
+    "environmental.breadcrumb.home": "خانه",
+    "environmental.badge": "حفاظت از محیط زیست",
+    "environmental.title": "پروژه های محیطی",
+    "environmental.subtitle":
+        "حفاظت از اکوسیستم‌ها و ترویج پایداری از طریق پروژه‌های مبتنی بر شواهد و جامعه‌محور.",
+    "environmental.stats.active": "پروژه‌های فعال",
+    "environmental.stats.funding_sources": "منابع مالی",
+    "environmental.stats.impact_metrics": "شاخص‌های تأثیر",
+    "environmental.scroll": "پروژه‌ها را در پایین بررسی کنید",
+    "environmental.filters.title": "فیلتر پروژه‌ها",
+    "environmental.filters.reset": "بازنشانی فیلترها",
+    "environmental.filters.project_type": "نوع پروژه",
+    "environmental.filters.project_type_all": "همه انواع",
+    "environmental.filters.search": "جستجو",
+    "environmental.filters.search_placeholder": "جستجوی پروژه‌ها...",
+    "environmental.results.count": "{count} پروژه پیدا شد",
+    "environmental.empty.title": "هیچ پروژه‌ای یافت نشد",
+    "environmental.empty.body":
+        "هیچ پروژه‌ای مطابق با فیلترهای شما نیست. لطفاً جستجو را تغییر دهید.",
+    "environmental.empty.clear": "حذف فیلترها",
+    "environmental.meta.environmental": "محیطی",
+    "environmental.meta.metrics": "شاخص‌ها",
+    "environmental.meta.not_specified": "مشخص نشده",
+    "environmental.meta.unknown": "نامشخص",
+    "environmental.meta.na": "نامشخص",
+
+    // Environmental Project Detail
+    "environmental.detail.badge": "حفاظت از محیط زیست",
+    "environmental.detail.quick_info": "اطلاعات سریع",
+    "environmental.detail.project_type": "نوع",
+    "environmental.detail.status": "وضعیت",
+    "environmental.detail.funding": "مالی",
+    "environmental.detail.funding_source": "منبع مالی",
+    "environmental.detail.impact_metrics": "شاخص‌های تأثیر",
+    "environmental.detail.overview": "نمای کلی",
+    "environmental.detail.no_description":
+        "هیچ توضیحی برای این پروژه ارائه نشده است.",
+    "environmental.detail.no_metrics":
+        "هیچ شاخص تأثیری برای این پروژه ارائه نشده است.",
+    "environmental.detail.error.title": "پروژه یافت نشد",
+    "environmental.detail.error.back": "بازگشت به پروژه‌ها",
+    "environmental.detail.loading": "در حال بارگذاری پروژه...",
+
     // Loader translations
     "loader.home": "در حال بارگذاری صفحه اصلی...",
     "loader.our_work": "در حال بارگذاری کارهای ما...",
