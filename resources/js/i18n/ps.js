@@ -141,26 +141,32 @@ export default {
     "home.pillars.training.description":
         "د کرنې هراړخیزې تعلیمي برنامې او د ظرفیت لوړولو هڅې د بزګرانو، همکاریو او مسلکي کسانو لپاره.",
     "home.pillars.training.countLabel": "پروګرامونه",
+
     "home.pillars.agritech.title": "د کرنې تخنیکي وسایل",
     "home.pillars.agritech.description":
         "نوې کرنیزې ټکنالوژۍ او ډیجیټلي حل لارې د کرنیزې تولید زیاتونې او موثریت لپاره.",
     "home.pillars.agritech.countLabel": "وسایل",
+
     "home.pillars.smartfarming.title": "پاملرنې او پایداره کرنه",
     "home.pillars.smartfarming.description":
         "د نوې طریقو ترویج لکه د څاڅکي اوبه خور، شنې خونې او دقیقه کرنه د اقلیمي شرایطو په وړاندې مقاومو ډولونو سره.",
     "home.pillars.smartfarming.countLabel": "پروګرامونه",
+
     "home.pillars.seedSupply.title": "د تخم او نهاده د عرضه زنځیر",
     "home.pillars.seedSupply.description":
         "د لوړ کیفیت تخمونو، سرو او چاپېریال دوستانه آفت وژونکو برابرول د باور وړ وېش شبکو له لارې.",
     "home.pillars.seedSupply.countLabel": "محصولات",
+
     "home.pillars.market.title": "د بازار د لاسرسي پروګرامونه",
     "home.pillars.market.description":
         "کروندګر او تولید کوونکي ګټورو بازارونو او د ارزښت ځنځیرونو سره نښلول د دوامدار عاید لپاره.",
     "home.pillars.market.countLabel": "پروګرامونه",
+
     "home.pillars.environmental.title": "د چاپیریال پروژې",
     "home.pillars.environmental.description":
         "پایدار چاپیریالي نوښتونه د ساتنې، د اقلیم د زغملو او د چاپېریال دوستانه کرنیزو طریقو د ودې لپاره.",
     "home.pillars.environmental.countLabel": "پروژې",
+
     "home.pillars.community.title": "د ټولنې پروګرامونه",
     "home.pillars.community.description":
         "هراړخیز ټولنیز پرمختیایي نوښتونه چې په کلیوالو ځواکمنتیا، ټولنیز ګډون او د معیشت ښه والي تمرکز لري.",

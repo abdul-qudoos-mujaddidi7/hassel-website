@@ -58,17 +58,9 @@
                     <div
                         class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-500/20 text-green-100 border border-green-400/30 mb-6"
                     >
-                        <svg
-                            class="w-4 h-4 mr-2"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
+                        <span class="text-white"
+                            >Seed & Input Supply Chain</span
                         >
-                            <path
-                                fill-rule="evenodd"
-                                d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm8 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V8z"
-                            ></path>
-                        </svg>
-                        Quality Inputs
                     </div>
 
                     <h1
