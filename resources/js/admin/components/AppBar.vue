@@ -2,7 +2,7 @@
     <div class="app-bar">
         <div class="app-bar-content">
             <h1 class="main-title">{{ $t(mainTitle) }}</h1>
-            <p v-if="subTitle" class="sub-title">{{ $t(subTitle) }}</p>
+            
         </div>
     </div>
 </template>

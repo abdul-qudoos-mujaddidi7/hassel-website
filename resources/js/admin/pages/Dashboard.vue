@@ -1,6 +1,6 @@
 <template>
     <div class="rounded-xl">
-        <AppBar :subTitle="$t('dashboard')" :main-title="$t('dashboard')" />
+      <Header :pageTitle="$t('dashboard')" />
 
         <v-divider
             :thickness="1"
@@ -206,9 +206,9 @@
         </v-row>
 
         <!-- Graphs Section -->
-        <v-row class="pt-4">
+        <v-row class="pt-4" style="align-items: stretch;">
             <v-col cols="12" md="6">
-                <v-card class="bg-background rounded-xl px-4 py-4">
+                <v-card class="bg-background rounded-xl px-4 py-4 chart-card">
                     <h2 class="pl-2 py-4">{{ t("contentTrends") }}</h2>
                     <div class="chart-container">
                         <div class="bar-chart">
@@ -227,15 +227,15 @@
                                         }"
                                     ></div>
                                     <span class="bar-value">{{ item.value }}</span>
-          </div>
-            </div>
-          </div>
-        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </v-card>
             </v-col>
 
             <v-col cols="12" md="6">
-                <v-card class="bg-background rounded-xl px-4 py-4">
+                <v-card class="bg-background rounded-xl px-4 py-4 chart-card">
                     <h2 class="pl-2 py-4">{{ t("contentStatus") }}</h2>
                     <div class="chart-container">
                         <div class="pie-chart-container">
@@ -297,7 +297,7 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
-import AppBar from "../components/AppBar.vue";
+import Header from "../components/Header.vue";
 import { useI18n } from "vue-i18n";
 import { useDashboardRepository } from "../stores/DashboardRepository.js";
 
@@ -530,8 +530,17 @@ const translateCategoryName = (categoryName) => {
 }
 
 /* Chart Styles */
+.chart-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .chart-container {
     padding: 1rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     min-height: 300px;
 }
 
@@ -546,13 +555,18 @@ const translateCategoryName = (categoryName) => {
     display: flex;
     align-items: center;
     gap: 1rem;
+    min-height: 48px;
+    height: 48px;
 }
 
 .bar-label {
     min-width: 120px;
+    width: 120px;
     font-size: 0.875rem;
     font-weight: 500;
     color: #374151;
+    display: flex;
+    align-items: center;
 }
 
 .bar-wrapper {
@@ -561,13 +575,17 @@ const translateCategoryName = (categoryName) => {
     align-items: center;
     gap: 0.75rem;
     position: relative;
+    height: 32px;
 }
 
 .bar-fill {
     height: 32px;
+    min-height: 32px;
     border-radius: 4px;
     transition: width 0.5s ease;
     min-width: 4px;
+    display: flex;
+    align-items: center;
 }
 
 .bar-value {
@@ -575,6 +593,7 @@ const translateCategoryName = (categoryName) => {
     font-weight: 600;
     color: #374151;
     min-width: 30px;
+    text-align: left;
 }
 
 /* Pie Chart Styles */
