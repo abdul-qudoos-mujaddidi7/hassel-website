@@ -32,6 +32,18 @@ export default {
     "created_date": "تاریخ ایجاد",
     "farsi": "دری",
     "pashto": "پښتو",
+    
+    // Form actions
+    "create": "ایجاد",
+    "update": "به‌روزرسانی",
+    "submit": "ایجاد",
+    
+    // Form fields
+    "stat_type": "نوع آمار",
+    "value": "مقدار",
+    "year": "سال",
+    "description": "توضیحات",
+    
     "field_required": "این فیلد الزامی است",
 
     // Footer
@@ -383,5 +395,10 @@ export default {
     "loader.sub_resources": "در حال جمع‌آوری منابع...",
     "loader.sub_careers": "در حال آماده‌سازی اطلاعات شغلی...",
     "loader.sub_contact": "در حال بارگذاری جزئیات تماس...",
-    "loader.sub_default": "لطفاً صبر کنید تا محتوا را آماده کنیم"
+    "loader.sub_default": "لطفاً صبر کنید تا محتوا را آماده کنیم",
+    
+    // Validation messages
+    "positive_number": "مقدار باید یک عدد مثبت باشد.",
+    "year_range": "سال باید بین 2000 و 2100 باشد.",
+    "max_length_500": "توضیحات باید 500 کاراکتر یا کمتر باشد."
 };

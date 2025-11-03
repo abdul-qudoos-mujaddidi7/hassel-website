@@ -75,7 +75,8 @@
                                             >
                                                 {{
                                                     BeneficiariesRepository.getStatTypeLabel(
-                                                        item.stat_type
+                                                        item.stat_type,
+                                                        t
                                                     )
                                                 }}
                                             </v-chip>

@@ -23,19 +23,19 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             beneficiariesStatsSearch: ref(""),
             currentStat: reactive({}),
             
-            // Stat types for dropdowns
-            statTypes: reactive([
-                { value: 'beneficiaries', label: 'Beneficiaries' },
-                { value: 'total_beneficiaries', label: 'Total Beneficiaries' },
-                { value: 'male_beneficiaries', label: 'Male Beneficiaries' },
-                { value: 'female_beneficiaries', label: 'Female Beneficiaries' },
-                { value: 'programs_completed', label: 'Programs Completed' },
-                { value: 'provinces_reached', label: 'Provinces Reached' },
-                { value: 'cooperatives_formed', label: 'Cooperatives Formed' },
-                { value: 'projects', label: 'Projects' },
-                { value: 'staff', label: 'Staff' },
-                { value: 'partners', label: 'Partners' }
-            ]),
+            // Stat types for dropdowns - will be computed with translations
+            statTypesBase: [
+                { value: 'beneficiaries', labelKey: 'stat_type.beneficiaries' },
+                { value: 'total_beneficiaries', labelKey: 'stat_type.total_beneficiaries' },
+                { value: 'male_beneficiaries', labelKey: 'stat_type.male_beneficiaries' },
+                { value: 'female_beneficiaries', labelKey: 'stat_type.female_beneficiaries' },
+                { value: 'programs_completed', labelKey: 'stat_type.programs_completed' },
+                { value: 'provinces_reached', labelKey: 'stat_type.provinces_reached' },
+                { value: 'cooperatives_formed', labelKey: 'stat_type.cooperatives_formed' },
+                { value: 'projects', labelKey: 'stat_type.projects' },
+                { value: 'staff', labelKey: 'stat_type.staff' },
+                { value: 'partners', labelKey: 'stat_type.partners' }
+            ],
         };
     },
     actions: {
@@ -270,10 +270,11 @@ export let useBeneficiariesRepository = defineStore("BeneficiariesRepository", {
             }
         },
         
-        // Helper method to get stat type label
-        getStatTypeLabel(statType) {
-            const stat = this.statTypes.find(s => s.value === statType);
-            return stat ? stat.label : statType;
+        // Helper method to get stat type label (requires i18n instance to be passed)
+        getStatTypeLabel(statType, t) {
+            const translate = t || ((key) => key);
+            const stat = this.statTypesBase.find(s => s.value === statType);
+            return stat ? translate(stat.labelKey) : statType;
         },
         
         // Helper method to format numbers

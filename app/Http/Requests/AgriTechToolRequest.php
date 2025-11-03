@@ -26,8 +26,60 @@ class AgriTechToolRequest extends FormRequest
             ],
             'description' => 'required|string',
             'short_description' => 'nullable|string',
-            'cover_image' => 'nullable|string|max:255',
-            'thumbnail_image' => 'nullable|string|max:255',
+            'cover_image' => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    if ($value === '' || $value === null) {
+                        return;
+                    }
+                    if (!is_string($value) && !($value instanceof \Illuminate\Http\UploadedFile)) {
+                        $fail('The cover image must be a string or a valid image file.');
+                        return;
+                    }
+                    if (is_string($value) && strlen($value) > 500) {
+                        $fail('The cover image URL may not be greater than 500 characters.');
+                        return;
+                    }
+                    if ($value instanceof \Illuminate\Http\UploadedFile) {
+                        $allowedMimes = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
+                        if (!in_array(strtolower($value->getClientOriginalExtension()), $allowedMimes)) {
+                            $fail('The cover image must be a file of type: jpeg, jpg, png, gif, webp.');
+                            return;
+                        }
+                        if ($value->getSize() > 3072 * 1024) {
+                            $fail('The cover image may not be greater than 3MB.');
+                            return;
+                        }
+                    }
+                }
+            ],
+            'thumbnail_image' => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    if ($value === '' || $value === null) {
+                        return;
+                    }
+                    if (!is_string($value) && !($value instanceof \Illuminate\Http\UploadedFile)) {
+                        $fail('The thumbnail image must be a string or a valid image file.');
+                        return;
+                    }
+                    if (is_string($value) && strlen($value) > 500) {
+                        $fail('The thumbnail image URL may not be greater than 500 characters.');
+                        return;
+                    }
+                    if ($value instanceof \Illuminate\Http\UploadedFile) {
+                        $allowedMimes = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
+                        if (!in_array(strtolower($value->getClientOriginalExtension()), $allowedMimes)) {
+                            $fail('The thumbnail image must be a file of type: jpeg, jpg, png, gif, webp.');
+                            return;
+                        }
+                        if ($value->getSize() > 3072 * 1024) {
+                            $fail('The thumbnail image may not be greater than 3MB.');
+                            return;
+                        }
+                    }
+                }
+            ],
             'tool_type' => 'required|in:mobile_app,web_platform,hardware,software,sensor',
             'platform' => 'nullable|string|max:100',
             'version' => 'nullable|string|max:50',
@@ -64,9 +116,7 @@ class AgriTechToolRequest extends FormRequest
             $this->merge(['slug' => \Illuminate\Support\Str::slug($this->name)]);
         }
 
-        // Convert features array to JSON if needed
-        if ($this->features && is_array($this->features)) {
-            $this->merge(['features' => json_encode($this->features)]);
-        }
+        // Arrays will be automatically converted to JSON by the model's casts
+        // Don't convert here as validation needs to see arrays
     }
 }

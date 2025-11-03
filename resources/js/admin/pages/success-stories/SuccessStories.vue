@@ -60,15 +60,19 @@
                                         <td class="py-2 pl-4">
                                             <div class="d-flex align-center">
                                                 <v-avatar
-                                                    v-if="item.featured_image"
+                                                    v-if="item.image || item.image_url"
                                                     size="40"
                                                     class="mr-3"
                                                 >
-                                                    <v-img :src="item.featured_image" :alt="item.title"></v-img>
+                                                    <v-img 
+                                                        :src="item.image_url || item.image" 
+                                                        :alt="item.title"
+                                                        cover
+                                                    ></v-img>
                                                 </v-avatar>
                                                 <div>
                                                     <div class="font-weight-medium">{{ item.title }}</div>
-                                                    <div class="text-caption text-grey">{{ item.author_name }}</div>
+                                                    <div class="text-caption text-grey">{{ item.client_name }}</div>
                                                 </div>
                                             </div>
                                         </td>

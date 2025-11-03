@@ -25,7 +25,7 @@
                             <div class="flex w-100">
                                 <v-select
                                     v-model="formData.stat_type"
-                                    :items="BeneficiariesRepository.statTypes"
+                                    :items="statTypes"
                                     variant="outlined"
                                     density="compact"
                                     item-value="value"
@@ -79,7 +79,7 @@
 
                     <div class="d-flex flex-row-reverse mb-6 mx-6">
                         <v-btn class="create-btn-gradient px-4" @click="save">
-                            <v-icon>mdi-content-save</v-icon>
+                           
                             {{ buttonText }}
                         </v-btn>
                     </div>
@@ -93,9 +93,18 @@
 import { ref, reactive, computed, watch } from "vue";
 import { useBeneficiariesRepository } from "../../stores/BeneficiariesRepository";
 import { useI18n } from "vue-i18n";
-const { t } = useI18n();
 
+const { t, locale } = useI18n();
 const BeneficiariesRepository = useBeneficiariesRepository();
+
+// Computed stat types with translations
+const statTypes = computed(() => {
+    return BeneficiariesRepository.statTypesBase.map(stat => ({
+        value: stat.value,
+        label: t(stat.labelKey)
+    }));
+});
+
 const formTitle = computed(() => BeneficiariesRepository.isEditMode ? t('update') : t('create'));
 const buttonText = computed(() => BeneficiariesRepository.isEditMode ? t('update') : t('submit'));
 const formRef = ref(null);
@@ -120,18 +129,18 @@ watch(() => BeneficiariesRepository.currentStat, (newStat) => {
 }, { deep: true, immediate: true });
 
 const rules = {
-    required: (value) => !!value || "This field is required.",
+    required: (value) => !!value || t('field_required'),
     positiveNumber: (value) => 
         (value !== null && value !== undefined && value >= 0) || 
-        "Value must be a positive number.",
+        t('positive_number'),
     year: (value) => {
         if (!value) return true;
         const year = parseInt(value);
-        return (year >= 2000 && year <= 2100) || "Year must be between 2000 and 2100.";
+        return (year >= 2000 && year <= 2100) || t('year_range');
     },
     maxLength: (value) => 
         !value || value.length <= 500 || 
-        "Description must be 500 characters or less."
+        t('max_length_500')
 };
 
 const save = async () => {

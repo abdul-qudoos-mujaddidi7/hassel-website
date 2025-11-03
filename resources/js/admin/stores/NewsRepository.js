@@ -23,12 +23,12 @@ export let useNewsRepository = defineStore("NewsRepository", {
             newsSearch: ref(""),
             currentNews: reactive({}),
 
-            // Status options for dropdowns
-            statusOptions: reactive([
-                { value: "draft", label: "Draft" },
-                { value: "published", label: "Published" },
-                { value: "archived", label: "Archived" },
-            ]),
+            // Status options for dropdowns - will be computed with translations
+            statusOptionsBase: [
+                { value: "draft", labelKey: "status.draft" },
+                { value: "published", labelKey: "status.published" },
+                { value: "archived", labelKey: "status.archived" },
+            ],
         };
     },
     actions: {
@@ -129,6 +129,7 @@ export let useNewsRepository = defineStore("NewsRepository", {
         // Create new news article
         async createNews(formData) {
             try {
+                // Axios automatically sets Content-Type for FormData, don't override it
                 const response = await axios.post("news", formData);
                 this.createDialog = false;
                 toast.success("News article created successfully!", {
@@ -166,7 +167,9 @@ export let useNewsRepository = defineStore("NewsRepository", {
         // Update existing news article
         async updateNews(id, formData) {
             try {
-                const response = await axios.put(`news/${id}`, formData);
+                // The route is POST to news/{news} which calls updateNews method
+                // Axios automatically sets Content-Type for FormData
+                const response = await axios.post(`news/${id}`, formData);
                 this.createDialog = false;
                 this.isEditMode = false;
                 toast.success("News article updated successfully!", {
@@ -333,12 +336,13 @@ export let useNewsRepository = defineStore("NewsRepository", {
             }
         },
 
-        // Helper method to get status label
-        getStatusLabel(status) {
-            const statusOption = this.statusOptions.find(
+        // Helper method to get status label (requires i18n instance to be passed)
+        getStatusLabel(status, t) {
+            const translate = t || ((key) => key);
+            const statusOption = this.statusOptionsBase.find(
                 (s) => s.value === status
             );
-            return statusOption ? statusOption.label : status;
+            return statusOption ? translate(statusOption.labelKey) : status;
         },
 
         // Helper method to format date

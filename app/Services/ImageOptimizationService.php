@@ -10,7 +10,7 @@ class ImageOptimizationService
   /**
    * Image optimization settings
    */
-  private const OPTIMIZATION_SETTINGS = [
+  private static array $optimizationSettings = [
     'jpeg_quality' => 85,
     'png_compression' => 6,
     'webp_quality' => 80,
@@ -54,8 +54,8 @@ class ImageOptimizationService
 
       // Resize if necessary
       if (
-        $width > self::OPTIMIZATION_SETTINGS['max_width'] ||
-        $height > self::OPTIMIZATION_SETTINGS['max_height']
+        $width > self::$optimizationSettings['max_width'] ||
+        $height > self::$optimizationSettings['max_height']
       ) {
 
         $image = $this->resizeImage($image, $width, $height);
@@ -157,7 +157,7 @@ class ImageOptimizationService
       }
 
       // Convert to WebP
-      $success = imagewebp($image, $webpPath, self::OPTIMIZATION_SETTINGS['webp_quality']);
+      $success = imagewebp($image, $webpPath, self::$optimizationSettings['webp_quality']);
 
       // Clean up memory
       imagedestroy($image);
@@ -178,8 +178,8 @@ class ImageOptimizationService
    */
   public function getOptimizedDimensions(int $width, int $height): array
   {
-    $maxWidth = self::OPTIMIZATION_SETTINGS['max_width'];
-    $maxHeight = self::OPTIMIZATION_SETTINGS['max_height'];
+    $maxWidth = self::$optimizationSettings['max_width'];
+    $maxHeight = self::$optimizationSettings['max_height'];
 
     if ($width <= $maxWidth && $height <= $maxHeight) {
       return ['width' => $width, 'height' => $height];
@@ -262,8 +262,8 @@ class ImageOptimizationService
    */
   private function createThumbnailImage($sourceImage, int $sourceWidth, int $sourceHeight)
   {
-    $thumbWidth = self::OPTIMIZATION_SETTINGS['thumbnail_width'];
-    $thumbHeight = self::OPTIMIZATION_SETTINGS['thumbnail_height'];
+    $thumbWidth = self::$optimizationSettings['thumbnail_width'];
+    $thumbHeight = self::$optimizationSettings['thumbnail_height'];
 
     // Calculate dimensions to maintain aspect ratio
     $ratio = min($thumbWidth / $sourceWidth, $thumbHeight / $sourceHeight);
@@ -301,14 +301,14 @@ class ImageOptimizationService
   {
     switch ($mimeType) {
       case 'image/jpeg':
-        return imagejpeg($image, $filePath, self::OPTIMIZATION_SETTINGS['jpeg_quality']);
+        return imagejpeg($image, $filePath, self::$optimizationSettings['jpeg_quality']);
       case 'image/png':
-        return imagepng($image, $filePath, self::OPTIMIZATION_SETTINGS['png_compression']);
+        return imagepng($image, $filePath, self::$optimizationSettings['png_compression']);
       case 'image/gif':
         return imagegif($image, $filePath);
       case 'image/webp':
         return function_exists('imagewebp') ?
-          imagewebp($image, $filePath, self::OPTIMIZATION_SETTINGS['webp_quality']) : false;
+          imagewebp($image, $filePath, self::$optimizationSettings['webp_quality']) : false;
       default:
         return false;
     }
@@ -362,8 +362,8 @@ class ImageOptimizationService
   public function updateSettings(array $settings): void
   {
     foreach ($settings as $key => $value) {
-      if (array_key_exists($key, self::OPTIMIZATION_SETTINGS)) {
-        self::OPTIMIZATION_SETTINGS[$key] = $value;
+      if (array_key_exists($key, self::$optimizationSettings)) {
+        self::$optimizationSettings[$key] = $value;
       }
     }
   }
@@ -373,6 +373,6 @@ class ImageOptimizationService
    */
   public function getSettings(): array
   {
-    return self::OPTIMIZATION_SETTINGS;
+    return self::$optimizationSettings;
   }
 }

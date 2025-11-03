@@ -46,7 +46,7 @@
                     :label="$t('slug')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="URL-friendly version of the title"
+                    :hint="$t('hint_url_friendly')"
                     persistent-hint
                 ></v-text-field>
 
@@ -72,7 +72,7 @@
                     :label="$t('file_path')"
                     density="compact"
                     class="pb-4 pr-2 w-75"
-                    hint="URL or path to the file"
+                    :hint="$t('hint_file_path')"
                     persistent-hint
                 ></v-text-field>
 
@@ -114,7 +114,7 @@
                     class="pb-4"
                     :rules="[rules.required]"
                     rows="6"
-                    hint="Detailed description of the publication"
+                    :hint="$t('hint_publication_description')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -232,10 +232,10 @@ watch(() => formData.status, (newStatus) => {
 });
 
 const rules = {
-    required: (value) => !!value || "This field is required.",
+    required: (value) => !!value || t('field_required'),
     maxLength: (value) => 
         !value || value.length <= 1000 || 
-        "Description must be 1000 characters or less."
+        t('max_length_1000')
 };
 
 // Generate slug from title

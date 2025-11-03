@@ -32,6 +32,18 @@ export default {
     "created_date": "د جوړیدو نیټه",
     "farsi": "دری",
     "pashto": "پښتو",
+    
+    // Form actions
+    "create": "جوړول",
+    "update": "تازه کول",
+    "submit": "وسپارل",
+    
+    // Form fields
+    "stat_type": "د احصایې ډول",
+    "value": "ارزښت",
+    "year": "کال",
+    "description": "تشریح",
+    
     "field_required": "دا ډګر اړین دی",
 
     // Footer
@@ -383,5 +395,10 @@ export default {
     "loader.sub_resources": "سرچینې راټولېږي...",
     "loader.sub_careers": "د دندو معلومات چمتو کېږي...",
     "loader.sub_contact": "د اړیکو جزئیات لوډ کېږي...",
-    "loader.sub_default": "مهرباني وکړئ انتظار وکړئ ترڅو محتوا چمتو شي"
+    "loader.sub_default": "مهرباني وکړئ انتظار وکړئ ترڅو محتوا چمتو شي",
+    
+    // Validation messages
+    "positive_number": "ارزښت باید د مثبت عدد وي.",
+    "year_range": "کال باید د 2000 او 2100 ترمنځ وي.",
+    "max_length_500": "تشریح باید 500 حروف یا کم وي."
 };

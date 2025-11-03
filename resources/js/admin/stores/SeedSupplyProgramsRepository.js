@@ -216,9 +216,15 @@ export let useSeedSupplyProgramsRepository = defineStore(
             // Update existing seed supply program
             async updateSeedSupplyProgram(id, formData) {
                 try {
-                    const response = await axios.put(
+                    // Use POST with _method=PUT for file uploads (FormData)
+                    const response = await axios.post(
                         `seed-supply-programs/${id}`,
-                        formData
+                        formData,
+                        {
+                            headers: {
+                                '_method': 'PUT'
+                            }
+                        }
                     );
                     this.createDialog = false;
                     this.isEditMode = false;
@@ -237,6 +243,9 @@ export let useSeedSupplyProgramsRepository = defineStore(
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
+                    
+                    // Return response so component can access updated data
+                    return response;
                 } catch (err) {
                     console.error(err);
                     const errorMessage =
@@ -251,6 +260,7 @@ export let useSeedSupplyProgramsRepository = defineStore(
                         draggable: true,
                         progress: undefined,
                     });
+                    throw err;
                 }
             },
 

@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useTranslations } from '../composables/useTranslations'
 
@@ -153,10 +153,10 @@ const props = defineProps({
     default: false
   },
   
-  // Direction
+  // Direction (auto-computed from locale if not provided)
   dir: {
     type: String,
-    default: 'rtl'
+    default: null
   },
   
   // Whether this is edit mode (has existing record)
@@ -172,7 +172,15 @@ const emit = defineEmits([
   'load-translations'
 ])
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+
+// Compute direction from locale if not provided
+const dir = computed(() => {
+  if (props.dir !== null) {
+    return props.dir
+  }
+  return ['fa', 'ps'].includes(locale.value) ? 'rtl' : 'ltr'
+})
 
 // Translation composable
 const {
@@ -228,12 +236,33 @@ const checkPashtoFilled = () => {
   isPashtoFilled.value = hasAnyTranslation
 }
 
+// Function to apply RTL styles to inputs
+const applyRTLStyles = () => {
+  if (dir.value === 'rtl') {
+    nextTick(() => {
+      setTimeout(() => {
+        // Target all Vuetify input elements within this form
+        const formElement = formRef.value?.$el || document
+        const inputs = formElement.querySelectorAll?.('.v-field__input, .v-text-field input, .v-textarea textarea, input[type="text"], input[type="number"], textarea') || []
+        inputs.forEach((input) => {
+          if (input && input.tagName) {
+            input.style.setProperty('text-align', 'right', 'important')
+            input.style.setProperty('direction', 'rtl', 'important')
+          }
+        })
+      }, 150)
+    })
+  }
+}
+
 // Initialize translations when component mounts
 // Only initialize for create mode without incoming translation data
 onMounted(() => {
   if (!props.isEditMode && !props.formData?.translationData) {
     initializeTranslations()
   }
+  // Apply RTL styles on mount
+  applyRTLStyles()
 })
 
 // Watch for form data changes to load translations
@@ -270,6 +299,18 @@ watch(() => translations.farsi, () => {
 watch(() => translations.pashto, () => {
   checkPashtoFilled()
 }, { deep: true })
+
+// Watch for direction changes
+watch(() => dir.value, () => {
+  applyRTLStyles()
+}, { immediate: true })
+
+// Watch for dialog visibility to apply styles when it opens
+watch(() => isVisible.value, (visible) => {
+  if (visible) {
+    applyRTLStyles()
+  }
+})
 
 // Get current step for stepper
 const getCurrentStep = () => {
@@ -349,5 +390,50 @@ defineExpose({
 .translation-stepper .v-stepper-item__subtitle {
   font-size: 0.8rem;
   color: #666;
+}
+</style>
+
+<style>
+/* RTL placeholder and input alignment for admin forms */
+[dir="rtl"] .v-field__input,
+[dir="rtl"] .v-field__input::placeholder,
+[dir="rtl"] .v-text-field input,
+[dir="rtl"] .v-text-field input::placeholder,
+[dir="rtl"] .v-textarea textarea,
+[dir="rtl"] .v-textarea textarea::placeholder {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+[dir="rtl"] .v-field__field input,
+[dir="rtl"] .v-field__field textarea {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+/* Additional RTL support for body class */
+body.rtl .v-field__input,
+body.rtl .v-field__input::placeholder,
+body.rtl .v-text-field input,
+body.rtl .v-text-field input::placeholder,
+body.rtl .v-textarea textarea,
+body.rtl .v-textarea textarea::placeholder {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+body.rtl .v-field__field input,
+body.rtl .v-field__field textarea {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+/* Universal fallback */
+.rtl input::placeholder,
+.rtl textarea::placeholder,
+.rtl input,
+.rtl textarea {
+    text-align: right !important;
+    direction: rtl !important;
 }
 </style>

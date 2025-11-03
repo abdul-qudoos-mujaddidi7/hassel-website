@@ -47,7 +47,7 @@
                     :label="$t('slug')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="URL-friendly version of the title"
+                    :hint="$t('hint_url_friendly')"
                     persistent-hint
                 ></v-text-field>
 
@@ -94,7 +94,7 @@
                     :label="$t('duration')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="e.g., 3 days, 2 weeks"
+                    :hint="$t('hint_duration')"
                     persistent-hint
                 ></v-text-field>
 
@@ -106,7 +106,7 @@
                     type="number"
                     min="1"
                     class="pb-4 pl-2 w-50"
-                    hint="Leave empty for unlimited"
+                    :hint="$t('hint_max_participants')"
                     persistent-hint
                 ></v-text-field>
             </div>
@@ -142,7 +142,7 @@
                     :label="$t('cover_image')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="URL of the cover image"
+                    :hint="$t('hint_cover_image')"
                     persistent-hint
                 ></v-text-field>
 
@@ -152,7 +152,7 @@
                     :label="$t('thumbnail_image')"
                     density="compact"
                     class="pb-4 pl-2 w-50"
-                    hint="URL of the thumbnail image"
+                    :hint="$t('hint_thumbnail_image')"
                     persistent-hint
                 ></v-text-field>
             </div>
@@ -167,7 +167,7 @@
                     class="pb-4"
                     :rules="[rules.required]"
                     rows="6"
-                    hint="Detailed description of the training program"
+                    :hint="$t('hint_training_description')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -339,19 +339,19 @@ watch(() => TrainingProgramsRepository.currentProgram, (newProgram) => {
 }, { deep: true, immediate: true });
 
 const rules = {
-    required: (value) => !!value || "This field is required.",
+    required: (value) => !!value || t('field_required'),
     startDate: (value) => {
         if (!value) return true;
         const startDate = new Date(value);
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        return startDate >= today || "Start date must be today or later.";
+        return startDate >= today || t('start_date_validation');
     },
     endDate: (value) => {
         if (!value) return true;
         const endDate = new Date(value);
         const startDate = new Date(formData.start_date);
-        return endDate > startDate || "End date must be after start date.";
+        return endDate > startDate || t('end_date_validation');
     }
 };
 

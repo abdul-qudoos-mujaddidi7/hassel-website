@@ -47,7 +47,7 @@
                     :label="$t('slug')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="URL-friendly version of the name"
+                    :hint="$t('hint_url_friendly_name')"
                     persistent-hint
                 ></v-text-field>
 
@@ -103,7 +103,7 @@
                     :label="$t('price_range')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="e.g., $100-500, $50-200"
+                    :hint="$t('hint_price_range')"
                     persistent-hint
                 ></v-text-field>
 
@@ -135,7 +135,7 @@
                     :label="$t('cover_image')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="URL of the cover image"
+                    :hint="$t('hint_cover_image')"
                     persistent-hint
                 ></v-text-field>
 
@@ -145,7 +145,7 @@
                     :label="$t('thumbnail_image')"
                     density="compact"
                     class="pb-4 pl-2 w-50"
-                    hint="URL of the thumbnail image"
+                    :hint="$t('hint_thumbnail_image')"
                     persistent-hint
                 ></v-text-field>
             </div>
@@ -159,7 +159,7 @@
                     density="compact"
                     class="pb-4"
                     rows="3"
-                    hint="Brief description of the agri-tech tool"
+                    :hint="$t('hint_agri_tool_description')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -174,7 +174,7 @@
                     class="pb-4"
                     :rules="[rules.required]"
                     rows="6"
-                    hint="Detailed description of the agri-tech tool"
+                    :hint="$t('hint_agri_tool_detailed')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -189,7 +189,7 @@
                     class="pb-4"
                     multiple
                     chips
-                    hint="Enter key features and capabilities"
+                    :hint="$t('hint_features')"
                     persistent-hint
                 ></v-combobox>
             </div>
@@ -203,7 +203,7 @@
                     density="compact"
                     class="pb-4"
                     rows="4"
-                    hint="Technical specifications"
+                    :hint="$t('hint_specifications')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -217,7 +217,7 @@
                     density="compact"
                     class="pb-4"
                     rows="6"
-                    hint="Step-by-step usage instructions"
+                    :hint="$t('hint_usage_instructions')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -231,7 +231,7 @@
                     density="compact"
                     class="pb-4"
                     rows="4"
-                    hint="Maintenance and care requirements"
+                    :hint="$t('hint_maintenance')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -279,7 +279,7 @@
                     class="pb-4"
                     multiple
                     chips
-                    hint="Enter key features and capabilities"
+                    :hint="$t('hint_features')"
                     persistent-hint
                 ></v-combobox>
             </div>
@@ -360,7 +360,7 @@
                     class="pb-4"
                     multiple
                     chips
-                    hint="Enter key features and capabilities"
+                    :hint="$t('hint_features')"
                     persistent-hint
                 ></v-combobox>
             </div>
@@ -486,7 +486,7 @@ watch(() => AgriTechToolsRepository.currentAgriTechTool, (newTool) => {
 }, { deep: true, immediate: true });
 
 const rules = {
-    required: (value) => !!value || "This field is required.",
+    required: (value) => !!value || t('field_required'),
 };
 
 // Generate slug from name

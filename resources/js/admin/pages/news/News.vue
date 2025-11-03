@@ -78,7 +78,7 @@
                                                 size="small"
                                                 variant="flat"
                                             >
-                                                {{ NewsRepository.getStatusLabel(item.status) }}
+                                                {{ NewsRepository.getStatusLabel(item.status, t) }}
                                             </v-chip>
                                         </div>
                                     </template>

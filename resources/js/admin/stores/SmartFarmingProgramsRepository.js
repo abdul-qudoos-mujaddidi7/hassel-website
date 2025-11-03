@@ -199,9 +199,15 @@ export let useSmartFarmingProgramsRepository = defineStore(
             // Update existing smart farming program
             async updateSmartFarmingProgram(id, formData) {
                 try {
-                    const response = await axios.put(
+                    // Use POST with _method=PUT for file uploads (FormData)
+                    const response = await axios.post(
                         `smart-farming-programs/${id}`,
-                        formData
+                        formData,
+                        {
+                            headers: {
+                                '_method': 'PUT'
+                            }
+                        }
                     );
                     this.createDialog = false;
                     this.isEditMode = false;
@@ -220,6 +226,9 @@ export let useSmartFarmingProgramsRepository = defineStore(
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
+                    
+                    // Return response so component can access updated data
+                    return response;
                 } catch (err) {
                     console.error(err);
                     const errorMessage =
@@ -234,6 +243,7 @@ export let useSmartFarmingProgramsRepository = defineStore(
                         draggable: true,
                         progress: undefined,
                     });
+                    throw err;
                 }
             },
 

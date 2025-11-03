@@ -47,7 +47,7 @@
                     :label="$t('slug')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="URL-friendly version of the title"
+                    :hint="$t('hint_url_friendly')"
                     persistent-hint
                 ></v-text-field>
 
@@ -98,7 +98,7 @@
                     :label="$t('featured_image')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="URL of the featured image"
+                    :hint="$t('hint_featured_image')"
                     persistent-hint
                 ></v-text-field>
 
@@ -108,7 +108,7 @@
                     :label="$t('cover_image')"
                     density="compact"
                     class="pb-4 pl-2 w-50"
-                    hint="URL of the cover image"
+                    :hint="$t('hint_cover_image')"
                     persistent-hint
                 ></v-text-field>
             </div>
@@ -121,7 +121,7 @@
                     :label="$t('thumbnail_image')"
                     density="compact"
                     class="pb-4 w-100"
-                    hint="URL of the thumbnail image"
+                    :hint="$t('hint_thumbnail_image')"
                     persistent-hint
                 ></v-text-field>
             </div>
@@ -136,7 +136,7 @@
                     class="pb-4"
                     multiple
                     chips
-                    hint="Enter partner organization names"
+                    :hint="$t('hint_partner_organizations')"
                     persistent-hint
                 ></v-combobox>
             </div>
@@ -151,7 +151,7 @@
                     class="pb-4"
                     :rules="[rules.required]"
                     rows="8"
-                    hint="Detailed description of the community program"
+                    :hint="$t('hint_detailed_description')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -197,7 +197,7 @@
                     class="pb-4"
                     multiple
                     chips
-                    hint="Enter partner organization names"
+                    :hint="$t('hint_partner_organizations')"
                     persistent-hint
                 ></v-combobox>
             </div>
@@ -243,7 +243,7 @@
                     class="pb-4"
                     multiple
                     chips
-                    hint="Enter partner organization names"
+                    :hint="$t('hint_partner_organizations')"
                     persistent-hint
                 ></v-combobox>
             </div>
@@ -309,7 +309,7 @@ watch(() => CommunityProgramsRepository.currentCommunityProgram, (newProgram) =>
 }, { deep: true, immediate: true });
 
 const rules = {
-    required: (value) => !!value || "This field is required.",
+    required: (value) => !!value || t('field_required'),
 };
 
 // Generate slug from title

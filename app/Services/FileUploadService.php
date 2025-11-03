@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
@@ -64,9 +65,14 @@ class FileUploadService
     // Store file
     $fullPath = $file->storeAs($storagePath, $filename, 'public');
 
-    // Optimize if it's an image
+    // Optimize if it's an image (non-critical - don't fail upload if optimization fails)
     if ($this->isImageType($type)) {
-      app(ImageOptimizationService::class)->optimize(storage_path('app/public/' . $fullPath));
+      try {
+        app(ImageOptimizationService::class)->optimize(storage_path('app/public/' . $fullPath));
+      } catch (\Exception $e) {
+        // Log error but don't fail the upload
+        Log::warning('Image optimization failed, but upload succeeded: ' . $e->getMessage());
+      }
     }
 
     return $fullPath;

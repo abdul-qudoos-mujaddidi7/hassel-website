@@ -192,18 +192,28 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->name('api.admin.'
   Route::get('/dashboard/stats', [App\Http\Controllers\Api\Admin\DashboardController::class, 'stats'])->name('dashboard.stats');
 
   // Content Management
-  Route::apiResource('news', App\Http\Controllers\Api\Admin\NewsController::class);
-  Route::apiResource('success-stories', App\Http\Controllers\Api\Admin\SuccessStoriesController::class);
+  Route::post('news/{news}', [App\Http\Controllers\Api\Admin\NewsController::class, 'updateNews'])->name('news.update');
+  Route::apiResource('news', App\Http\Controllers\Api\Admin\NewsController::class)->except('update');
+  Route::post('success-stories/{successStory}', [App\Http\Controllers\Api\Admin\SuccessStoriesController::class, 'update'])->name('success-stories.update');
+  Route::apiResource('success-stories', App\Http\Controllers\Api\Admin\SuccessStoriesController::class)->except('update');
+  Route::post('training-programs/{trainingProgram}', [App\Http\Controllers\Api\Admin\TrainingProgramsController::class, 'update'])->name('training-programs.update');
+  Route::apiResource('training-programs', App\Http\Controllers\Api\Admin\TrainingProgramsController::class)->except('update');
   Route::apiResource('job-announcements', App\Http\Controllers\Api\Admin\JobAnnouncementController::class);
   Route::apiResource('publications', App\Http\Controllers\Api\Admin\PublicationsController::class);
   Route::apiResource('programs', App\Http\Controllers\Api\Admin\ProgramsController::class);
-  Route::apiResource('training-programs', App\Http\Controllers\Api\Admin\TrainingProgramsController::class);
   Route::apiResource('agri-tech-tools', App\Http\Controllers\Api\Admin\AgriTechToolsController::class);
-  Route::apiResource('market-access-programs', App\Http\Controllers\Api\Admin\MarketAccessProgramsController::class);
-  Route::apiResource('smart-farming-programs', App\Http\Controllers\Api\Admin\SmartFarmingProgramsController::class);
-  Route::apiResource('seed-supply-programs', App\Http\Controllers\Api\Admin\SeedSupplyProgramsController::class);
-  Route::apiResource('community-programs', App\Http\Controllers\Api\Admin\CommunityProgramsController::class);
-  Route::apiResource('environmental-projects', App\Http\Controllers\Api\Admin\EnvironmentalProjectsController::class);
+  Route::post('market-access-programs/{marketAccessProgram}', [App\Http\Controllers\Api\Admin\MarketAccessProgramsController::class, 'update'])->name('market-access-programs.update');
+  Route::apiResource('market-access-programs', App\Http\Controllers\Api\Admin\MarketAccessProgramsController::class)->except('update');
+  Route::post('smart-farming-programs/{smartFarmingProgram}', [App\Http\Controllers\Api\Admin\SmartFarmingProgramsController::class, 'update'])->name('smart-farming-programs.update');
+  Route::apiResource('smart-farming-programs', App\Http\Controllers\Api\Admin\SmartFarmingProgramsController::class)->except('update');
+  Route::post('seed-supply-programs/{seedSupplyProgram}', [App\Http\Controllers\Api\Admin\SeedSupplyProgramsController::class, 'update'])->name('seed-supply-programs.update');
+  Route::apiResource('seed-supply-programs', App\Http\Controllers\Api\Admin\SeedSupplyProgramsController::class)->except('update');
+  Route::post('community-programs/{communityProgram}', [App\Http\Controllers\Api\Admin\CommunityProgramsController::class, 'update'])->name('community-programs.update');
+  Route::apiResource('community-programs', App\Http\Controllers\Api\Admin\CommunityProgramsController::class)->except('update');
+  Route::post('environmental-projects/{environmentalProject}', [App\Http\Controllers\Api\Admin\EnvironmentalProjectsController::class, 'update'])->name('environmental-projects.update');
+  Route::apiResource('environmental-projects', App\Http\Controllers\Api\Admin\EnvironmentalProjectsController::class)->except('update');
+  Route::post('agri-tech-tools/{agriTechTool}', [App\Http\Controllers\Api\Admin\AgriTechToolsController::class, 'update'])->name('agri-tech-tools.update');
+  Route::apiResource('agri-tech-tools', App\Http\Controllers\Api\Admin\AgriTechToolsController::class)->except('update');
   Route::apiResource('beneficiaries-stats', App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class);
   Route::get('beneficiaries-stats-summary', [App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class, 'summary'])->name('beneficiaries-stats.summary');
 });

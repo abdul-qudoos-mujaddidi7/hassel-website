@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class NewsRequest extends FormRequest
 {
@@ -21,19 +22,70 @@ class NewsRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Get the news ID for update requests - safely extract ID
+        // Laravel route model binding will provide a News model instance
+        $newsId = null;
+        $newsModel = $this->route('news');
+        
+        if ($newsModel instanceof \Illuminate\Database\Eloquent\Model) {
+            $newsId = $newsModel->getKey();
+        } elseif ($newsModel !== null && is_numeric($newsModel)) {
+            $newsId = (int) $newsModel;
+        }
+
+        // Build slug rule based on whether it's an update
+        $slugRule = Rule::unique('news', 'slug');
+        if ($newsId !== null) {
+            $slugRule = $slugRule->ignore($newsId);
+        }
+        
         $rules = [
             'title' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:news,slug',
+            'slug' => [
+                'nullable',
+                'string',
+                'max:255',
+                $slugRule
+            ],
             'excerpt' => 'nullable|string|max:500',
             'content' => 'required|string',
-            'featured_image' => 'nullable|string|max:500',
+            'featured_image' => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    // Allow empty string (for clearing image)
+                    if ($value === '' || $value === null) {
+                        return; // Validation passes for empty/null
+                    }
+                    // Allow string or file - validation will pass if it's a file
+                    if (!is_string($value) && !($value instanceof \Illuminate\Http\UploadedFile)) {
+                        $fail('The featured image must be a string or a valid image file.');
+                        return;
+                    }
+                    // If it's a string, check max length
+                    if (is_string($value) && strlen($value) > 500) {
+                        $fail('The featured image URL may not be greater than 500 characters.');
+                        return;
+                    }
+                    // If it's a file, validate it
+                    if ($value instanceof \Illuminate\Http\UploadedFile) {
+                        $allowedMimes = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
+                        if (!in_array(strtolower($value->getClientOriginalExtension()), $allowedMimes)) {
+                            $fail('The featured image must be a file of type: jpeg, jpg, png, gif, webp.');
+                            return;
+                        }
+                        if ($value->getSize() > 3072 * 1024) {
+                            $fail('The featured image may not be greater than 3MB.');
+                            return;
+                        }
+                    }
+                }
+            ],
             'status' => 'required|in:draft,published,archived',
             'published_at' => 'nullable|date',
         ];
 
-        // For update requests, make slug unique except for current record
-        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
-            $rules['slug'] = 'nullable|string|max:255|unique:news,slug,' . $this->route('news');
+        // For update requests, make fields optional
+        if ($newsId) {
             $rules['title'] = 'sometimes|required|string|max:255';
             $rules['content'] = 'sometimes|required|string';
             $rules['status'] = 'sometimes|required|in:draft,published,archived';
@@ -85,7 +137,7 @@ class NewsRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         // Set published_at to current time if status is published and published_at is not set
-        if ($this->status === 'published' && !$this->has('published_at')) {
+        if ($this->input('status') === 'published' && !$this->has('published_at')) {
             $this->merge([
                 'published_at' => now()
             ]);

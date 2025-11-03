@@ -187,9 +187,15 @@ export let useTrainingProgramsRepository = defineStore(
             // Update existing training program
             async updateTrainingProgram(id, formData) {
                 try {
-                    const response = await axios.put(
+                    // Use POST with _method=PUT for file uploads (FormData)
+                    const response = await axios.post(
                         `training-programs/${id}`,
-                        formData
+                        formData,
+                        {
+                            headers: {
+                                '_method': 'PUT'
+                            }
+                        }
                     );
                     this.createDialog = false;
                     this.isEditMode = false;
@@ -208,6 +214,9 @@ export let useTrainingProgramsRepository = defineStore(
                         page: 1,
                         itemsPerPage: this.itemsPerPage,
                     });
+                    
+                    // Return response so component can access updated data
+                    return response;
                 } catch (err) {
                     console.error(err);
                     const errorMessage =
@@ -222,6 +231,7 @@ export let useTrainingProgramsRepository = defineStore(
                         draggable: true,
                         progress: undefined,
                     });
+                    throw err;
                 }
             },
 

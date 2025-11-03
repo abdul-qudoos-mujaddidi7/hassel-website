@@ -47,7 +47,7 @@
                     :label="$t('slug')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="URL-friendly version of the title"
+                    :hint="$t('hint_url_friendly')"
                 ></v-text-field>
 
                 <v-text-field

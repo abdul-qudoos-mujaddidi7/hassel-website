@@ -47,7 +47,7 @@
                     :label="$t('slug')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="URL-friendly version of the title"
+                    :hint="$t('hint_url_friendly')"
                     persistent-hint
                 ></v-text-field>
 
@@ -119,7 +119,7 @@
                     density="compact"
                     type="number"
                     class="pb-4 w-100"
-                    hint="Budget in USD"
+                    :hint="$t('hint_budget_usd')"
                     persistent-hint
                 ></v-text-field>
             </div>
@@ -132,7 +132,7 @@
                     :label="$t('cover_image')"
                     density="compact"
                     class="pb-4 pr-2 w-50"
-                    hint="URL of the cover image"
+                    :hint="$t('hint_cover_image')"
                     persistent-hint
                 ></v-text-field>
 
@@ -142,7 +142,7 @@
                     :label="$t('thumbnail_image')"
                     density="compact"
                     class="pb-4 pl-2 w-50"
-                    hint="URL of the thumbnail image"
+                    :hint="$t('hint_thumbnail_image')"
                     persistent-hint
                 ></v-text-field>
             </div>
@@ -157,7 +157,7 @@
                     class="pb-4"
                     multiple
                     chips
-                    hint="Enter partner organization names"
+                    :hint="$t('hint_partner_organizations')"
                     persistent-hint
                 ></v-combobox>
             </div>
@@ -172,7 +172,7 @@
                     class="pb-4"
                     :rules="[rules.required]"
                     rows="6"
-                    hint="Detailed description of the environmental project"
+                    :hint="$t('hint_environmental_description')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -186,7 +186,7 @@
                     density="compact"
                     class="pb-4"
                     rows="4"
-                    hint="Project objectives and goals"
+                    :hint="$t('hint_project_objectives')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -200,7 +200,7 @@
                     density="compact"
                     class="pb-4"
                     rows="4"
-                    hint="Project methodology and approach"
+                    :hint="$t('hint_project_methodology')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -214,7 +214,7 @@
                     density="compact"
                     class="pb-4"
                     rows="4"
-                    hint="Expected project outcomes and results"
+                    :hint="$t('hint_project_outcomes')"
                     persistent-hint
                 ></v-textarea>
             </div>
@@ -404,7 +404,7 @@ watch(() => EnvironmentalProjectsRepository.currentEnvironmentalProject, (newPro
 }, { deep: true, immediate: true });
 
 const rules = {
-    required: (value) => !!value || "This field is required.",
+    required: (value) => !!value || t('field_required'),
 };
 
 // Generate slug from title
