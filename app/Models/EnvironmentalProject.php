@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
+use App\Models\Translation;
 
 class EnvironmentalProject extends Model
 {
@@ -109,10 +110,53 @@ class EnvironmentalProject extends Model
     // Helper Methods
     
     // Get translation for a specific field and language
-    public function getTranslation($field, $language = 'farsi')
+    // This method checks both the translations table and JSON columns
+    public function getTranslation($field, $language = 'farsi', $fallbackLanguage = 'en')
     {
-        $translations = $language === 'farsi' ? $this->farsi_translations : $this->pashto_translations;
-        return $translations[$field] ?? null;
+        // Normalize language code (fa -> farsi, ps -> pashto, etc.)
+        $normalizeLanguage = function($langCode) {
+            $map = [
+                'fa' => 'farsi',
+                'farsi' => 'farsi',
+                'ps' => 'pashto',
+                'pashto' => 'pashto',
+                'en' => 'en',
+                'english' => 'en',
+            ];
+            $normalized = strtolower($langCode ?? 'en');
+            return $map[$normalized] ?? 'en';
+        };
+        
+        $normalizedLang = $normalizeLanguage($language);
+        
+        // First, try to get from translations table (via trait method if available)
+        // Call parent trait method using call_user_func or directly query
+        try {
+            $translation = Translation::query()
+                ->where('model_type', static::class)
+                ->where('model_id', $this->getKey())
+                ->where('field_name', $field)
+                ->where('language', $normalizedLang)
+                ->value('content');
+            
+            if ($translation !== null && $translation !== '') {
+                return $translation;
+            }
+        } catch (\Exception $e) {
+            // If translation table query fails, continue to JSON columns
+        }
+        
+        // Fallback to JSON columns
+        if ($normalizedLang === 'farsi') {
+            $translations = $this->farsi_translations ?? [];
+            return $translations[$field] ?? null;
+        } elseif ($normalizedLang === 'pashto') {
+            $translations = $this->pashto_translations ?? [];
+            return $translations[$field] ?? null;
+        }
+        
+        // For English, return base value
+        return null;
     }
     
     // Set translation for a specific field and language

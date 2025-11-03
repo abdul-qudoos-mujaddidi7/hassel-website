@@ -51,8 +51,22 @@ class TranslationSyncService
           continue;
         }
 
-        // Convert arrays to JSON strings for storage in the translations table
+        // If value is already a JSON string (for arrays like features), keep it as is for storage
+        // Otherwise, convert arrays to JSON strings for storage in the translations table
         $content = is_array($value) ? json_encode($value) : $value;
+        
+        // Parse JSON strings back to array for JSON column storage
+        $arrayValue = $value;
+        if (is_string($value) && (substr($value, 0, 1) === '[' || substr($value, 0, 1) === '{')) {
+          try {
+            $parsed = json_decode($value, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($parsed)) {
+              $arrayValue = $parsed;
+            }
+          } catch (\Exception $e) {
+            // Keep original value if parsing fails
+          }
+        }
 
         // Upsert
         $existing = $query->first();
@@ -72,8 +86,8 @@ class TranslationSyncService
         // Also collect for JSON columns when present on the model
         $langKey = strtolower($language);
         if (isset($jsonCollect[$langKey])) {
-          // Store original value for JSON columns (arrays are fine here)
-          $jsonCollect[$langKey][$fieldName] = $value;
+          // Store parsed array value for JSON columns (arrays are preserved as arrays)
+          $jsonCollect[$langKey][$fieldName] = $arrayValue;
         }
       }
     }

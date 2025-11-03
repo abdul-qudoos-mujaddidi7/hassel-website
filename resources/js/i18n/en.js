@@ -707,39 +707,5 @@ export default {
     "hint_seed_detailed": "Detailed description of the seed/input",
     "hint_input_instructions": "Step-by-step instructions for using this input",
     "hint_technical_details": "Technical details and specifications",
-    "max_length_1000": "Description must be 1000 characters or less."
-    "loader.home": "Welcome to Mount Agro",
-    "loader.our_work": "Exploring Our Impact",
-    "loader.training_programs": "Preparing Training Programs",
-    "loader.agri_tech": "Loading Agricultural Technology",
-    "loader.market_access": "Accessing Market Opportunities",
-    "loader.smart_farming": "Connecting to Smart Solutions",
-    "loader.seed_supply": "Preparing Seed Supply Information",
-    "loader.community_programs": "Loading Community Programs",
-    "loader.environmental_projects": "Accessing Environmental Projects",
-    "loader.resources": "Gathering Resources",
-    "loader.careers": "Preparing Career Opportunities",
-    "loader.contact": "Loading Contact Information",
-    "loader.default": "Loading Page",
-    "loader.sub_home":
-        "Discovering innovative agricultural solutions and sustainable farming practices",
-    "loader.sub_our_work":
-        "Showcasing our commitment to transforming agriculture in Afghanistan",
-    "loader.sub_training_programs":
-        "Getting ready to share knowledge and build capacity",
-    "loader.sub_agri_tech":
-        "Bringing you cutting-edge tools and technologies for modern farming",
-    "loader.sub_market_access":
-        "Opening doors to new opportunities and connections",
-    "loader.sub_smart_farming":
-        "Integrating technology with traditional farming wisdom",
-    "loader.sub_seed_supply": "Ensuring quality inputs for better yields",
-    "loader.sub_community_programs":
-        "Connecting communities and building partnerships",
-    "loader.sub_environmental_projects":
-        "Promoting sustainable practices for a better future",
-    "loader.sub_resources": "Compiling publications, news, and success stories",
-    "loader.sub_careers": "Finding the right talent to grow with us",
-    "loader.sub_contact": "Getting in touch with our team",
-    "loader.sub_default": "Please wait while we prepare everything for you",
+    "max_length_1000": "Description must be 1000 characters or less.",
 };

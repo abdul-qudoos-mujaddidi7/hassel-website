@@ -324,28 +324,38 @@ const getTechnologyLevelColor = (level) => {
     }
 };
 
+// Helper function to format string (capitalize words)
+const formatLabel = (str) => {
+    if (!str) return 'N/A';
+    return str
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+};
+
 // Helper function to get category label
 const getCategoryLabel = (category) => {
-    const categoryOption = AgriTechToolsRepository.categoryOptions.find(
+    // Category is actually tool_type, so use toolTypeOptions
+    const categoryOption = AgriTechToolsRepository.toolTypeOptions?.find(
         (c) => c.value === category
     );
-    return categoryOption ? categoryOption.label : category;
+    return categoryOption ? categoryOption.label : formatLabel(category);
 };
 
 // Helper function to get technology level label
 const getTechnologyLevelLabel = (level) => {
-    const levelOption = AgriTechToolsRepository.technologyLevelOptions.find(
+    const levelOption = AgriTechToolsRepository.technologyLevelOptions?.find(
         (l) => l.value === level
     );
-    return levelOption ? levelOption.label : level;
+    return levelOption ? levelOption.label : formatLabel(level);
 };
 
 // Helper function to get availability label
 const getAvailabilityLabel = (availability) => {
-    const availabilityOption = AgriTechToolsRepository.availabilityOptions.find(
+    const availabilityOption = AgriTechToolsRepository.availabilityOptions?.find(
         (a) => a.value === availability
     );
-    return availabilityOption ? availabilityOption.label : availability;
+    return availabilityOption ? availabilityOption.label : formatLabel(availability);
 };
 
 // Table headers

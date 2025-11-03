@@ -69,7 +69,31 @@ class SeedSupplyProgramController extends Controller
 
         $programs = $query->paginate($perPage);
 
-        return SeedSupplyProgramResource::collection($programs);
+        // Ensure lang parameter is set for translations
+        $lang = $request->get('lang', 'en');
+        $request->merge(['lang' => $lang]);
+
+        // Transform each item through the resource
+        $data = collect($programs->items())->map(function ($item) use ($request) {
+            return (new SeedSupplyProgramResource($item))->resolve($request);
+        });
+
+        // Return response in the format expected by frontend
+        return response()->json([
+            'data' => $data,
+            'meta' => [
+                'total' => $programs->total(),
+                'per_page' => $programs->perPage(),
+                'current_page' => $programs->currentPage(),
+                'last_page' => $programs->lastPage(),
+            ],
+            'links' => [
+                'first' => $programs->url(1),
+                'last' => $programs->url($programs->lastPage()),
+                'prev' => $programs->previousPageUrl(),
+                'next' => $programs->nextPageUrl(),
+            ],
+        ]);
     }
 
     /**

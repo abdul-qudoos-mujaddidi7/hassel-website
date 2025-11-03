@@ -116,6 +116,41 @@ class AgriTechToolRequest extends FormRequest
             $this->merge(['slug' => \Illuminate\Support\Str::slug($this->name)]);
         }
 
+        // Handle features field - ensure it's always an array
+        // Features can come as bracket notation (features[0], features[1]) which Laravel converts to array automatically
+        // Or as a JSON string, or as an array directly
+        if ($this->has('features')) {
+            $features = $this->input('features');
+            
+            // If it's already an array (from bracket notation or direct array)
+            if (is_array($features)) {
+                // Filter out empty strings from array (in case features[]='' was sent)
+                $features = array_filter($features, function($item) {
+                    return $item !== '' && $item !== null;
+                });
+                // Re-index array after filtering
+                $this->merge(['features' => array_values($features)]);
+            } elseif (is_string($features)) {
+                // If it's a JSON string, try to parse it
+                try {
+                    $parsed = json_decode($features, true);
+                    if (is_array($parsed)) {
+                        $this->merge(['features' => $parsed]);
+                    } elseif ($features === '[]' || $features === '') {
+                        $this->merge(['features' => []]);
+                    }
+                } catch (\Exception $e) {
+                    // If parsing fails and it's empty string or '[]', set to empty array
+                    if ($features === '[]' || $features === '') {
+                        $this->merge(['features' => []]);
+                    }
+                }
+            } else {
+                // If it's not an array or string, set to empty array
+                $this->merge(['features' => []]);
+            }
+        }
+
         // Arrays will be automatically converted to JSON by the model's casts
         // Don't convert here as validation needs to see arrays
     }

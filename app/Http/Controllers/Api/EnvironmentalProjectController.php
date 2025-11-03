@@ -40,7 +40,31 @@ class EnvironmentalProjectController extends Controller
 
         $projects = $query->orderBy('created_at', 'desc')->paginate(12);
 
-        return EnvironmentalProjectResource::collection($projects);
+        // Ensure lang parameter is set for translations
+        $lang = $request->get('lang', 'en');
+        $request->merge(['lang' => $lang]);
+
+        // Transform each item through the resource
+        $data = collect($projects->items())->map(function ($item) use ($request) {
+            return (new EnvironmentalProjectResource($item))->resolve($request);
+        });
+
+        // Return response in the format expected by frontend
+        return response()->json([
+            'data' => $data,
+            'meta' => [
+                'total' => $projects->total(),
+                'per_page' => $projects->perPage(),
+                'current_page' => $projects->currentPage(),
+                'last_page' => $projects->lastPage(),
+            ],
+            'links' => [
+                'first' => $projects->url(1),
+                'last' => $projects->url($projects->lastPage()),
+                'prev' => $projects->previousPageUrl(),
+                'next' => $projects->nextPageUrl(),
+            ],
+        ]);
     }
 
     /**

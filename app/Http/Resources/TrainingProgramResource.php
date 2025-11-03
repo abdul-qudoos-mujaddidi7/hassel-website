@@ -14,19 +14,53 @@ class TrainingProgramResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $lang = $request->get('lang', 'en');
+        // When include_translations is set or it's an admin route, always return base English values
+        // This ensures the admin form gets English base values with separate translation fields
+        $isAdminRequest = $request->get('include_translations') || $request->routeIs('api.admin.*');
+        $lang = $isAdminRequest ? 'en' : $request->get('lang', 'en');
+        
+        // Normalize language code: frontend uses 'fa', 'ps', 'en' but model expects 'farsi', 'pashto'
+        $normalizeLanguage = function($langCode) {
+            $langMap = [
+                'fa' => 'farsi',
+                'farsi' => 'farsi',
+                'ps' => 'pashto',
+                'pashto' => 'pashto',
+                'en' => 'en',
+                'english' => 'en',
+            ];
+            $normalized = strtolower($langCode ?? 'en');
+            return $langMap[$normalized] ?? 'en';
+        };
+        
+        $normalizedLang = $normalizeLanguage($lang);
+        
+        // Helper function to get translated or base value
+        $getTranslatableValue = function($field) use ($normalizedLang, $isAdminRequest) {
+            // For admin requests, always return base English value
+            if ($isAdminRequest) {
+                return $this->$field;
+            }
+            // For public API, use translation if available (only for farsi/pashto)
+            if ($normalizedLang !== 'en' && method_exists($this->resource, 'getTranslation')) {
+                return $this->getTranslation($field, $normalizedLang) ?? $this->$field;
+            }
+            // For English or if no translation available, return base value
+            return $this->$field;
+        };
+        
         return [
             'id' => $this->id,
-            'title' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('title', $lang) ?? $this->title) : $this->title,
+            'title' => $getTranslatableValue('title'),
             'slug' => $this->slug,
-            'description' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('description', $lang) ?? $this->description) : $this->description,
+            'description' => $getTranslatableValue('description'),
             'cover_image' => $this->cover_image ? asset($this->cover_image) : null,
             'thumbnail_image' => $this->thumbnail_image ? asset($this->thumbnail_image) : null,
-            'program_type' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('program_type', $lang) ?? $this->program_type) : $this->program_type,
+            'program_type' => $getTranslatableValue('program_type'),
             'program_type_display' => ucwords(str_replace('_', ' ', $this->program_type)),
             'duration' => $this->duration,
-            'location' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('location', $lang) ?? $this->location) : $this->location,
-            'instructor' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('instructor', $lang) ?? $this->instructor) : $this->instructor,
+            'location' => $getTranslatableValue('location'),
+            'instructor' => $getTranslatableValue('instructor'),
             'max_participants' => $this->max_participants,
             'start_date' => $this->start_date->toDateString(),
             'end_date' => $this->end_date->toDateString(),

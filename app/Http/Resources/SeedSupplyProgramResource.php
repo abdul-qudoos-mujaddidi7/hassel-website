@@ -14,27 +14,60 @@ class SeedSupplyProgramResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $lang = $request->get('lang', 'en');
+        // When include_translations is set or it's an admin route, always return base English values
+        $isAdminRequest = $request->get('include_translations') || $request->routeIs('api.admin.*');
+        $lang = $isAdminRequest ? 'en' : $request->get('lang', 'en');
+        
+        // Normalize language code: frontend uses 'fa', 'ps', 'en' but model expects 'farsi', 'pashto'
+        $normalizeLanguage = function($langCode) {
+            $langMap = [
+                'fa' => 'farsi',
+                'farsi' => 'farsi',
+                'ps' => 'pashto',
+                'pashto' => 'pashto',
+                'en' => 'en',
+                'english' => 'en',
+            ];
+            $normalized = strtolower($langCode ?? 'en');
+            return $langMap[$normalized] ?? 'en';
+        };
+        
+        $normalizedLang = $normalizeLanguage($lang);
+        
+        // Helper function to get translated or base value
+        $getTranslatableValue = function($field) use ($normalizedLang, $isAdminRequest) {
+            // For admin requests, always return base English value
+            if ($isAdminRequest) {
+                return $this->$field;
+            }
+            // For public API, use translation if available (only for farsi/pashto)
+            if ($normalizedLang !== 'en' && method_exists($this->resource, 'getTranslation')) {
+                return $this->getTranslation($field, $normalizedLang) ?? $this->$field;
+            }
+            // For English or if no translation available, return base value
+            return $this->$field;
+        };
+        
         return [
             'id' => $this->id,
-            'name' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('name', $lang) ?? $this->name) : $this->name,
+            'name' => $getTranslatableValue('name'),
             'slug' => $this->slug,
-            'description' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('description', $lang) ?? $this->description) : $this->description,
-            'short_description' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('short_description', $lang) ?? $this->short_description) : $this->short_description,
-            'input_type' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('input_type', $lang) ?? $this->input_type) : $this->input_type,
+            'description' => $getTranslatableValue('description'),
+            'short_description' => $getTranslatableValue('short_description'),
+            'input_type' => $getTranslatableValue('input_type'),
             'input_type_display' => ucwords(str_replace('_', ' ', $this->input_type)),
-            'target_crops' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('target_crops', $lang) ?? $this->target_crops) : $this->target_crops,
+            'target_crops' => $getTranslatableValue('target_crops'),
             'formatted_target_crops' => $this->formatted_target_crops,
             'quality_grade' => $this->quality_grade,
             'price_range' => $this->price_range,
             'availability' => $this->availability,
             'shelf_life' => $this->shelf_life,
-            'distribution_centers' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('distribution_centers', $lang) ?? $this->distribution_centers) : $this->distribution_centers,
+            'distribution_centers' => $getTranslatableValue('distribution_centers'),
             'formatted_distribution_centers' => $this->formatted_distribution_centers,
-            'usage_instructions' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('usage_instructions', $lang) ?? $this->usage_instructions) : $this->usage_instructions,
-            'technical_specifications' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('technical_specifications', $lang) ?? $this->technical_specifications) : $this->technical_specifications,
-            'supplier' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('supplier', $lang) ?? $this->supplier) : $this->supplier,
-            'contact_info' => method_exists($this->resource, 'getTranslation') ? ($this->getTranslation('contact_info', $lang) ?? $this->contact_info) : $this->contact_info,
+            'usage_instructions' => $getTranslatableValue('usage_instructions'),
+            'technical_specifications' => $getTranslatableValue('technical_specifications'),
+            'supplier' => $getTranslatableValue('supplier'),
+            'contact_info' => $getTranslatableValue('contact_info'),
             'cover_image' => $this->cover_image ? asset($this->cover_image) : null,
             'thumbnail_image' => $this->thumbnail_image ? asset($this->thumbnail_image) : null,
             'status' => $this->status,
@@ -57,6 +90,16 @@ class SeedSupplyProgramResource extends JsonResource
             'translations' => $this->when(
                 $request->get('include_translations'),
                 TranslationResource::collection($this->whenLoaded('translations'))
+            ),
+            
+            // JSON translations for admin
+            'farsi_translations' => $this->when(
+                $request->get('include_translations'),
+                $this->farsi_translations ?? []
+            ),
+            'pashto_translations' => $this->when(
+                $request->get('include_translations'),
+                $this->pashto_translations ?? []
             ),
         ];
     }

@@ -34,9 +34,17 @@ class MarketAccessProgramsController extends Controller
             $query->where('status', $status);
         }
         $items = $query->paginate($perPage);
+        
+        // Always include translations for admin list
+        $request->merge(['include_translations' => true]);
+        
+        $data = collect($items->items())->map(function ($item) use ($request) {
+            return (new MarketAccessProgramResource($item))->resolve($request);
+        });
+        
         return response()->json([
             'success' => true,
-            'data' => MarketAccessProgramResource::collection($items),
+            'data' => $data,
             'meta' => [
                 'total' => $items->total(),
                 'per_page' => $items->perPage(),
@@ -114,9 +122,17 @@ class MarketAccessProgramsController extends Controller
         }
     }
 
-    public function show(MarketAccessProgram $marketAccessProgram): JsonResponse
+    public function show(Request $request, MarketAccessProgram $marketAccessProgram): JsonResponse
     {
-        return response()->json(['success' => true, 'data' => new MarketAccessProgramResource($marketAccessProgram)]);
+        // Include translations for admin edit mode
+        if ($request->boolean('include_translations')) {
+            $request->merge(['include_translations' => true]);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => (new MarketAccessProgramResource($marketAccessProgram))->resolve($request)
+        ]);
     }
 
     public function update(MarketAccessProgramRequest $request, MarketAccessProgram $marketAccessProgram): JsonResponse
@@ -139,41 +155,65 @@ class MarketAccessProgramsController extends Controller
 
             // Handle cover image upload/removal
             if ($request->hasFile('cover_image')) {
-                $uploadService = app(FileUploadService::class);
-                $oldImagePath = null;
-                if ($marketAccessProgram->cover_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($marketAccessProgram->cover_image, PHP_URL_PATH));
+                // New file uploaded - replace existing image
+                try {
+                    $uploadService = app(FileUploadService::class);
+                    $oldImagePath = null;
+                    if ($marketAccessProgram->cover_image) {
+                        $oldImagePath = str_replace('/storage/', '', parse_url($marketAccessProgram->cover_image, PHP_URL_PATH));
+                    }
+                    $imagePath = $uploadService->replace($request->file('cover_image'), 'cover_image', $oldImagePath);
+                    $validated['cover_image'] = Storage::url($imagePath);
+                } catch (\Exception $e) {
+                    Log::error('Cover image upload error: ' . $e->getMessage());
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Failed to upload cover image: ' . $e->getMessage(),
+                        'error' => $e->getMessage()
+                    ], 422);
                 }
-                $imagePath = $uploadService->replace($request->file('cover_image'), 'cover_image', $oldImagePath);
-                $validated['cover_image'] = Storage::url($imagePath);
             } elseif ($request->has('cover_image') && $request->input('cover_image') === '') {
+                // Empty string sent - clear the existing image
                 if ($marketAccessProgram->cover_image) {
                     $oldImagePath = str_replace('/storage/', '', parse_url($marketAccessProgram->cover_image, PHP_URL_PATH));
-                    if (Storage::exists($oldImagePath)) {
-                        Storage::delete($oldImagePath);
+                    if (Storage::disk('public')->exists($oldImagePath)) {
+                        Storage::disk('public')->delete($oldImagePath);
                     }
                 }
                 $validated['cover_image'] = null;
             }
+            // If cover_image is not in request, it means keep existing value (don't update)
 
             // Handle thumbnail image upload/removal
             if ($request->hasFile('thumbnail_image')) {
-                $uploadService = app(FileUploadService::class);
-                $oldImagePath = null;
-                if ($marketAccessProgram->thumbnail_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($marketAccessProgram->thumbnail_image, PHP_URL_PATH));
+                // New file uploaded - replace existing image
+                try {
+                    $uploadService = app(FileUploadService::class);
+                    $oldImagePath = null;
+                    if ($marketAccessProgram->thumbnail_image) {
+                        $oldImagePath = str_replace('/storage/', '', parse_url($marketAccessProgram->thumbnail_image, PHP_URL_PATH));
+                    }
+                    $imagePath = $uploadService->replace($request->file('thumbnail_image'), 'cover_image', $oldImagePath);
+                    $validated['thumbnail_image'] = Storage::url($imagePath);
+                } catch (\Exception $e) {
+                    Log::error('Thumbnail image upload error: ' . $e->getMessage());
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Failed to upload thumbnail image: ' . $e->getMessage(),
+                        'error' => $e->getMessage()
+                    ], 422);
                 }
-                $imagePath = $uploadService->replace($request->file('thumbnail_image'), 'cover_image', $oldImagePath);
-                $validated['thumbnail_image'] = Storage::url($imagePath);
             } elseif ($request->has('thumbnail_image') && $request->input('thumbnail_image') === '') {
+                // Empty string sent - clear the existing image
                 if ($marketAccessProgram->thumbnail_image) {
                     $oldImagePath = str_replace('/storage/', '', parse_url($marketAccessProgram->thumbnail_image, PHP_URL_PATH));
-                    if (Storage::exists($oldImagePath)) {
-                        Storage::delete($oldImagePath);
+                    if (Storage::disk('public')->exists($oldImagePath)) {
+                        Storage::disk('public')->delete($oldImagePath);
                     }
                 }
                 $validated['thumbnail_image'] = null;
             }
+            // If thumbnail_image is not in request, it means keep existing value (don't update)
 
             $marketAccessProgram->update($validated);
             TranslationSyncService::sync($marketAccessProgram, $translations);

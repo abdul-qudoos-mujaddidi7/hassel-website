@@ -82,7 +82,7 @@
                 <!-- Cover Image -->
                 <div class="w-50 image-upload-wrapper">
                     <label class="image-upload-label mb-3 d-block">{{ $t('cover_image') }}</label>
-                    <div class="photo-upload-container">
+                    <div class="photo-upload-container" @click="!computedCoverImageSrc && openCoverImageInput()">
                         <input
                             ref="coverImageInputRef"
                             type="file"
@@ -99,7 +99,7 @@
                             <button
                                 v-if="!computedCoverImageSrc"
                                 type="button"
-                                @click="openCoverImageInput"
+                                @click.stop="openCoverImageInput"
                                 class="overlay-button"
                             >
                                 <v-icon
@@ -110,7 +110,7 @@
                             <button
                                 v-if="computedCoverImageSrc"
                                 type="button"
-                                @click="removeCoverImage"
+                                @click.stop="removeCoverImage"
                                 class="close-button"
                             >
                                 <v-icon size="lg" color="red">mdi-close</v-icon>
@@ -118,7 +118,7 @@
                             <button
                                 v-if="computedCoverImageSrc"
                                 type="button"
-                                @click="openCoverImageInput"
+                                @click.stop="openCoverImageInput"
                                 class="edit-button"
                             >
                                 <v-icon size="small">mdi-pencil</v-icon>
@@ -130,7 +130,7 @@
                 <!-- Thumbnail Image -->
                 <div class="w-50 image-upload-wrapper">
                     <label class="image-upload-label mb-3 d-block">{{ $t('thumbnail_image') }}</label>
-                    <div class="photo-upload-container">
+                    <div class="photo-upload-container" @click="!computedThumbnailImageSrc && openThumbnailImageInput()">
                         <input
                             ref="thumbnailImageInputRef"
                             type="file"
@@ -147,7 +147,7 @@
                             <button
                                 v-if="!computedThumbnailImageSrc"
                                 type="button"
-                                @click="openThumbnailImageInput"
+                                @click.stop="openThumbnailImageInput"
                                 class="overlay-button"
                             >
                                 <v-icon
@@ -158,7 +158,7 @@
                             <button
                                 v-if="computedThumbnailImageSrc"
                                 type="button"
-                                @click="removeThumbnailImage"
+                                @click.stop="removeThumbnailImage"
                                 class="close-button"
                             >
                                 <v-icon size="lg" color="red">mdi-close</v-icon>
@@ -166,7 +166,7 @@
                             <button
                                 v-if="computedThumbnailImageSrc"
                                 type="button"
-                                @click="openThumbnailImageInput"
+                                @click.stop="openThumbnailImageInput"
                                 class="edit-button"
                             >
                                 <v-icon size="small">mdi-pencil</v-icon>
@@ -550,10 +550,47 @@ const handleSave = async ({ data }) => {
         Object.keys(data).forEach(key => {
             if (key !== 'cover_image' && key !== 'thumbnail_image') {
                 if (key === 'translations') {
-                    formDataToSend.append(key, JSON.stringify(data[key]));
+                    // Process translations to extract values from object arrays
+                    const translations = { ...data[key] };
+                    
+                    // Helper function to extract values from arrays of objects
+                    const extractArrayValues = (arr) => {
+                        if (!Array.isArray(arr)) return arr;
+                        return arr.map(item => {
+                            // Extract value if item is an object (from v-combobox with item-value="value")
+                            return typeof item === 'object' && item !== null && 'value' in item 
+                                ? item.value 
+                                : item;
+                        }).filter(item => item !== null && item !== undefined && item !== '');
+                    };
+                    
+                    // Process arrays in each language's translations
+                    ['farsi', 'pashto'].forEach(lang => {
+                        if (translations[lang]) {
+                            if (translations[lang].target_crops) {
+                                translations[lang].target_crops = extractArrayValues(translations[lang].target_crops);
+                            }
+                            if (translations[lang].partner_organizations) {
+                                translations[lang].partner_organizations = extractArrayValues(translations[lang].partner_organizations);
+                            }
+                        }
+                    });
+                    
+                    formDataToSend.append(key, JSON.stringify(translations));
                 } else if ((key === 'target_crops' || key === 'partner_organizations') && Array.isArray(data[key])) {
-                    data[key].forEach((item, index) => {
-                        formDataToSend.append(`${key}[${index}]`, item);
+                    // Extract values from objects and filter out empty values
+                    const values = data[key]
+                        .map(item => {
+                            // Extract value if item is an object (from v-combobox with item-value="value")
+                            return typeof item === 'object' && item !== null && 'value' in item 
+                                ? item.value 
+                                : item;
+                        })
+                        .filter(value => value !== null && value !== undefined && value !== '');
+                    
+                    // Append each value with proper index
+                    values.forEach((value, index) => {
+                        formDataToSend.append(`${key}[${index}]`, value);
                     });
                 } else if (data[key] !== null && data[key] !== undefined) {
                     formDataToSend.append(key, data[key]);
@@ -671,10 +708,21 @@ const handleSave = async ({ data }) => {
     background: rgba(0, 0, 0, 0.3);
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.photo-overlay button {
+    pointer-events: auto;
 }
 
 .photo-upload-container:hover .photo-overlay {
     opacity: 1;
+}
+
+/* Show overlay button always when no image is present */
+.photo-upload-container .overlay-button {
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 0.95) !important;
 }
 
 .overlay-button,
