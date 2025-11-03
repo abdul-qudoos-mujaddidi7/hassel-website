@@ -139,8 +139,26 @@
         "sub_careers": "Preparing career information...",
         "sub_contact": "Loading contact details...",
         "sub_default": "Please wait while we prepare the content"
-    }
-    
+    },
+    "active": "Active",
+    "contentBasedOnAmountAndPercentage": "Content Based on Amount and Percentage",
+    "thisYear": "This Year",
+    "thisMonth": "This Month",
+    "today": "Today",
+    "recentContacts": "Recent Contacts",
+    "noRecentContacts": "No recent contacts",
+    "contentTrends": "Content Trends",
+    "contentStatus": "Content Status",
+    "totalItems": "Total Items",
+    "time": "Time",
+    "phone": "Phone",
+    "uncategorized": "Uncategorized",
+    "general": "General",
+    "unknown": "Unknown",
+    "contacts_management": "Contacts Management",
+    "mark_as_read": "Mark as Read",
+    "mark_as_replied": "Mark as Replied",
+    "view": "View"
   }
   
-  
+   

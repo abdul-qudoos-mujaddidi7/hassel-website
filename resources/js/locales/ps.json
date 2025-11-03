@@ -139,7 +139,26 @@
         "sub_careers": "د دندو معلومات چمتو کول...",
         "sub_contact": "د اړیکو جزئیات پورته کول...",
         "sub_default": "مهرباني وکړئ ترڅو موږ منځپانګه چمتو کړو"
-    }
+    },
+    "active": "فعال",
+    "contentBasedOnAmountAndPercentage": "محتوا د مقدار او سلنې پر اساس",
+    "thisYear": "ددغه کال",
+    "thisMonth": "ددغه میاشت",
+    "today": "نن",
+    "recentContacts": "تازه اړیکې",
+    "noRecentContacts": "نورې تازه اړیکې نشته",
+    "contentTrends": "د محتوا روندونه",
+    "contentStatus": "د محتوا وضعیت",
+    "totalItems": "ټول توکي",
+    "time": "وخت",
+    "phone": "تلیفون",
+    "uncategorized": "کټګوریزه نشوي",
+    "general": "عمومی",
+    "unknown": "نامعلوم",
+    "contacts_management": "د اړیکو مدیریت",
+    "mark_as_read": "د لوستلو په توګه نښه کړئ",
+    "mark_as_replied": "د ځواب ورکړلو په توګه نښه کړئ",
+    "view": "کتل"
   }
   
-  
+   

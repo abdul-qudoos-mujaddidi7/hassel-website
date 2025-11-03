@@ -216,4 +216,8 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->name('api.admin.'
   Route::apiResource('agri-tech-tools', App\Http\Controllers\Api\Admin\AgriTechToolsController::class)->except('update');
   Route::apiResource('beneficiaries-stats', App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class);
   Route::get('beneficiaries-stats-summary', [App\Http\Controllers\Api\Admin\BeneficiariesStatsController::class, 'summary'])->name('beneficiaries-stats.summary');
+  Route::apiResource('contacts', App\Http\Controllers\Api\Admin\ContactsController::class);
+  Route::patch('contacts/{contact}/mark-as-read', [App\Http\Controllers\Api\Admin\ContactsController::class, 'markAsRead'])->name('contacts.mark-as-read');
+  Route::patch('contacts/{contact}/mark-as-replied', [App\Http\Controllers\Api\Admin\ContactsController::class, 'markAsReplied'])->name('contacts.mark-as-replied');
+  Route::get('contacts/statistics', [App\Http\Controllers\Api\Admin\ContactsController::class, 'statistics'])->name('contacts.statistics');
 });

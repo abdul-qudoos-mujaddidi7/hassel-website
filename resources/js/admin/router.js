@@ -15,6 +15,7 @@ const AgriTechToolsManagement = () => import("./pages/agri-tech-tools/AgriTechTo
 const PublicationsManagement = () => import("./pages/publications/Publications.vue");
 const SuccessStoriesManagement = () => import("./pages/success-stories/SuccessStories.vue");
 const JobAnnouncementsManagement = () => import("./pages/job-announcements/JobAnnouncements.vue");
+const ContactsManagement = () => import("./pages/contacts/Contacts.vue");
 const BeneficiariesStats = () => import("./pages/states/BeneficiariesStats.vue");
 const AdminLogin = () => import("./pages/auth/AdminLogin.vue");
 
@@ -41,6 +42,12 @@ const router = createRouter({
                     component: Dashboard,
                     meta: { title: "Dashboard" }
                 },
+                {
+                    path: "dashboard",
+                    name: "admin.dashboard.alias",
+                    component: Dashboard,
+                    meta: { title: "Dashboard" }
+                },
                 // Content Management Routes
                 { path: "news", name: "admin.news", component: NewsManagement, meta: { title: "news_management" } },
                 // Program Management Routes
@@ -55,6 +62,7 @@ const router = createRouter({
                 { path: "publications", name: "admin.publications", component: PublicationsManagement, meta: { title: "publications_management" } },
                 { path: "success-stories", name: "admin.success-stories", component: SuccessStoriesManagement, meta: { title: "success_stories_management" } },
                 { path: "job-announcements", name: "admin.job-announcements", component: JobAnnouncementsManagement, meta: { title: "job_announcements_management" } },
+                { path: "contacts", name: "admin.contacts", component: ContactsManagement, meta: { title: "contacts_management" } },
                 // Statistics Routes
                 { path: "beneficiaries-stats", name: "admin.beneficiaries-stats", component: BeneficiariesStats, meta: { title: "beneficiaries_stats_management" } },
             ]

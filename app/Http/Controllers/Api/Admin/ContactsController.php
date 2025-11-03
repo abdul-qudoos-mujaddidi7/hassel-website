@@ -19,7 +19,7 @@ class ContactsController extends Controller
             $perPage = $request->get('perPage', 15);
             $search = $request->get('search', '');
             $status = $request->get('status', '');
-            $type = $request->get('type', '');
+            $subject = $request->get('subject', '');
             
             $query = Contact::query();
             
@@ -36,8 +36,8 @@ class ContactsController extends Controller
                 $query->where('status', $status);
             }
             
-            if ($type) {
-                $query->where('type', $type);
+            if ($subject) {
+                $query->where('subject', $subject);
             }
             
             $contacts = $query->orderBy('created_at', 'desc')
@@ -202,14 +202,14 @@ class ContactsController extends Controller
         try {
             $stats = [
                 'total' => Contact::count(),
-                'pending' => Contact::where('status', 'pending')->count(),
+                'new' => Contact::where('status', 'new')->count(),
                 'read' => Contact::where('status', 'read')->count(),
                 'replied' => Contact::where('status', 'replied')->count(),
-                'closed' => Contact::where('status', 'closed')->count(),
-                'by_type' => Contact::selectRaw('type, COUNT(*) as count')
-                    ->groupBy('type')
+                'archived' => Contact::where('status', 'archived')->count(),
+                'by_subject' => Contact::selectRaw('subject, COUNT(*) as count')
+                    ->groupBy('subject')
                     ->get()
-                    ->pluck('count', 'type')
+                    ->pluck('count', 'subject')
                     ->toArray(),
                 'recent' => Contact::where('created_at', '>=', now()->subDays(7))->count(),
             ];

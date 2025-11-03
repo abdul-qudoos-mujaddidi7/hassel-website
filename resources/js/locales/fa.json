@@ -139,7 +139,26 @@
         "sub_careers": "در حال آماده‌سازی اطلاعات شغلی...",
         "sub_contact": "در حال بارگذاری جزئیات تماس...",
         "sub_default": "لطفاً صبر کنید تا محتوا را آماده کنیم"
-    }
+    },
+    "active": "فعال",
+    "contentBasedOnAmountAndPercentage": "محتوا بر اساس مقدار و درصد",
+    "thisYear": "امسال",
+    "thisMonth": "این ماه",
+    "today": "امروز",
+    "recentContacts": "تماس‌های اخیر",
+    "noRecentContacts": "هیچ تماس اخیری وجود ندارد",
+    "contentTrends": "روند محتوا",
+    "contentStatus": "وضعیت محتوا",
+    "totalItems": "کل موارد",
+    "time": "زمان",
+    "phone": "تلفن",
+    "uncategorized": "دسته‌بندی نشده",
+    "general": "عمومی",
+    "unknown": "ناشناس",
+    "contacts_management": "مدیریت تماس‌ها",
+    "mark_as_read": "علامت‌گذاری به عنوان خوانده شده",
+    "mark_as_replied": "علامت‌گذاری به عنوان پاسخ داده شده",
+    "view": "مشاهده"
   }
   
-  
+   
