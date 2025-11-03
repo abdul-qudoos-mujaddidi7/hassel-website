@@ -29,7 +29,7 @@
                 class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-32"
             >
                 <!-- Breadcrumbs -->
-                <nav class="mb-8">
+                <!-- <nav class="mb-8">
                     <div class="flex items-center space-x-2 text-sm">
                         <router-link
                             to="/"
@@ -51,23 +51,16 @@
                             >Agri-Tech Tools</span
                         >
                     </div>
-                </nav>
+                </nav> -->
 
                 <div class="text-center max-w-4xl mx-auto">
                     <!-- Category Badge -->
                     <div
                         class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-500/20 text-green-100 border border-green-400/30 mb-6"
                     >
-                        <svg
-                            class="w-4 h-4 mr-2"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                            ></path>
-                        </svg>
-                        {{ t("agritech.badge") }}
+                        <span class="text-white">{{
+                            t("agritech.badge")
+                        }}</span>
                     </div>
 
                     <h1

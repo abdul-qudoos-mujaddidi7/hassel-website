@@ -5,9 +5,9 @@
             <!-- Background with gradient overlay -->
             <div class="absolute inset-0">
                 <img
-                    :src="'/images/ourWork/ourworkhero.avif'"
+                    :src="'/images/programs/Agricultural-Training.jpg'"
                     alt="Training Programs"
-                    class="w-full h-full object-cover"
+                    class="h-full w-full object-cover"
                 />
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-green-900/85 via-green-800/80 to-emerald-900/85"
@@ -28,46 +28,15 @@
             <div
                 class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-32"
             >
-                <!-- Breadcrumbs -->
-                <nav class="mb-8">
-                    <div class="flex items-center space-x-2 text-sm">
-                        <router-link
-                            to="/"
-                            class="text-green-200 hover:text-white transition-colors"
-                            >{{ t("training.breadcrumb.home") }}</router-link
-                        >
-                        <svg
-                            class="w-4 h-4 text-green-300"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd"
-                            ></path>
-                        </svg>
-                        <span class="text-white font-medium"
-                            >Training Programs</span
-                        >
-                    </div>
-                </nav>
-
                 <div class="text-center max-w-4xl mx-auto">
                     <!-- Category Badge -->
                     <div
                         class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-500/20 text-green-100 border border-green-400/30 mb-6"
                     >
-                        <svg
-                            class="w-4 h-4 mr-2"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                            ></path>
-                        </svg>
-                        {{ t("training.badge") }}
+                        <span class="text-white">{{
+                            t("training.badge")
+                        }}</span>
+                        <!-- {{ t("training.badge") }} -->
                     </div>
 
                     <h1

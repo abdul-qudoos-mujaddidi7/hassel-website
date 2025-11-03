@@ -4,12 +4,19 @@ export default {
     "nav.work": "Our Work",
     "nav.programs": "Programs",
     "nav.training": "Training Programs",
-    "nav.agri_tech": "Agri-Tech Tools",
+    "nav.agri_tech": "Agri Tech Tools",
     "nav.market_access": "Market Access",
     "nav.smart_farming": "Smart Farming",
     "nav.seed_supply": "Seed Supply",
     "nav.community": "Community Programs",
     "nav.environmental": "Environmental Projects",
+    // "nav.community": "Cold Storage Facilities",
+    // "nav.training": "Capacity Building & Training",
+    // "nav.agri_tech": "Adoption of New Technologies",
+    // "nav.market_access": "Market Linkages & Access Support",
+    // "nav.smart_farming": "Modern Irrigation Systems",
+    // "nav.seed_supply": "Improved Agricultural Inputs",
+    // "nav.environmental": "Sustainability & Awareness Programs",
     "nav.resources": "Resources",
     "nav.careers": "Careers",
     "nav.contact": "Contact",
@@ -55,9 +62,9 @@ export default {
     // About section
     "home.about.title": "About Us",
     "home.about.p1":
-        "Mount Agro Microfinance Institution is a leading financial services provider dedicated to transforming Afghanistan's agricultural sector through innovative microfinance solutions and comprehensive support programs.",
+        "Mount Agro is an agricultural development organization committed to empowering farmers and strengthening rural communities through innovation, education, and sustainable practices. We believe that agriculture is more than cultivation — it is the heart of community growth, economic stability, and environmental care. Our work focuses on improving productivity, promoting modern techniques, and ensuring that every farmer has the opportunity to thrive with dignity and independence.",
     "home.about.p2":
-        "Since our establishment, we have been committed to empowering farmers, agricultural entrepreneurs, and rural communities by providing accessible financial services, technical training, and market linkage opportunities.",
+        "Through collaboration with local stakeholders and development partners, Mount Agro continues to bring meaningful change to the agricultural sector. We aim to create a future where farming is efficient, sustainable, and rewarding for all, while preserving the natural balance that sustains life.",
 
     // Home business pillars
     "home.pillars.training.title": "Training Programs",
@@ -101,13 +108,13 @@ export default {
         "Built on strong principles that guide everything we do",
     "home.foundation.vision.title": "Vision",
     "home.foundation.vision.body":
-        "To be the leading microfinance institution empowering Afghanistan's agricultural communities through innovative financial solutions and sustainable development programs.",
+        "Our vision is to create a prosperous, self-reliant agricultural sector where every farmer has access to knowledge, technology, and fair markets. Mount Agro strives to build a sustainable future in which agriculture becomes a source of growth, dignity, and stability for communities across the nation.",
     "home.foundation.mission.title": "Mission",
     "home.foundation.mission.body":
-        "We provide accessible microfinance services, agricultural training, and technical support to help farmers increase productivity, improve livelihoods, and build resilient communities.",
+        "Mount Agro’s mission is to empower farmers and rural communities by promoting modern agricultural technologies, providing high-quality seeds, practical training, and sustainable farming practices. Through these initiatives, we aim to strengthen food security, improve livelihoods, and preserve environmental balance for future generations.",
     "home.foundation.values.title": "Values",
     "home.foundation.values.body":
-        "Integrity, transparency, community focus, and sustainable development guide our commitment to serving Afghanistan's agricultural sector with excellence and trust.",
+        "At Mount Agro, we are guided by a strong commitment to sustainability, innovation, and community empowerment. We believe in transparency, integrity, and collaboration as the foundation of our work. By prioritizing quality, inclusiveness, and environmental care, we continue to foster trust, productivity, and long-term progress in every project we undertake.",
 
     // Business pillars section intro
     "home.pillars.title": "Our Business Pillars",
@@ -149,7 +156,7 @@ export default {
     // AgriTech Tools (list)
     "agritech.breadcrumb.home": "Home",
     "agritech.badge": "Technology Solutions",
-    "agritech.title": "Agri-Tech Tools",
+    "agritech.title": "Agri Tech Tools",
     "agritech.subtitle":
         "Discover innovative agricultural technology solutions designed to enhance farming practices, increase productivity, and support sustainable agriculture across Afghanistan.",
     "agritech.stats.tools": "Available Tools",
@@ -199,6 +206,28 @@ export default {
     "market.meta.various": "Various",
     "market.meta.multiple": "Multiple",
     "market.meta.partners_count": "{count} Partners",
+    "market.meta.program": "Program",
+
+    // Market Access Program Detail
+    "market.detail.loading": "Loading program details...",
+    "market.detail.error.title": "Program Not Found",
+    "market.detail.error.back": "Back to Programs",
+    "market.detail.target_crops": "Target Crops",
+    "market.detail.location": "Location",
+    "market.detail.partners": "Partners",
+    "market.detail.learn_more": "Learn More",
+    "market.detail.overview": "Program Overview",
+    "market.detail.partner_organizations": "Partner Organizations",
+    "market.detail.quick_info": "Quick Information",
+    "market.detail.program_type": "Type",
+    "market.detail.need_info": "Need More Information?",
+    "market.detail.need_info_sub":
+        "Get detailed information about this market access program and how it can benefit your agricultural business.",
+    "market.detail.contact_us": "Get Information",
+    "market.detail.need_help": "Need Help?",
+    "market.detail.need_help_sub":
+        "Contact our team for more information about this program.",
+    "market.detail.contact_link": "Contact Us",
 
     // Training Programs (list)
     "training.breadcrumb.home": "Home",
@@ -315,19 +344,21 @@ export default {
     "contact.send": "Send",
     "contact.sending": "Sending...",
     "contact.success_title": "Message Sent!",
-    "contact.success_message": "Thank you for your message. We'll get back to you soon.",
-    "contact.address_line1": "123 Agriculture Street",
+    "contact.success_message":
+        "Thank you for your message. We'll get back to you soon.",
+    "contact.address_line1": " Street 1, Karte Chahar, House 5",
     "contact.address_line2": "Kabul, Afghanistan",
-    "contact.address_line3": "Postal Code: 1001",
-    "contact.phone_line1": "+93 70 123 4567",
+    "contact.address_line3": "Postal Code: 100613-36-31",
+    "contact.phone_line1": "+93 70 576 3628",
     "contact.phone_line2": "+1 (555) 987-6543",
-    "contact.email_line1": "info@mountagro.com",
-    "contact.email_line2": "support@mountagro.com",
+    "contact.email_line1": "mountagro.af@gmail.com",
+    // "contact.email_line2": "support@mountagro.com",
     "contact.hours_line1": "Monday - Friday: 9:00 AM - 6:00 PM",
     "contact.hours_line2": "Saturday: 10:00 AM - 4:00 PM",
     "contact.hours_line3": "Sunday: Closed",
     "contact.message_placeholder": "Please describe your inquiry in detail...",
-    "contact.job_message_placeholder": "Please provide any additional information about your application...",
+    "contact.job_message_placeholder":
+        "Please provide any additional information about your application...",
     "contact.form.name": "Full Name",
     "contact.form.email": "Email Address",
     "contact.form.phone": "Phone Number",
@@ -339,7 +370,8 @@ export default {
     "contact.form.error": "Failed to send message. Please try again.",
 
     // Footer
-    "footer.company_tagline": "Empowering agricultural communities for a sustainable future",
+    "footer.company_tagline":
+        "Empowering agricultural communities for a sustainable future",
     "footer.quick_links": "Quick Links",
     "footer.programs": "Programs",
     "footer.contact": "Contact",
@@ -379,7 +411,209 @@ export default {
         "Email your CV to {email} and include the job title in the subject.",
     // Loading labels
     "loading.jobs": "Loading open jobs...",
-    
+
+    // Smart Farming Programs (list)
+    "smartfarming.breadcrumb.home": "Home",
+    "smartfarming.badge": "Sustainable Agriculture",
+    "smartfarming.title": "Smart & Sustainable Farming",
+    "smartfarming.subtitle":
+        "Embrace modern farming techniques, climate-resilient practices, and sustainable agriculture to maximize yields while protecting our environment for future generations.",
+    "smartfarming.stats.active": "Active Programs",
+    "smartfarming.stats.techniques": "Farming Techniques",
+    "smartfarming.stats.climate_resilient": "Climate-Resilient Crops",
+    "smartfarming.scroll": "Explore sustainable farming below",
+    "smartfarming.filters.title": "Filter Programs",
+    "smartfarming.filters.reset": "Reset Filters",
+    "smartfarming.filters.type": "Farming Type",
+    "smartfarming.filters.type_all": "All Types",
+    "smartfarming.filters.type_drip_irrigation": "Drip Irrigation",
+    "smartfarming.filters.type_greenhouse": "Greenhouse Farming",
+    "smartfarming.filters.type_precision_agriculture": "Precision Agriculture",
+    "smartfarming.filters.type_organic": "Organic Practices",
+    "smartfarming.filters.type_climate_resilient": "Climate-Resilient Crops",
+    "smartfarming.filters.type_soil_health": "Soil Health Management",
+    "smartfarming.filters.crops": "Target Crops",
+    "smartfarming.filters.crops_all": "All Crops",
+    "smartfarming.filters.crops_vegetables": "Vegetables",
+    "smartfarming.filters.crops_fruits": "Fruits",
+    "smartfarming.filters.crops_cereals": "Cereals",
+    "smartfarming.filters.crops_legumes": "Legumes",
+    "smartfarming.filters.crops_spices": "Spices",
+    "smartfarming.filters.crops_medicinal": "Medicinal Plants",
+    "smartfarming.filters.search": "Search",
+    "smartfarming.filters.search_placeholder": "Search programs...",
+    "smartfarming.results.count": "{count} programs found",
+    "smartfarming.empty.title": "No Programs Found",
+    "smartfarming.empty.body":
+        "No programs match your current filters. Try adjusting your search criteria.",
+    "smartfarming.empty.clear": "Clear Filters",
+    "smartfarming.meta.various": "Various",
+    "smartfarming.meta.sustainable": "Sustainable",
+
+    // Smart Farming Program Detail
+    "smartfarming.detail.badge": "Sustainable Agriculture",
+    "smartfarming.detail.program_details": "Program Details",
+    "smartfarming.detail.farming_type": "Type",
+    "smartfarming.detail.duration": "Duration",
+    "smartfarming.detail.location": "Location",
+    "smartfarming.detail.sustainability": "Sustainability",
+    "smartfarming.detail.target_crops": "Target Crops",
+    "smartfarming.detail.target_crops_count": "Target Crops",
+    "smartfarming.detail.overview": "Program Overview",
+    "smartfarming.detail.implementation_guide": "Implementation Guide",
+    "smartfarming.detail.sustainability_impact": "Sustainability Impact",
+    "smartfarming.detail.need_info": "Need More Information?",
+    "smartfarming.detail.need_info_sub":
+        "Get detailed information about this sustainable farming program and how it can benefit your agricultural practices.",
+    "smartfarming.detail.contact_us": "Get Information",
+    "smartfarming.detail.learn_more": "Learn More",
+    "smartfarming.detail.error.title": "Program Not Found",
+    "smartfarming.detail.error.back": "Back to Programs",
+    "smartfarming.detail.loading": "Loading program details...",
+    "smartfarming.detail.contact_info": "Contact Information",
+
+    // Seed Supply Programs (list)
+    "seedsupply.breadcrumb.home": "Home",
+    "seedsupply.badge": "Seed & Input Supply Chain",
+    "seedsupply.title": "Seed & Input Supply Chain",
+    "seedsupply.subtitle":
+        "Access high-quality seeds, fertilizers, and eco-friendly inputs through our reliable distribution network. Building sustainable supply chains across provinces for better yields and farming success.",
+    "seedsupply.stats.supply_programs": "Supply Programs",
+    "seedsupply.stats.input_types": "Input Types",
+    "seedsupply.stats.distribution_centers": "Distribution Centers",
+    "seedsupply.scroll": "Explore supply programs below",
+    "seedsupply.filters.title": "Filter Supply Programs",
+    "seedsupply.filters.reset": "Reset Filters",
+    "seedsupply.filters.input_type": "Input Type",
+    "seedsupply.filters.input_type_all": "All Types",
+    "seedsupply.filters.crops": "Target Crops",
+    "seedsupply.filters.crops_all": "All Crops",
+    "seedsupply.filters.search": "Search",
+    "seedsupply.filters.search_placeholder": "Search programs...",
+    "seedsupply.results.count": "{count} programs found",
+    "seedsupply.empty.title": "No Programs Found",
+    "seedsupply.empty.body":
+        "No programs match your current filters. Try adjusting your search criteria.",
+    "seedsupply.empty.clear": "Clear Filters",
+    "seedsupply.meta.various": "Various",
+    "seedsupply.meta.supply_program": "Supply Program",
+
+    // Seed Supply Program Detail
+    "seedsupply.detail.badge": "Seed & Input Supply Chain",
+    "seedsupply.detail.program_details": "Product Details",
+    "seedsupply.detail.input_type": "Type",
+    "seedsupply.detail.quality_grade": "Quality Grade",
+    "seedsupply.detail.availability": "Availability",
+    "seedsupply.detail.price_range": "Price Range",
+    "seedsupply.detail.shelf_life": "Shelf Life",
+    "seedsupply.detail.target_crops": "Target Crops",
+    "seedsupply.detail.overview": "Product Overview",
+    "seedsupply.detail.technical_specifications": "Technical Specifications",
+    "seedsupply.detail.usage_instructions": "Usage Instructions",
+    "seedsupply.detail.distribution_centers": "Distribution Centers",
+    "seedsupply.detail.supplier": "Supplier",
+    "seedsupply.detail.need_info": "Need More Information?",
+    "seedsupply.detail.need_info_sub":
+        "Get detailed information about this quality input and how it can benefit your farming operations.",
+    "seedsupply.detail.contact_us": "Get Information",
+    "seedsupply.detail.learn_more": "Learn More",
+    "seedsupply.detail.error.title": "Program Not Found",
+    "seedsupply.detail.error.back": "Back to Programs",
+    "seedsupply.detail.loading": "Loading program details...",
+    "seedsupply.detail.contact_info": "Contact Information",
+
+    // Community Programs (list)
+    "community.breadcrumb.home": "Home",
+    "community.badge": "Community Development",
+    "community.title": "Community Programs",
+    "community.subtitle":
+        "Strengthen communities through targeted development initiatives, capacity building, and sustainable partnerships that create lasting positive impact.",
+    "community.stats.active": "Active Programs",
+    "community.stats.target_groups": "Target Groups",
+    "community.stats.partners": "Partner Organizations",
+    "community.scroll": "Explore programs below",
+    "community.filters.title": "Filter Programs",
+    "community.filters.reset": "Reset Filters",
+    "community.filters.program_type": "Program Type",
+    "community.filters.program_type_all": "All Types",
+    "community.filters.target_group": "Target Group",
+    "community.filters.target_group_all": "All Groups",
+    "community.filters.search": "Search",
+    "community.filters.search_placeholder": "Search programs...",
+    "community.results.count": "{count} programs found",
+    "community.empty.title": "No Programs Found",
+    "community.empty.body":
+        "No programs match your current filters. Try adjusting your search criteria.",
+    "community.empty.clear": "Clear Filters",
+    "community.meta.program": "Program",
+    "community.meta.partners": "Partners",
+    "community.meta.general_community": "General Community",
+
+    // Community Program Detail
+    "community.detail.badge": "Community Development",
+    "community.detail.quick_info": "Quick Information",
+    "community.detail.program_type": "Type",
+    "community.detail.location": "Location",
+    "community.detail.target_group": "Target Group",
+    "community.detail.partners": "Partners",
+    "community.detail.overview": "Program Overview",
+    "community.detail.no_description":
+        "No description available for this program.",
+    "community.detail.partner_organizations": "Partner Organizations",
+    "community.detail.no_partners":
+        "No partner organizations listed for this program.",
+    "community.detail.need_info": "Need More Information?",
+    "community.detail.need_info_sub":
+        "Get detailed information about this community program and how you can participate.",
+    "community.detail.contact_us": "Get Information",
+    "community.detail.error.title": "Program Not Found",
+    "community.detail.error.back": "Back to Programs",
+    "community.detail.loading": "Loading program details...",
+
+    // Environmental Projects (list)
+    "environmental.breadcrumb.home": "Home",
+    "environmental.badge": "Environmental Stewardship",
+    "environmental.title": "Environmental Projects",
+    "environmental.subtitle":
+        "Protect ecosystems and promote sustainability through evidence-based, community-driven projects.",
+    "environmental.stats.active": "Active Projects",
+    "environmental.stats.funding_sources": "Funding Sources",
+    "environmental.stats.impact_metrics": "Impact Metrics",
+    "environmental.scroll": "Explore projects below",
+    "environmental.filters.title": "Filter Projects",
+    "environmental.filters.reset": "Reset Filters",
+    "environmental.filters.project_type": "Project Type",
+    "environmental.filters.project_type_all": "All Types",
+    "environmental.filters.search": "Search",
+    "environmental.filters.search_placeholder": "Search projects...",
+    "environmental.results.count": "{count} projects found",
+    "environmental.empty.title": "No Projects Found",
+    "environmental.empty.body":
+        "No projects match your current filters. Try adjusting your search.",
+    "environmental.empty.clear": "Clear Filters",
+    "environmental.meta.environmental": "Environmental",
+    "environmental.meta.metrics": "Metrics",
+    "environmental.meta.not_specified": "Not specified",
+    "environmental.meta.unknown": "Unknown",
+    "environmental.meta.na": "N/A",
+
+    // Environmental Project Detail
+    "environmental.detail.badge": "Environmental Stewardship",
+    "environmental.detail.quick_info": "Quick Information",
+    "environmental.detail.project_type": "Type",
+    "environmental.detail.status": "Status",
+    "environmental.detail.funding": "Funding",
+    "environmental.detail.funding_source": "Funding Source",
+    "environmental.detail.impact_metrics": "Impact Metrics",
+    "environmental.detail.overview": "Overview",
+    "environmental.detail.no_description":
+        "No description provided for this project.",
+    "environmental.detail.no_metrics":
+        "No impact metrics provided for this project.",
+    "environmental.detail.error.title": "Project Not Found",
+    "environmental.detail.error.back": "Back to Projects",
+    "environmental.detail.loading": "Loading project...",
+
     // Loader translations
     "loader.home": "Loading home page...",
     "loader.our_work": "Loading our work...",
@@ -474,4 +708,38 @@ export default {
     "hint_input_instructions": "Step-by-step instructions for using this input",
     "hint_technical_details": "Technical details and specifications",
     "max_length_1000": "Description must be 1000 characters or less."
+    "loader.home": "Welcome to Mount Agro",
+    "loader.our_work": "Exploring Our Impact",
+    "loader.training_programs": "Preparing Training Programs",
+    "loader.agri_tech": "Loading Agricultural Technology",
+    "loader.market_access": "Accessing Market Opportunities",
+    "loader.smart_farming": "Connecting to Smart Solutions",
+    "loader.seed_supply": "Preparing Seed Supply Information",
+    "loader.community_programs": "Loading Community Programs",
+    "loader.environmental_projects": "Accessing Environmental Projects",
+    "loader.resources": "Gathering Resources",
+    "loader.careers": "Preparing Career Opportunities",
+    "loader.contact": "Loading Contact Information",
+    "loader.default": "Loading Page",
+    "loader.sub_home":
+        "Discovering innovative agricultural solutions and sustainable farming practices",
+    "loader.sub_our_work":
+        "Showcasing our commitment to transforming agriculture in Afghanistan",
+    "loader.sub_training_programs":
+        "Getting ready to share knowledge and build capacity",
+    "loader.sub_agri_tech":
+        "Bringing you cutting-edge tools and technologies for modern farming",
+    "loader.sub_market_access":
+        "Opening doors to new opportunities and connections",
+    "loader.sub_smart_farming":
+        "Integrating technology with traditional farming wisdom",
+    "loader.sub_seed_supply": "Ensuring quality inputs for better yields",
+    "loader.sub_community_programs":
+        "Connecting communities and building partnerships",
+    "loader.sub_environmental_projects":
+        "Promoting sustainable practices for a better future",
+    "loader.sub_resources": "Compiling publications, news, and success stories",
+    "loader.sub_careers": "Finding the right talent to grow with us",
+    "loader.sub_contact": "Getting in touch with our team",
+    "loader.sub_default": "Please wait while we prepare everything for you",
 };

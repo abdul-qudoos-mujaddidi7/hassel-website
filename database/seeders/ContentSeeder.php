@@ -44,28 +44,7 @@ class ContentSeeder extends Seeder
         JobAnnouncement::factory()->open()->contract()->count(3)->create();
         JobAnnouncement::factory()->closed()->count(8)->create();
 
-        // Create RFP/RFQ
-        $this->command->line('- Creating RFP/RFQ listings...');
-        RfpRfq::factory()->open()->count(4)->create();
-        RfpRfq::factory()->closed()->count(6)->create();
 
-        // Create Galleries with Images
-        $this->command->line('- Creating galleries...');
-        $galleries = collect([
-            Gallery::factory()->published()->farmingActivities()->create(),
-            Gallery::factory()->published()->trainingEvents()->create(),
-            Gallery::factory()->published()->projects()->create(),
-            Gallery::factory()->published()->create(['title' => 'Community Outreach Programs']),
-            Gallery::factory()->published()->create(['title' => 'Agricultural Innovation Showcase']),
-        ]);
-
-        // Add images to each gallery
-        $galleries->each(function ($gallery) {
-            GalleryImage::factory()
-                ->forGallery($gallery)
-                ->count(rand(5, 12))
-                ->create();
-        });
 
         $this->command->info('Core content created successfully!');
         $this->command->line('- News articles: 20 total (15 published, 5 draft)');

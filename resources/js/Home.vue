@@ -1,8 +1,8 @@
 <template>
-    <div class="min-h-screen">
+    <div>
         <!-- Hero Section with 5 Images Slider -->
         <section
-            class="relative min-h-[70vh] md:h-screen overflow-hidden text-white"
+            class="relative h-[70vh] sm:h-[60vh] md:h-[87vh] max-h-screen overflow-hidden text-white"
         >
             <!-- Image Slider Background -->
             <div class="absolute inset-0">
@@ -33,19 +33,17 @@
                 class="absolute inset-0 bg-gradient-to-br from-green-800 via-green-700 to-green-600 -z-10"
             ></div>
 
-            <div
-                class="relative flex items-center justify-center min-h-screen z-10"
-            >
+            <div class="relative flex items-center justify-center h-full z-10">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <!-- Dynamic Hero Content -->
                     <div v-if="heroSlides[currentSlide]" class="mb-8">
                         <h1
-                            class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fadeInUp"
+                            class="heading-hero font-bold mb-6 animate-fadeInUp text-center"
                         >
                             {{ heroSlides[currentSlide].title }}
                         </h1>
                         <p
-                            class="text-xl md:text-2xl text-gray-100 mb-8 max-w-4xl mx-auto animate-fadeInUp"
+                            class="text-xl md:text-2xl text-gray-100 mb-8 max-w-4xl mx-auto animate-fadeInUp text-center"
                             style="animation-delay: 0.2s"
                         >
                             {{ heroSlides[currentSlide].description }}
@@ -53,7 +51,7 @@
                     </div>
 
                     <div
-                        class="flex flex-col gap-2 justify-center items-center animate-fadeInUp sm:flex-row sm:gap-4"
+                        class="flex flex-col gap-2 justify-center items-center animate-fadeInUp sm:flex-row sm:gap-4 text-center"
                         style="animation-delay: 0.4s"
                     >
                         <router-link
@@ -93,7 +91,6 @@
                                 {{ t("home.hero.contact") }}
                             </template>
                         </router-link>
-                        <!-- About link removed; consolidated into Home -->
                     </div>
                 </div>
             </div>
@@ -120,37 +117,39 @@
         <!-- Welcome Section -->
         <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-lg text-green-600 mb-6">
+                <div class="self-start text-center mb-16">
+                    <h2 class="heading-lg text-green-600 mb-6 text-center">
                         {{ t("home.welcome.title") }}
                     </h2>
                     <p
-                        class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
+                        class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed text-left rtl:text-right"
                     >
                         {{ t("home.welcome.body") }}
                     </p>
                 </div>
-
-                <!-- Stats moved to its own section below About Us -->
             </div>
         </section>
 
-        <!-- About Us Section (moved here) -->
+        <!-- About Us Section -->
         <section class="section-padding bg-white about-section">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
-                    <h2 class="heading-lg text-green-600 mb-16">
+                    <h2 class="heading-lg text-green-600 mb-16 text-center">
                         {{ t("home.about.title") }}
                     </h2>
                 </div>
                 <div
                     class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
                 >
-                    <div class="self-start rtl:order-2 ltr:order-1">
-                        <p class="text-xl text-gray-600 leading-relaxed rtl:text-justify ltr:text-justify mb-6">
+                    <div class="self-start">
+                        <p
+                            class="text-xl text-gray-600 mb-6 text-left rtl:text-right"
+                        >
                             {{ t("home.about.p1") }}
                         </p>
-                        <p class="text-lg text-gray-600 leading-relaxed rtl:text-justify ltr:text-justify">
+                        <p
+                            class="text-lg text-gray-600 text-left rtl:text-right"
+                        >
                             {{ t("home.about.p2") }}
                         </p>
                     </div>
@@ -166,7 +165,7 @@
             </div>
         </section>
 
-        <!-- Key Statistics Section (separate) -->
+        <!-- Key Statistics Section -->
         <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div
@@ -194,12 +193,12 @@
                             </svg>
                         </div>
                         <div
-                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2"
+                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2 text-center"
                             ref="totalBeneficiariesRef"
                         >
                             0
                         </div>
-                        <div class="text-gray-600 font-medium">
+                        <div class="text-gray-600 font-medium text-center">
                             {{ t("home.stats.beneficiaries") }}
                         </div>
                     </div>
@@ -226,12 +225,12 @@
                             </svg>
                         </div>
                         <div
-                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2"
+                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2 text-center"
                             ref="programsCompletedRef"
                         >
                             0
                         </div>
-                        <div class="text-gray-600 font-medium">
+                        <div class="text-gray-600 font-medium text-center">
                             {{ t("home.stats.programs_completed") }}
                         </div>
                     </div>
@@ -258,12 +257,12 @@
                             </svg>
                         </div>
                         <div
-                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2"
+                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2 text-center"
                             ref="provincesReachedRef"
                         >
                             0
                         </div>
-                        <div class="text-gray-600 font-medium">
+                        <div class="text-gray-600 font-medium text-center">
                             {{ t("home.stats.provinces_reached") }}
                         </div>
                     </div>
@@ -290,12 +289,12 @@
                             </svg>
                         </div>
                         <div
-                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2"
+                            class="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2 text-center"
                             ref="cooperativesFormedRef"
                         >
                             0
                         </div>
-                        <div class="text-gray-600 font-medium">
+                        <div class="text-gray-600 font-medium text-center">
                             {{ t("home.stats.cooperatives_formed") }}
                         </div>
                     </div>
@@ -307,10 +306,12 @@
         <section class="section-padding bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-10 md:mb-12">
-                    <h2 class="heading-lg text-green-600 mb-4">
+                    <h2 class="heading-lg text-green-600 mb-4 text-center">
                         {{ t("home.foundation.title") }}
                     </h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p
+                        class="text-xl text-gray-600 max-w-3xl mx-auto text-center"
+                    >
                         {{ t("home.foundation.subtitle") }}
                     </p>
                 </div>
@@ -344,10 +345,14 @@
                                 />
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">
+                        <h3
+                            class="text-2xl font-bold text-gray-900 mb-4 text-center"
+                        >
                             {{ t("home.foundation.vision.title") }}
                         </h3>
-                        <p class="text-gray-700 leading-relaxed">
+                        <p
+                            class="text-gray-700 leading-relaxed text-left rtl:text-right"
+                        >
                             {{ t("home.foundation.vision.body") }}
                         </p>
                     </div>
@@ -373,10 +378,14 @@
                                 />
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">
+                        <h3
+                            class="text-2xl font-bold text-gray-900 mb-4 text-center"
+                        >
                             {{ t("home.foundation.mission.title") }}
                         </h3>
-                        <p class="text-gray-700 leading-relaxed">
+                        <p
+                            class="text-gray-700 leading-relaxed text-left rtl:text-right"
+                        >
                             {{ t("home.foundation.mission.body") }}
                         </p>
                     </div>
@@ -402,10 +411,14 @@
                                 />
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">
+                        <h3
+                            class="text-2xl font-bold text-gray-900 mb-4 text-center"
+                        >
                             {{ t("home.foundation.values.title") }}
                         </h3>
-                        <p class="text-gray-700 leading-relaxed">
+                        <p
+                            class="text-gray-700 leading-relaxed text-left rtl:text-right"
+                        >
                             {{ t("home.foundation.values.body") }}
                         </p>
                     </div>
@@ -413,15 +426,15 @@
             </div>
         </section>
 
-        <!-- Business Pillars Slider Section (3 cards at a time: 123→234→345→451→512→123) -->
-        <section class="section-padding bg-gray-50">
+        <!-- Business Pillars Slider Section -->
+        <section ref="pillarsSectionRef" class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="heading-lg text-green-600 mb-6">
+                    <h2 class="heading-lg text-green-600 mb-6 text-center">
                         {{ t("home.pillars.title") }}
                     </h2>
                     <p
-                        class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
+                        class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed text-center"
                     >
                         {{ t("home.pillars.subtitle") }}
                     </p>
@@ -473,9 +486,15 @@
                         <div
                             class="flex transition-transform duration-500 ease-in-out"
                             :style="{
-                                transform: isRTL 
-                                    ? `translateX(${currentPillarSlide * (100 / cardsPerView)}%)`
-                                    : `translateX(-${currentPillarSlide * (100 / cardsPerView)}%)`,
+                                transform: isRTL
+                                    ? `translateX(${
+                                          currentPillarSlide *
+                                          (100 / cardsPerView)
+                                      }%)`
+                                    : `translateX(-${
+                                          currentPillarSlide *
+                                          (100 / cardsPerView)
+                                      }%)`,
                             }"
                         >
                             <!-- Show cards in sequence: 1-2-3-4-5-6-7-1-2-3-4-5-6-7 for seamless loop -->
@@ -548,7 +567,9 @@
                                     <div
                                         class="text-gray-600 mb-6 flex-grow text-center flex items-start min-h-[120px]"
                                     >
-                                        <p class="leading-relaxed">
+                                        <p
+                                            class="leading-relaxed text-left rtl:text-right"
+                                        >
                                             {{ pillar.description }}
                                         </p>
                                     </div>
@@ -621,10 +642,12 @@
         <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="heading-lg text-green-600 mb-6">
+                    <h2 class="heading-lg text-green-600 mb-6 text-center">
                         {{ t("home.news.title") }}
                     </h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p
+                        class="text-xl text-gray-600 max-w-3xl mx-auto text-center"
+                    >
                         {{ t("home.news.subtitle") }}
                     </p>
                 </div>
@@ -682,13 +705,13 @@
                                 {{ formatDate(article.published_at) }}
                             </div>
                             <h3
-                                class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 h-14 flex items-start"
+                                class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 h-14 flex items-start text-left rtl:text-right"
                             >
                                 {{ article.title }}
                             </h3>
                             <div class="flex-grow mb-4">
                                 <p
-                                    class="text-gray-600 line-clamp-3 leading-relaxed"
+                                    class="text-gray-600 line-clamp-3 leading-relaxed text-left rtl:text-right"
                                 >
                                     {{
                                         article.excerpt ||
@@ -752,10 +775,12 @@
         <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="heading-lg text-green-600 mb-6">
+                    <h2 class="heading-lg text-green-600 mb-6 text-center">
                         {{ t("home.partners.title") }}
                     </h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p
+                        class="text-xl text-gray-600 max-w-3xl mx-auto text-center"
+                    >
                         {{ t("home.partners.subtitle") }}
                     </p>
                 </div>
@@ -766,7 +791,7 @@
                 >
                     <div class="flex items-center justify-center">
                         <div
-                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold text-center"
                             aria-label="Ministry of Agriculture"
                         >
                             MoA
@@ -774,7 +799,7 @@
                     </div>
                     <div class="flex items-center justify-center">
                         <div
-                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold text-center"
                             aria-label="United Nations Development Programme"
                         >
                             UNDP
@@ -782,7 +807,7 @@
                     </div>
                     <div class="flex items-center justify-center">
                         <div
-                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold text-center"
                             aria-label="Local Banks"
                         >
                             Banks
@@ -790,7 +815,7 @@
                     </div>
                     <div class="flex items-center justify-center">
                         <div
-                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold text-center"
                             aria-label="Farmer Associations"
                         >
                             FA
@@ -798,7 +823,7 @@
                     </div>
                     <div class="flex items-center justify-center">
                         <div
-                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold text-center"
                             aria-label="Tech Companies"
                         >
                             Tech
@@ -806,7 +831,7 @@
                     </div>
                     <div class="flex items-center justify-center">
                         <div
-                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold"
+                            class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-soft flex items-center justify-center text-gray-700 font-semibold text-center"
                             aria-label="Research Institutes"
                         >
                             RI
@@ -816,14 +841,16 @@
             </div>
         </section>
 
-        <!-- Leadership Team (moved from About) -->
+        <!-- Leadership Team -->
         <section class="pt-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
-                    <h2 class="heading-lg text-green-600 mb-4">
+                    <h2 class="heading-lg text-green-600 mb-4 text-center">
                         {{ t("home.leadership.title") }}
                     </h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p
+                        class="text-xl text-gray-600 max-w-3xl mx-auto text-center"
+                    >
                         {{ t("home.leadership.subtitle") }}
                     </p>
                 </div>
@@ -838,11 +865,11 @@
                             class="w-28 h-28 mx-auto mb-5 rounded-full bg-brand-primary"
                         />
                         <h3
-                            class="text-lg font-semibold mb-1 text-brand-primary"
+                            class="text-lg font-semibold mb-1 text-brand-primary text-center"
                         >
                             {{ t("home.leadership.ceo_title") }}
                         </h3>
-                        <p class="text-brand-secondary text-sm">
+                        <p class="text-brand-secondary text-sm text-center">
                             {{ t("home.leadership.ceo_desc") }}
                         </p>
                     </div>
@@ -855,11 +882,11 @@
                             class="w-28 h-28 mx-auto mb-5 rounded-full bg-brand-primary"
                         />
                         <h3
-                            class="text-lg font-semibold mb-1 text-brand-primary"
+                            class="text-lg font-semibold mb-1 text-brand-primary text-center"
                         >
                             {{ t("home.leadership.programs_title") }}
                         </h3>
-                        <p class="text-brand-secondary text-sm">
+                        <p class="text-brand-secondary text-sm text-center">
                             {{ t("home.leadership.programs_desc") }}
                         </p>
                     </div>
@@ -872,11 +899,11 @@
                             class="w-28 h-28 mx-auto mb-5 rounded-full bg-brand-primary"
                         />
                         <h3
-                            class="text-lg font-semibold mb-1 text-brand-primary"
+                            class="text-lg font-semibold mb-1 text-brand-primary text-center"
                         >
                             {{ t("home.leadership.finance_title") }}
                         </h3>
-                        <p class="text-brand-secondary text-sm">
+                        <p class="text-brand-secondary text-sm text-center">
                             {{ t("home.leadership.finance_desc") }}
                         </p>
                     </div>
@@ -887,11 +914,11 @@
         <!-- Closing CTA Section -->
         <section class="section-padding text-white">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="heading-lg mb-6 text-green-600">
+                <h2 class="heading-lg mb-6 text-green-600 text-center">
                     {{ t("home.cta.title") }}
                 </h2>
                 <div class="max-w-3xl mx-auto">
-                    <p class="text-xl text-green-100 mb-8">
+                    <p class="text-xl text-green-100 mb-8 text-center">
                         {{ t("home.cta.body") }}
                     </p>
                 </div>
@@ -933,7 +960,6 @@
                             {{ t("home.cta.get_started") }}
                         </template>
                     </router-link>
-                    <!-- About link removed; consolidated into Home -->
                 </div>
             </div>
         </section>
@@ -945,7 +971,11 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import axios from "axios";
 import { useI18n } from "./composables/useI18n.js";
 
-const { t, isRTL } = useI18n();
+const { t, isRTL, currentLang, setLang } = useI18n();
+
+function toggleLang() {
+    setLang(currentLang.value === "en" ? "fa" : "en");
+}
 
 // Hero slider state
 const currentSlide = ref(0);
@@ -1104,6 +1134,11 @@ const femaleBeneficiariesRef = ref(null);
 const programsCompletedRef = ref(null);
 const provincesReachedRef = ref(null);
 const cooperativesFormedRef = ref(null);
+// Ref for observing when the pillars section enters viewport
+const pillarsSectionRef = ref(null);
+
+// IntersectionObserver instance for pillars (will be initialized on mount)
+let pillarsObserver = null;
 
 // Statistics data aligned to beneficiaries_stats
 const stats = ref({
@@ -1229,11 +1264,12 @@ const goToPillarSlide = (index) => {
     currentPillarSlide.value = index;
 };
 
-// Auto-rotate pillar slider
+// Auto-rotate pillar slider (idempotent: will not create duplicate intervals)
 const startPillarAutoSlide = () => {
+    if (pillarSlideInterval) return; // already running
     pillarSlideInterval = setInterval(() => {
         nextPillarSlide();
-    }, 4000); // Change slide every 8 seconds (slower than hero)
+    }, 4000); // Change slide every 4 seconds
 };
 
 const stopPillarAutoSlide = () => {
@@ -1507,8 +1543,34 @@ onMounted(async () => {
     // Start hero slider
     startAutoSlide();
 
-    // Start pillar auto-slide
-    startPillarAutoSlide();
+    // Start pillar auto-slide only when the pillars section becomes visible
+    // (use IntersectionObserver to start/stop automatic sliding)
+    const handlePillarsIntersection = (entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                // Begin auto-rotation when the section is in view
+                startPillarAutoSlide();
+            } else {
+                // Pause/stop auto-rotation when the section leaves view
+                stopPillarAutoSlide();
+            }
+        });
+    };
+
+    // Create observer with a moderate threshold (50% visible)
+    pillarsObserver = new IntersectionObserver(handlePillarsIntersection, {
+        threshold: 0.5,
+    });
+
+    // Observe the pillars section element if available
+    try {
+        if (pillarsSectionRef.value)
+            pillarsObserver.observe(pillarsSectionRef.value);
+    } catch (e) {
+        // Defensive: if ref isn't available yet, attempt a DOM lookup as fallback
+        const el = document.querySelector("section.section-padding.bg-gray-50");
+        if (el) pillarsObserver.observe(el);
+    }
 
     // Fetch all dynamic content
     console.log("📡 FETCHING DYNAMIC CONTENT FROM APIs...");
@@ -1537,6 +1599,14 @@ onMounted(async () => {
 onUnmounted(() => {
     stopAutoSlide();
     stopPillarAutoSlide();
+    if (pillarsObserver) {
+        try {
+            pillarsObserver.disconnect();
+        } catch (e) {
+            // ignore
+        }
+        pillarsObserver = null;
+    }
     window.removeEventListener("resize", updateCardsPerView);
     window.removeEventListener("resize", updateWindowWidth);
     // Remove beforeunload cleanup listener (no-op if not set)

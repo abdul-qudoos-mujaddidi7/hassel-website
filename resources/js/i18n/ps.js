@@ -5,10 +5,17 @@ export default {
     "nav.training": "د روزنې پروګرامونه",
     "nav.agri_tech": "د کرنې وسایل",
     "nav.market_access": "د بازار لاسرسی",
-    "nav.smart_farming": "پاملرنې کرنه",
+    "nav.smart_farming": "ځیرکه کرنه",
     "nav.seed_supply": "د تخم ورکړه",
     "nav.community": "د ټولنې پروګرامونه",
     "nav.environmental": "د چاپیریال پروژې",
+    // "nav.community": "تأسیس سردخانه‌ها",
+    // "nav.training": "ایجاد ظرفیت و آموزش‌ها",
+    // "nav.agri_tech": "تطبیق تکنالوژی‌های نوین",
+    // "nav.market_access": "ارتباطات و دسترسی به بازار",
+    // "nav.smart_farming": "سیستم‌های آبیاری مدرن",
+    // "nav.seed_supply": "تأمین مواد زراعتی بهبود یافته",
+    // "nav.environmental": "برنامه‌های آگاهی و پایداری محیط زیست",
     "nav.resources": "سرچینې",
     "nav.careers": "د دندو فرصتونه",
     "nav.contact": "اړیکه",
@@ -32,18 +39,6 @@ export default {
     "created_date": "د جوړیدو نیټه",
     "farsi": "دری",
     "pashto": "پښتو",
-    
-    // Form actions
-    "create": "جوړول",
-    "update": "تازه کول",
-    "submit": "وسپارل",
-    
-    // Form fields
-    "stat_type": "د احصایې ډول",
-    "value": "ارزښت",
-    "year": "کال",
-    "description": "تشریح",
-    
     "field_required": "دا ډګر اړین دی",
 
     // Footer
@@ -53,7 +48,8 @@ export default {
     "footer.copyright": "ټول حقونه ساتل شوي.",
     "footer.programs": "پروګرامونه",
     "footer.contact": "اړیکه",
-    "footer.company_tagline": "د نن ورځې د ستونزو لپاره مسلکي حل لارې. موږ د راتلونکي تخنیک نن جوړوو.",
+    "footer.company_tagline":
+        "د نن ورځې د ستونزو لپاره مسلکي حل لارې. موږ د راتلونکي تخنیک نن جوړوو.",
     "footer.address": "د سوداګرۍ کوڅه 123",
     "footer.city_state": "ښار، ولایت 12345",
     "footer.phone": "تلیفون: (555) 123-4567",
@@ -94,8 +90,9 @@ export default {
     "contact.send": "پیغام واستوئ",
     "contact.sending": "د لېږد په حال کې...",
     "contact.success_title": "پیغام په بریالیتوب سره واستول شو!",
-    "contact.success_message": "د تاسو د اړیکې نیولو څخه مننه. موږ به په 24 ساعتونو کې ستاسو سره اړیکه ونیسو.",
-    "contact.address_line1": "د سوداګرۍ کوڅه 123",
+    "contact.success_message":
+        "د تاسو د اړیکې نیولو څخه مننه. موږ به په 24 ساعتونو کې ستاسو سره اړیکه ونیسو.",
+    "contact.address_line1": "کوڅه ۱، کارته چهار، د ۵ شمېرې کور",
     "contact.address_line2": "سان فرانسیسکو، کالیفورنیا 94105",
     "contact.address_line3": "د امریکا متحده ایالات",
     "contact.phone_line1": "+1 (555) 123-4567",
@@ -105,8 +102,10 @@ export default {
     "contact.hours_line1": "دوشنبه - جمعه: 9:00 سهار - 6:00 ماښام",
     "contact.hours_line2": "شنبه: 10:00 سهار - 4:00 ماښام",
     "contact.hours_line3": "یکشنبه: بند",
-    "contact.message_placeholder": "مهرباني وکړئ خپله پوښتنه په تفصیل سره بیان کړئ...",
-    "contact.job_message_placeholder": "مهرباني وکړئ د خپلې غوښتنې په اړه اضافي معلومات ورکړئ...",
+    "contact.message_placeholder":
+        "مهرباني وکړئ خپله پوښتنه په تفصیل سره بیان کړئ...",
+    "contact.job_message_placeholder":
+        "مهرباني وکړئ د خپلې غوښتنې په اړه اضافي معلومات ورکړئ...",
 
     // File Types
     "file_type.pdf": "د PDF سند",
@@ -134,34 +133,40 @@ export default {
     // About
     "home.about.title": "زموږ په اړه",
     "home.about.p1":
-        "د مانت اگرو د کوچنۍ مالي مرستې اداره یو مخکښ مالي خدمت وړاندې کوونکی بنسټ دی چې د افغانستان د کرنې سکتور د بدلون لپاره د نوښتګرې کوچنۍ مالي مرستې او هراړخیزو حمایوي پروګرامونو له لارې کار کوي.",
+        "ماونټ اګرو یو کرنیز پرمختیایي بنسټ دی چې موخه یې د کروندګرو پیاوړتیا او د کلیوالو ټولنو ځواکمنول دي، د نوښت، زده‌کړې او دوامدارو کړنو له لارې. موږ باور لرو چې کرنه یوازې د کر یا حاصلاتو معنا نه لري، بلکې د ټولنې د ودې، اقتصادي ثبات او د چاپېریال د ساتنې بنسټ دی. زموږ هڅه دا ده چې تولید زیات، د کرنې طریقې عصري او د هر کروندګر ژوند باعزته او ځان بسیا شي.",
     "home.about.p2":
-        "له بنسټ اېښودلو راپدېخوا، موږ د کروندګرو، کرنیزو سوداګرو او کلیوالو ټولنو د توانمندولو لپاره د لاسرسي وړ مالي خدمتونه، تخنیکي روزنه او د بازار تړون فرصتونه برابروو.",
+        "د ماونټ اګرو ټیم له سیمیزو کروندګرو او شریکانو سره په ګډه کار کوي تر څو د بدلون او پرمختګ رښتینې پایلې رامنځته کړي. موږ د داسې راتلونکي د جوړولو لپاره کار کوو چې کرنه پکې مثمره، دوامداره او د ټولو لپاره ګټوره وي، په داسې حال کې چې د طبیعت توازن او ښکلا وساتو.",
 
     "home.pillars.training.title": "د روزنې پروګرامونه",
     "home.pillars.training.description":
         "د کرنې هراړخیزې تعلیمي برنامې او د ظرفیت لوړولو هڅې د بزګرانو، همکاریو او مسلکي کسانو لپاره.",
     "home.pillars.training.countLabel": "پروګرامونه",
+
     "home.pillars.agritech.title": "د کرنې تخنیکي وسایل",
     "home.pillars.agritech.description":
         "نوې کرنیزې ټکنالوژۍ او ډیجیټلي حل لارې د کرنیزې تولید زیاتونې او موثریت لپاره.",
     "home.pillars.agritech.countLabel": "وسایل",
+
     "home.pillars.smartfarming.title": "پاملرنې او پایداره کرنه",
     "home.pillars.smartfarming.description":
         "د نوې طریقو ترویج لکه د څاڅکي اوبه خور، شنې خونې او دقیقه کرنه د اقلیمي شرایطو په وړاندې مقاومو ډولونو سره.",
     "home.pillars.smartfarming.countLabel": "پروګرامونه",
+
     "home.pillars.seedSupply.title": "د تخم او نهاده د عرضه زنځیر",
     "home.pillars.seedSupply.description":
         "د لوړ کیفیت تخمونو، سرو او چاپېریال دوستانه آفت وژونکو برابرول د باور وړ وېش شبکو له لارې.",
     "home.pillars.seedSupply.countLabel": "محصولات",
+
     "home.pillars.market.title": "د بازار د لاسرسي پروګرامونه",
     "home.pillars.market.description":
         "کروندګر او تولید کوونکي ګټورو بازارونو او د ارزښت ځنځیرونو سره نښلول د دوامدار عاید لپاره.",
     "home.pillars.market.countLabel": "پروګرامونه",
+
     "home.pillars.environmental.title": "د چاپیریال پروژې",
     "home.pillars.environmental.description":
         "پایدار چاپیریالي نوښتونه د ساتنې، د اقلیم د زغملو او د چاپېریال دوستانه کرنیزو طریقو د ودې لپاره.",
     "home.pillars.environmental.countLabel": "پروژې",
+
     "home.pillars.community.title": "د ټولنې پروګرامونه",
     "home.pillars.community.description":
         "هراړخیز ټولنیز پرمختیایي نوښتونه چې په کلیوالو ځواکمنتیا، ټولنیز ګډون او د معیشت ښه والي تمرکز لري.",
@@ -184,14 +189,13 @@ export default {
     "home.foundation.subtitle": "پر قوي اصولو ولاړ چې زموږ هر کار رهنمایي کوي",
     "home.foundation.vision.title": "لید",
     "home.foundation.vision.body":
-        "په افغانستان کې د نوښتګرې مالي حل لارو او پایدارو پرمختیایي پروګرامونو له لارې د کرنیزو ټولنو بااختیاره کولو مخکښ مایکروفاینانس اداره اوسېدل.",
+        "زموږ لید دا دی چې یو بډای او ځان بسیا کرنیز سکتور رامنځته کړو، چیرې چې هر کروندګر د پوهې، ټکنالوژۍ او عادلانه بازارونو ته لاسرسی ولري. ماونټ اګرو غواړي داسې راتلونکی جوړ کړي چې کرنه د ودې، عزت او ثبات سرچینه وي، او د ټولنې د پرمختګ بنسټ وګرځي.",
     "home.foundation.mission.title": "ماموریت",
     "home.foundation.mission.body":
-        "موږ د لاسرسي وړ مایکروفاینانس خدمتونه، کرنیزې روزنې، او تخنیکي ملاتړ برابروو ترڅو بزګران تولید زیات کړي، معیشت ښه کړي، او مقاومت لرونکي ټولنې جوړې کړي.",
+        "د ماونټ اګرو موخه دا ده چې کروندګر او کلیوالې ټولنې د عصري کرنیزو ټکنالوژیو، باکیفیته تخمونو، عملي روزنو او دوامدارو کرنیزو کړنو له لارې پیاوړې کړي. موږ هڅه کوو چې د خوړو خوندیتوب ټینګ او د خلکو ژوند ښه کړو، په داسې حال کې چې د چاپېریال توازن او د راتلونکو نسلونو هوساینه وساتو.",
     "home.foundation.values.title": "ارزښتونه",
     "home.foundation.values.body":
-        "پاکي، شفافیت، د ټولنې تمرکز، او پایدار پرمختګ زموږ د ژمنې لارښود دی چې د افغانستان د کرنې سکتور ته په لوړ کیفیت او باور سره خدمت وکړو.",
-
+        "ماونټ اګرو د دوامدارۍ، نوښت او د ټولنې د پیاوړتیا پر بنسټ ولاړ دی. موږ د رڼاوالۍ، رښتینولۍ او همکارۍ ارزښت ته ژمن یو، او د کیفیت، عدالت او د چاپېریال ساتنې له لارې باور او پرمختګ ته وده ورکوو. زموږ هدف دا دی چې د هرې پروژې له لارې یو بااعتماده، تولیدي او اوږدمهاله پرمختګ رامنځته کړو.",
     // Pillars intro
     "home.pillars.title": "زموږ د سوداګرۍ ستنې",
     "home.pillars.subtitle":
@@ -281,6 +285,28 @@ export default {
     "market.meta.various": "ګوناګون",
     "market.meta.multiple": "متعدد",
     "market.meta.partners_count": "{count} شریکان",
+    "market.meta.program": "پروګرام",
+
+    // Market Access Program Detail
+    "market.detail.loading": "د پروګرام جزئیات لوډ کېږي...",
+    "market.detail.error.title": "پروګرام ونه موندل شو",
+    "market.detail.error.back": "پروګرامونو ته بیرته",
+    "market.detail.target_crops": "د هدف محصولات",
+    "market.detail.location": "ځای",
+    "market.detail.partners": "شریکان",
+    "market.detail.learn_more": "نور زده کړئ",
+    "market.detail.overview": "د پروګرام لنډیز",
+    "market.detail.partner_organizations": "د شریک سازمانونه",
+    "market.detail.quick_info": "د ژر معلومات",
+    "market.detail.program_type": "ډول",
+    "market.detail.need_info": "نور معلومات غواړئ؟",
+    "market.detail.need_info_sub":
+        "د دې د بازار د لاسرسي پروګرام په اړه تفصيلي معلومات ترلاسه کړئ او وګورئ چې څنګه کولی شي ستاسو د کرنیزو سوداګرۍ ګټه وکړي.",
+    "market.detail.contact_us": "معلومات ترلاسه کړئ",
+    "market.detail.need_help": "مرسته غواړئ؟",
+    "market.detail.need_help_sub":
+        "د دې پروګرام په اړه نورو معلوماتو لپاره زموږ ټیم سره اړیکه ونیسئ.",
+    "market.detail.contact_link": "موږ سره اړیکه",
 
     // Training Programs (list)
     "training.breadcrumb.home": "کور",
@@ -368,7 +394,209 @@ export default {
         "خپل CV دې {email} ته ایمیل کړئ او د دندې عنوان په موضوع کې ولیکئ.",
     // Loading labels
     "loading.jobs": "پرانیستې دندې لوډ کېږي...",
-    
+
+    // Smart Farming Programs (list)
+    "smartfarming.breadcrumb.home": "کور",
+    "smartfarming.badge": "پایداره کرنه",
+    "smartfarming.title": "ځیرکه او پایداره کرنه",
+    "smartfarming.subtitle":
+        "د عصري کرنیزو تکنیکونو، د اقلیم سره مقاومو طریقو او پایداره کرنې کارونه ترڅو تولید زیات کړو او د راتلونکو نسلونو لپاره چاپېریال وساتو.",
+    "smartfarming.stats.active": "فعال پروګرامونه",
+    "smartfarming.stats.techniques": "د کرنې تکنیکونه",
+    "smartfarming.stats.climate_resilient": "د اقلیم سره مقاوم محصولات",
+    "smartfarming.scroll": "د پایدارې کرنې لاندې وګورئ",
+    "smartfarming.filters.title": "پروګرامونه فلټر کړئ",
+    "smartfarming.filters.reset": "فلټرونه بیا تنظیم کړئ",
+    "smartfarming.filters.type": "د کرنې ډول",
+    "smartfarming.filters.type_all": "ټول ډولونه",
+    "smartfarming.filters.type_drip_irrigation": "د څاڅکي اوبه خور",
+    "smartfarming.filters.type_greenhouse": "د شنو خونو کرنه",
+    "smartfarming.filters.type_precision_agriculture": "دقیقه کرنه",
+    "smartfarming.filters.type_organic": "طبیعي طریقې",
+    "smartfarming.filters.type_climate_resilient": "د اقلیم سره مقاوم محصولات",
+    "smartfarming.filters.type_soil_health": "د خاورې روغتیا مدیریت",
+    "smartfarming.filters.crops": "د هدف محصولات",
+    "smartfarming.filters.crops_all": "ټول محصولات",
+    "smartfarming.filters.crops_vegetables": "سبزي",
+    "smartfarming.filters.crops_fruits": "میوې",
+    "smartfarming.filters.crops_cereals": "غلات",
+    "smartfarming.filters.crops_legumes": "دانه",
+    "smartfarming.filters.crops_spices": "توکي",
+    "smartfarming.filters.crops_medicinal": "طبي بوټي",
+    "smartfarming.filters.search": "لټون",
+    "smartfarming.filters.search_placeholder": "پروګرامونه ولټوئ...",
+    "smartfarming.results.count": "{count} پروګرامونه وموندل شول",
+    "smartfarming.empty.title": "هیڅ پروګرام ونه موندل شو",
+    "smartfarming.empty.body":
+        "ستاسو د اوسني فلټرونو له مخې کوم پروګرام نشته. مهرباني وکړئ لټون بدل کړئ.",
+    "smartfarming.empty.clear": "فلټرونه پاک کړئ",
+    "smartfarming.meta.various": "ګوناګون",
+    "smartfarming.meta.sustainable": "پایدار",
+
+    // Smart Farming Program Detail
+    "smartfarming.detail.badge": "پایداره کرنه",
+    "smartfarming.detail.program_details": "د پروګرام جزئیات",
+    "smartfarming.detail.farming_type": "ډول",
+    "smartfarming.detail.duration": "موده",
+    "smartfarming.detail.location": "ځای",
+    "smartfarming.detail.sustainability": "پایداری",
+    "smartfarming.detail.target_crops": "د هدف محصولات",
+    "smartfarming.detail.target_crops_count": "د هدف محصولات",
+    "smartfarming.detail.overview": "د پروګرام لنډیز",
+    "smartfarming.detail.implementation_guide": "د پلي کولو لارښود",
+    "smartfarming.detail.sustainability_impact": "د پایداری اغېز",
+    "smartfarming.detail.need_info": "نور معلومات غواړئ؟",
+    "smartfarming.detail.need_info_sub":
+        "د دې پایداره کرنیز پروګرام په اړه تفصيلي معلومات ترلاسه کړئ او وګورئ چې څنګه کولی شي ستاسو د کرنیزو کړنو ګټه وکړي.",
+    "smartfarming.detail.contact_us": "معلومات ترلاسه کړئ",
+    "smartfarming.detail.learn_more": "نور زده کړئ",
+    "smartfarming.detail.error.title": "پروګرام ونه موندل شو",
+    "smartfarming.detail.error.back": "پروګرامونو ته بیرته",
+    "smartfarming.detail.loading": "د پروګرام جزئیات لوډ کېږي...",
+    "smartfarming.detail.contact_info": "د اړیکو معلومات",
+
+    // Seed Supply Programs (list)
+    "seedsupply.breadcrumb.home": "کور",
+    "seedsupply.badge": "د تخم او نهاده د عرضه زنځیر",
+    "seedsupply.title": "د تخم او نهاده د عرضه زنځیر",
+    "seedsupply.subtitle":
+        "د لوړ کیفیت تخمونو، سرو او چاپیریال دوستانه نهاده لاسرسی د زموږ د باور وړ وېش شبکو له لارې. د دوامدارو عرضه زنځیرونو جوړول په ټولو ولایتونو کې د ښه تولید او د کرنې بریا لپاره.",
+    "seedsupply.stats.supply_programs": "د عرضه پروګرامونه",
+    "seedsupply.stats.input_types": "د نهاده ډولونه",
+    "seedsupply.stats.distribution_centers": "د وېش مرکزونه",
+    "seedsupply.scroll": "د عرضه پروګرامونه لاندې وګورئ",
+    "seedsupply.filters.title": "د عرضه پروګرامونه فلټر کړئ",
+    "seedsupply.filters.reset": "فلټرونه بیا تنظیم کړئ",
+    "seedsupply.filters.input_type": "د نهاده ډول",
+    "seedsupply.filters.input_type_all": "ټول ډولونه",
+    "seedsupply.filters.crops": "د هدف محصولات",
+    "seedsupply.filters.crops_all": "ټول محصولات",
+    "seedsupply.filters.search": "لټون",
+    "seedsupply.filters.search_placeholder": "پروګرامونه ولټوئ...",
+    "seedsupply.results.count": "{count} پروګرامونه وموندل شول",
+    "seedsupply.empty.title": "هیڅ پروګرام ونه موندل شو",
+    "seedsupply.empty.body":
+        "ستاسو د اوسني فلټرونو له مخې کوم پروګرام نشته. مهرباني وکړئ لټون بدل کړئ.",
+    "seedsupply.empty.clear": "فلټرونه پاک کړئ",
+    "seedsupply.meta.various": "ګوناګون",
+    "seedsupply.meta.supply_program": "د عرضه پروګرام",
+
+    // Seed Supply Program Detail
+    "seedsupply.detail.badge": "د تخم او نهاده د عرضه زنځیر",
+    "seedsupply.detail.program_details": "د محصول جزئیات",
+    "seedsupply.detail.input_type": "ډول",
+    "seedsupply.detail.quality_grade": "د کیفیت درجه",
+    "seedsupply.detail.availability": "شتوالي",
+    "seedsupply.detail.price_range": "د قیمت حد",
+    "seedsupply.detail.shelf_life": "د مصرف تاریخ",
+    "seedsupply.detail.target_crops": "د هدف محصولات",
+    "seedsupply.detail.overview": "د محصول لنډیز",
+    "seedsupply.detail.technical_specifications": "تخنیکي مشخصات",
+    "seedsupply.detail.usage_instructions": "د استعمال لارښود",
+    "seedsupply.detail.distribution_centers": "د وېش مرکزونه",
+    "seedsupply.detail.supplier": "عرضه کوونکی",
+    "seedsupply.detail.need_info": "نور معلومات غواړئ؟",
+    "seedsupply.detail.need_info_sub":
+        "د دې باکیفیته نهاده په اړه تفصيلي معلومات ترلاسه کړئ او وګورئ چې څنګه کولی شي ستاسو د کرنیزو عملیاتو ګټه وکړي.",
+    "seedsupply.detail.contact_us": "معلومات ترلاسه کړئ",
+    "seedsupply.detail.learn_more": "نور زده کړئ",
+    "seedsupply.detail.error.title": "پروګرام ونه موندل شو",
+    "seedsupply.detail.error.back": "پروګرامونو ته بیرته",
+    "seedsupply.detail.loading": "د پروګرام جزئیات لوډ کېږي...",
+    "seedsupply.detail.contact_info": "د اړیکو معلومات",
+
+    // Community Programs (list)
+    "community.breadcrumb.home": "کور",
+    "community.badge": "د ټولنې پراختیا",
+    "community.title": "د ټولنې پروګرامونه",
+    "community.subtitle":
+        "د هدف لرونکو پراختیایي نوښتونو، د ظرفیت جوړولو او دوامدارو شریکونو له لارې ټولنې پیاوړې کړئ چې د اوږدمهاله مثبت اغېز رامنځته کوي.",
+    "community.stats.active": "فعال پروګرامونه",
+    "community.stats.target_groups": "د هدف ګروپونه",
+    "community.stats.partners": "د شریک سازمانونه",
+    "community.scroll": "د پروګرامونو لاندې وګورئ",
+    "community.filters.title": "پروګرامونه فلټر کړئ",
+    "community.filters.reset": "فلټرونه بیا تنظیم کړئ",
+    "community.filters.program_type": "د پروګرام ډول",
+    "community.filters.program_type_all": "ټول ډولونه",
+    "community.filters.target_group": "د هدف ګروپ",
+    "community.filters.target_group_all": "ټول ګروپونه",
+    "community.filters.search": "لټون",
+    "community.filters.search_placeholder": "پروګرامونه ولټوئ...",
+    "community.results.count": "{count} پروګرامونه وموندل شول",
+    "community.empty.title": "هیڅ پروګرام ونه موندل شو",
+    "community.empty.body":
+        "ستاسو د اوسني فلټرونو له مخې کوم پروګرام نشته. مهرباني وکړئ لټون بدل کړئ.",
+    "community.empty.clear": "فلټرونه پاک کړئ",
+    "community.meta.program": "پروګرام",
+    "community.meta.partners": "شریکان",
+    "community.meta.general_community": "عمومي ټولنه",
+
+    // Community Program Detail
+    "community.detail.badge": "د ټولنې پراختیا",
+    "community.detail.quick_info": "د ژر معلومات",
+    "community.detail.program_type": "ډول",
+    "community.detail.location": "ځای",
+    "community.detail.target_group": "د هدف ګروپ",
+    "community.detail.partners": "شریکان",
+    "community.detail.overview": "د پروګرام لنډیز",
+    "community.detail.no_description":
+        "د دې پروګرام لپاره هیڅ توضیحات شتون نلري.",
+    "community.detail.partner_organizations": "د شریک سازمانونه",
+    "community.detail.no_partners":
+        "د دې پروګرام لپاره هیڅ شریک سازمان لیست شوی نه دی.",
+    "community.detail.need_info": "نور معلومات غواړئ؟",
+    "community.detail.need_info_sub":
+        "د دې د ټولنې پروګرام په اړه تفصيلي معلومات ترلاسه کړئ او وګورئ چې څنګه کولی شئ برخه واخلئ.",
+    "community.detail.contact_us": "معلومات ترلاسه کړئ",
+    "community.detail.error.title": "پروګرام ونه موندل شو",
+    "community.detail.error.back": "پروګرامونو ته بیرته",
+    "community.detail.loading": "د پروګرام جزئیات لوډ کېږي...",
+
+    // Environmental Projects (list)
+    "environmental.breadcrumb.home": "کور",
+    "environmental.badge": "د چاپیریال ساتنه",
+    "environmental.title": "د چاپیریال پروژې",
+    "environmental.subtitle":
+        "د دلیلو پر بنسټ او د ټولنې لخوا اداره شوي پروژو له لارې د چاپیریال ساتنه او د پایداری ترویج.",
+    "environmental.stats.active": "فعال پروژې",
+    "environmental.stats.funding_sources": "د مالي سرچینې",
+    "environmental.stats.impact_metrics": "د اغېز سنجشونه",
+    "environmental.scroll": "د پروژو لاندې وګورئ",
+    "environmental.filters.title": "پروژې فلټر کړئ",
+    "environmental.filters.reset": "فلټرونه بیا تنظیم کړئ",
+    "environmental.filters.project_type": "د پروژې ډول",
+    "environmental.filters.project_type_all": "ټول ډولونه",
+    "environmental.filters.search": "لټون",
+    "environmental.filters.search_placeholder": "پروژې ولټوئ...",
+    "environmental.results.count": "{count} پروژې وموندل شوې",
+    "environmental.empty.title": "هیڅ پروژه ونه موندل شوه",
+    "environmental.empty.body":
+        "ستاسو د اوسني فلټرونو له مخې کومه پروژه نشته. مهرباني وکړئ لټون بدل کړئ.",
+    "environmental.empty.clear": "فلټرونه پاک کړئ",
+    "environmental.meta.environmental": "چاپیریال",
+    "environmental.meta.metrics": "سنجشونه",
+    "environmental.meta.not_specified": "مشخص شوی نه دی",
+    "environmental.meta.unknown": "نامعلوم",
+    "environmental.meta.na": "په لاس کې نشته",
+
+    // Environmental Project Detail
+    "environmental.detail.badge": "د چاپیریال ساتنه",
+    "environmental.detail.quick_info": "د ژر معلومات",
+    "environmental.detail.project_type": "ډول",
+    "environmental.detail.status": "وضعیت",
+    "environmental.detail.funding": "مالي",
+    "environmental.detail.funding_source": "د مالي سرچینه",
+    "environmental.detail.impact_metrics": "د اغېز سنجشونه",
+    "environmental.detail.overview": "لنډیز",
+    "environmental.detail.no_description":
+        "د دې پروژې لپاره هیڅ توضیحات ورکړل شوي نه دي.",
+    "environmental.detail.no_metrics":
+        "د دې پروژې لپاره هیڅ د اغېز سنجشونه ورکړل شوي نه دي.",
+    "environmental.detail.error.title": "پروژه ونه موندل شوه",
+    "environmental.detail.error.back": "پروژو ته بیرته",
+    "environmental.detail.loading": "پروژه لوډ کېږي...",
+
     // Loader translations
     "loader.home": "د کور پاڼه لوډ کېږي...",
     "loader.our_work": "زموږ کار لوډ کېږي...",
@@ -395,10 +623,5 @@ export default {
     "loader.sub_resources": "سرچینې راټولېږي...",
     "loader.sub_careers": "د دندو معلومات چمتو کېږي...",
     "loader.sub_contact": "د اړیکو جزئیات لوډ کېږي...",
-    "loader.sub_default": "مهرباني وکړئ انتظار وکړئ ترڅو محتوا چمتو شي",
-    
-    // Validation messages
-    "positive_number": "ارزښت باید د مثبت عدد وي.",
-    "year_range": "کال باید د 2000 او 2100 ترمنځ وي.",
-    "max_length_500": "تشریح باید 500 حروف یا کم وي."
+    "loader.sub_default": "مهرباني وکړئ انتظار وکړئ ترڅو محتوا چمتو شي"
 };

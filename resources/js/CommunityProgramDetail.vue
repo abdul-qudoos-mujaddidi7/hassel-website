@@ -9,7 +9,7 @@
                 <div
                     class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"
                 ></div>
-                <p class="text-gray-600">Loading program details...</p>
+                <p class="text-gray-600">{{ t("community.detail.loading") }}</p>
             </div>
         </div>
 
@@ -37,7 +37,7 @@
                     </svg>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-2">
-                    Program Not Found
+                    {{ t("community.detail.error.title") }}
                 </h2>
                 <p class="text-gray-600 mb-6">{{ error }}</p>
                 <router-link
@@ -57,7 +57,7 @@
                             d="M10 19l-7-7m0 0l7-7m-7 7h18"
                         />
                     </svg>
-                    Back to Programs
+                    {{ t("community.detail.error.back") }}
                 </router-link>
             </div>
         </div>
@@ -86,7 +86,9 @@
                             <router-link
                                 to="/"
                                 class="text-green-200 hover:text-white transition-colors"
-                                >Home</router-link
+                                >{{
+                                    t("community.breadcrumb.home")
+                                }}</router-link
                             >
                             <svg
                                 class="w-4 h-4 text-green-300"
@@ -102,7 +104,7 @@
                             <router-link
                                 to="/community-programs"
                                 class="text-green-200 hover:text-white transition-colors"
-                                >Community Programs</router-link
+                                >{{ t("community.title") }}</router-link
                             >
                             <svg
                                 class="w-4 h-4 text-green-300"
@@ -160,11 +162,13 @@
                                             ? formatTargetGroup(
                                                   program.target_group
                                               )
-                                            : "General Community"
+                                            : t(
+                                                  "community.meta.general_community"
+                                              )
                                     }}
                                 </div>
                                 <div class="text-green-200 text-sm">
-                                    Target Group
+                                    {{ t("community.detail.target_group") }}
                                 </div>
                             </div>
                             <div class="text-center">
@@ -176,7 +180,7 @@
                                     }}
                                 </div>
                                 <div class="text-green-200 text-sm">
-                                    Partners
+                                    {{ t("community.detail.partners") }}
                                 </div>
                             </div>
                         </div>
@@ -196,13 +200,13 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-6"
                                 >
-                                    Program Overview
+                                    {{ t("community.detail.overview") }}
                                 </h2>
                                 <div class="prose max-w-none">
                                     <p class="text-gray-600 leading-relaxed">
                                         {{
                                             program.description ||
-                                            "No description available for this program."
+                                            t("community.detail.no_description")
                                         }}
                                     </p>
                                 </div>
@@ -214,7 +218,11 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-6"
                                 >
-                                    Partner Organizations
+                                    {{
+                                        t(
+                                            "community.detail.partner_organizations"
+                                        )
+                                    }}
                                 </h2>
                                 <template
                                     v-if="
@@ -257,8 +265,7 @@
                                     <div
                                         class="p-6 bg-gray-50 border border-gray-200 rounded-xl text-center text-gray-600"
                                     >
-                                        No partner organizations listed for this
-                                        program.
+                                        {{ t("community.detail.no_partners") }}
                                     </div>
                                 </template>
                             </div>
@@ -272,14 +279,16 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
                                 >
-                                    Quick Information
+                                    {{ t("community.detail.quick_info") }}
                                 </h3>
                                 <div class="space-y-4">
                                     <div
                                         v-if="program.program_type"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600">Type</span>
+                                        <span class="text-gray-600">{{
+                                            t("community.detail.program_type")
+                                        }}</span>
                                         <span
                                             class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full"
                                             >{{
@@ -293,9 +302,9 @@
                                         v-if="program.location"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600"
-                                            >Location</span
-                                        >
+                                        <span class="text-gray-600">{{
+                                            t("community.detail.location")
+                                        }}</span>
                                         <span
                                             class="text-gray-900 font-medium"
                                             >{{ program.location }}</span
@@ -310,12 +319,10 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
                                 >
-                                    Need More Information?
+                                    {{ t("community.detail.need_info") }}
                                 </h3>
                                 <p class="text-gray-600 mb-4">
-                                    Get detailed information about this
-                                    community program and how you can
-                                    participate.
+                                    {{ t("community.detail.need_info_sub") }}
                                 </p>
                                 <router-link
                                     to="/contact"
@@ -334,7 +341,7 @@
                                             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                                         />
                                     </svg>
-                                    Get Information
+                                    {{ t("community.detail.contact_us") }}
                                 </router-link>
                             </div>
                         </div>
@@ -355,7 +362,7 @@ const loading = ref(true);
 const error = ref(null);
 const program = ref(null);
 const heroImage = ref("/images/ourWork/ourworkhero.avif");
-const { currentLanguage, onLanguageChange } = useI18n();
+const { currentLanguage, onLanguageChange, t } = useI18n();
 let unsubscribeLang = null;
 
 onMounted(async () => {

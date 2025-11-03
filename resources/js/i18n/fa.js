@@ -9,6 +9,13 @@ export default {
     "nav.seed_supply": "تأمین بذر",
     "nav.community": "برنامه های اجتماعی",
     "nav.environmental": "پروژه های محیطی",
+    // "nav.community": "تأسیس سردخانه‌ها",
+    // "nav.training": "ایجاد ظرفیت و آموزش‌ها",
+    // "nav.agri_tech": "تطبیق تکنالوژی‌های نوین",
+    // "nav.market_access": "ارتباطات و دسترسی به بازار",
+    // "nav.smart_farming": "سیستم‌های آبیاری مدرن",
+    // "nav.seed_supply": "تأمین مواد زراعتی بهبود یافته",
+    // "nav.environmental": "برنامه‌های آگاهی و پایداری محیط زیست",
     "nav.resources": "منابع",
     "nav.careers": "فرصت های شغلی",
     "nav.contact": "تماس",
@@ -32,18 +39,6 @@ export default {
     "created_date": "تاریخ ایجاد",
     "farsi": "دری",
     "pashto": "پښتو",
-    
-    // Form actions
-    "create": "ایجاد",
-    "update": "به‌روزرسانی",
-    "submit": "ایجاد",
-    
-    // Form fields
-    "stat_type": "نوع آمار",
-    "value": "مقدار",
-    "year": "سال",
-    "description": "توضیحات",
-    
     "field_required": "این فیلد الزامی است",
 
     // Footer
@@ -53,11 +48,12 @@ export default {
     "footer.copyright": "تمام حقوق محفوظ است.",
     "footer.programs": "برنامه ها",
     "footer.contact": "تماس",
-    "footer.company_tagline": "راه حل های حرفه ای برای چالش های مدرن. ما فناوری فردا را امروز می سازیم.",
+    "footer.company_tagline":
+        "راه حل های حرفه ای برای چالش های مدرن. ما فناوری فردا را امروز می سازیم.",
     "footer.address": "خیابان تجاری 123",
     "footer.city_state": "شهر، استان 12345",
     "footer.phone": "تلفن: (555) 123-4567",
-    "footer.email": "ایمیل: info@mountagro.com",
+    "footer.email": "ایمیل: mountagro.af@gmail.com",
     "footer.privacy_policy": "سیاست حریم خصوصی",
     "footer.terms_of_service": "شرایط خدمات",
 
@@ -94,7 +90,8 @@ export default {
     "contact.send": "ارسال پیام",
     "contact.sending": "در حال ارسال...",
     "contact.success_title": "پیام با موفقیت ارسال شد!",
-    "contact.success_message": "از تماس شما متشکریم. ظرف 24 ساعت با شما تماس خواهیم گرفت.",
+    "contact.success_message":
+        "از تماس شما متشکریم. ظرف 24 ساعت با شما تماس خواهیم گرفت.",
     "contact.address_line1": "خیابان تجاری 123",
     "contact.address_line2": "سان فرانسیسکو، کالیفرنیا 94105",
     "contact.address_line3": "ایالات متحده",
@@ -106,7 +103,8 @@ export default {
     "contact.hours_line2": "شنبه: 10:00 صبح - 4:00 عصر",
     "contact.hours_line3": "یکشنبه: تعطیل",
     "contact.message_placeholder": "لطفاً استعلام خود را به تفصیل شرح دهید...",
-    "contact.job_message_placeholder": "لطفاً اطلاعات اضافی در مورد درخواست خود ارائه دهید...",
+    "contact.job_message_placeholder":
+        "لطفاً اطلاعات اضافی در مورد درخواست خود ارائه دهید...",
 
     // File Types
     "file_type.pdf": "سند PDF",
@@ -134,10 +132,9 @@ export default {
     // About
     "home.about.title": "درباره ما",
     "home.about.p1":
-        "نهاد مالی خرد مانت اگرو ارائه‌دهنده پیشرو خدمات مالی است که به تحول بخش کشاورزی افغانستان از طریق راه‌حل‌های نوآورانه مالی خرد و برنامه‌های حمایتی جامع اختصاص دارد.",
+        "ماونت آگرو یک نهاد توسعه کشاورزی است که با هدف توانمندسازی کشاورزان و تقویت جوامع روستایی از طریق نوآوری، آموزش و روش‌های پایدار فعالیت می‌کند. ما باور داریم که کشاورزی تنها کاشت و برداشت نیست، بلکه قلب رشد اجتماعی، ثبات اقتصادی و حفاظت از محیط زیست است. تلاش ما بر این است که بهره‌وری را افزایش دهیم، روش‌های مدرن را ترویج کنیم و زمینه رشد و استقلال برای هر کشاورز فراهم سازیم.",
     "home.about.p2":
-        "از زمان تأسیس، ما متعهد به توانمندسازی کشاورزان، کارآفرینان کشاورزی و جوامع روستایی با ارائه خدمات مالی قابل دسترس، آموزش‌های فنی و فرصت‌های پیوند بازار بوده‌ایم.",
-
+        "تیم ماونت آگرو با همکاری کشاورزان محلی و شرکای توسعه، تغییرات مثبت و ماندگاری در بخش کشاورزی ایجاد می‌کند. هدف ما ساخت آینده‌ای است که در آن کشاورزی کارآمد، پایدار و سودمند برای همه باشد و در عین حال، تعادل و زیبایی طبیعت حفظ گردد.",
     "home.pillars.training.title": "برنامه های آموزشی",
     "home.pillars.training.description":
         "برنامه‌های جامع آموزش کشاورزی و توانمندسازی ظرفیت‌ها برای کشاورزان، تعاونی‌ها و متخصصان کشاورزی.",
@@ -185,14 +182,13 @@ export default {
         "بر اصول محکمی استوار است که هر کاری را راهنمایی می‌کند",
     "home.foundation.vision.title": "چشم‌انداز",
     "home.foundation.vision.body":
-        "بهترین نهاد مالی خرد بودن برای توانمندسازی جوامع کشاورزی افغانستان از طریق راه‌حل‌های نوآورانه مالی و برنامه‌های توسعه پایدار.",
+        "چشم‌انداز ما ایجاد بخشی کشاورزی پویا و خودکفاست که در آن هر کشاورز به دانش، فناوری و بازارهای عادلانه دسترسی داشته باشد. ماونت آگرو می‌کوشد آینده‌ای پایدار بسازد که در آن کشاورزی منبع رشد، عزت و ثبات برای جوامع سراسر کشور باشد.",
     "home.foundation.mission.title": "ماموریت",
     "home.foundation.mission.body":
-        "ما خدمات مالی خرد قابل دسترس، آموزش‌های کشاورزی و پشتیبانی فنی ارائه می‌کنیم تا کشاورزان بهره‌وری را افزایش دهند، معیشت را بهبود بخشند و جوامع مقاوم بسازند.",
+        "ماموریت ماونت آگرو توانمندسازی کشاورزان و جوامع روستایی از طریق ترویج فناوری‌های نوین کشاورزی، تأمین بذرهای باکیفیت، آموزش‌های عملی و اجرای روش‌های پایدار است. هدف ما تقویت امنیت غذایی، بهبود معیشت مردم و حفظ تعادل محیط زیست برای نسل‌های آینده می‌باشد.",
     "home.foundation.values.title": "ارزش‌ها",
     "home.foundation.values.body":
-        "صداقت، شفافیت، تمرکز بر جامعه و توسعه پایدار تعهد ما را برای خدمت به بخش کشاورزی افغانستان با برتری و اعتماد هدایت می‌کند.",
-
+        "ماونت آگرو بر پایه پایداری، نوآوری و توانمندسازی جامعه بنا شده است. ما به شفافیت، صداقت و همکاری به عنوان اصول اساسی باور داریم و از طریق تمرکز بر کیفیت، عدالت و حفاظت از محیط زیست، به اعتماد، بهره‌وری و پیشرفت پایدار دست می‌یابیم. هدف ما ایجاد توسعه‌ای پایدار است که در هر پروژه نمود پیدا کند.",
     // Pillars intro
     "home.pillars.title": "ستون‌های کسب‌وکار ما",
     "home.pillars.subtitle":
@@ -225,7 +221,8 @@ export default {
 
     // Closing CTA
     "home.cta.title": "آماده‌ای برای تحول جوامع کشاورزی؟",
-    "home.cta.body":"با ما در ماموریت ما برای توانمند سازی دهاقین و تقویت سکتور زراعتی افغانستان از طریق راهکارهای ابتکاری تمویل مالی کوچک همراه باشید\u200F.",
+    "home.cta.body":
+        "با ما در ماموریت ما برای توانمند سازی دهاقین و تقویت سکتور زراعتی افغانستان از طریق راهکارهای ابتکاری تمویل مالی کوچک همراه باشید\u200F.",
     "home.cta.get_started": "شروع کنید",
 
     // AgriTech Tools (list)
@@ -262,7 +259,7 @@ export default {
     "market.badge": "راهکارهای بازار",
     "market.title": "برنامه های دسترسی به بازار",
     "market.subtitle":
-    "ارتباط با بازارها، تقویت زنجیره های ارزش و ایجاد مشارکت‌های پایدار برای حداکثرسازی ظرفیت کشاورزی و فرصت‌های درآمدی\u200F.",
+        "ارتباط با بازارها، تقویت زنجیره های ارزش و ایجاد مشارکت‌های پایدار برای حداکثرسازی ظرفیت کشاورزی و فرصت‌های درآمدی\u200F.",
     "market.stats.active": "برنامه‌های فعال",
     "market.stats.crops": "انواع محصولات",
     "market.stats.partners": "سازمان‌های همکار",
@@ -281,6 +278,28 @@ export default {
     "market.meta.various": "گوناگون",
     "market.meta.multiple": "متعدد",
     "market.meta.partners_count": "{count} شریک",
+    "market.meta.program": "برنامه",
+
+    // Market Access Program Detail
+    "market.detail.loading": "در حال بارگذاری جزئیات برنامه...",
+    "market.detail.error.title": "برنامه یافت نشد",
+    "market.detail.error.back": "بازگشت به برنامه‌ها",
+    "market.detail.target_crops": "محصولات هدف",
+    "market.detail.location": "موقعیت",
+    "market.detail.partners": "همکاران",
+    "market.detail.learn_more": "بیشتر بدانید",
+    "market.detail.overview": "نمای کلی برنامه",
+    "market.detail.partner_organizations": "سازمان‌های همکار",
+    "market.detail.quick_info": "اطلاعات سریع",
+    "market.detail.program_type": "نوع",
+    "market.detail.need_info": "نیاز به اطلاعات بیشتر؟",
+    "market.detail.need_info_sub":
+        "اطلاعات تفصیلی درباره این برنامه دسترسی به بازار دریافت کنید و ببینید چگونه می‌تواند به کسب‌وکار کشاورزی شما کمک کند.",
+    "market.detail.contact_us": "دریافت اطلاعات",
+    "market.detail.need_help": "نیاز به کمک دارید؟",
+    "market.detail.need_help_sub":
+        "برای اطلاعات بیشتر درباره این برنامه با تیم ما تماس بگیرید.",
+    "market.detail.contact_link": "تماس با ما",
 
     // Training Programs (list)
     "training.breadcrumb.home": "خانه",
@@ -368,7 +387,209 @@ export default {
         "رزومهٔ خود را به {email} ایمیل کنید و عنوان شغل را در موضوع ایمیل درج نمایید.",
     // Loading labels
     "loading.jobs": "در حال بارگذاری فرصت‌های شغلی...",
-    
+
+    // Smart Farming Programs (list)
+    "smartfarming.breadcrumb.home": "خانه",
+    "smartfarming.badge": "کشاورزی پایدار",
+    "smartfarming.title": "کشاورزی هوشمند و پایدار",
+    "smartfarming.subtitle":
+        "استفاده از تکنیک‌های مدرن کشاورزی، روش‌های مقاوم به اقلیم و کشاورزی پایدار برای افزایش تولید و حفاظت از محیط زیست برای نسل‌های آینده.",
+    "smartfarming.stats.active": "برنامه‌های فعال",
+    "smartfarming.stats.techniques": "تکنیک‌های کشاورزی",
+    "smartfarming.stats.climate_resilient": "محصولات مقاوم به اقلیم",
+    "smartfarming.scroll": "کشاورزی پایدار را در پایین بررسی کنید",
+    "smartfarming.filters.title": "فیلتر برنامه‌ها",
+    "smartfarming.filters.reset": "بازنشانی فیلترها",
+    "smartfarming.filters.type": "نوع کشاورزی",
+    "smartfarming.filters.type_all": "همه انواع",
+    "smartfarming.filters.type_drip_irrigation": "آبیاری قطره‌ای",
+    "smartfarming.filters.type_greenhouse": "کشاورزی گلخانه‌ای",
+    "smartfarming.filters.type_precision_agriculture": "کشاورزی دقیق",
+    "smartfarming.filters.type_organic": "روش‌های ارگانیک",
+    "smartfarming.filters.type_climate_resilient": "محصولات مقاوم به اقلیم",
+    "smartfarming.filters.type_soil_health": "مدیریت سلامت خاک",
+    "smartfarming.filters.crops": "محصولات هدف",
+    "smartfarming.filters.crops_all": "همه محصولات",
+    "smartfarming.filters.crops_vegetables": "سبزیجات",
+    "smartfarming.filters.crops_fruits": "میوه‌ها",
+    "smartfarming.filters.crops_cereals": "غلات",
+    "smartfarming.filters.crops_legumes": "حبوبات",
+    "smartfarming.filters.crops_spices": "ادویه‌جات",
+    "smartfarming.filters.crops_medicinal": "گیاهان دارویی",
+    "smartfarming.filters.search": "جستجو",
+    "smartfarming.filters.search_placeholder": "جستجوی برنامه‌ها...",
+    "smartfarming.results.count": "{count} برنامه پیدا شد",
+    "smartfarming.empty.title": "هیچ برنامه‌ای یافت نشد",
+    "smartfarming.empty.body":
+        "هیچ برنامه‌ای مطابق با فیلترهای شما نیست. لطفاً معیارهای جستجو را تغییر دهید.",
+    "smartfarming.empty.clear": "حذف فیلترها",
+    "smartfarming.meta.various": "گوناگون",
+    "smartfarming.meta.sustainable": "پایدار",
+
+    // Smart Farming Program Detail
+    "smartfarming.detail.badge": "کشاورزی پایدار",
+    "smartfarming.detail.program_details": "جزئیات برنامه",
+    "smartfarming.detail.farming_type": "نوع",
+    "smartfarming.detail.duration": "مدت زمان",
+    "smartfarming.detail.location": "موقعیت",
+    "smartfarming.detail.sustainability": "پایداری",
+    "smartfarming.detail.target_crops": "محصولات هدف",
+    "smartfarming.detail.target_crops_count": "محصولات هدف",
+    "smartfarming.detail.overview": "نمای کلی برنامه",
+    "smartfarming.detail.implementation_guide": "راهنمای اجرا",
+    "smartfarming.detail.sustainability_impact": "تأثیر پایداری",
+    "smartfarming.detail.need_info": "نیاز به اطلاعات بیشتر؟",
+    "smartfarming.detail.need_info_sub":
+        "اطلاعات تفصیلی درباره این برنامه کشاورزی پایدار و چگونگی بهره‌مندی از آن دریافت کنید.",
+    "smartfarming.detail.contact_us": "دریافت اطلاعات",
+    "smartfarming.detail.learn_more": "بیشتر بدانید",
+    "smartfarming.detail.error.title": "برنامه یافت نشد",
+    "smartfarming.detail.error.back": "بازگشت به برنامه‌ها",
+    "smartfarming.detail.loading": "در حال بارگذاری جزئیات برنامه...",
+    "smartfarming.detail.contact_info": "اطلاعات تماس",
+
+    // Seed Supply Programs (list)
+    "seedsupply.breadcrumb.home": "خانه",
+    "seedsupply.badge": "زنجیره تأمین بذر و نهاده",
+    "seedsupply.title": "زنجیره تأمین بذر و نهاده",
+    "seedsupply.subtitle":
+        "دسترسی به بذرهای باکیفیت، کودها و نهاده‌های سازگار با محیط‌زیست از طریق شبکه توزیع قابل اعتماد ما. ساخت زنجیره‌های تأمین پایدار در سراسر استان‌ها برای عملکرد بهتر و موفقیت در کشاورزی.",
+    "seedsupply.stats.supply_programs": "برنامه‌های تأمین",
+    "seedsupply.stats.input_types": "انواع نهاده",
+    "seedsupply.stats.distribution_centers": "مراکز توزیع",
+    "seedsupply.scroll": "برنامه‌های تأمین را در پایین بررسی کنید",
+    "seedsupply.filters.title": "فیلتر برنامه‌های تأمین",
+    "seedsupply.filters.reset": "بازنشانی فیلترها",
+    "seedsupply.filters.input_type": "نوع نهاده",
+    "seedsupply.filters.input_type_all": "همه انواع",
+    "seedsupply.filters.crops": "محصولات هدف",
+    "seedsupply.filters.crops_all": "همه محصولات",
+    "seedsupply.filters.search": "جستجو",
+    "seedsupply.filters.search_placeholder": "جستجوی برنامه‌ها...",
+    "seedsupply.results.count": "{count} برنامه پیدا شد",
+    "seedsupply.empty.title": "هیچ برنامه‌ای یافت نشد",
+    "seedsupply.empty.body":
+        "هیچ برنامه‌ای مطابق با فیلترهای شما نیست. لطفاً معیارهای جستجو را تغییر دهید.",
+    "seedsupply.empty.clear": "حذف فیلترها",
+    "seedsupply.meta.various": "گوناگون",
+    "seedsupply.meta.supply_program": "برنامه تأمین",
+
+    // Seed Supply Program Detail
+    "seedsupply.detail.badge": "زنجیره تأمین بذر و نهاده",
+    "seedsupply.detail.program_details": "جزئیات محصول",
+    "seedsupply.detail.input_type": "نوع",
+    "seedsupply.detail.quality_grade": "درجه کیفیت",
+    "seedsupply.detail.availability": "در دسترس بودن",
+    "seedsupply.detail.price_range": "محدوده قیمت",
+    "seedsupply.detail.shelf_life": "مدت انقضا",
+    "seedsupply.detail.target_crops": "محصولات هدف",
+    "seedsupply.detail.overview": "نمای کلی محصول",
+    "seedsupply.detail.technical_specifications": "مشخصات فنی",
+    "seedsupply.detail.usage_instructions": "دستورالعمل استفاده",
+    "seedsupply.detail.distribution_centers": "مراکز توزیع",
+    "seedsupply.detail.supplier": "تأمین‌کننده",
+    "seedsupply.detail.need_info": "نیاز به اطلاعات بیشتر؟",
+    "seedsupply.detail.need_info_sub":
+        "اطلاعات تفصیلی درباره این نهاده باکیفیت و چگونگی بهره‌مندی از آن در عملیات کشاورزی دریافت کنید.",
+    "seedsupply.detail.contact_us": "دریافت اطلاعات",
+    "seedsupply.detail.learn_more": "بیشتر بدانید",
+    "seedsupply.detail.error.title": "برنامه یافت نشد",
+    "seedsupply.detail.error.back": "بازگشت به برنامه‌ها",
+    "seedsupply.detail.loading": "در حال بارگذاری جزئیات برنامه...",
+    "seedsupply.detail.contact_info": "اطلاعات تماس",
+
+    // Community Programs (list)
+    "community.breadcrumb.home": "خانه",
+    "community.badge": "توسعه جامعه",
+    "community.title": "برنامه های جامعه",
+    "community.subtitle":
+        "تقویت جوامع از طریق ابتکارات توسعه هدفمند، توانمندسازی و مشارکت‌های پایدار که تأثیر مثبت ماندگار ایجاد می‌کنند.",
+    "community.stats.active": "برنامه‌های فعال",
+    "community.stats.target_groups": "گروه‌های هدف",
+    "community.stats.partners": "سازمان‌های همکار",
+    "community.scroll": "برنامه‌ها را در پایین بررسی کنید",
+    "community.filters.title": "فیلتر برنامه‌ها",
+    "community.filters.reset": "بازنشانی فیلترها",
+    "community.filters.program_type": "نوع برنامه",
+    "community.filters.program_type_all": "همه انواع",
+    "community.filters.target_group": "گروه هدف",
+    "community.filters.target_group_all": "همه گروه‌ها",
+    "community.filters.search": "جستجو",
+    "community.filters.search_placeholder": "جستجوی برنامه‌ها...",
+    "community.results.count": "{count} برنامه پیدا شد",
+    "community.empty.title": "هیچ برنامه‌ای یافت نشد",
+    "community.empty.body":
+        "هیچ برنامه‌ای مطابق با فیلترهای شما نیست. لطفاً معیارهای جستجو را تغییر دهید.",
+    "community.empty.clear": "حذف فیلترها",
+    "community.meta.program": "برنامه",
+    "community.meta.partners": "همکاران",
+    "community.meta.general_community": "جامعه عمومی",
+
+    // Community Program Detail
+    "community.detail.badge": "توسعه جامعه",
+    "community.detail.quick_info": "اطلاعات سریع",
+    "community.detail.program_type": "نوع",
+    "community.detail.location": "موقعیت",
+    "community.detail.target_group": "گروه هدف",
+    "community.detail.partners": "همکاران",
+    "community.detail.overview": "نمای کلی برنامه",
+    "community.detail.no_description":
+        "هیچ توضیحی برای این برنامه در دسترس نیست.",
+    "community.detail.partner_organizations": "سازمان‌های همکار",
+    "community.detail.no_partners":
+        "هیچ سازمان همکاری برای این برنامه فهرست نشده است.",
+    "community.detail.need_info": "نیاز به اطلاعات بیشتر؟",
+    "community.detail.need_info_sub":
+        "اطلاعات تفصیلی درباره این برنامه جامعه و نحوه مشارکت در آن دریافت کنید.",
+    "community.detail.contact_us": "دریافت اطلاعات",
+    "community.detail.error.title": "برنامه یافت نشد",
+    "community.detail.error.back": "بازگشت به برنامه‌ها",
+    "community.detail.loading": "در حال بارگذاری جزئیات برنامه...",
+
+    // Environmental Projects (list)
+    "environmental.breadcrumb.home": "خانه",
+    "environmental.badge": "حفاظت از محیط زیست",
+    "environmental.title": "پروژه های محیطی",
+    "environmental.subtitle":
+        "حفاظت از اکوسیستم‌ها و ترویج پایداری از طریق پروژه‌های مبتنی بر شواهد و جامعه‌محور.",
+    "environmental.stats.active": "پروژه‌های فعال",
+    "environmental.stats.funding_sources": "منابع مالی",
+    "environmental.stats.impact_metrics": "شاخص‌های تأثیر",
+    "environmental.scroll": "پروژه‌ها را در پایین بررسی کنید",
+    "environmental.filters.title": "فیلتر پروژه‌ها",
+    "environmental.filters.reset": "بازنشانی فیلترها",
+    "environmental.filters.project_type": "نوع پروژه",
+    "environmental.filters.project_type_all": "همه انواع",
+    "environmental.filters.search": "جستجو",
+    "environmental.filters.search_placeholder": "جستجوی پروژه‌ها...",
+    "environmental.results.count": "{count} پروژه پیدا شد",
+    "environmental.empty.title": "هیچ پروژه‌ای یافت نشد",
+    "environmental.empty.body":
+        "هیچ پروژه‌ای مطابق با فیلترهای شما نیست. لطفاً جستجو را تغییر دهید.",
+    "environmental.empty.clear": "حذف فیلترها",
+    "environmental.meta.environmental": "محیطی",
+    "environmental.meta.metrics": "شاخص‌ها",
+    "environmental.meta.not_specified": "مشخص نشده",
+    "environmental.meta.unknown": "نامشخص",
+    "environmental.meta.na": "نامشخص",
+
+    // Environmental Project Detail
+    "environmental.detail.badge": "حفاظت از محیط زیست",
+    "environmental.detail.quick_info": "اطلاعات سریع",
+    "environmental.detail.project_type": "نوع",
+    "environmental.detail.status": "وضعیت",
+    "environmental.detail.funding": "مالی",
+    "environmental.detail.funding_source": "منبع مالی",
+    "environmental.detail.impact_metrics": "شاخص‌های تأثیر",
+    "environmental.detail.overview": "نمای کلی",
+    "environmental.detail.no_description":
+        "هیچ توضیحی برای این پروژه ارائه نشده است.",
+    "environmental.detail.no_metrics":
+        "هیچ شاخص تأثیری برای این پروژه ارائه نشده است.",
+    "environmental.detail.error.title": "پروژه یافت نشد",
+    "environmental.detail.error.back": "بازگشت به پروژه‌ها",
+    "environmental.detail.loading": "در حال بارگذاری پروژه...",
+
     // Loader translations
     "loader.home": "در حال بارگذاری صفحه اصلی...",
     "loader.our_work": "در حال بارگذاری کارهای ما...",
@@ -395,10 +616,5 @@ export default {
     "loader.sub_resources": "در حال جمع‌آوری منابع...",
     "loader.sub_careers": "در حال آماده‌سازی اطلاعات شغلی...",
     "loader.sub_contact": "در حال بارگذاری جزئیات تماس...",
-    "loader.sub_default": "لطفاً صبر کنید تا محتوا را آماده کنیم",
-    
-    // Validation messages
-    "positive_number": "مقدار باید یک عدد مثبت باشد.",
-    "year_range": "سال باید بین 2000 و 2100 باشد.",
-    "max_length_500": "توضیحات باید 500 کاراکتر یا کمتر باشد."
+    "loader.sub_default": "لطفاً صبر کنید تا محتوا را آماده کنیم"
 };

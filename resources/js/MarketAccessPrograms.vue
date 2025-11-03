@@ -47,9 +47,9 @@
                                 clip-rule="evenodd"
                             ></path>
                         </svg>
-                        <span class="text-white font-medium"
-                            >Market Access Programs</span
-                        >
+                        <span class="text-white font-medium">{{
+                            t("market.title")
+                        }}</span>
                     </div>
                 </nav>
 
@@ -58,16 +58,7 @@
                     <div
                         class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-500/20 text-green-100 border border-green-400/30 mb-6"
                     >
-                        <svg
-                            class="w-4 h-4 mr-2"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm8 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V8z"
-                            ></path>
-                        </svg>
-                        {{ t("market.badge") }}
+                        <span class="text-white">{{ t("market.badge") }}</span>
                     </div>
 
                     <h1
@@ -326,7 +317,13 @@
                                         ></path>
                                     </svg>
                                     <p class="text-green-600 font-medium">
-                                        {{ program.program_type || "Program" }}
+                                        {{
+                                            program.program_type
+                                                ? formatProgramType(
+                                                      program.program_type
+                                                  )
+                                                : t("market.meta.program")
+                                        }}
                                     </p>
                                 </div>
                             </div>
@@ -380,7 +377,7 @@
                                     :to="`/market-access/${
                                         program.slug || program.id
                                     }`"
-                                    class="w-full bg-brand-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-brand-secondary transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md block inline-flex items-center justify-center"
+                                    class="w-full bg-brand-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-brand-secondary transition-all duration-200 text-sm text-center shadow-sm hover:shadow-md inline-flex items-center justify-center"
                                 >
                                     <template v-if="!isRTL">
                                         {{ t("common.view_details") }}

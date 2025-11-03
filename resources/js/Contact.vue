@@ -1,7 +1,15 @@
 <template>
     <div class="min-h-screen">
         <!-- Hero Section -->
-        <section class="relative text-white overflow-hidden" style="background-image: url('/images/home/contact.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <section
+            class="relative text-white overflow-hidden"
+            style="
+                background-image: url('/images/home/contact.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            "
+        >
             <!-- Overlay -->
             <div class="absolute inset-0 bg-black/60"></div>
 
@@ -15,7 +23,7 @@
                         {{ t("contact.hero.title") }}
                     </h1>
                     <p
-                        class="text-xl md:text-2xl  mb-8 max-w-3xl mx-auto animate-fadeInUp"
+                        class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-fadeInUp"
                         style="animation-delay: 0.2s"
                     >
                         {{ t("contact.hero.subtitle") }}
@@ -24,13 +32,11 @@
                         class="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp"
                         style="animation-delay: 0.35s"
                     >
-                       
                         <a
                             href="tel:+93701234567"
                             class="btn btn-cta px-8 py-4 text-lg"
                             >{{ t("contact.hero.call_now") }}</a
                         >
-                       
                     </div>
                 </div>
             </div>
@@ -141,39 +147,7 @@
                                     </h3>
                                     <p class="text-gray-600">
                                         {{ t("contact.email_line1") }}<br />
-                                        {{ t("contact.email_line2") }}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start gap-4">
-                                <div
-                                    class="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-lg flex items-center justify-center"
-                                >
-                                    <svg
-                                        class="w-6 h-6 text-white"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3
-                                        class="text-xl font-semibold mb-2 text-gray-900"
-                                    >
-                                        {{ t("contact.business_hours") }}
-                                    </h3>
-                                    <p class="text-gray-600">
-                                        {{ t("contact.hours_line1") }}<br />
-                                        {{ t("contact.hours_line2") }}<br />
-                                        {{ t("contact.hours_line3") }}
+                                        <!-- {{ t("contact.email_line2") }} -->
                                     </p>
                                 </div>
                             </div>
@@ -376,7 +350,9 @@
                                     required
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                                 >
-                                    <option value="">{{ t("contact.select_subject") }}</option>
+                                    <option value="">
+                                        {{ t("contact.select_subject") }}
+                                    </option>
                                     <option value="job_application">
                                         {{ t("contact.job_application") }}
                                     </option>
@@ -395,7 +371,9 @@
                                     <option value="media_inquiry">
                                         {{ t("contact.media_inquiry") }}
                                     </option>
-                                    <option value="other">{{ t("contact.other") }}</option>
+                                    <option value="other">
+                                        {{ t("contact.other") }}
+                                    </option>
                                 </select>
                             </div>
 
@@ -427,7 +405,7 @@
                                     />
                                 </div>
 
-                                <div>
+                                <!-- <div>
                                     <label
                                         for="location"
                                         class="block text-sm font-medium text-gray-700 mb-2"
@@ -441,7 +419,7 @@
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
                                         placeholder="e.g., Kabul, Afghanistan"
                                     />
-                                </div>
+                                </div> -->
 
                                 <div>
                                     <label
@@ -494,7 +472,9 @@
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                                     :placeholder="
                                         form.subject === 'job_application'
-                                            ? t('contact.job_message_placeholder')
+                                            ? t(
+                                                  'contact.job_message_placeholder'
+                                              )
                                             : t('contact.message_placeholder')
                                     "
                                 ></textarea>
@@ -549,9 +529,9 @@
                                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                                     />
                                 </svg>
-                                <span class="font-medium"
-                                    >{{ t("contact.success_title") }}</span
-                                >
+                                <span class="font-medium">{{
+                                    t("contact.success_title")
+                                }}</span>
                             </div>
                             <p class="text-sm mt-1">
                                 {{ t("contact.success_message") }}
@@ -561,7 +541,6 @@
                 </div>
             </div>
         </section>
-            
     </div>
 </template>
 
@@ -577,10 +556,10 @@ const showSuccess = ref(false);
 
 // Debug function to test loader
 const testLoader = () => {
-    if (typeof window !== 'undefined' && window.testLoader) {
+    if (typeof window !== "undefined" && window.testLoader) {
         window.testLoader();
     } else {
-        console.log('Test loader function not available');
+        console.log("Test loader function not available");
     }
 };
 

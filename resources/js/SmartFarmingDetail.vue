@@ -9,7 +9,9 @@
                 <div
                     class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"
                 ></div>
-                <p class="text-gray-600">Loading program details...</p>
+                <p class="text-gray-600">
+                    {{ t("smartfarming.detail.loading") }}
+                </p>
             </div>
         </div>
 
@@ -37,7 +39,7 @@
                     </svg>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-2">
-                    Program Not Found
+                    {{ t("smartfarming.detail.error.title") }}
                 </h2>
                 <p class="text-gray-600 mb-6">{{ error }}</p>
                 <router-link
@@ -57,7 +59,7 @@
                             d="M10 19l-7-7m0 0l7-7m-7 7h18"
                         ></path>
                     </svg>
-                    Back to Programs
+                    {{ t("smartfarming.detail.error.back") }}
                 </router-link>
             </div>
         </div>
@@ -103,7 +105,9 @@
                             <router-link
                                 to="/"
                                 class="text-green-200 hover:text-white transition-colors"
-                                >Home</router-link
+                                >{{
+                                    t("smartfarming.breadcrumb.home")
+                                }}</router-link
                             >
                             <svg
                                 class="w-4 h-4 text-green-300"
@@ -119,7 +123,7 @@
                             <router-link
                                 to="/smart-farming"
                                 class="text-green-200 hover:text-white transition-colors"
-                                >Smart & Sustainable Farming</router-link
+                                >{{ t("smartfarming.title") }}</router-link
                             >
                             <svg
                                 class="w-4 h-4 text-green-300"
@@ -154,7 +158,7 @@
                                     clip-rule="evenodd"
                                 ></path>
                             </svg>
-                            {{ formatFarmingType(program.farming_type) }}
+                            {{ t("smartfarming.detail.badge") }}
                         </div>
 
                         <h1
@@ -181,7 +185,11 @@
                                     {{ getCropCount(program.target_crops) }}
                                 </div>
                                 <div class="text-green-200 text-sm">
-                                    Target Crops
+                                    {{
+                                        t(
+                                            "smartfarming.detail.target_crops_count"
+                                        )
+                                    }}
                                 </div>
                             </div>
                             <div
@@ -192,7 +200,9 @@
                                     {{ program.sustainability_level }}%
                                 </div>
                                 <div class="text-green-200 text-sm">
-                                    Sustainable
+                                    {{
+                                        t("smartfarming.detail.sustainability")
+                                    }}
                                 </div>
                             </div>
                             <div v-if="program.duration" class="text-center">
@@ -200,7 +210,7 @@
                                     {{ program.duration }}
                                 </div>
                                 <div class="text-green-200 text-sm">
-                                    Duration
+                                    {{ t("smartfarming.detail.duration") }}
                                 </div>
                             </div>
                         </div>
@@ -224,7 +234,7 @@
                                         d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                                     ></path>
                                 </svg>
-                                Learn More
+                                {{ t("smartfarming.detail.learn_more") }}
                             </router-link>
                         </div>
                     </div>
@@ -244,7 +254,7 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-4"
                                 >
-                                    Program Overview
+                                    {{ t("smartfarming.detail.overview") }}
                                 </h2>
                                 <div
                                     class="prose prose-lg max-w-none text-gray-600"
@@ -266,7 +276,7 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-4"
                                 >
-                                    Target Crops
+                                    {{ t("smartfarming.detail.target_crops") }}
                                 </h2>
                                 <div class="flex flex-wrap gap-3">
                                     <span
@@ -289,7 +299,11 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-4"
                                 >
-                                    Implementation Guide
+                                    {{
+                                        t(
+                                            "smartfarming.detail.implementation_guide"
+                                        )
+                                    }}
                                 </h2>
                                 <div
                                     class="prose prose-lg max-w-none text-gray-600"
@@ -306,7 +320,11 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-4"
                                 >
-                                    Sustainability Impact
+                                    {{
+                                        t(
+                                            "smartfarming.detail.sustainability_impact"
+                                        )
+                                    }}
                                 </h2>
                                 <div
                                     class="prose prose-lg max-w-none text-gray-600"
@@ -325,14 +343,20 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
                                 >
-                                    Program Details
+                                    {{
+                                        t("smartfarming.detail.program_details")
+                                    }}
                                 </h3>
                                 <div class="space-y-4">
                                     <div
                                         v-if="program.farming_type"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600">Type</span>
+                                        <span class="text-gray-600">{{
+                                            t(
+                                                "smartfarming.detail.farming_type"
+                                            )
+                                        }}</span>
                                         <span class="text-gray-900 font-medium">
                                             {{
                                                 formatFarmingType(
@@ -345,9 +369,9 @@
                                         v-if="program.duration"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600"
-                                            >Duration</span
-                                        >
+                                        <span class="text-gray-600">{{
+                                            t("smartfarming.detail.duration")
+                                        }}</span>
                                         <span class="text-gray-900 font-medium">
                                             {{ program.duration }}
                                         </span>
@@ -356,9 +380,9 @@
                                         v-if="program.location"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600"
-                                            >Location</span
-                                        >
+                                        <span class="text-gray-600">{{
+                                            t("smartfarming.detail.location")
+                                        }}</span>
                                         <span class="text-gray-900 font-medium">
                                             {{ program.location }}
                                         </span>
@@ -367,9 +391,11 @@
                                         v-if="program.sustainability_level"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600"
-                                            >Sustainability</span
-                                        >
+                                        <span class="text-gray-600">{{
+                                            t(
+                                                "smartfarming.detail.sustainability"
+                                            )
+                                        }}</span>
                                         <span
                                             class="text-green-600 font-medium"
                                         >
@@ -386,12 +412,10 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-2"
                                 >
-                                    Need More Information?
+                                    {{ t("smartfarming.detail.need_info") }}
                                 </h3>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Get detailed information about this
-                                    sustainable farming program and how it can
-                                    benefit your agricultural practices.
+                                    {{ t("smartfarming.detail.need_info_sub") }}
                                 </p>
 
                                 <router-link
@@ -411,7 +435,7 @@
                                             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                                         ></path>
                                     </svg>
-                                    Get Information
+                                    {{ t("smartfarming.detail.contact_us") }}
                                 </router-link>
                             </div>
 
@@ -422,7 +446,7 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
                                 >
-                                    Contact Information
+                                    {{ t("smartfarming.detail.contact_info") }}
                                 </h3>
                                 <div class="space-y-3 text-sm">
                                     <div class="flex items-center">
@@ -481,7 +505,7 @@ const route = useRoute();
 const loading = ref(true);
 const error = ref(null);
 const program = ref(null);
-const { currentLanguage, onLanguageChange } = useI18n();
+const { currentLanguage, onLanguageChange, t } = useI18n();
 let unsubscribeLang = null;
 
 onMounted(() => {

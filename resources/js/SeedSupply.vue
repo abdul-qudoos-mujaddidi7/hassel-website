@@ -34,7 +34,7 @@
                         <router-link
                             to="/"
                             class="text-green-200 hover:text-white transition-colors"
-                            >Home</router-link
+                            >{{ t("seedsupply.breadcrumb.home") }}</router-link
                         >
                         <svg
                             class="w-4 h-4 text-green-300"
@@ -47,9 +47,9 @@
                                 clip-rule="evenodd"
                             ></path>
                         </svg>
-                        <span class="text-white font-medium"
-                            >Seed & Input Supply Chain</span
-                        >
+                        <span class="text-white font-medium">{{
+                            t("seedsupply.title")
+                        }}</span>
                     </div>
                 </nav>
 
@@ -58,32 +58,21 @@
                     <div
                         class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-500/20 text-green-100 border border-green-400/30 mb-6"
                     >
-                        <svg
-                            class="w-4 h-4 mr-2"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm8 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V8z"
-                            ></path>
-                        </svg>
-                        Quality Inputs
+                        <span class="text-white">{{
+                            t("seedsupply.badge")
+                        }}</span>
                     </div>
 
                     <h1
                         class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
                     >
-                        Seed & Input Supply Chain
+                        {{ t("seedsupply.title") }}
                     </h1>
 
                     <p
                         class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
-                        Access high-quality seeds, fertilizers, and eco-friendly
-                        inputs through our reliable distribution network.
-                        Building sustainable supply chains across provinces for
-                        better yields and farming success.
+                        {{ t("seedsupply.subtitle") }}
                     </p>
 
                     <!-- Quick Stats -->
@@ -93,7 +82,7 @@
                                 {{ totalPrograms }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Supply Programs
+                                {{ t("seedsupply.stats.supply_programs") }}
                             </div>
                         </div>
                         <div class="text-center">
@@ -101,7 +90,7 @@
                                 {{ uniqueInputs }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Input Types
+                                {{ t("seedsupply.stats.input_types") }}
                             </div>
                         </div>
                         <div class="text-center">
@@ -109,16 +98,16 @@
                                 {{ distributionCenters }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Distribution Centers
+                                {{ t("seedsupply.stats.distribution_centers") }}
                             </div>
                         </div>
                     </div>
 
                     <!-- Scroll Indicator -->
                     <div class="flex flex-col items-center">
-                        <span class="text-green-200 text-sm mb-2"
-                            >Explore supply programs below</span
-                        >
+                        <span class="text-green-200 text-sm mb-2">{{
+                            t("seedsupply.scroll")
+                        }}</span>
                         <svg
                             class="w-6 h-6 text-green-300 animate-bounce"
                             fill="none"
@@ -142,7 +131,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-gray-900">
-                        Filter Supply Programs
+                        {{ t("seedsupply.filters.title") }}
                     </h2>
                     <button
                         @click="resetFilters"
@@ -161,7 +150,7 @@
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                             ></path>
                         </svg>
-                        Reset Filters
+                        {{ t("seedsupply.filters.reset") }}
                     </button>
                 </div>
 
@@ -172,13 +161,15 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Input Type</label
+                            >{{ t("seedsupply.filters.input_type") }}</label
                         >
                         <select
                             v-model="filters.type"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
-                            <option value="">All Types</option>
+                            <option value="">
+                                {{ t("seedsupply.filters.input_type_all") }}
+                            </option>
                             <option
                                 v-for="type in typeOptions"
                                 :key="type"
@@ -193,13 +184,15 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Target Crops</label
+                            >{{ t("seedsupply.filters.crops") }}</label
                         >
                         <select
                             v-model="filters.crops"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
-                            <option value="">All Crops</option>
+                            <option value="">
+                                {{ t("seedsupply.filters.crops_all") }}
+                            </option>
                             <option
                                 v-for="crop in cropOptions"
                                 :key="crop"
@@ -214,13 +207,15 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Search</label
+                            >{{ t("seedsupply.filters.search") }}</label
                         >
                         <div class="relative">
                             <input
                                 v-model="filters.search"
                                 type="text"
-                                placeholder="Search programs..."
+                                :placeholder="
+                                    t('seedsupply.filters.search_placeholder')
+                                "
                                 class="w-full border border-gray-300 rounded-lg px-4 py-3 pl-10 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                             />
                             <svg
@@ -285,17 +280,16 @@
                             </svg>
                         </div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            No Programs Found
+                            {{ t("seedsupply.empty.title") }}
                         </h3>
                         <p class="text-gray-600 mb-6">
-                            No programs match your current filters. Try
-                            adjusting your search criteria.
+                            {{ t("seedsupply.empty.body") }}
                         </p>
                         <button
                             @click="resetFilters"
                             class="inline-flex items-center px-6 py-3 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors"
                         >
-                            Clear Filters
+                            {{ t("seedsupply.empty.clear") }}
                         </button>
                     </div>
 
@@ -338,8 +332,13 @@
                                     </svg>
                                     <p class="text-green-600 font-medium">
                                         {{
-                                            program.input_type ||
-                                            "Supply Program"
+                                            program.input_type
+                                                ? formatInputType(
+                                                      program.input_type
+                                                  )
+                                                : t(
+                                                      "seedsupply.meta.supply_program"
+                                                  )
                                         }}
                                     </p>
                                 </div>
@@ -409,7 +408,7 @@
                                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                                         ></path>
                                     </svg>
-                                    View Details
+                                    {{ t("common.view_details") }}
                                 </router-link>
                             </div>
                         </div>
@@ -427,7 +426,7 @@ import { useI18n } from "./composables/useI18n";
 const loading = ref(true);
 const programs = ref([]);
 const total = ref(0);
-const { currentLanguage, onLanguageChange } = useI18n();
+const { currentLanguage, onLanguageChange, t } = useI18n();
 let unsubscribeLang = null;
 
 const filters = ref({
@@ -603,7 +602,7 @@ function formatInputType(type) {
 }
 
 function formatCrops(crops) {
-    if (!crops) return "Various";
+    if (!crops) return t("seedsupply.meta.various");
     if (typeof crops === "string") {
         try {
             const parsed = JSON.parse(crops);
@@ -617,6 +616,6 @@ function formatCrops(crops) {
     if (Array.isArray(crops)) {
         return crops.slice(0, 2).join(", ");
     }
-    return "Various";
+    return t("seedsupply.meta.various");
 }
 </script>

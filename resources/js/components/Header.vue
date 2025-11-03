@@ -8,13 +8,12 @@
                 <div class="flex-shrink-0">
                     <router-link to="/" class="flex items-center">
                         <img
-                            :src="'/mountagro-logo.png'"
+                            :src="'/mountagro-logo.jpg'"
                             alt="Mount Agro Logo"
                             width="112"
                             height="112"
                             decoding="async"
                             fetchpriority="high"
-                            
                             class="w-24 h-24 md:w-28 md:h-28 rounded-lg object-contain"
                         />
                     </router-link>
@@ -190,13 +189,16 @@
                 >
                     <div class="flex items-center">
                         <img
-                            :src="'/mountagro-logo.png'"
+                            :src="'/mountagro-logo.jpg'"
                             alt="Mount Agro Logo"
                             width="80"
                             height="80"
                             decoding="async"
                             class="w-16 h-16 rounded-lg object-contain"
                         />
+                    </div>
+                    <div>
+                        <LanguageSwitcher />
                     </div>
                     <button
                         @click="closeMobileMenu"
@@ -233,7 +235,10 @@
                                 $route.path === item.path,
                         }"
                     >
-                        <component :is="item.icon" class="w-5 h-5 mr-3 rtl:mr-0 rtl:ml-3" />
+                        <component
+                            :is="item.icon"
+                            class="w-5 h-5 mr-3 rtl:mr-0 rtl:ml-3"
+                        />
                         <span class="font-medium">{{ item.name }}</span>
                     </router-link>
 

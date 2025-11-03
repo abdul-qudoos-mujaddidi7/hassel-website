@@ -34,8 +34,7 @@ class TranslationsForAllContentSeeder extends Seeder
       EnvironmentalProject::class,
       CommunityProgram::class,
       JobAnnouncement::class,
-      Gallery::class,
-      GalleryImage::class,
+
     ];
 
     foreach ($models as $modelClass) {
@@ -44,10 +43,18 @@ class TranslationsForAllContentSeeder extends Seeder
         foreach ($items as $item) {
           $fields = $this->getTranslatableFields($item);
           foreach ($fields as $field) {
-            $base = (string)($item->{$field} ?? '');
+            $value = $item->{$field} ?? '';
+
+            // Skip arrays or objects
+            if (is_array($value) || is_object($value)) {
+              continue;
+            }
+
+            $base = trim((string)$value);
             if ($base === '') {
               continue;
             }
+
             $this->upsertTranslation($item, $field, 'farsi', $this->fakeTranslate($base, 'fa'));
             $this->upsertTranslation($item, $field, 'pashto', $this->fakeTranslate($base, 'ps'));
           }

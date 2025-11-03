@@ -4,18 +4,16 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Company Info -->
                 <div>
-                   
-                        <img
-                            :src="'/mountagro-logo.png'"
-                            alt="Mount Agro Logo"
-                            width="90"
-                            height="90"
-                            decoding="async"
-                            fetchpriority="high"
-                            class="rounded-full object-contain  bg-white p-2"
-                        />
-                       
-               
+                    <img
+                        :src="'/mountagro-logo.jpg'"
+                        alt="Mount Agro Logo"
+                        width="90"
+                        height="90"
+                        decoding="async"
+                        fetchpriority="high"
+                        class="rounded-full object-contain bg-white p-2"
+                    />
+
                     <p class="text-brand-cream mb-4 max-w-md">
                         {{ t("footer.company_tagline") }}
                     </p>
@@ -55,7 +53,9 @@
 
                 <!-- Quick Links -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">{{ t("footer.quick_links") }}</h3>
+                    <h3 class="text-lg font-semibold mb-4">
+                        {{ t("footer.quick_links") }}
+                    </h3>
                     <ul class="space-y-2">
                         <li>
                             <router-link
@@ -90,7 +90,9 @@
 
                 <!-- Programs Column -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">{{ t("footer.programs") }}</h3>
+                    <h3 class="text-lg font-semibold mb-4">
+                        {{ t("footer.programs") }}
+                    </h3>
                     <ul class="space-y-2">
                         <li>
                             <router-link
@@ -146,7 +148,9 @@
 
                 <!-- Contact Info -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">{{ t("footer.contact") }}</h3>
+                    <h3 class="text-lg font-semibold mb-4">
+                        {{ t("footer.contact") }}
+                    </h3>
                     <div class="space-y-2 text-brand-cream">
                         <p>{{ t("footer.address") }}</p>
                         <p>{{ t("footer.city_state") }}</p>
@@ -161,7 +165,8 @@
                     class="flex flex-col md:flex-row justify-between items-center"
                 >
                     <p class="text-brand-cream text-sm">
-                        © {{ currentYear }} Mount Agro. {{ t("footer.copyright") }}
+                        © {{ currentYear }} Mount Agro.
+                        {{ t("footer.copyright") }}
                     </p>
                     <div class="flex space-x-6 mt-4 md:mt-0">
                         <a

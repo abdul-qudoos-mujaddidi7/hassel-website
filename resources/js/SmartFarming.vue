@@ -34,7 +34,9 @@
                         <router-link
                             to="/"
                             class="text-green-200 hover:text-white transition-colors"
-                            >Home</router-link
+                            >{{
+                                t("smartfarming.breadcrumb.home")
+                            }}</router-link
                         >
                         <svg
                             class="w-4 h-4 text-green-300"
@@ -47,9 +49,9 @@
                                 clip-rule="evenodd"
                             ></path>
                         </svg>
-                        <span class="text-white font-medium"
-                            >Smart & Sustainable Farming</span
-                        >
+                        <span class="text-white font-medium">{{
+                            t("smartfarming.title")
+                        }}</span>
                     </div>
                 </nav>
 
@@ -58,32 +60,21 @@
                     <div
                         class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-500/20 text-green-100 border border-green-400/30 mb-6"
                     >
-                        <svg
-                            class="w-4 h-4 mr-2"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm8 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V8z"
-                            ></path>
-                        </svg>
-                        Sustainable Agriculture
+                        <span class="text-white">{{
+                            t("smartfarming.badge")
+                        }}</span>
                     </div>
 
                     <h1
                         class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
                     >
-                        Smart & Sustainable Farming
+                        {{ t("smartfarming.title") }}
                     </h1>
 
                     <p
                         class="text-xl text-white mb-8 leading-relaxed max-w-3xl mx-auto"
                     >
-                        Embrace modern farming techniques, climate-resilient
-                        practices, and sustainable agriculture to maximize
-                        yields while protecting our environment for future
-                        generations.
+                        {{ t("smartfarming.subtitle") }}
                     </p>
 
                     <!-- Quick Stats -->
@@ -93,7 +84,7 @@
                                 {{ totalPrograms }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Active Programs
+                                {{ t("smartfarming.stats.active") }}
                             </div>
                         </div>
                         <div class="text-center">
@@ -101,7 +92,7 @@
                                 {{ uniqueTechniques }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Farming Techniques
+                                {{ t("smartfarming.stats.techniques") }}
                             </div>
                         </div>
                         <div class="text-center">
@@ -109,16 +100,16 @@
                                 {{ climateResilientCount }}
                             </div>
                             <div class="text-green-200 text-sm">
-                                Climate-Resilient Crops
+                                {{ t("smartfarming.stats.climate_resilient") }}
                             </div>
                         </div>
                     </div>
 
                     <!-- Scroll Indicator -->
                     <div class="flex flex-col items-center">
-                        <span class="text-green-200 text-sm mb-2"
-                            >Explore sustainable farming below</span
-                        >
+                        <span class="text-green-200 text-sm mb-2">{{
+                            t("smartfarming.scroll")
+                        }}</span>
                         <svg
                             class="w-6 h-6 text-green-300 animate-bounce"
                             fill="none"
@@ -142,7 +133,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-gray-900">
-                        Filter Programs
+                        {{ t("smartfarming.filters.title") }}
                     </h2>
                     <button
                         @click="resetFilters"
@@ -161,7 +152,7 @@
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                             ></path>
                         </svg>
-                        Reset Filters
+                        {{ t("smartfarming.filters.reset") }}
                     </button>
                 </div>
 
@@ -172,28 +163,44 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Farming Type</label
+                            >{{ t("smartfarming.filters.type") }}</label
                         >
                         <select
                             v-model="filters.type"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
-                            <option value="">All Types</option>
+                            <option value="">
+                                {{ t("smartfarming.filters.type_all") }}
+                            </option>
                             <option value="drip_irrigation">
-                                Drip Irrigation
+                                {{
+                                    t(
+                                        "smartfarming.filters.type_drip_irrigation"
+                                    )
+                                }}
                             </option>
                             <option value="greenhouse">
-                                Greenhouse Farming
+                                {{ t("smartfarming.filters.type_greenhouse") }}
                             </option>
                             <option value="precision_agriculture">
-                                Precision Agriculture
+                                {{
+                                    t(
+                                        "smartfarming.filters.type_precision_agriculture"
+                                    )
+                                }}
                             </option>
-                            <option value="organic">Organic Practices</option>
+                            <option value="organic">
+                                {{ t("smartfarming.filters.type_organic") }}
+                            </option>
                             <option value="climate_resilient">
-                                Climate-Resilient Crops
+                                {{
+                                    t(
+                                        "smartfarming.filters.type_climate_resilient"
+                                    )
+                                }}
                             </option>
                             <option value="soil_health">
-                                Soil Health Management
+                                {{ t("smartfarming.filters.type_soil_health") }}
                             </option>
                         </select>
                     </div>
@@ -202,19 +209,33 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Target Crops</label
+                            >{{ t("smartfarming.filters.crops") }}</label
                         >
                         <select
                             v-model="filters.crops"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                         >
-                            <option value="">All Crops</option>
-                            <option value="vegetables">Vegetables</option>
-                            <option value="fruits">Fruits</option>
-                            <option value="cereals">Cereals</option>
-                            <option value="legumes">Legumes</option>
-                            <option value="spices">Spices</option>
-                            <option value="medicinal">Medicinal Plants</option>
+                            <option value="">
+                                {{ t("smartfarming.filters.crops_all") }}
+                            </option>
+                            <option value="vegetables">
+                                {{ t("smartfarming.filters.crops_vegetables") }}
+                            </option>
+                            <option value="fruits">
+                                {{ t("smartfarming.filters.crops_fruits") }}
+                            </option>
+                            <option value="cereals">
+                                {{ t("smartfarming.filters.crops_cereals") }}
+                            </option>
+                            <option value="legumes">
+                                {{ t("smartfarming.filters.crops_legumes") }}
+                            </option>
+                            <option value="spices">
+                                {{ t("smartfarming.filters.crops_spices") }}
+                            </option>
+                            <option value="medicinal">
+                                {{ t("smartfarming.filters.crops_medicinal") }}
+                            </option>
                         </select>
                     </div>
 
@@ -222,13 +243,15 @@
                     <div class="relative">
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2"
-                            >Search</label
+                            >{{ t("smartfarming.filters.search") }}</label
                         >
                         <div class="relative">
                             <input
                                 v-model="filters.search"
                                 type="text"
-                                placeholder="Search programs..."
+                                :placeholder="
+                                    t('smartfarming.filters.search_placeholder')
+                                "
                                 class="w-full border border-gray-300 rounded-lg px-4 py-3 pl-10 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                             />
                             <svg
@@ -252,9 +275,11 @@
                         <div
                             class="w-full bg-gray-50 rounded-lg px-4 py-3 text-sm text-gray-600"
                         >
-                            <span class="font-medium"
-                                >{{ total }} programs found</span
-                            >
+                            <span class="font-medium">{{
+                                t("smartfarming.results.count", {
+                                    count: total,
+                                })
+                            }}</span>
                         </div>
                     </div>
                 </div>
@@ -304,17 +329,16 @@
                             </svg>
                         </div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            No Programs Found
+                            {{ t("smartfarming.empty.title") }}
                         </h3>
                         <p class="text-gray-600 mb-6">
-                            No programs match your current filters. Try
-                            adjusting your search criteria.
+                            {{ t("smartfarming.empty.body") }}
                         </p>
                         <button
                             @click="resetFilters"
                             class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
                         >
-                            Clear Filters
+                            {{ t("smartfarming.empty.clear") }}
                         </button>
                     </div>
 
@@ -357,8 +381,11 @@
                                     </svg>
                                     <p class="text-green-600 font-medium">
                                         {{
-                                            program.farming_type ||
-                                            "Smart Farming"
+                                            program.farming_type
+                                                ? formatFarmingType(
+                                                      program.farming_type
+                                                  )
+                                                : t("smartfarming.title")
                                         }}
                                     </p>
                                 </div>
@@ -400,7 +427,7 @@
                                     class="px-2 py-1 bg-brand-cream text-brand-primary text-xs font-medium rounded-full"
                                 >
                                     {{ program.sustainability_level }}%
-                                    Sustainable
+                                    {{ t("smartfarming.meta.sustainable") }}
                                 </span>
                             </div>
 
@@ -431,7 +458,7 @@
                                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                                         ></path>
                                     </svg>
-                                    View Details
+                                    {{ t("common.view_details") }}
                                 </router-link>
                             </div>
                         </div>
@@ -449,7 +476,7 @@ import { useI18n } from "./composables/useI18n";
 const loading = ref(true);
 const programs = ref([]);
 const total = ref(0);
-const { currentLanguage, onLanguageChange } = useI18n();
+const { currentLanguage, onLanguageChange, t } = useI18n();
 let unsubscribeLang = null;
 
 const filters = ref({

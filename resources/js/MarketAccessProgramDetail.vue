@@ -9,7 +9,7 @@
                 <div
                     class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"
                 ></div>
-                <p class="text-gray-600">Loading program details...</p>
+                <p class="text-gray-600">{{ t("market.detail.loading") }}</p>
             </div>
         </div>
 
@@ -37,7 +37,7 @@
                     </svg>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-2">
-                    Program Not Found
+                    {{ t("market.detail.error.title") }}
                 </h2>
                 <p class="text-gray-600 mb-6">{{ error }}</p>
                 <router-link
@@ -57,7 +57,7 @@
                             d="M10 19l-7-7m0 0l7-7m-7 7h18"
                         ></path>
                     </svg>
-                    Back to Programs
+                    {{ t("market.detail.error.back") }}
                 </router-link>
             </div>
         </div>
@@ -99,7 +99,7 @@
                             <router-link
                                 to="/"
                                 class="text-green-200 hover:text-white transition-colors"
-                                >Home</router-link
+                                >{{ t("market.breadcrumb.home") }}</router-link
                             >
                             <svg
                                 class="w-4 h-4 text-green-300"
@@ -115,7 +115,7 @@
                             <router-link
                                 to="/market-access"
                                 class="text-green-200 hover:text-white transition-colors"
-                                >Market Access Programs</router-link
+                                >{{ t("market.title") }}</router-link
                             >
                             <svg
                                 class="w-4 h-4 text-green-300"
@@ -175,7 +175,7 @@
                                     {{ getCropCount(program.target_crops) }}
                                 </div>
                                 <div class="text-green-200 text-sm">
-                                    Target Crops
+                                    {{ t("market.detail.target_crops") }}
                                 </div>
                             </div>
                             <div v-if="program.location" class="text-center">
@@ -183,7 +183,7 @@
                                     {{ program.location }}
                                 </div>
                                 <div class="text-green-200 text-sm">
-                                    Location
+                                    {{ t("market.detail.location") }}
                                 </div>
                             </div>
                             <div
@@ -198,7 +198,7 @@
                                     }}
                                 </div>
                                 <div class="text-green-200 text-sm">
-                                    Partners
+                                    {{ t("market.detail.partners") }}
                                 </div>
                             </div>
                         </div>
@@ -222,7 +222,7 @@
                                         d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                                     ></path>
                                 </svg>
-                                Learn More
+                                {{ t("market.detail.learn_more") }}
                             </router-link>
                         </div>
                     </div>
@@ -242,7 +242,7 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-6"
                                 >
-                                    Program Overview
+                                    {{ t("market.detail.overview") }}
                                 </h2>
                                 <div class="prose prose-lg max-w-none">
                                     <p class="text-gray-600 leading-relaxed">
@@ -259,7 +259,7 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-6"
                                 >
-                                    Target Crops
+                                    {{ t("market.detail.target_crops") }}
                                 </h2>
                                 <div class="flex flex-wrap gap-3">
                                     <span
@@ -282,7 +282,9 @@
                                 <h2
                                     class="text-2xl font-bold text-gray-900 mb-6"
                                 >
-                                    Partner Organizations
+                                    {{
+                                        t("market.detail.partner_organizations")
+                                    }}
                                 </h2>
                                 <div
                                     class="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -324,14 +326,16 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
                                 >
-                                    Quick Information
+                                    {{ t("market.detail.quick_info") }}
                                 </h3>
                                 <div class="space-y-4">
                                     <div
                                         v-if="program.program_type"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600">Type</span>
+                                        <span class="text-gray-600">{{
+                                            t("market.detail.program_type")
+                                        }}</span>
                                         <span
                                             class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full"
                                         >
@@ -346,9 +350,9 @@
                                         v-if="program.location"
                                         class="flex items-center justify-between"
                                     >
-                                        <span class="text-gray-600"
-                                            >Location</span
-                                        >
+                                        <span class="text-gray-600">{{
+                                            t("market.detail.location")
+                                        }}</span>
                                         <span class="text-gray-900 font-medium">
                                             {{ program.location }}
                                         </span>
@@ -363,12 +367,10 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
                                 >
-                                    Need More Information?
+                                    {{ t("market.detail.need_info") }}
                                 </h3>
                                 <p class="text-gray-600 mb-4">
-                                    Get detailed information about this market
-                                    access program and how it can benefit your
-                                    agricultural business.
+                                    {{ t("market.detail.need_info_sub") }}
                                 </p>
                                 <router-link
                                     to="/contact"
@@ -387,7 +389,7 @@
                                             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                                         ></path>
                                     </svg>
-                                    Get Information
+                                    {{ t("market.detail.contact_us") }}
                                 </router-link>
                             </div>
 
@@ -398,11 +400,10 @@
                                 <h3
                                     class="text-lg font-bold text-gray-900 mb-4"
                                 >
-                                    Need Help?
+                                    {{ t("market.detail.need_help") }}
                                 </h3>
                                 <p class="text-gray-600 mb-4">
-                                    Contact our team for more information about
-                                    this program.
+                                    {{ t("market.detail.need_help_sub") }}
                                 </p>
                                 <router-link
                                     to="/contact"
@@ -421,7 +422,7 @@
                                             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                                         ></path>
                                     </svg>
-                                    Contact Us
+                                    {{ t("market.detail.contact_link") }}
                                 </router-link>
                             </div>
                         </div>
@@ -441,7 +442,7 @@ const route = useRoute();
 const loading = ref(true);
 const error = ref(null);
 const program = ref(null);
-const { currentLanguage, onLanguageChange } = useI18n();
+const { currentLanguage, onLanguageChange, t } = useI18n();
 let unsubscribeLang = null;
 
 onMounted(async () => {
