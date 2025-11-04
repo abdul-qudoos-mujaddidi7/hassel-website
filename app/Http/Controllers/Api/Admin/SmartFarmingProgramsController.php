@@ -49,46 +49,31 @@ class SmartFarmingProgramsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
-            // Handle cover image upload if provided
+            // Handle cover image upload
             if ($request->hasFile('cover_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('cover_image'), 'cover_image');
-                    $validated['cover_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Cover image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload cover image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('cover_image') || $request->input('cover_image') === '') {
+                $path = $request->file('cover_image')->store('cover_images', 'public');
+                $validated['cover_image'] = Storage::url($path);
+            } else {
                 $validated['cover_image'] = null;
             }
 
-            // Handle thumbnail image upload if provided
+            // Handle thumbnail image upload
             if ($request->hasFile('thumbnail_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('thumbnail_image'), 'cover_image');
-                    $validated['thumbnail_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Thumbnail image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload thumbnail image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('thumbnail_image') || $request->input('thumbnail_image') === '') {
+                $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
+                $validated['thumbnail_image'] = Storage::url($path);
+            } else {
                 $validated['thumbnail_image'] = null;
             }
 
-            $item = SmartFarmingProgram::create($validated);
-            TranslationSyncService::sync($item, $translations);
+            // Create program
+            $program = SmartFarmingProgram::create($validated);
+            TranslationSyncService::sync($program, $translations);
 
-            return response()->json(['success' => true, 'data' => $item], 201);
+            return response()->json([
+                'success' => true,
+                'data' => $program,
+                'message' => 'Smart farming program created successfully'
+            ], 201);
         } catch (\Exception $e) {
             Log::error('Smart farming program creation error: ' . $e->getMessage());
             return response()->json([
@@ -98,6 +83,7 @@ class SmartFarmingProgramsController extends Controller
             ], 500);
         }
     }
+
 
     public function show(SmartFarmingProgram $smartFarmingProgram): JsonResponse
     {
@@ -122,48 +108,59 @@ class SmartFarmingProgramsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
-            // Handle cover image upload/removal
+            // --- Handle cover image upload/removal ---
             if ($request->hasFile('cover_image')) {
-                $uploadService = app(FileUploadService::class);
-                $oldImagePath = null;
+                // Delete old image if exists
                 if ($smartFarmingProgram->cover_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($smartFarmingProgram->cover_image, PHP_URL_PATH));
+                    $oldPath = str_replace('/storage/', '', parse_url($smartFarmingProgram->cover_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
+                    }
                 }
-                $imagePath = $uploadService->replace($request->file('cover_image'), 'cover_image', $oldImagePath);
-                $validated['cover_image'] = Storage::url($imagePath);
+
+                $path = $request->file('cover_image')->store('cover_images', 'public');
+                $validated['cover_image'] = Storage::url($path);
             } elseif ($request->has('cover_image') && $request->input('cover_image') === '') {
+                // Clear existing image
                 if ($smartFarmingProgram->cover_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($smartFarmingProgram->cover_image, PHP_URL_PATH));
-                    if (Storage::exists($oldImagePath)) {
-                        Storage::delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($smartFarmingProgram->cover_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['cover_image'] = null;
             }
 
-            // Handle thumbnail image upload/removal
+            // --- Handle thumbnail image upload/removal ---
             if ($request->hasFile('thumbnail_image')) {
-                $uploadService = app(FileUploadService::class);
-                $oldImagePath = null;
                 if ($smartFarmingProgram->thumbnail_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($smartFarmingProgram->thumbnail_image, PHP_URL_PATH));
+                    $oldPath = str_replace('/storage/', '', parse_url($smartFarmingProgram->thumbnail_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
+                    }
                 }
-                $imagePath = $uploadService->replace($request->file('thumbnail_image'), 'cover_image', $oldImagePath);
-                $validated['thumbnail_image'] = Storage::url($imagePath);
+
+                $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
+                $validated['thumbnail_image'] = Storage::url($path);
             } elseif ($request->has('thumbnail_image') && $request->input('thumbnail_image') === '') {
                 if ($smartFarmingProgram->thumbnail_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($smartFarmingProgram->thumbnail_image, PHP_URL_PATH));
-                    if (Storage::exists($oldImagePath)) {
-                        Storage::delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($smartFarmingProgram->thumbnail_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['thumbnail_image'] = null;
             }
 
+            // Update record
             $smartFarmingProgram->update($validated);
             TranslationSyncService::sync($smartFarmingProgram, $translations);
 
-            return response()->json(['success' => true, 'data' => $smartFarmingProgram]);
+            return response()->json([
+                'success' => true,
+                'data' => $smartFarmingProgram,
+                'message' => 'Smart farming program updated successfully'
+            ]);
         } catch (\Exception $e) {
             Log::error('Smart farming program update error: ' . $e->getMessage());
             return response()->json([

@@ -26,9 +26,8 @@ class SmartFarmingProgramRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'short_description' => 'nullable|string|max:500',
-            'farming_type' => 'nullable|string|in:drip_irrigation,greenhouse,precision_agriculture,organic,climate_resilient,soil_health',
+            'farming_type' => 'nullable|string',
             'target_crops' => 'nullable|array',
-            'target_crops.*' => 'string|in:vegetables,fruits,cereals,legumes,spices,medicinal',
             'sustainability_level' => 'nullable|integer|min:1|max:100',
             'implementation_guide' => 'nullable|string',
             'sustainability_impact' => 'nullable|string',
@@ -103,7 +102,7 @@ class SmartFarmingProgramRequest extends FormRequest
         // Get the program ID for update requests
         $programId = null;
         $programModel = $this->route('smartFarmingProgram');
-        
+
         if ($programModel instanceof \Illuminate\Database\Eloquent\Model) {
             $programId = $programModel->getKey();
         } elseif ($programModel !== null && is_numeric($programModel)) {

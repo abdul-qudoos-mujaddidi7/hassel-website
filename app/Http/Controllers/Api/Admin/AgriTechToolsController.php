@@ -32,14 +32,14 @@ class AgriTechToolsController extends Controller
             $query->where('status', $status);
         }
         $items = $query->paginate($perPage);
-        
+
         // Always include translations for admin list
         $request->merge(['include_translations' => true]);
-        
+
         $data = collect($items->items())->map(function ($item) use ($request) {
             return (new AgriTechToolResource($item))->resolve($request);
         });
-        
+
         return response()->json([
             'success' => true,
             'data' => $data,
@@ -63,7 +63,6 @@ class AgriTechToolsController extends Controller
                         $request->merge(['translations' => $translationsArray]);
                     }
                 } catch (\Exception $e) {
-                    // If parsing fails, set to empty array
                     $request->merge(['translations' => []]);
                 }
             }
@@ -71,39 +70,21 @@ class AgriTechToolsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
-            // Handle cover image upload if provided
+            // Handle cover image upload directly
             if ($request->hasFile('cover_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('cover_image'), 'cover_image');
-                    $validated['cover_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Cover image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload cover image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('cover_image') || $request->input('cover_image') === '') {
+                $file = $request->file('cover_image');
+                $path = $file->store('cover_images', 'public'); // stores in storage/app/public/cover_images
+                $validated['cover_image'] = Storage::url($path);
+            } else {
                 $validated['cover_image'] = null;
             }
 
-            // Handle thumbnail image upload if provided
+            // Handle thumbnail image upload directly
             if ($request->hasFile('thumbnail_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('thumbnail_image'), 'cover_image');
-                    $validated['thumbnail_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Thumbnail image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload thumbnail image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('thumbnail_image') || $request->input('thumbnail_image') === '') {
+                $file = $request->file('thumbnail_image');
+                $path = $file->store('thumbnail_images', 'public'); // stores in storage/app/public/thumbnail_images
+                $validated['thumbnail_image'] = Storage::url($path);
+            } else {
                 $validated['thumbnail_image'] = null;
             }
 
@@ -131,7 +112,7 @@ class AgriTechToolsController extends Controller
         if ($request->boolean('include_translations')) {
             $request->merge(['include_translations' => true]);
         }
-        
+
         return response()->json([
             'success' => true,
             'data' => (new AgriTechToolResource($agriTechTool))->resolve($request)
@@ -149,7 +130,6 @@ class AgriTechToolsController extends Controller
                         $request->merge(['translations' => $translationsArray]);
                     }
                 } catch (\Exception $e) {
-                    // If parsing fails, set to empty array
                     $request->merge(['translations' => []]);
                 }
             }
@@ -157,27 +137,21 @@ class AgriTechToolsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
-            // Handle cover image upload/removal
+            // --- Handle cover image ---
             if ($request->hasFile('cover_image')) {
-                // New file uploaded - replace existing image
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $oldImagePath = null;
-                    if ($agriTechTool->cover_image) {
-                        $oldImagePath = str_replace('/storage/', '', parse_url($agriTechTool->cover_image, PHP_URL_PATH));
+                // Delete old image if exists
+                if ($agriTechTool->cover_image) {
+                    $oldImagePath = str_replace('/storage/', '', parse_url($agriTechTool->cover_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldImagePath)) {
+                        Storage::disk('public')->delete($oldImagePath);
                     }
-                    $imagePath = $uploadService->replace($request->file('cover_image'), 'cover_image', $oldImagePath);
-                    $validated['cover_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Cover image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload cover image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
                 }
+
+                $file = $request->file('cover_image');
+                $path = $file->store('cover_images', 'public');
+                $validated['cover_image'] = Storage::url($path);
             } elseif ($request->has('cover_image') && $request->input('cover_image') === '') {
-                // Empty string sent - clear the existing image
+                // Clear existing image
                 if ($agriTechTool->cover_image) {
                     $oldImagePath = str_replace('/storage/', '', parse_url($agriTechTool->cover_image, PHP_URL_PATH));
                     if (Storage::disk('public')->exists($oldImagePath)) {
@@ -186,29 +160,23 @@ class AgriTechToolsController extends Controller
                 }
                 $validated['cover_image'] = null;
             }
-            // If cover_image is not in request, it means keep existing value (don't update)
+            // If cover_image not in request, keep existing value
 
-            // Handle thumbnail image upload/removal
+            // --- Handle thumbnail image ---
             if ($request->hasFile('thumbnail_image')) {
-                // New file uploaded - replace existing image
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $oldImagePath = null;
-                    if ($agriTechTool->thumbnail_image) {
-                        $oldImagePath = str_replace('/storage/', '', parse_url($agriTechTool->thumbnail_image, PHP_URL_PATH));
+                // Delete old image if exists
+                if ($agriTechTool->thumbnail_image) {
+                    $oldImagePath = str_replace('/storage/', '', parse_url($agriTechTool->thumbnail_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldImagePath)) {
+                        Storage::disk('public')->delete($oldImagePath);
                     }
-                    $imagePath = $uploadService->replace($request->file('thumbnail_image'), 'cover_image', $oldImagePath);
-                    $validated['thumbnail_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Thumbnail image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload thumbnail image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
                 }
+
+                $file = $request->file('thumbnail_image');
+                $path = $file->store('thumbnail_images', 'public');
+                $validated['thumbnail_image'] = Storage::url($path);
             } elseif ($request->has('thumbnail_image') && $request->input('thumbnail_image') === '') {
-                // Empty string sent - clear the existing image
+                // Clear existing image
                 if ($agriTechTool->thumbnail_image) {
                     $oldImagePath = str_replace('/storage/', '', parse_url($agriTechTool->thumbnail_image, PHP_URL_PATH));
                     if (Storage::disk('public')->exists($oldImagePath)) {
@@ -217,8 +185,9 @@ class AgriTechToolsController extends Controller
                 }
                 $validated['thumbnail_image'] = null;
             }
-            // If thumbnail_image is not in request, it means keep existing value (don't update)
+            // If thumbnail_image not in request, keep existing value
 
+            // Update the record
             $agriTechTool->update($validated);
             TranslationSyncService::sync($agriTechTool, $translations);
 
