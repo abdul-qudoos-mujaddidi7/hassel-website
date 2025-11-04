@@ -101,9 +101,13 @@ class NewsController extends Controller
             // Handle featured image upload if provided
             if ($request->hasFile('featured_image')) {
                 try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('featured_image'), 'featured_image');
-                    $validated['featured_image'] = Storage::url($imagePath);
+                    if ($request->hasFile('featured_image')) {
+                        $file = $request->file('featured_image');
+                        $path = $file->store('featured_images', 'public'); // stores in storage/app/public/featured_images
+                        $validated['featured_image'] = Storage::url($path); // generates URL
+                    } else {
+                        $validated['featured_image'] = null;
+                    }
                 } catch (\Exception $e) {
                     Log::error('Image upload error: ' . $e->getMessage());
                     return response()->json([
@@ -120,7 +124,7 @@ class NewsController extends Controller
             // Prepare JSON translations
             $farsiTranslations = $translations['farsi'] ?? [];
             $pashtoTranslations = $translations['pashto'] ?? [];
-            
+
             // Add translations to validated data
             $validated['farsi_translations'] = $farsiTranslations;
             $validated['pashto_translations'] = $pashtoTranslations;
@@ -219,7 +223,7 @@ class NewsController extends Controller
             // Prepare JSON translations
             $farsiTranslations = $translations['farsi'] ?? [];
             $pashtoTranslations = $translations['pashto'] ?? [];
-            
+
             // Add translations to validated data
             $validated['farsi_translations'] = $farsiTranslations;
             $validated['pashto_translations'] = $pashtoTranslations;

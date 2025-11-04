@@ -41,7 +41,7 @@
         </div>
 
         <!-- Article Content -->
-        <div v-else-if="article" class="min-h-screen pt-24">
+        <div v-else-if="article" class="min-h-screen">
             <!-- Hero Section -->
             <section
                 class="relative h-[500px] md:h-[600px] lg:h-[700px] bg-cover bg-center bg-no-repeat"
