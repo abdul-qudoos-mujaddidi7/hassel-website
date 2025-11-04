@@ -1,223 +1,254 @@
 <template>
-    <div class="rounded-xl">
-      <Header :pageTitle="$t('dashboard')" />
+    <div class="dashboard-container">
+        <Header :pageTitle="$t('dashboard')" />
 
         <v-divider
-            :thickness="1"
-            class="border-opacity-100"
+            :thickness="2"
+            class="border-opacity-100 dashboard-divider"
             color="success"
         ></v-divider>
 
-        <v-row class="pt-6">
-            <v-col>
-                <v-card variant="elevated" rounded="lg" hover class="stat-card">
-                    <template v-slot:title>
-                        <div class="d-flex">
-                            <v-avatar size="40" class="mr-4">
-                                <v-icon size="24" color="primary">mdi-newspaper-variant-outline</v-icon>
-                            </v-avatar>
-                            <div class="pt-1">
-                                <div class="font-weight-black">
-                                    {{ DashboardRepository.dashboardReport.publishedNews }}
-          </div>
-        </div>
-      </div>
-                    </template>
-                    <v-card-text class="text-h6 d-flex justify-start ml-14 stat-card-text">
-                        {{ t("news") }} ({{ t("published") }})
-                    </v-card-text>
+        <!-- Stats Cards Row -->
+        <v-row class="stats-row pt-6">
+            <v-col cols="12" sm="6" md="3">
+                <v-card 
+                    class="stat-card news-card" 
+                    elevation="2"
+                    :class="{ 'hover-elevation': true }"
+                >
+                    <div class="stat-card-content">
+                        <div class="stat-icon-wrapper news-icon">
+                            <v-icon size="32" color="white">mdi-newspaper-variant-outline</v-icon>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">
+                                {{ DashboardRepository.dashboardReport.publishedNews }}
+                            </div>
+                            <div class="stat-label">
+                                {{ t("news") }}
+                            </div>
+                            <div class="stat-subtitle">
+                                {{ t("published") }}
+                            </div>
+                        </div>
+                    </div>
                 </v-card>
             </v-col>
 
-            <v-col>
-                <v-card variant="elevated" rounded="lg" hover class="stat-card">
-                    <template v-slot:title>
-                        <div class="d-flex align-center justify-start">
-                            <v-avatar size="40" class="mr-4">
-                                <v-icon size="24" color="primary">mdi-book-outline</v-icon>
-                            </v-avatar>
-                            <div class="font-weight-black">
+            <v-col cols="12" sm="6" md="3">
+                <v-card 
+                    class="stat-card publications-card" 
+                    elevation="2"
+                    :class="{ 'hover-elevation': true }"
+                >
+                    <div class="stat-card-content">
+                        <div class="stat-icon-wrapper publications-icon">
+                            <v-icon size="32" color="white">mdi-book-outline</v-icon>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">
                                 {{ DashboardRepository.dashboardReport.publishedPublications }}
                             </div>
+                            <div class="stat-label">
+                                {{ t("publications") }}
+                            </div>
+                            <div class="stat-subtitle">
+                                {{ t("published") }}
+                            </div>
                         </div>
-                    </template>
-                    <v-card-text class="text-h6 d-flex justify-start ml-14 stat-card-text">
-                        {{ t("publications") }} ({{ t("published") }})
-                    </v-card-text>
+                    </div>
                 </v-card>
             </v-col>
 
-            <v-col>
-                <v-card variant="elevated" rounded="lg" hover class="stat-card">
-                    <template v-slot:title>
-                        <div class="d-flex align-center justify-start">
-                            <v-avatar size="40" class="mr-4">
-                                <v-icon size="24" color="primary">mdi-trophy-outline</v-icon>
-                            </v-avatar>
-                            <div class="font-weight-black" :dir="dir">
+            <v-col cols="12" sm="6" md="3">
+                <v-card 
+                    class="stat-card success-stories-card" 
+                    elevation="2"
+                    :class="{ 'hover-elevation': true }"
+                >
+                    <div class="stat-card-content">
+                        <div class="stat-icon-wrapper success-stories-icon">
+                            <v-icon size="32" color="white">mdi-trophy-outline</v-icon>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">
                                 {{ DashboardRepository.dashboardReport.publishedSuccessStories }}
                             </div>
+                            <div class="stat-label">
+                                {{ t("success_stories") }}
+                            </div>
+                            <div class="stat-subtitle">
+                                {{ t("published") }}
+                            </div>
                         </div>
-                    </template>
-                    <v-card-text class="text-h6 d-flex justify-start ml-14 stat-card-text">
-                        {{ t("success_stories") }} ({{ t("published") }})
-                    </v-card-text>
+                    </div>
                 </v-card>
             </v-col>
 
-            <v-col>
-                <v-card variant="elevated" rounded="lg" hover class="stat-card">
-                    <template v-slot:title>
-                        <div class="d-flex align-center justify-start">
-                            <v-avatar size="40" class="mr-4">
-                                <v-icon size="24" color="primary">mdi-school-outline</v-icon>
-                            </v-avatar>
-                            <div class="font-weight-black">
+            <v-col cols="12" sm="6" md="3">
+                <v-card 
+                    class="stat-card training-card" 
+                    elevation="2"
+                    :class="{ 'hover-elevation': true }"
+                >
+                    <div class="stat-card-content">
+                        <div class="stat-icon-wrapper training-icon">
+                            <v-icon size="32" color="white">mdi-school-outline</v-icon>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">
                                 {{ DashboardRepository.dashboardReport.activeTrainingPrograms }}
                             </div>
+                            <div class="stat-label">
+                                {{ t("training_programs") }}
+                            </div>
+                            <div class="stat-subtitle">
+                                {{ t("active") }}
+                            </div>
                         </div>
-                    </template>
-                    <v-card-text class="text-h6 d-flex justify-start ml-14 stat-card-text">
-                        {{ t("training_programs") }} ({{ t("active") }})
-                    </v-card-text>
+                    </div>
                 </v-card>
             </v-col>
         </v-row>
 
-        <v-row :dir="dir">
-            <v-col>
-                <v-card class="pt-4 bg-background rounded-xl pr-4">
-                    <div class="pa-3 px-4 py-5 mr-4 ml-6">
-                        <!-- Header -->
-                        <div class="d-flex justify-space-between mb-6">
-                            <span>
-                                <p class="text-lg font-bold">
-                                    {{ totalContent }}
-                                </p>
-                                <p class="text-subtitle-2">
-                                    {{ t("contentBasedOnAmountAndPercentage") }}
-                                </p>
-                            </span>
-                            <span class="flex flex-col gap-1">
-                                <!-- Filter buttons for switching between time views -->
-                                <v-btn
-                                    size="x-small"
-                                    :style="{
-                                        backgroundColor: activeButton === 'black' ? '#112F53' : '',
-                                        color: activeButton === 'black' ? '#fff' : '',
-                                    }"
-                                    @click="updateExpenses(DashboardRepository.dashboardReport.yearlyContent, 'black')"
-                                >
-                                    {{ t("thisYear") }}
-                                </v-btn>
-                                <v-btn
-                                    size="x-small"
-                                    :style="{
-                                        backgroundColor: activeButton === 'red' ? '#112F53' : '',
-                                        color: activeButton === 'red' ? '#fff' : '',
-                                    }"
-                                    @click="updateExpenses(DashboardRepository.dashboardReport.monthlyContent, 'red')"
-                                >
-                                    {{ t("thisMonth") }}
-                                </v-btn>
-                                <v-btn
-                                    size="x-small"
-                                    :style="{
-                                        backgroundColor: activeButton === 'green' ? '#112F53' : '',
-                                        color: activeButton === 'green' ? '#fff' : '',
-                                    }"
-                                    @click="updateExpenses(DashboardRepository.dashboardReport.dailyContent, 'green')"
-                                >
-                                    {{ t("today") }}
-                                </v-btn>
-                            </span>
-    </div>
-
-                        <!-- List of content with percentages and progress bars -->
-                        <div
-                            v-for="expense in DashboardRepository.expensesList"
-                            :key="expense.id"
-                            class="mb-4"
-                        >
-                            <div class="d-flex justify-space-between" :dir="dir">
-                                <span class="text-sm font-bold">{{ expense.percentage }}%</span>
-                                <span class="text-sm font-bold text-gray-700">
-                                    {{ translateCategoryName(expense.categoryName) }} ({{ expense.totalExpense }})
-                                </span>
-        </div>
-
-                            <v-progress-linear
-                                :model-value="Number(expense.percentage)"
-                                height="6"
-                                :color="randomColor()"
-                                class="rounded-lg"
-                            ></v-progress-linear>
-          </div>
-        </div>
+        <!-- Content Analysis and Recent Contacts Row -->
+        <v-row class="pt-6" :dir="dir">
+            <v-col cols="12" lg="7">
+                <v-card class="content-analysis-card" elevation="2">
+                    <v-card-title class="card-title">
+                        <div class="title-content">
+                            <v-icon class="title-icon" color="primary">mdi-chart-box-outline</v-icon>
+                            <span>{{ t("contentBasedOnAmountAndPercentage") }}</span>
+                        </div>
+                        <div class="time-filter-buttons">
+                            <v-btn
+                                size="small"
+                                variant="text"
+                                :class="['time-filter-btn', { 'active': activeButton === 'black' }]"
+                                @click="updateExpenses(DashboardRepository.dashboardReport.yearlyContent, 'black')"
+                            >
+                                {{ t("thisYear") }}
+                            </v-btn>
+                            <v-btn
+                                size="small"
+                                variant="text"
+                                :class="['time-filter-btn', { 'active': activeButton === 'red' }]"
+                                @click="updateExpenses(DashboardRepository.dashboardReport.monthlyContent, 'red')"
+                            >
+                                {{ t("thisMonth") }}
+                            </v-btn>
+                            <v-btn
+                                size="small"
+                                variant="text"
+                                :class="['time-filter-btn', { 'active': activeButton === 'green' }]"
+                                @click="updateExpenses(DashboardRepository.dashboardReport.dailyContent, 'green')"
+                            >
+                                {{ t("today") }}
+                            </v-btn>
+                        </div>
+                    </v-card-title>
+                    <v-card-text class="content-analysis-body">
+                        <div class="total-content-display">
+                            <span class="total-label">{{ t("totalItems") }}:</span>
+                            <span class="total-value">{{ totalContent }}</span>
+                        </div>
+                        <div class="expenses-list">
+                            <div
+                                v-for="expense in DashboardRepository.expensesList"
+                                :key="expense.id"
+                                class="expense-item"
+                            >
+                                <div class="expense-header">
+                                    <div class="expense-label">
+                                        <span class="expense-category">{{ translateCategoryName(expense.categoryName) }}</span>
+                                        <span class="expense-count">({{ expense.totalExpense }})</span>
+                                    </div>
+                                    <span class="expense-percentage">{{ expense.percentage }}%</span>
+                                </div>
+                                <v-progress-linear
+                                    :model-value="Number(expense.percentage)"
+                                    height="10"
+                                    :color="getExpenseColor(expense.categoryName)"
+                                    class="expense-progress"
+                                    rounded
+                                ></v-progress-linear>
+                            </div>
+                        </div>
+                    </v-card-text>
                 </v-card>
             </v-col>
 
-            <v-col>
-                <v-card class="bg-background rounded-xl mr-3 px-4 mt-0 h-100">
-                    <h2 class="pl-2 py-4">{{ t("recentContacts") }}</h2>
-                    <div class="flex justify-center">
-                        <v-table class="rounded w-100">
-                            <template v-slot:default>
-                                <thead class="bg-gray-100">
+            <v-col cols="12" lg="5">
+                <v-card class="recent-contacts-card" elevation="2">
+                    <v-card-title class="card-title">
+                        <div class="title-content">
+                            <v-icon class="title-icon" color="primary">mdi-account-group-outline</v-icon>
+                            <span>{{ t("recentContacts") }}</span>
+                        </div>
+                    </v-card-title>
+                    <v-card-text class="contacts-table-wrapper">
+                        <div class="contacts-table">
+                            <table class="custom-table">
+                                <thead>
                                     <tr>
-                                        <th class="text-left font-medium text-gray-700">
-                                            {{ t("name") }}
-                                        </th>
-                                        <th class="text-center font-medium text-gray-700">
-                                            {{ t("time") }}
-                                        </th>
-                                        <th class="text-center font-medium text-gray-700">
-                                            {{ t("phone") }}
-                                        </th>
+                                        <th>{{ t("name") }}</th>
+                                        <th>{{ t("time") }}</th>
+                                        <th>{{ t("phone") }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr
                                         v-for="item in DashboardRepository.dashboardReport.recentContacts"
                                         :key="item.id"
-                                        class="border-b border-gray-200"
                                     >
-                                        <td class="text-left">
-                                            {{ item.name }}
+                                        <td>
+                                            <div class="contact-name">
+                                                <v-icon size="16" class="contact-icon">mdi-account-circle</v-icon>
+                                                {{ item.name }}
+                                            </div>
                                         </td>
                                         <td class="text-center">
-                                            {{ item.time }}
+                                            <span class="time-badge">{{ item.time }}</span>
                                         </td>
                                         <td class="text-center">
-                                            {{ item.phone || '—' }}
+                                            <span class="phone-text">{{ item.phone || '—' }}</span>
                                         </td>
                                     </tr>
                                     <tr v-if="DashboardRepository.dashboardReport.recentContacts.length === 0">
-                                        <td colspan="3" class="text-center text-gray-500 py-4">
-                                            {{ t("noRecentContacts") }}
+                                        <td colspan="3" class="empty-state">
+                                            <v-icon size="48" color="grey-lighten-1">mdi-inbox</v-icon>
+                                            <p>{{ t("noRecentContacts") }}</p>
                                         </td>
                                     </tr>
                                 </tbody>
-                            </template>
-                        </v-table>
-      </div>
+                            </table>
+                        </div>
+                    </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
 
-        <!-- Graphs Section -->
-        <v-row class="pt-4" style="align-items: stretch;">
+        <!-- Charts Section -->
+        <v-row class="pt-6 charts-row">
             <v-col cols="12" md="6">
-                <v-card class="bg-background rounded-xl px-4 py-4 chart-card">
-                    <h2 class="pl-2 py-4">{{ t("contentTrends") }}</h2>
-                    <div class="chart-container">
+                <v-card class="chart-card" elevation="2">
+                    <v-card-title class="card-title">
+                        <div class="title-content">
+                            <v-icon class="title-icon" color="primary">mdi-chart-bar</v-icon>
+                            <span>{{ t("contentTrends") }}</span>
+                        </div>
+                    </v-card-title>
+                    <v-card-text class="chart-container">
                         <div class="bar-chart">
                             <div 
                                 v-for="(item, index) in chartData" 
                                 :key="index"
                                 class="bar-item"
                             >
-                                <div class="bar-label">{{ item.label }}</div>
+                                <div class="bar-label-wrapper">
+                                    <div class="bar-color-dot" :style="{ backgroundColor: item.color }"></div>
+                                    <span class="bar-label">{{ item.label }}</span>
+                                </div>
                                 <div class="bar-wrapper">
                                     <div 
                                         class="bar-fill" 
@@ -230,14 +261,19 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </v-card-text>
                 </v-card>
             </v-col>
 
             <v-col cols="12" md="6">
-                <v-card class="bg-background rounded-xl px-4 py-4 chart-card">
-                    <h2 class="pl-2 py-4">{{ t("contentStatus") }}</h2>
-                    <div class="chart-container">
+                <v-card class="chart-card" elevation="2">
+                    <v-card-title class="card-title">
+                        <div class="title-content">
+                            <v-icon class="title-icon" color="primary">mdi-chart-pie</v-icon>
+                            <span>{{ t("contentStatus") }}</span>
+                        </div>
+                    </v-card-title>
+                    <v-card-text class="chart-container">
                         <div class="pie-chart-container">
                             <div class="pie-chart-wrapper">
                                 <svg class="pie-chart" viewBox="0 0 200 200">
@@ -280,19 +316,25 @@
                             <div class="pie-legend">
                                 <div class="legend-item">
                                     <span class="legend-color" style="background-color: #10b981;"></span>
-                                    <span>{{ t("published") }}: {{ publishedCount }}</span>
-          </div>
+                                    <div class="legend-info">
+                                        <span class="legend-label">{{ t("published") }}</span>
+                                        <span class="legend-value">{{ publishedCount }}</span>
+                                    </div>
+                                </div>
                                 <div class="legend-item">
                                     <span class="legend-color" style="background-color: #f59e0b;"></span>
-                                    <span>{{ t("draft") }}: {{ draftCount }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+                                    <div class="legend-info">
+                                        <span class="legend-label">{{ t("draft") }}</span>
+                                        <span class="legend-value">{{ draftCount }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
-  </div>
+    </div>
 </template>
 
 <script setup>
@@ -304,7 +346,6 @@ import { useDashboardRepository } from "../stores/DashboardRepository.js";
 const { t, locale } = useI18n();
 
 // Sync locale with localStorage on component creation
-// Only update if localStorage has a different value (to avoid overriding current locale)
 const savedLang = localStorage.getItem("locale");
 if (savedLang && savedLang !== locale.value) {
     locale.value = savedLang;
@@ -326,25 +367,20 @@ const dir = computed(() => {
 let DashboardRepository = useDashboardRepository();
 
 onMounted(async () => {
-    // Ensure language is set from localStorage when component mounts
     const savedLang = localStorage.getItem("locale");
     if (savedLang && savedLang !== locale.value) {
         locale.value = savedLang;
     }
-    
-    // Then fetch dashboard data
     await DashboardRepository.fetchDashboardData();
 });
 
 const activeButton = ref("black");
 
-// Method to update expenses based on button clicks
 const updateExpenses = (expenses, color) => {
     DashboardRepository.updateExpenses(expenses, color);
-    activeButton.value = color; // Set the active button to the clicked color
+    activeButton.value = color;
 };
 
-// Total content count
 const totalContent = computed(() => {
     return DashboardRepository.expensesList.reduce(
         (sum, item) => sum + (item.totalExpense || 0),
@@ -352,7 +388,6 @@ const totalContent = computed(() => {
     );
 });
 
-// Chart data for bar chart
 const chartData = computed(() => {
     const data = [
         {
@@ -390,7 +425,6 @@ const chartData = computed(() => {
     }));
 });
 
-// Status chart data (pie chart)
 const totalContentItems = computed(() => {
     return DashboardRepository.dashboardReport.publishedNews +
            DashboardRepository.dashboardReport.publishedPublications +
@@ -427,7 +461,7 @@ const statusChartData = computed(() => {
         };
     }
     
-    const circumference = 2 * Math.PI * 80; // radius = 80
+    const circumference = 2 * Math.PI * 80;
     const publishedPercentage = (published / total) * 100;
     const draftPercentage = (draft / total) * 100;
     
@@ -444,24 +478,21 @@ const statusChartData = computed(() => {
     };
 });
 
-// Array of colors to choose from
-const colors = [
-    "blue",
-    "primary",
-    "green",
-    "success",
-    "info",
-    "warning",
-];
-
-// Function to select a random color
-const randomColor = () => {
-    return colors[Math.floor(Math.random() * colors.length)];
+// Get color for expense category
+const getExpenseColor = (categoryName) => {
+    const colorMap = {
+        'News': '#10b981',
+        'Publications': '#3b82f6',
+        'Success Stories': '#f59e0b',
+        'Training Programs': '#8b5cf6',
+        'Contacts': '#ef4444',
+    };
+    
+    return colorMap[categoryName] || 'primary';
 };
 
-// Function to translate category names from backend
 const translateCategoryName = (categoryName) => {
-    if (!categoryName) return 'Unknown';
+    if (!categoryName) return t('unknown');
     
     const categoryMap = {
         'News': t('news'),
@@ -476,12 +507,10 @@ const translateCategoryName = (categoryName) => {
         'Unknown': t('unknown') || 'Unknown',
     };
     
-    // Try exact match first
     if (categoryMap[categoryName]) {
         return categoryMap[categoryName];
     }
     
-    // Try case-insensitive match
     const lowerName = categoryName.toLowerCase();
     for (const [key, value] of Object.entries(categoryMap)) {
         if (key.toLowerCase() === lowerName) {
@@ -489,131 +518,401 @@ const translateCategoryName = (categoryName) => {
         }
     }
     
-    // If no translation found, return original
     return categoryName;
 };
 </script>
 
 <style scoped>
-.bg-background {
-    background-color: #fafafa;
+.dashboard-container {
+    padding: 0;
+    background: #f5f7fa;
+    min-height: 100vh;
 }
 
-.flex {
-    display: flex;
+.dashboard-divider {
+    margin: 0;
 }
 
-.flex-col {
-    flex-direction: column;
+/* Stats Cards */
+.stats-row {
+    margin-bottom: 0;
 }
 
-.gap-1 {
-    gap: 0.25rem;
-}
-
-.gap-2 {
-    gap: 0.5rem;
-}
-
-/* Ensure all stat cards have the same height */
 .stat-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    position: relative;
+    overflow: hidden;
 }
 
-.stat-card-text {
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+}
+
+.stat-card.hover-elevation {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card.hover-elevation:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+.stat-card-content {
+    display: flex;
+    align-items: center;
+    padding: 24px;
+    gap: 20px;
+}
+
+.stat-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.news-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.publications-icon {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.success-stories-icon {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.training-icon {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.stat-info {
     flex: 1;
-    display: flex;
-    align-items: flex-end;
-    min-height: 48px;
+    min-width: 0;
 }
 
-/* Chart Styles */
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 2px;
+}
+
+.stat-subtitle {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-weight: 500;
+}
+
+/* Content Analysis Card */
+.content-analysis-card,
+.recent-contacts-card,
 .chart-card {
+    border-radius: 16px;
+    border: none;
     height: 100%;
+}
+
+.card-title {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.title-icon {
+    font-size: 24px;
+}
+
+.time-filter-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.time-filter-btn {
+    min-width: auto;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: none;
+    transition: all 0.2s ease;
+}
+
+.time-filter-btn.active {
+    background: #112F53 !important;
+    color: white !important;
+}
+
+.content-analysis-body {
+    padding: 24px;
+}
+
+.total-content-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    color: white;
+}
+
+.total-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.total-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.expenses-list {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+}
+
+.expense-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.expense-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expense-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+}
+
+.expense-category {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.expense-count {
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.expense-percentage {
+    font-weight: 700;
+    color: #1f2937;
+    font-size: 0.875rem;
+}
+
+.expense-progress {
+    border-radius: 8px;
+}
+
+/* Recent Contacts Card */
+.contacts-table-wrapper {
+    padding: 0;
+}
+
+.contacts-table {
+    overflow-x: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table thead {
+    background: #f9fafb;
+}
+
+.custom-table th {
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.custom-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.custom-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.contact-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.contact-icon {
+    color: #9ca3af;
+}
+
+.time-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #eff6ff;
+    color: #3b82f6;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.phone-text {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 48px 20px !important;
+    color: #9ca3af;
+}
+
+.empty-state p {
+    margin-top: 16px;
+    font-size: 0.875rem;
+}
+
+/* Charts */
+.chart-card {
+    min-height: 400px;
 }
 
 .chart-container {
-    padding: 1rem 0;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 300px;
+    padding: 24px;
+    min-height: 350px;
 }
 
-/* Bar Chart Styles */
 .bar-chart {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 24px;
 }
 
 .bar-item {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    min-height: 48px;
-    height: 48px;
+    gap: 16px;
+}
+
+.bar-label-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 140px;
+    width: 140px;
+}
+
+.bar-color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
 .bar-label {
-    min-width: 120px;
-    width: 120px;
     font-size: 0.875rem;
     font-weight: 500;
     color: #374151;
-    display: flex;
-    align-items: center;
 }
 
 .bar-wrapper {
     flex: 1;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 12px;
     position: relative;
-    height: 32px;
+    height: 36px;
+    background: #f3f4f6;
+    border-radius: 8px;
+    padding: 0 4px;
 }
 
 .bar-fill {
-    height: 32px;
-    min-height: 32px;
-    border-radius: 4px;
-    transition: width 0.5s ease;
+    height: 28px;
+    border-radius: 6px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     min-width: 4px;
-    display: flex;
-    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .bar-value {
     font-size: 0.875rem;
-    font-weight: 600;
-    color: #374151;
-    min-width: 30px;
-    text-align: left;
+    font-weight: 700;
+    color: #1f2937;
+    min-width: 40px;
+    text-align: right;
+    padding-right: 8px;
 }
 
-/* Pie Chart Styles */
 .pie-chart-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 32px;
+    padding: 20px 0;
 }
 
 .pie-chart-wrapper {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
 }
 
 .pie-chart {
     width: 100%;
     height: 100%;
-    transform: rotate(-90deg);
 }
 
 .pie-chart-center {
@@ -625,36 +924,98 @@ const translateCategoryName = (categoryName) => {
 }
 
 .pie-chart-number {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    color: rgb(var(--v-theme-primary));
+    color: #1f2937;
     line-height: 1;
 }
 
 .pie-chart-label {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     color: #6b7280;
-    margin-top: 0.25rem;
+    margin-top: 8px;
+    font-weight: 500;
 }
 
 .pie-legend {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
+    width: 100%;
+    max-width: 200px;
 }
 
 .legend-item {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 0.875rem;
-    color: #374151;
+    gap: 12px;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 8px;
 }
 
 .legend-color {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     border-radius: 4px;
-    display: inline-block;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.legend-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
+.legend-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.legend-value {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+    .stat-card-content {
+        padding: 20px;
+    }
+    
+    .stat-icon-wrapper {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .stat-value {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .stat-card-content {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .title-content {
+        font-size: 1rem;
+    }
+    
+    .time-filter-buttons {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .bar-label-wrapper {
+        min-width: 100px;
+        width: 100px;
+    }
 }
 </style>
