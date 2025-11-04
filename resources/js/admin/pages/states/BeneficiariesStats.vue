@@ -63,52 +63,47 @@
                                 >
                                     <!-- Stat Type Column -->
                                     <template v-slot:item.stat_type="{ item }">
-                                        <td class="py-2 pl-4">
-                                            <v-chip
-                                                :color="
-                                                    getStatTypeColor(
-                                                        item.stat_type
-                                                    )
-                                                "
-                                                variant="flat"
-                                                size="small"
-                                            >
-                                                {{
-                                                    BeneficiariesRepository.getStatTypeLabel(
-                                                        item.stat_type,
-                                                        t
-                                                    )
-                                                }}
-                                            </v-chip>
-                                        </td>
+                                        <v-chip
+                                            :color="
+                                                getStatTypeColor(
+                                                    item.stat_type
+                                                )
+                                            "
+                                            variant="flat"
+                                            size="small"
+                                        >
+                                            {{
+                                                BeneficiariesRepository.getStatTypeLabel(
+                                                    item.stat_type,
+                                                    t
+                                                )
+                                            }}
+                                        </v-chip>
                                     </template>
 
                                     <!-- Value Column -->
                                     <template v-slot:item.value="{ item }">
-                                        <td class="py-2 pl-4">
-                                            <span
-                                                class="font-weight-bold text-h6"
-                                            >
-                                                {{
-                                                    BeneficiariesRepository.formatNumber(
-                                                        item.value
-                                                    )
-                                                }}
-                                            </span>
-                                        </td>
+                                        <span
+                                            class="font-weight-bold text-h6 value-cell"
+                                            :class="dir === 'rtl' ? 'text-left' : 'text-right'"
+                                        >
+                                            {{
+                                                BeneficiariesRepository.formatNumber(
+                                                    item.value
+                                                )
+                                            }}
+                                        </span>
                                     </template>
 
                                     <!-- Year Column -->
                                     <template v-slot:item.year="{ item }">
-                                        <td class="py-2 pl-4">
-                                            <v-chip
-                                                color="primary"
-                                                variant="outlined"
-                                                size="small"
-                                            >
-                                                {{ item.year }}
-                                            </v-chip>
-                                        </td>
+                                        <v-chip
+                                            color="primary"
+                                            variant="outlined"
+                                            size="small"
+                                        >
+                                            {{ item.year }}
+                                        </v-chip>
                                     </template>
 
                                     <!-- Checkbox for selecting rows -->
@@ -123,9 +118,7 @@
                                     <!-- Actions Column -->
                                     <template v-slot:item.action="{ item }">
                                         <v-menu>
-                                            <template
-                                                v-slot:activator="{ props }"
-                                            >
+                                            <template v-slot:activator="{ props }">
                                                 <v-btn
                                                     icon="mdi-dots-vertical"
                                                     v-bind="props"
@@ -135,36 +128,18 @@
                                             <v-list>
                                                 <v-list-item>
                                                     <v-list-item-title
-                                                        v-if="
-                                                            AuthRepository.permissions &&
-                                                            AuthRepository.permissions.includes(
-                                                                'editBeneficiariesStats'
-                                                            )
-                                                        "
                                                         @click="edit(item)"
                                                         class="cursor-pointer d-flex gap-3 justify-left pb-3"
                                                     >
-                                                        <v-icon color="primary"
-                                                            >mdi-square-edit-outline</v-icon
-                                                        >
+                                                        <v-icon color="primary">mdi-square-edit-outline</v-icon>
                                                         {{ $t("edit") }}
                                                     </v-list-item-title>
 
                                                     <v-list-item-title
-                                                        v-if="
-                                                            AuthRepository.permissions &&
-                                                            AuthRepository.permissions.includes(
-                                                                'deleteBeneficiariesStats'
-                                                            )
-                                                        "
                                                         class="cursor-pointer d-flex gap-3"
-                                                        @click="
-                                                            deleteItem(item)
-                                                        "
+                                                        @click="deleteItem(item)"
                                                     >
-                                                        <v-icon color="error"
-                                                            >mdi-delete-outline</v-icon
-                                                        >
+                                                        <v-icon color="error">mdi-delete-outline</v-icon>
                                                         {{ $t("delete") }}
                                                     </v-list-item-title>
                                                 </v-list-item>
@@ -206,7 +181,7 @@ const AuthRepository = useAuthRepository();
 const BeneficiariesRepository = useBeneficiariesRepository();
 
 const dir = computed(() => {
-    return ["fa", "pa"].includes(locale.value) ? "rtl" : "ltr";
+    return ["fa", "ps"].includes(locale.value) ? "rtl" : "ltr";
 });
 
 // Search handling with debounce
@@ -259,22 +234,24 @@ const deleteItem = async (item) => {
 
 // Table headers
 const headers = computed(() => [
-    { title: "", key: "checkbox", align: "start", sortable: false },
+    { title: "", key: "checkbox", align: "start", sortable: false, width: "50px" },
     {
         title: t("stat_type"),
         key: "stat_type",
-        align: "center",
+        align: "start",
         sortable: true,
+        width: "180px",
     },
-    { title: t("value"), key: "value", align: "center", sortable: true },
+    { title: t("value"), key: "value", align: "end", sortable: true, width: "150px" },
     {
         title: t("description"),
         key: "description",
         align: "start",
         sortable: false,
+        width: "400px",
     },
-    { title: t("year"), key: "year", align: "center", sortable: true },
-    { title: t("action"), key: "action", align: "center", sortable: false },
+    { title: t("year"), key: "year", align: "start", sortable: true, width: "120px" },
+    { title: t("action"), key: "action", align: "center", sortable: false, width: "100px" },
 ]);
 
 // Get color for stat type chip
@@ -339,11 +316,120 @@ const getStatTypeColor = (statType) => {
     position: relative;
 }
 
+/* Column alignment styles */
+.v-data-table-server :deep(.v-data-table__td) {
+    vertical-align: middle;
+}
+
+.v-data-table-server :deep(.v-data-table__th) {
+    vertical-align: middle;
+}
+
+/* Ensure proper alignment for RTL/LTR */
+.v-data-table-server :deep(.v-data-table__td) {
+    padding: 12px 16px;
+    vertical-align: middle;
+}
+
+/* Value column - ensure proper alignment */
+.v-data-table-server :deep(.value-cell) {
+    display: block;
+    width: 100%;
+    text-align: right;
+}
+
+[dir="rtl"] .v-data-table-server :deep(.value-cell) {
+    text-align: left;
+}
+
+/* Value column header and cells alignment */
+.v-data-table-server :deep(thead th),
+.v-data-table-server :deep(tbody td) {
+    text-align: inherit;
+}
+
+/* Value column (3rd column) - right align with spacing */
+.v-data-table-server :deep(thead th:nth-of-type(3)),
+.v-data-table-server :deep(tbody td:nth-of-type(3)) {
+    text-align: right !important;
+    padding-right: 60px !important;
+    padding-left: 16px !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+}
+
+[dir="rtl"] .v-data-table-server :deep(thead th:nth-of-type(3)),
+[dir="rtl"] .v-data-table-server :deep(tbody td:nth-of-type(3)) {
+    text-align: left !important;
+    padding-left: 60px !important;
+    padding-right: 16px !important;
+}
+
+/* Description column (4th column) - add left padding for spacing */
+.v-data-table-server :deep(thead th:nth-of-type(4)),
+.v-data-table-server :deep(tbody td:nth-of-type(4)) {
+    padding-left: 60px !important;
+    padding-right: 16px !important;
+    min-width: 400px !important;
+    width: auto !important;
+}
+
+[dir="rtl"] .v-data-table-server :deep(thead th:nth-of-type(4)),
+[dir="rtl"] .v-data-table-server :deep(tbody td:nth-of-type(4)) {
+    padding-right: 60px !important;
+    padding-left: 16px !important;
+}
+
+/* Ensure table cells have proper spacing */
+.v-data-table-server :deep(tbody td) {
+    padding: 12px 16px;
+}
+
+/* Add extra spacing specifically between value and description columns */
+.v-data-table-server :deep(tbody tr td:nth-of-type(3)) {
+    padding-right: 80px !important;
+    border-right: none !important;
+}
+
+[dir="rtl"] .v-data-table-server :deep(tbody tr td:nth-of-type(3)) {
+    padding-left: 80px !important;
+    padding-right: 16px !important;
+    border-left: none !important;
+}
+
+.v-data-table-server :deep(tbody tr td:nth-of-type(4)) {
+    padding-left: 80px !important;
+    border-left: none !important;
+}
+
+[dir="rtl"] .v-data-table-server :deep(tbody tr td:nth-of-type(4)) {
+    padding-right: 80px !important;
+    padding-left: 16px !important;
+    border-right: none !important;
+}
+
 .header-button {
     position: absolute;
     top: 0.7rem;
     left: 0.7rem;
     z-index: 1;
+}
+
+/* Ensure action column is visible */
+.v-data-table-server :deep(thead th:nth-of-type(6)),
+.v-data-table-server :deep(tbody td:nth-of-type(6)) {
+    width: 100px !important;
+    min-width: 100px !important;
+    padding: 12px 16px !important;
+    text-align: center !important;
+}
+
+/* Make sure action button is visible */
+.v-data-table-server :deep(tbody td:nth-of-type(6) .v-btn) {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-flex !important;
 }
 
 /* Responsive Design */

@@ -7,6 +7,7 @@
         :form-data="formData"
         :rules="rules"
         :saving="saving"
+        :is-edit-mode="PublicationsRepository.isEditMode"
         @save="handleSave"
     >
         <!-- Base Language Tab (English) -->
@@ -217,10 +218,55 @@ watch(() => PublicationsRepository.currentPublication, async (newPublication) =>
         formData.status = newPublication.status || 'draft';
         formData.published_at = newPublication.published_at ? new Date(newPublication.published_at).toISOString().slice(0, 16) : null;
         
-        // Load translations if in edit mode
-        if (PublicationsRepository.isEditMode && newPublication.id) {
-            await loadTranslations(newPublication.id);
+        // Process translations - handle both JSON format and translations array format
+        let farsiTranslations = {};
+        let pashtoTranslations = {};
+        
+        // If translations come as JSON objects (from JSON columns)
+        if (newPublication.farsi_translations) {
+            farsiTranslations = typeof newPublication.farsi_translations === 'string' 
+                ? JSON.parse(newPublication.farsi_translations) 
+                : newPublication.farsi_translations;
         }
+        
+        if (newPublication.pashto_translations) {
+            pashtoTranslations = typeof newPublication.pashto_translations === 'string'
+                ? JSON.parse(newPublication.pashto_translations)
+                : newPublication.pashto_translations;
+        }
+        
+        // If translations come as an array (from translations table)
+        if (newPublication.translations && Array.isArray(newPublication.translations)) {
+            newPublication.translations.forEach(translation => {
+                const field = translation.field_name;
+                const content = translation.content;
+                
+                if (translation.language === 'farsi' || translation.language === 'fa') {
+                    farsiTranslations[field] = content;
+                } else if (translation.language === 'pashto' || translation.language === 'ps') {
+                    pashtoTranslations[field] = content;
+                }
+            });
+        }
+        
+        // Set translation data for the form
+        formData.translationData = {
+            ...newPublication,
+            farsi_translations: farsiTranslations,
+            pashto_translations: pashtoTranslations
+        };
+        
+        console.log('=== FORM DATA UPDATED ===');
+        console.log('Form data:', formData);
+        console.log('Translation data:', formData.translationData);
+        console.log('Farsi translations:', formData.translationData.farsi_translations);
+        console.log('Pashto translations:', formData.translationData.pashto_translations);
+        console.log('Raw publication translations array:', newPublication.translations);
+        console.log('Is Edit Mode:', PublicationsRepository.isEditMode);
+        console.log('========================');
+        
+        // Force a small delay to ensure TranslatableForm has processed the translationData
+        await new Promise(resolve => setTimeout(resolve, 100));
     }
 }, { deep: true, immediate: true });
 
@@ -263,21 +309,6 @@ const getAcceptedFileTypes = () => {
     return '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt';
 };
 
-// Load translations for edit mode
-const loadTranslations = async (publicationId) => {
-    try {
-        await PublicationsRepository.fetchPublication(publicationId);
-        const pub = PublicationsRepository.currentPublication || {};
-        formData.translationData = {
-            ...pub,
-            farsi_translations: pub.farsi_translations || {},
-            pashto_translations: pub.pashto_translations || {}
-        };
-    } catch (error) {
-        console.error('Error loading translations:', error);
-    }
-};
-
 // Handle save with translation support
 const handleSave = async (saveEvent) => {
     saving.value = true;
@@ -285,21 +316,65 @@ const handleSave = async (saveEvent) => {
         if (saveEvent?.type !== 'complete') {
             return;
         }
-        const apiData = { ...saveEvent.data };
-        // Convert published_at to proper format if provided
-        if (apiData.published_at) {
-            apiData.published_at = new Date(apiData.published_at).toISOString();
-        } else if (apiData.status === 'published') {
-            apiData.published_at = new Date().toISOString();
+        
+        // Prepare FormData for file upload
+        const formDataToSend = new FormData();
+        
+        // Log save event data for debugging
+        console.log('=== SAVE EVENT DATA ===');
+        console.log('Full saveEvent.data:', saveEvent.data);
+        console.log('Translations in saveEvent:', saveEvent.data.translations);
+        console.log('FormData id:', formData.id);
+        console.log('Is Edit Mode:', PublicationsRepository.isEditMode);
+        console.log('========================');
+        
+        // Add all form data (excluding file-related keys that need special handling)
+        Object.keys(saveEvent.data).forEach(key => {
+            if (key !== 'file' && key !== 'featured_image' && key !== 'translationData') {
+                if (key === 'translations') {
+                    // Stringify translations for FormData
+                    const translationsStr = JSON.stringify(saveEvent.data[key] || {});
+                    formDataToSend.append(key, translationsStr);
+                    console.log('Added translations to FormData:', translationsStr);
+                } else if (saveEvent.data[key] !== null && saveEvent.data[key] !== undefined) {
+                    formDataToSend.append(key, saveEvent.data[key]);
+                }
+            }
+        });
+        
+        // Ensure ID is included for edit mode
+        if (PublicationsRepository.isEditMode && formData.id) {
+            formDataToSend.set('id', formData.id);
         }
+        
+        // Handle file upload if provided
+        if (fileInput.value && fileInput.value.length > 0) {
+            formDataToSend.append('file', fileInput.value[0]);
+        }
+        
+        // Convert published_at to proper format if provided
+        if (formData.published_at) {
+            formDataToSend.set('published_at', new Date(formData.published_at).toISOString());
+        } else if (formData.status === 'published') {
+            formDataToSend.set('published_at', new Date().toISOString());
+        }
+        
+        // Log FormData contents before sending
+        console.log('=== FORM DATA TO SEND ===');
+        console.log('FormData entries:');
+        for (let pair of formDataToSend.entries()) {
+            console.log(pair[0] + ': ' + (pair[0] === 'translations' ? pair[1] : pair[1]));
+        }
+        console.log('========================');
 
         if (PublicationsRepository.isEditMode) {
-            await PublicationsRepository.updatePublication(formData.id, apiData);
+            await PublicationsRepository.updatePublication(formData.id, formDataToSend);
         } else {
-            await PublicationsRepository.createPublication(apiData);
+            await PublicationsRepository.createPublication(formDataToSend);
         }
     } catch (error) {
         console.error('Error saving publication:', error);
+        console.error('Error details:', error.response?.data);
         // Handle error (show notification, etc.)
     } finally {
         saving.value = false;

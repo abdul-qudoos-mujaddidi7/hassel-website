@@ -81,6 +81,23 @@ class PublicationsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
+            // Parse translations if it's a JSON string (from FormData)
+            if (is_string($translations)) {
+                try {
+                    $translations = json_decode($translations, true) ?? [];
+                } catch (\Exception $e) {
+                    \Log::warning('Failed to parse translations JSON: ' . $e->getMessage());
+                    $translations = [];
+                }
+            }
+
+            \Log::info('Publication Store - Translations received:', [
+                'raw' => $request->input('translations'),
+                'parsed' => $translations,
+                'farsi' => $translations['farsi'] ?? [],
+                'pashto' => $translations['pashto'] ?? []
+            ]);
+
             // Prepare JSON translations
             $farsiTranslations = $translations['farsi'] ?? [];
             $pashtoTranslations = $translations['pashto'] ?? [];
@@ -138,13 +155,33 @@ class PublicationsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
+            // Parse translations if it's a JSON string (from FormData)
+            if (is_string($translations)) {
+                try {
+                    $translations = json_decode($translations, true) ?? [];
+                } catch (\Exception $e) {
+                    \Log::warning('Failed to parse translations JSON: ' . $e->getMessage());
+                    $translations = [];
+                }
+            }
+
+            \Log::info('Publication Update - Translations received:', [
+                'raw' => $request->input('translations'),
+                'parsed' => $translations,
+                'farsi' => $translations['farsi'] ?? [],
+                'pashto' => $translations['pashto'] ?? []
+            ]);
+
             // Prepare JSON translations
             $farsiTranslations = $translations['farsi'] ?? [];
             $pashtoTranslations = $translations['pashto'] ?? [];
             
-            // Add translations to validated data
-            $validated['farsi_translations'] = $farsiTranslations;
-            $validated['pashto_translations'] = $pashtoTranslations;
+            // Ensure we always update translations (even if empty, to clear them)
+            // Only set if translations key exists in request (user explicitly sent them)
+            if ($request->has('translations')) {
+                $validated['farsi_translations'] = $farsiTranslations;
+                $validated['pashto_translations'] = $pashtoTranslations;
+            }
 
             $publication->update($validated);
 

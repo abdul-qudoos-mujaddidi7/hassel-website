@@ -107,14 +107,14 @@
                                                     size="x-small"
                                                     variant="flat"
                                                 >
-                                                    FA: {{ item.farsi_coverage || 0 }}%
+                                                    {{ $t("dari") }}: {{ item.farsi_coverage || 0 }}%
                                                 </v-chip>
                                                 <v-chip
                                                     :color="getTranslationCoverageColor(item.pashto_coverage || 0)"
                                                     size="x-small"
                                                     variant="flat"
                                                 >
-                                                    PS: {{ item.pashto_coverage || 0 }}%
+                                                    {{ $t("pashto") }}: {{ item.pashto_coverage || 0 }}%
                                                 </v-chip>
                                             </div>
                                         </td>
@@ -127,7 +127,7 @@
                                                 <v-icon icon="mdi-file" size="16" class="mr-2"></v-icon>
                                                 <span class="text-caption">{{ getFileName(item.file_path) }}</span>
                                             </div>
-                                            <span v-else class="text-grey">No file</span>
+                                            <span v-else class="text-grey">{{ $t("no_file") }}</span>
                                         </td>
                                     </template>
 
@@ -173,7 +173,7 @@
                                                         class="cursor-pointer d-flex gap-3 pb-3"
                                                     >
                                                         <v-icon color="blue">mdi-download</v-icon>
-                                                        Download
+                                                        {{ $t("download") }}
                                                     </v-list-item-title>
 
                                                     <v-list-item-title
@@ -197,7 +197,7 @@
                                     color="#B71C1C"
                                     flat
                                     inset
-                                    :text="`Delete ${selectedIds.length} selected`"
+                                    :text="t('delete_selected', { count: selectedIds.length })"
                                 >
                                 </v-btn>
                             </v-col>
@@ -221,7 +221,7 @@ const AuthRepository = useAuthRepository();
 const PublicationsRepository = usePublicationsRepository();
 
 const dir = computed(() => {
-    return ["fa", "pa"].includes(locale.value) ? "rtl" : "ltr";
+    return ["fa", "ps"].includes(locale.value) ? "rtl" : "ltr";
 });
 
 const selectedStatus = ref('');
@@ -277,9 +277,10 @@ const CreateDialogShow = () => {
     PublicationsRepository.createDialog = true;
 };
 
-const edit = (item) => {
+const edit = async (item) => {
     PublicationsRepository.isEditMode = true;
-    PublicationsRepository.currentPublication = { ...item };
+    // Fetch the full publication with translations
+    await PublicationsRepository.fetchPublication(item.id);
     PublicationsRepository.createDialog = true;
 };
 

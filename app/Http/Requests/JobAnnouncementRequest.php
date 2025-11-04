@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class JobAnnouncementRequest extends FormRequest
 {
@@ -22,9 +23,31 @@ class JobAnnouncementRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Get the job announcement ID for update requests - safely extract ID
+        // Laravel route model binding will provide a JobAnnouncement model instance
+        $jobId = null;
+        $jobModel = $this->route('job_announcement');
+        
+        if ($jobModel instanceof \Illuminate\Database\Eloquent\Model) {
+            $jobId = $jobModel->getKey();
+        } elseif ($jobModel !== null && is_numeric($jobModel)) {
+            $jobId = (int) $jobModel;
+        }
+
+        // Build slug rule based on whether it's an update
+        $slugRule = Rule::unique('job_announcements', 'slug');
+        if ($jobId !== null) {
+            $slugRule = $slugRule->ignore($jobId);
+        }
+
         $rules = [
             'title' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:job_announcements,slug',
+            'slug' => [
+                'nullable',
+                'string',
+                'max:255',
+                $slugRule
+            ],
             'description' => 'required|string',
             'requirements' => 'nullable|string',
             'responsibilities' => 'nullable|string',
@@ -35,18 +58,19 @@ class JobAnnouncementRequest extends FormRequest
             'published_at' => 'nullable|date',
             'farsi_translations' => 'nullable|array',
             'pashto_translations' => 'nullable|array',
+            'translations' => 'nullable|array',
         ];
 
         // For update requests, make fields sometimes required
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
-            $rules['slug'] = 'nullable|string|max:255|unique:job_announcements,slug,' . $this->route('job_announcement');
             $rules['title'] = 'sometimes|required|string|max:255';
             $rules['description'] = 'sometimes|required|string';
             $rules['location'] = 'sometimes|required|string|max:255';
+            $rules['deadline'] = 'sometimes|required|date|after:today';
             $rules['employment_type'] = 'sometimes|required|in:full_time,part_time,contract,internship';
             $rules['experience_level'] = 'sometimes|required|in:entry,mid,senior,executive';
             $rules['application_deadline'] = 'sometimes|required|date';
-            $rules['status'] = 'sometimes|required|in:draft,published,closed';
+            $rules['status'] = 'sometimes|required|in:draft,published,closed,open';
         }
 
         return $rules;

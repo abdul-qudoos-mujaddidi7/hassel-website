@@ -334,11 +334,42 @@ watch(() => NewsRepository.currentNews, async (newNews) => {
         imageSrc.value = formData.featured_image || null;
         originalFeaturedImage.value = formData.featured_image || null;
         
-        // Set translation data immediately for the form
+        // Process translations - handle both JSON format and translations array format
+        let farsiTranslations = {};
+        let pashtoTranslations = {};
+        
+        // If translations come as JSON objects (from JSON columns)
+        if (newNews.farsi_translations) {
+            farsiTranslations = typeof newNews.farsi_translations === 'string' 
+                ? JSON.parse(newNews.farsi_translations) 
+                : newNews.farsi_translations;
+        }
+        
+        if (newNews.pashto_translations) {
+            pashtoTranslations = typeof newNews.pashto_translations === 'string'
+                ? JSON.parse(newNews.pashto_translations)
+                : newNews.pashto_translations;
+        }
+        
+        // If translations come as an array (from translations table)
+        if (newNews.translations && Array.isArray(newNews.translations)) {
+            newNews.translations.forEach(translation => {
+                const field = translation.field_name;
+                const content = translation.content;
+                
+                if (translation.language === 'farsi' || translation.language === 'fa') {
+                    farsiTranslations[field] = content;
+                } else if (translation.language === 'pashto' || translation.language === 'ps') {
+                    pashtoTranslations[field] = content;
+                }
+            });
+        }
+        
+        // Set translation data for the form
         formData.translationData = {
             ...newNews,
-            farsi_translations: newNews.farsi_translations || {},
-            pashto_translations: newNews.pashto_translations || {}
+            farsi_translations: farsiTranslations,
+            pashto_translations: pashtoTranslations
         };
         
         console.log('=== FORM DATA UPDATED ===');
@@ -346,6 +377,7 @@ watch(() => NewsRepository.currentNews, async (newNews) => {
         console.log('Translation data:', formData.translationData);
         console.log('Farsi translations:', formData.translationData.farsi_translations);
         console.log('Pashto translations:', formData.translationData.pashto_translations);
+        console.log('Raw news translations array:', newNews.translations);
         console.log('========================');
     }
 }, { deep: true, immediate: true });
@@ -460,12 +492,14 @@ const handleSave = async (saveData) => {
                 formDataToSend.set('published_at', new Date().toISOString());
             }
 
-            // Convert FormData to object for API call or send FormData directly
-            const apiData = Object.fromEntries(formDataToSend.entries());
-            // Parse JSON fields
-            if (apiData.translations) {
-                apiData.translations = JSON.parse(apiData.translations);
-            }
+            // Log translations before sending
+            const translationsData = saveData.data.translations || {};
+            console.log('=== SAVING TRANSLATIONS ===');
+            console.log('Translations object:', translationsData);
+            console.log('Farsi translations:', translationsData.farsi);
+            console.log('Pashto translations:', translationsData.pashto);
+            console.log('Translations JSON string:', JSON.stringify(translationsData));
+            console.log('===========================');
 
             if (NewsRepository.isEditMode) {
                 await NewsRepository.updateNews(formData.id, formDataToSend);

@@ -134,7 +134,7 @@
                                                         <v-icon :color="item.status === 'published' ? 'orange' : 'green'">
                                                             {{ item.status === 'published' ? 'mdi-eye-off' : 'mdi-eye' }}
                                                         </v-icon>
-                                                        {{ item.status === 'published' ? 'Unpublish' : 'Publish' }}
+                                                        {{ item.status === 'published' ? $t('unpublish') : $t('publish') }}
                                                     </v-list-item-title>
 
                                                     <v-list-item-title
@@ -158,7 +158,7 @@
                                     color="#B71C1C"
                                     flat
                                     inset
-                                    :text="`Delete ${selectedIds.length} selected`"
+                                    :text="t('delete_selected', { count: selectedIds.length })"
                                 >
                                 </v-btn>
                             </v-col>
@@ -183,7 +183,7 @@ const AuthRepository = useAuthRepository();
 const SuccessStoriesRepository = useSuccessStoriesRepository();
 
 const dir = computed(() => {
-    return ["fa", "pa"].includes(locale.value) ? "rtl" : "ltr";
+    return ["fa", "ps"].includes(locale.value) ? "rtl" : "ltr";
 });
 
 const selectedStatus = ref('');

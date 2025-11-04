@@ -187,6 +187,7 @@ export let usePublicationsRepository = defineStore("PublicationsRepository", {
         // Update existing publication
         async updatePublication(id, formData) {
             try {
+                // Use PUT directly - axios supports FormData with PUT
                 const response = await axios.put(
                     `publications/${id}`,
                     formData

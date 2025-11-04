@@ -21,37 +21,39 @@ export let useContactsRepository = defineStore("ContactsRepository", {
             contactSearch: ref(""),
             currentContact: reactive({}),
 
-            // Status options for dropdowns
-            statusOptions: reactive([
-                { value: "", label: "All Status" },
-                { value: "new", label: "New" },
-                { value: "read", label: "Read" },
-                { value: "replied", label: "Replied" },
-                { value: "archived", label: "Archived" },
-            ]),
+            // Status options for dropdowns - will be computed with translations
+            statusOptionsBase: [
+                { value: "", labelKey: "all_status" },
+                { value: "new", labelKey: "new" },
+                { value: "read", labelKey: "read" },
+                { value: "replied", labelKey: "replied" },
+                { value: "archived", labelKey: "archived" },
+            ],
 
-            // Subject/Type options
-            subjectOptions: reactive([
-                { value: "", label: "All Types" },
-                { value: "job_application", label: "Job Application" },
-                { value: "general_inquiry", label: "General Inquiry" },
-                { value: "project_discussion", label: "Project Discussion" },
-                { value: "technical_support", label: "Technical Support" },
-                { value: "partnership", label: "Partnership" },
-                { value: "media_inquiry", label: "Media Inquiry" },
-                { value: "other", label: "Other" },
-            ]),
+            // Subject/Type options - will be computed with translations
+            subjectOptionsBase: [
+                { value: "", labelKey: "all_types" },
+                { value: "job_application", labelKey: "contact.job_application" },
+                { value: "general_inquiry", labelKey: "contact.general_inquiry" },
+                { value: "project_discussion", labelKey: "contact.project_discussion" },
+                { value: "technical_support", labelKey: "contact.technical_support" },
+                { value: "partnership", labelKey: "contact.partnership" },
+                { value: "media_inquiry", labelKey: "contact.media_inquiry" },
+                { value: "other", labelKey: "contact.other" },
+            ],
         };
     },
     actions: {
-        getStatusLabel(status) {
-            const option = this.statusOptions.find(opt => opt.value === status);
-            return option ? option.label : status;
+        getStatusLabel(status, t) {
+            const translate = t || ((key) => key);
+            const option = this.statusOptionsBase.find(opt => opt.value === status);
+            return option ? translate(option.labelKey) : status;
         },
 
-        getSubjectLabel(subject) {
-            const option = this.subjectOptions.find(opt => opt.value === subject);
-            return option ? option.label : subject;
+        getSubjectLabel(subject, t) {
+            const translate = t || ((key) => key);
+            const option = this.subjectOptionsBase.find(opt => opt.value === subject);
+            return option ? translate(option.labelKey) : subject;
         },
 
         // Fetch all contacts with pagination

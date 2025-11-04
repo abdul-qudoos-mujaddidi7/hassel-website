@@ -104,7 +104,8 @@ export let useJobAnnouncementRepository = defineStore("JobAnnouncementRepository
         // Update job announcement
         async updateJob(jobId, jobData) {
             try {
-                const response = await axios.put(`/api/admin/job-announcements/${jobId}`, jobData);
+                // Use PUT directly - axios baseURL already includes /api/admin
+                const response = await axios.put(`job-announcements/${jobId}`, jobData);
                 
                 if (response.data.success) {
                     toast.success("Job announcement updated successfully");
@@ -131,7 +132,8 @@ export let useJobAnnouncementRepository = defineStore("JobAnnouncementRepository
         // Delete job announcement
         async deleteJob(jobId) {
             try {
-                const response = await axios.delete(`/api/admin/job-announcements/${jobId}`);
+                // axios baseURL already includes /api/admin
+                const response = await axios.delete(`job-announcements/${jobId}`);
                 
                 if (response.data.success) {
                     toast.success("Job announcement deleted successfully");
@@ -155,7 +157,8 @@ export let useJobAnnouncementRepository = defineStore("JobAnnouncementRepository
         // Bulk delete job announcements
         async bulkDeleteJobs(jobIds) {
             try {
-                const response = await axios.post("/api/admin/job-announcements/bulk-delete", {
+                // axios baseURL already includes /api/admin
+                const response = await axios.post("job-announcements/bulk-delete", {
                     ids: jobIds
                 });
                 
@@ -181,7 +184,8 @@ export let useJobAnnouncementRepository = defineStore("JobAnnouncementRepository
         // Toggle job announcement status
         async toggleStatus(jobId) {
             try {
-                const response = await axios.patch(`/api/admin/job-announcements/${jobId}/toggle-status`);
+                // axios baseURL already includes /api/admin
+                const response = await axios.patch(`job-announcements/${jobId}/toggle-status`);
                 
                 if (response.data.success) {
                     toast.success("Job announcement status updated successfully");
@@ -204,21 +208,29 @@ export let useJobAnnouncementRepository = defineStore("JobAnnouncementRepository
 
         // Get single job announcement
         async getJob(jobId) {
+            this.loading = true;
             try {
-                const response = await axios.get(`/api/admin/job-announcements/${jobId}`);
+                const response = await axios.get(`job-announcements/${jobId}`, {
+                    params: { include_translations: 1 },
+                });
                 
-                if (response.data.success) {
+                if (response.data && response.data.success) {
+                    this.currentJob = response.data.data;
+                    this.loading = false;
                     return response.data.data;
                 } else {
-                    toast.error("Failed to fetch job announcement");
+                    this.loading = false;
+                    const errorMsg = response.data?.message || "Failed to fetch job announcement";
+                    toast.error(errorMsg);
+                    throw new Error(errorMsg);
                 }
             } catch (error) {
                 console.error("Error fetching job announcement:", error);
-                if (error.response?.data?.message) {
-                    toast.error(error.response.data.message);
-                } else {
-                    toast.error("Error fetching job announcement");
-                }
+                console.error("Error response:", error.response);
+                this.loading = false;
+                const errorMsg = error.response?.data?.message || error.message || "Error fetching job announcement";
+                toast.error(errorMsg);
+                throw error;
             }
         },
 

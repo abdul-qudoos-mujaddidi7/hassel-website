@@ -77,6 +77,23 @@ class JobAnnouncementController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
+            // Parse translations if it's a JSON string (from FormData)
+            if (is_string($translations)) {
+                try {
+                    $translations = json_decode($translations, true) ?? [];
+                } catch (\Exception $e) {
+                    \Log::warning('Failed to parse translations JSON: ' . $e->getMessage());
+                    $translations = [];
+                }
+            }
+
+            \Log::info('Job Announcement Store - Translations received:', [
+                'raw' => $request->input('translations'),
+                'parsed' => $translations,
+                'farsi' => $translations['farsi'] ?? [],
+                'pashto' => $translations['pashto'] ?? []
+            ]);
+
             // Prepare JSON translations
             $farsiTranslations = $translations['farsi'] ?? [];
             $pashtoTranslations = $translations['pashto'] ?? [];
@@ -132,6 +149,23 @@ class JobAnnouncementController extends Controller
         try {
             $validated = $request->validated();
             $translations = $request->input('translations', []);
+
+            // Parse translations if it's a JSON string (from FormData)
+            if (is_string($translations)) {
+                try {
+                    $translations = json_decode($translations, true) ?? [];
+                } catch (\Exception $e) {
+                    \Log::warning('Failed to parse translations JSON: ' . $e->getMessage());
+                    $translations = [];
+                }
+            }
+
+            \Log::info('Job Announcement Update - Translations received:', [
+                'raw' => $request->input('translations'),
+                'parsed' => $translations,
+                'farsi' => $translations['farsi'] ?? [],
+                'pashto' => $translations['pashto'] ?? []
+            ]);
 
             // Prepare JSON translations
             $farsiTranslations = $translations['farsi'] ?? [];

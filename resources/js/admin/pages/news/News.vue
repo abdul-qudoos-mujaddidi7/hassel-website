@@ -219,9 +219,10 @@ const CreateDialogShow = () => {
     NewsRepository.createDialog = true;
 };
 
-const edit = (item) => {
+const edit = async (item) => {
     NewsRepository.isEditMode = true;
-    NewsRepository.currentNews = { ...item };
+    // Fetch the full news item with translations
+    await NewsRepository.fetchNewsItem(item.id);
     NewsRepository.createDialog = true;
 };
 

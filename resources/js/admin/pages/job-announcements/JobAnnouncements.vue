@@ -83,10 +83,10 @@
                                                 {{ formatDate(item.deadline) }}
                                             </div>
                                             <div v-if="item.days_remaining > 0" class="text-caption text-success">
-                                                {{ item.days_remaining }} days left
+                                                {{ item.days_remaining }} {{ $t('days_left') }}
                                             </div>
                                             <div v-else class="text-caption text-error">
-                                                Expired
+                                                {{ $t('expired') }}
                                             </div>
                                         </div>
                                     </template>
@@ -127,7 +127,7 @@
                                                         <v-icon :color="item.status === 'open' ? 'orange' : 'green'">
                                                             {{ item.status === 'open' ? 'mdi-eye-off' : 'mdi-eye' }}
                                                         </v-icon>
-                                                        {{ item.status === 'open' ? 'Close' : 'Open' }}
+                                                        {{ item.status === 'open' ? $t('close') : $t('open') }}
                                                     </v-list-item-title>
 
                                                     <v-list-item-title
@@ -151,7 +151,7 @@
                                     color="#B71C1C"
                                     flat
                                     inset
-                                    :text="`Delete ${selectedIds.length} selected`"
+                                    :text="t('delete_selected', { count: selectedIds.length })"
                                 >
                                 </v-btn>
                             </v-col>
@@ -228,10 +228,17 @@ const CreateDialogShow = () => {
     JobAnnouncementRepository.createDialog = true;
 };
 
-const edit = (item) => {
-    JobAnnouncementRepository.isEditMode = true;
-    JobAnnouncementRepository.currentJob = { ...item };
-    JobAnnouncementRepository.createDialog = true;
+const edit = async (item) => {
+    try {
+        JobAnnouncementRepository.isEditMode = true;
+        // Fetch the full job announcement with translations
+        await JobAnnouncementRepository.getJob(item.id);
+        JobAnnouncementRepository.createDialog = true;
+    } catch (error) {
+        console.error('Error loading job announcement for edit:', error);
+        // Don't open dialog if fetch failed
+        JobAnnouncementRepository.isEditMode = false;
+    }
 };
 
 const deleteItem = async (item) => {

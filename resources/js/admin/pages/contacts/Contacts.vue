@@ -21,7 +21,7 @@
             <div class="flex gap-2">
                 <v-select
                     v-model="selectedStatus"
-                    :items="ContactsRepository.statusOptions"
+                    :items="statusOptions"
                     variant="outlined"
                     density="compact"
                     item-value="value"
@@ -32,7 +32,7 @@
                 ></v-select>
                 <v-select
                     v-model="selectedSubject"
-                    :items="ContactsRepository.subjectOptions"
+                    :items="subjectOptions"
                     variant="outlined"
                     density="compact"
                     item-value="value"
@@ -80,7 +80,7 @@
                                             variant="outlined"
                                             color="primary"
                                         >
-                                            {{ ContactsRepository.getSubjectLabel(item.subject) }}
+                                            {{ ContactsRepository.getSubjectLabel(item.subject, t) }}
                                         </v-chip>
                                     </div>
                                 </template>
@@ -93,7 +93,7 @@
                                             size="small"
                                             variant="flat"
                                         >
-                                            {{ ContactsRepository.getStatusLabel(item.status) }}
+                                            {{ ContactsRepository.getStatusLabel(item.status, t) }}
                                         </v-chip>
                                     </div>
                                 </template>
@@ -184,7 +184,7 @@
                                 color="#B71C1C"
                                 flat
                                 inset
-                                :text="`Delete ${selectedIds.length} selected`"
+                                :text="t('delete_selected', { count: selectedIds.length })"
                             >
                             </v-btn>
                         </v-col>
@@ -228,7 +228,7 @@
                         <label class="text-sm font-medium text-grey-darken-1">{{ $t("subject") }}</label>
                         <p class="text-body-1">
                             <v-chip size="small" variant="outlined" color="primary">
-                                {{ ContactsRepository.getSubjectLabel(selectedContact.subject) }}
+                                {{ ContactsRepository.getSubjectLabel(selectedContact.subject, t) }}
                             </v-chip>
                         </p>
                     </div>
@@ -260,7 +260,7 @@
                                 size="small"
                                 variant="flat"
                             >
-                                {{ ContactsRepository.getStatusLabel(selectedContact.status) }}
+                                {{ ContactsRepository.getStatusLabel(selectedContact.status, t) }}
                             </v-chip>
                         </p>
                     </div>
@@ -317,6 +317,22 @@ const selectedStatus = ref('');
 const selectedSubject = ref('');
 const showContactDialog = ref(false);
 const selectedContact = ref(null);
+
+// Computed status options with translations
+const statusOptions = computed(() => {
+    return ContactsRepository.statusOptionsBase.map(option => ({
+        value: option.value,
+        label: t(option.labelKey)
+    }));
+});
+
+// Computed subject options with translations
+const subjectOptions = computed(() => {
+    return ContactsRepository.subjectOptionsBase.map(option => ({
+        value: option.value,
+        label: t(option.labelKey)
+    }));
+});
 
 // Initialize on mount
 onMounted(() => {
@@ -375,7 +391,7 @@ const handleTableUpdate = (options) => {
 // Bulk delete functionality
 const selectedIds = ref([]);
 const sendSelectedIds = () => {
-    if (selectedIds.value.length > 0 && confirm(`Are you sure you want to delete ${selectedIds.value.length} contact(s)?`)) {
+    if (selectedIds.value.length > 0 && confirm(t('confirm_delete_contacts', { count: selectedIds.value.length }))) {
         ContactsRepository.bulkDeleteContacts(selectedIds.value);
         selectedIds.value = [];
     }
@@ -403,7 +419,7 @@ const markAsReplied = async (item) => {
 };
 
 const deleteItem = async (item) => {
-    if (confirm(`Are you sure you want to delete this contact?`)) {
+    if (confirm(t('confirm_delete_contact'))) {
         await ContactsRepository.deleteContact(item.id);
         if (showContactDialog.value && selectedContact.value?.id === item.id) {
             showContactDialog.value = false;
@@ -435,8 +451,8 @@ const headers = computed(() => [
     { title: t("subject"), key: "subject", align: "start", sortable: false },
     { title: t("status"), key: "status", align: "start", sortable: false },
     { title: t("message"), key: "message", align: "start", sortable: false },
-    { title: t("date"), key: "created_at", align: "start", sortable: false },
-    { title: t("actions"), key: "action", align: "end", sortable: false },
+    { title: t("created_at"), key: "created_at", align: "start", sortable: false },
+    { title: t("action"), key: "action", align: "end", sortable: false },
 ]);
 </script>
 

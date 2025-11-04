@@ -250,8 +250,21 @@ const pashtoTranslations = reactive({
 });
 
 // Populate form on edit
-watch(() => JobAnnouncementRepository.currentJob, (newJob) => {
-    if (newJob && Object.keys(newJob).length > 0) {
+watch(() => JobAnnouncementRepository.currentJob, async (newJob, oldJob) => {
+    // Only skip if it's the exact same object reference (not just same ID)
+    // This allows updates when getJob() fetches fresh data for the same ID
+    if (oldJob === newJob) {
+        return;
+    }
+    
+    if (newJob && Object.keys(newJob).length > 0 && newJob.id) {
+        console.log('=== JOB ANNOUNCEMENT DATA LOADED ===');
+        console.log('Full job data:', newJob);
+        console.log('Has ID:', newJob.id);
+        console.log('Farsi translations:', newJob.farsi_translations);
+        console.log('Pashto translations:', newJob.pashto_translations);
+        console.log('====================================');
+        
         // Populate base fields
         formData.id = newJob.id || null;
         formData.title = newJob.title || '';
@@ -260,25 +273,84 @@ watch(() => JobAnnouncementRepository.currentJob, (newJob) => {
         formData.requirements = newJob.requirements || '';
         formData.location = newJob.location || '';
         formData.salary_range = newJob.salary_range || '';
-        formData.deadline = newJob.deadline || '';
+        
+        // Format deadline date properly
+        if (newJob.deadline) {
+            // Handle both date string and Date object
+            const deadlineDate = new Date(newJob.deadline);
+            if (!isNaN(deadlineDate.getTime())) {
+                formData.deadline = deadlineDate.toISOString().split('T')[0];
+            } else {
+                formData.deadline = newJob.deadline;
+            }
+        } else {
+            formData.deadline = '';
+        }
+        
         formData.status = newJob.status || 'draft';
         
-        // Populate translations
-        formData.farsi_translations = newJob.farsi_translations || {};
-        formData.pashto_translations = newJob.pashto_translations || {};
+        // Process translations - handle both JSON string and object formats
+        let farsiTranslationsData = {};
+        let pashtoTranslationsData = {};
         
-        // Set current translation values
-        farsiTranslations.title = newJob.farsi_translations?.title || '';
-        farsiTranslations.location = newJob.farsi_translations?.location || '';
-        farsiTranslations.description = newJob.farsi_translations?.description || '';
-        farsiTranslations.requirements = newJob.farsi_translations?.requirements || '';
+        if (newJob.farsi_translations) {
+            try {
+                farsiTranslationsData = typeof newJob.farsi_translations === 'string' 
+                    ? JSON.parse(newJob.farsi_translations) 
+                    : newJob.farsi_translations;
+            } catch (e) {
+                console.error('Error parsing farsi_translations:', e);
+                farsiTranslationsData = {};
+            }
+        }
         
-        pashtoTranslations.title = newJob.pashto_translations?.title || '';
-        pashtoTranslations.location = newJob.pashto_translations?.location || '';
-        pashtoTranslations.description = newJob.pashto_translations?.description || '';
-        pashtoTranslations.requirements = newJob.pashto_translations?.requirements || '';
+        if (newJob.pashto_translations) {
+            try {
+                pashtoTranslationsData = typeof newJob.pashto_translations === 'string'
+                    ? JSON.parse(newJob.pashto_translations)
+                    : newJob.pashto_translations;
+            } catch (e) {
+                console.error('Error parsing pashto_translations:', e);
+                pashtoTranslationsData = {};
+            }
+        }
+        
+        // Store in formData
+        formData.farsi_translations = farsiTranslationsData;
+        formData.pashto_translations = pashtoTranslationsData;
+        
+        // Set translationData for TranslatableForm component
+        formData.translationData = {
+            ...newJob,
+            farsi_translations: farsiTranslationsData,
+            pashto_translations: pashtoTranslationsData
+        };
+        
+        // Populate translation reactive objects
+        farsiTranslations.title = farsiTranslationsData.title || '';
+        farsiTranslations.location = farsiTranslationsData.location || '';
+        farsiTranslations.description = farsiTranslationsData.description || '';
+        farsiTranslations.requirements = farsiTranslationsData.requirements || '';
+        
+        pashtoTranslations.title = pashtoTranslationsData.title || '';
+        pashtoTranslations.location = pashtoTranslationsData.location || '';
+        pashtoTranslations.description = pashtoTranslationsData.description || '';
+        pashtoTranslations.requirements = pashtoTranslationsData.requirements || '';
+        
+        console.log('=== FORM DATA POPULATED ===');
+        console.log('Form data:', formData);
+        console.log('Translation data:', formData.translationData);
+        console.log('Farsi translations reactive:', farsiTranslations);
+        console.log('Pashto translations reactive:', pashtoTranslations);
+        console.log('===========================');
+        
+        // Small delay to ensure DOM updates
+        await new Promise(resolve => setTimeout(resolve, 100));
+    } else if (newJob && Object.keys(newJob).length === 0) {
+        // Reset form if job is cleared
+        resetForm();
     }
-});
+}, { deep: true, immediate: true });
 
 // Reset form when dialog closes
 watch(() => JobAnnouncementRepository.createDialog, (isOpen) => {
@@ -345,35 +417,48 @@ const clearPashtoTranslation = (fieldName) => {
 };
 
 // Handle save
-const handleSave = async () => {
+const handleSave = async (saveEvent) => {
     saving.value = true;
     try {
-        // Prepare translation data
-        const farsiTranslationData = {
-            title: farsiTranslations.title,
-            location: farsiTranslations.location,
-            description: farsiTranslations.description,
-            requirements: farsiTranslations.requirements
+        // Prepare translation data in the format expected by the API
+        const translations = {
+            farsi: {
+                title: farsiTranslations.title || '',
+                location: farsiTranslations.location || '',
+                description: farsiTranslations.description || '',
+                requirements: farsiTranslations.requirements || ''
+            },
+            pashto: {
+                title: pashtoTranslations.title || '',
+                location: pashtoTranslations.location || '',
+                description: pashtoTranslations.description || '',
+                requirements: pashtoTranslations.requirements || ''
+            }
         };
         
-        const pashtoTranslationData = {
-            title: pashtoTranslations.title,
-            location: pashtoTranslations.location,
-            description: pashtoTranslations.description,
-            requirements: pashtoTranslations.requirements
+        // Prepare data object with translations
+        const dataToSend = {
+            ...formData,
+            translations: translations
         };
         
-        // Update form data with translations
-        formData.farsi_translations = farsiTranslationData;
-        formData.pashto_translations = pashtoTranslationData;
+        // Remove translationData from the payload (it's only for frontend use)
+        delete dataToSend.translationData;
+        
+        console.log('=== SAVING JOB ANNOUNCEMENT ===');
+        console.log('Data to send:', dataToSend);
+        console.log('Translations:', translations);
+        console.log('Is Edit Mode:', JobAnnouncementRepository.isEditMode);
+        console.log('==============================');
         
         if (JobAnnouncementRepository.isEditMode) {
-            await JobAnnouncementRepository.updateJob(formData.id, formData);
+            await JobAnnouncementRepository.updateJob(formData.id, dataToSend);
         } else {
-            await JobAnnouncementRepository.createJob(formData);
+            await JobAnnouncementRepository.createJob(dataToSend);
         }
     } catch (error) {
         console.error("Error saving job announcement:", error);
+        console.error("Error response:", error.response?.data);
     } finally {
         saving.value = false;
     }

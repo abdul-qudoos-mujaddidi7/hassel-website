@@ -81,6 +81,23 @@ class NewsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
+            // Parse translations if it's a JSON string (from FormData)
+            if (is_string($translations)) {
+                try {
+                    $translations = json_decode($translations, true) ?? [];
+                } catch (\Exception $e) {
+                    Log::warning('Failed to parse translations JSON: ' . $e->getMessage());
+                    $translations = [];
+                }
+            }
+
+            Log::info('News Store - Translations received:', [
+                'raw' => $request->input('translations'),
+                'parsed' => $translations,
+                'farsi' => $translations['farsi'] ?? [],
+                'pashto' => $translations['pashto'] ?? []
+            ]);
+
             // Handle featured image upload if provided
             if ($request->hasFile('featured_image')) {
                 try {
@@ -156,6 +173,23 @@ class NewsController extends Controller
         try {
             $validated = $request->validated();
             $translations = $request->input('translations', []);
+
+            // Parse translations if it's a JSON string (from FormData)
+            if (is_string($translations)) {
+                try {
+                    $translations = json_decode($translations, true) ?? [];
+                } catch (\Exception $e) {
+                    Log::warning('Failed to parse translations JSON: ' . $e->getMessage());
+                    $translations = [];
+                }
+            }
+
+            Log::info('News Update - Translations received:', [
+                'raw' => $request->input('translations'),
+                'parsed' => $translations,
+                'farsi' => $translations['farsi'] ?? [],
+                'pashto' => $translations['pashto'] ?? []
+            ]);
 
             // Handle featured image upload/removal
             if ($request->hasFile('featured_image')) {
