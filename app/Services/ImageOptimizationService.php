@@ -25,7 +25,7 @@ class ImageOptimizationService
    */
   public function optimize(string $filePath): bool
   {
-    if (!file_exists($filePath)) {
+    if (!\file_exists($filePath)) {
       Log::warning("Image optimization: File not found - {$filePath}");
       return false;
     }
@@ -36,7 +36,7 @@ class ImageOptimizationService
     }
 
     try {
-      $imageInfo = getimagesize($filePath);
+      $imageInfo = \getimagesize($filePath);
       if (!$imageInfo) {
         Log::warning("Image optimization: Cannot get image info - {$filePath}");
         return false;
@@ -65,7 +65,7 @@ class ImageOptimizationService
       $success = $this->saveOptimizedImage($image, $filePath, $mimeType);
 
       // Clean up memory
-      imagedestroy($image);
+      \imagedestroy($image);
 
       if ($success) {
         Log::info("Image optimized successfully: {$filePath}");
@@ -83,12 +83,12 @@ class ImageOptimizationService
    */
   public function createThumbnail(string $sourcePath, string $thumbnailPath = null): string|false
   {
-    if (!file_exists($sourcePath) || !$this->isImage($sourcePath)) {
+    if (!\file_exists($sourcePath) || !$this->isImage($sourcePath)) {
       return false;
     }
 
     try {
-      $imageInfo = getimagesize($sourcePath);
+      $imageInfo = \getimagesize($sourcePath);
       if (!$imageInfo) {
         return false;
       }
@@ -104,7 +104,7 @@ class ImageOptimizationService
 
       // Generate thumbnail path if not provided
       if (!$thumbnailPath) {
-        $pathInfo = pathinfo($sourcePath);
+        $pathInfo = \pathinfo($sourcePath);
         $thumbnailPath = $pathInfo['dirname'] . '/' .
           $pathInfo['filename'] . '_thumb.' .
           $pathInfo['extension'];
@@ -114,8 +114,8 @@ class ImageOptimizationService
       $success = $this->saveOptimizedImage($thumbnail, $thumbnailPath, $mimeType);
 
       // Clean up memory
-      imagedestroy($sourceImage);
-      imagedestroy($thumbnail);
+      \imagedestroy($sourceImage);
+      \imagedestroy($thumbnail);
 
       return $success ? $thumbnailPath : false;
     } catch (\Exception $e) {
@@ -129,18 +129,18 @@ class ImageOptimizationService
    */
   public function convertToWebP(string $sourcePath, string $webpPath = null): string|false
   {
-    if (!file_exists($sourcePath) || !$this->isImage($sourcePath)) {
+    if (!\file_exists($sourcePath) || !$this->isImage($sourcePath)) {
       return false;
     }
 
     // Check if WebP is supported
-    if (!function_exists('imagewebp')) {
+    if (!\function_exists('imagewebp')) {
       Log::warning("WebP conversion: WebP not supported on this system");
       return false;
     }
 
     try {
-      $imageInfo = getimagesize($sourcePath);
+      $imageInfo = \getimagesize($sourcePath);
       if (!$imageInfo) {
         return false;
       }
@@ -152,15 +152,15 @@ class ImageOptimizationService
 
       // Generate WebP path if not provided
       if (!$webpPath) {
-        $pathInfo = pathinfo($sourcePath);
+        $pathInfo = \pathinfo($sourcePath);
         $webpPath = $pathInfo['dirname'] . '/' . $pathInfo['filename'] . '.webp';
       }
 
       // Convert to WebP
-      $success = imagewebp($image, $webpPath, self::$optimizationSettings['webp_quality']);
+      $success = \imagewebp($image, $webpPath, self::$optimizationSettings['webp_quality']);
 
       // Clean up memory
-      imagedestroy($image);
+      \imagedestroy($image);
 
       if ($success) {
         Log::info("Image converted to WebP: {$webpPath}");
@@ -185,11 +185,11 @@ class ImageOptimizationService
       return ['width' => $width, 'height' => $height];
     }
 
-    $ratio = min($maxWidth / $width, $maxHeight / $height);
+    $ratio = \min($maxWidth / $width, $maxHeight / $height);
 
     return [
-      'width' => (int) round($width * $ratio),
-      'height' => (int) round($height * $ratio)
+      'width' => (int) \round($width * $ratio),
+      'height' => (int) \round($height * $ratio)
     ];
   }
 
@@ -199,9 +199,9 @@ class ImageOptimizationService
   private function isImage(string $filePath): bool
   {
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    $mimeType = mime_content_type($filePath);
+    $mimeType = \mime_content_type($filePath);
 
-    return in_array($mimeType, $allowedTypes);
+    return \in_array($mimeType, $allowedTypes);
   }
 
   /**
@@ -211,14 +211,14 @@ class ImageOptimizationService
   {
     switch ($mimeType) {
       case 'image/jpeg':
-        return imagecreatefromjpeg($filePath);
+        return \imagecreatefromjpeg($filePath);
       case 'image/png':
-        return imagecreatefrompng($filePath);
+        return \imagecreatefrompng($filePath);
       case 'image/gif':
-        return imagecreatefromgif($filePath);
+        return \imagecreatefromgif($filePath);
       case 'image/webp':
-        return function_exists('imagecreatefromwebp') ?
-          imagecreatefromwebp($filePath) : false;
+        return \function_exists('imagecreatefromwebp') ?
+          \imagecreatefromwebp($filePath) : false;
       default:
         return false;
     }
@@ -234,14 +234,14 @@ class ImageOptimizationService
     $newHeight = $newDimensions['height'];
 
     // Create new image
-    $resizedImage = imagecreatetruecolor($newWidth, $newHeight);
+    $resizedImage = \imagecreatetruecolor($newWidth, $newHeight);
 
     // Preserve transparency for PNG and GIF
-    imagealphablending($resizedImage, false);
-    imagesavealpha($resizedImage, true);
+    \imagealphablending($resizedImage, false);
+    \imagesavealpha($resizedImage, true);
 
     // Resize
-    imagecopyresampled(
+    \imagecopyresampled(
       $resizedImage,
       $sourceImage,
       0,
@@ -266,19 +266,19 @@ class ImageOptimizationService
     $thumbHeight = self::$optimizationSettings['thumbnail_height'];
 
     // Calculate dimensions to maintain aspect ratio
-    $ratio = min($thumbWidth / $sourceWidth, $thumbHeight / $sourceHeight);
-    $newWidth = (int) round($sourceWidth * $ratio);
-    $newHeight = (int) round($sourceHeight * $ratio);
+    $ratio = \min($thumbWidth / $sourceWidth, $thumbHeight / $sourceHeight);
+    $newWidth = (int) \round($sourceWidth * $ratio);
+    $newHeight = (int) \round($sourceHeight * $ratio);
 
     // Create thumbnail
-    $thumbnail = imagecreatetruecolor($newWidth, $newHeight);
+    $thumbnail = \imagecreatetruecolor($newWidth, $newHeight);
 
     // Preserve transparency
-    imagealphablending($thumbnail, false);
-    imagesavealpha($thumbnail, true);
+    \imagealphablending($thumbnail, false);
+    \imagesavealpha($thumbnail, true);
 
     // Resize
-    imagecopyresampled(
+    \imagecopyresampled(
       $thumbnail,
       $sourceImage,
       0,
@@ -301,14 +301,14 @@ class ImageOptimizationService
   {
     switch ($mimeType) {
       case 'image/jpeg':
-        return imagejpeg($image, $filePath, self::$optimizationSettings['jpeg_quality']);
+        return \imagejpeg($image, $filePath, self::$optimizationSettings['jpeg_quality']);
       case 'image/png':
-        return imagepng($image, $filePath, self::$optimizationSettings['png_compression']);
+        return \imagepng($image, $filePath, self::$optimizationSettings['png_compression']);
       case 'image/gif':
-        return imagegif($image, $filePath);
+        return \imagegif($image, $filePath);
       case 'image/webp':
-        return function_exists('imagewebp') ?
-          imagewebp($image, $filePath, self::$optimizationSettings['webp_quality']) : false;
+        return \function_exists('imagewebp') ?
+          \imagewebp($image, $filePath, self::$optimizationSettings['webp_quality']) : false;
       default:
         return false;
     }
@@ -319,16 +319,16 @@ class ImageOptimizationService
    */
   public function getImageInfo(string $filePath): array
   {
-    if (!file_exists($filePath) || !$this->isImage($filePath)) {
+    if (!\file_exists($filePath) || !$this->isImage($filePath)) {
       return [];
     }
 
-    $imageInfo = getimagesize($filePath);
+    $imageInfo = \getimagesize($filePath);
     if (!$imageInfo) {
       return [];
     }
 
-    $fileSize = filesize($filePath);
+    $fileSize = \filesize($filePath);
 
     return [
       'width' => $imageInfo[0],
@@ -349,11 +349,11 @@ class ImageOptimizationService
   {
     $units = ['B', 'KB', 'MB', 'GB'];
 
-    for ($i = 0; $bytes > 1024 && $i < count($units) - 1; $i++) {
+    for ($i = 0; $bytes > 1024 && $i < \count($units) - 1; $i++) {
       $bytes /= 1024;
     }
 
-    return round($bytes, $precision) . ' ' . $units[$i];
+    return \round($bytes, $precision) . ' ' . $units[$i];
   }
 
   /**
@@ -362,7 +362,7 @@ class ImageOptimizationService
   public function updateSettings(array $settings): void
   {
     foreach ($settings as $key => $value) {
-      if (array_key_exists($key, self::$optimizationSettings)) {
+      if (\array_key_exists($key, self::$optimizationSettings)) {
         self::$optimizationSettings[$key] = $value;
       }
     }
