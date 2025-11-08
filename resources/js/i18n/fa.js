@@ -95,7 +95,7 @@ export default {
     "contact.address_line1": "کوچه اول، کارته چهار، خانه شماره ۵",
     "contact.address_line2": "کابل، افغانستان",
     // "contact.address_line3": "ایالات متحده",
-    "contact.phone_line1": "+93783820753",
+    "contact.phone_line1": "93783820753+",
     "contact.phone_line2": "+1 (555) 987-6543",
     "contact.email_line2": "info@mountagro.com",
     "contact.email_line1": "Director@mountagro-af.com",
