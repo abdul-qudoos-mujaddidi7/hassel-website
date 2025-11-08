@@ -772,7 +772,7 @@
         </section>
 
         <!-- Stakeholders Section -->
-        <section class="section-padding bg-gray-50">
+        <!-- <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="heading-lg text-green-600 mb-6 text-center">
@@ -785,8 +785,8 @@
                     </p>
                 </div>
 
-                <!-- Icon badges for partners -->
-                <div
+                Icon badges for partners -->
+        <!-- <div
                     class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 md:gap-8 items-center"
                 >
                     <div class="flex items-center justify-center">
@@ -838,11 +838,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </div> 
+        </section> -->
 
         <!-- Leadership Team -->
-        <section class="pt-16 bg-white">
+        <!-- <section class="pt-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
                     <h2 class="heading-lg text-green-600 mb-4 text-center">
@@ -909,7 +909,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- Closing CTA Section -->
         <section class="section-padding text-white">
