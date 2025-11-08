@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\SuccessStory;
 use App\Services\TranslationSyncService;
-use App\Services\FileUploadService;
 use App\Http\Resources\SuccessStoryResource;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -87,18 +86,8 @@ class SuccessStoriesController extends Controller
 
             // Handle featured image upload if provided
             if ($request->hasFile('featured_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('featured_image'), 'featured_image');
-                    $validated['image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
+                $path = $request->file('featured_image')->store('cover_images', 'public');
+                $validated['image'] = Storage::url($path);
             } elseif (isset($validated['featured_image']) && $validated['featured_image'] !== '') {
                 // String URL provided
                 $validated['image'] = $validated['featured_image'];
@@ -203,20 +192,19 @@ class SuccessStoriesController extends Controller
 
             // Handle featured image upload/removal
             if ($request->hasFile('featured_image')) {
-                // New file uploaded - replace existing image
-                $uploadService = app(FileUploadService::class);
-                $oldImagePath = null;
                 if ($successStory->image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($successStory->image, PHP_URL_PATH));
+                    $oldPath = str_replace('/storage/', '', parse_url($successStory->image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
+                    }
                 }
-                $imagePath = $uploadService->replace($request->file('featured_image'), 'featured_image', $oldImagePath);
-                $validated['image'] = Storage::url($imagePath);
+                $path = $request->file('featured_image')->store('cover_images', 'public');
+                $validated['image'] = Storage::url($path);
             } elseif ($request->has('featured_image') && $request->input('featured_image') === '') {
-                // Empty string sent - clear the existing image
                 if ($successStory->image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($successStory->image, PHP_URL_PATH));
-                    if (Storage::exists($oldImagePath)) {
-                        Storage::delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($successStory->image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['image'] = null;

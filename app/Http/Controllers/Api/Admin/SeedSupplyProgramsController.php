@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\SeedSupplyProgram;
 use App\Services\TranslationSyncService;
-use App\Services\FileUploadService;
 use App\Http\Requests\SeedSupplyProgramRequest;
 use App\Http\Resources\SeedSupplyProgramResource;
 use Illuminate\Support\Facades\Storage;
@@ -81,37 +80,17 @@ class SeedSupplyProgramsController extends Controller
 
             // Handle cover image upload if provided
             if ($request->hasFile('cover_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('cover_image'), 'cover_image');
-                    $validated['cover_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Cover image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload cover image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('cover_image') || $request->input('cover_image') === '') {
+                $path = $request->file('cover_image')->store('cover_images', 'public');
+                $validated['cover_image'] = Storage::url($path);
+            } else {
                 $validated['cover_image'] = null;
             }
 
             // Handle thumbnail image upload if provided
             if ($request->hasFile('thumbnail_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('thumbnail_image'), 'cover_image');
-                    $validated['thumbnail_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Thumbnail image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload thumbnail image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('thumbnail_image') || $request->input('thumbnail_image') === '') {
+                $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
+                $validated['thumbnail_image'] = Storage::url($path);
+            } else {
                 $validated['thumbnail_image'] = null;
             }
 
@@ -167,65 +146,43 @@ class SeedSupplyProgramsController extends Controller
 
             // Handle cover image upload/removal
             if ($request->hasFile('cover_image')) {
-                // New file uploaded - replace existing image
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $oldImagePath = null;
-                    if ($seedSupplyProgram->cover_image) {
-                        $oldImagePath = str_replace('/storage/', '', parse_url($seedSupplyProgram->cover_image, PHP_URL_PATH));
-                    }
-                    $imagePath = $uploadService->replace($request->file('cover_image'), 'cover_image', $oldImagePath);
-                    $validated['cover_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Cover image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload cover image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif ($request->has('cover_image') && $request->input('cover_image') === '') {
-                // Empty string sent - clear the existing image
                 if ($seedSupplyProgram->cover_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($seedSupplyProgram->cover_image, PHP_URL_PATH));
-                    if (Storage::disk('public')->exists($oldImagePath)) {
-                        Storage::disk('public')->delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($seedSupplyProgram->cover_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
+                    }
+                }
+                $path = $request->file('cover_image')->store('cover_images', 'public');
+                $validated['cover_image'] = Storage::url($path);
+            } elseif ($request->has('cover_image') && $request->input('cover_image') === '') {
+                if ($seedSupplyProgram->cover_image) {
+                    $oldPath = str_replace('/storage/', '', parse_url($seedSupplyProgram->cover_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['cover_image'] = null;
             }
-            // If cover_image is not in request, it means keep existing value (don't update)
 
             // Handle thumbnail image upload/removal
             if ($request->hasFile('thumbnail_image')) {
-                // New file uploaded - replace existing image
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $oldImagePath = null;
-                    if ($seedSupplyProgram->thumbnail_image) {
-                        $oldImagePath = str_replace('/storage/', '', parse_url($seedSupplyProgram->thumbnail_image, PHP_URL_PATH));
-                    }
-                    $imagePath = $uploadService->replace($request->file('thumbnail_image'), 'cover_image', $oldImagePath);
-                    $validated['thumbnail_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Thumbnail image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload thumbnail image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif ($request->has('thumbnail_image') && $request->input('thumbnail_image') === '') {
-                // Empty string sent - clear the existing image
                 if ($seedSupplyProgram->thumbnail_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($seedSupplyProgram->thumbnail_image, PHP_URL_PATH));
-                    if (Storage::disk('public')->exists($oldImagePath)) {
-                        Storage::disk('public')->delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($seedSupplyProgram->thumbnail_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
+                    }
+                }
+                $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
+                $validated['thumbnail_image'] = Storage::url($path);
+            } elseif ($request->has('thumbnail_image') && $request->input('thumbnail_image') === '') {
+                if ($seedSupplyProgram->thumbnail_image) {
+                    $oldPath = str_replace('/storage/', '', parse_url($seedSupplyProgram->thumbnail_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['thumbnail_image'] = null;
             }
-            // If thumbnail_image is not in request, it means keep existing value (don't update)
 
             $seedSupplyProgram->update($validated);
             TranslationSyncService::sync($seedSupplyProgram, $translations);

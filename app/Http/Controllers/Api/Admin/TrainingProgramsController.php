@@ -8,7 +8,6 @@ use App\Models\TrainingProgram;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Services\TranslationSyncService;
-use App\Services\FileUploadService;
 use App\Http\Resources\TrainingProgramResource;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -100,37 +99,17 @@ class TrainingProgramsController extends Controller
 
             // Handle cover image upload if provided
             if ($request->hasFile('cover_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('cover_image'), 'cover_image');
-                    $validated['cover_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Cover image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload cover image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('cover_image') || $request->input('cover_image') === '') {
+                $path = $request->file('cover_image')->store('cover_images', 'public');
+                $validated['cover_image'] = Storage::url($path);
+            } else {
                 $validated['cover_image'] = null;
             }
 
             // Handle thumbnail image upload if provided
             if ($request->hasFile('thumbnail_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('thumbnail_image'), 'cover_image');
-                    $validated['thumbnail_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Thumbnail image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload thumbnail image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('thumbnail_image') || $request->input('thumbnail_image') === '') {
+                $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
+                $validated['thumbnail_image'] = Storage::url($path);
+            } else {
                 $validated['thumbnail_image'] = null;
             }
 
@@ -200,47 +179,43 @@ class TrainingProgramsController extends Controller
 
             // Handle cover image upload/removal
             if ($request->hasFile('cover_image')) {
-                // New file uploaded - replace existing image
-                $uploadService = app(FileUploadService::class);
-                $oldImagePath = null;
                 if ($trainingProgram->cover_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($trainingProgram->cover_image, PHP_URL_PATH));
+                    $oldPath = str_replace('/storage/', '', parse_url($trainingProgram->cover_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
+                    }
                 }
-                $imagePath = $uploadService->replace($request->file('cover_image'), 'cover_image', $oldImagePath);
-                $validated['cover_image'] = Storage::url($imagePath);
+                $path = $request->file('cover_image')->store('cover_images', 'public');
+                $validated['cover_image'] = Storage::url($path);
             } elseif ($request->has('cover_image') && $request->input('cover_image') === '') {
-                // Empty string sent - clear the existing image
                 if ($trainingProgram->cover_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($trainingProgram->cover_image, PHP_URL_PATH));
-                    if (Storage::exists($oldImagePath)) {
-                        Storage::delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($trainingProgram->cover_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['cover_image'] = null;
             }
-            // If cover_image is not in request, it means keep existing value (don't update)
 
             // Handle thumbnail image upload/removal
             if ($request->hasFile('thumbnail_image')) {
-                // New file uploaded - replace existing image
-                $uploadService = app(FileUploadService::class);
-                $oldImagePath = null;
                 if ($trainingProgram->thumbnail_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($trainingProgram->thumbnail_image, PHP_URL_PATH));
+                    $oldPath = str_replace('/storage/', '', parse_url($trainingProgram->thumbnail_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
+                    }
                 }
-                $imagePath = $uploadService->replace($request->file('thumbnail_image'), 'cover_image', $oldImagePath);
-                $validated['thumbnail_image'] = Storage::url($imagePath);
+                $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
+                $validated['thumbnail_image'] = Storage::url($path);
             } elseif ($request->has('thumbnail_image') && $request->input('thumbnail_image') === '') {
-                // Empty string sent - clear the existing image
                 if ($trainingProgram->thumbnail_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($trainingProgram->thumbnail_image, PHP_URL_PATH));
-                    if (Storage::exists($oldImagePath)) {
-                        Storage::delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($trainingProgram->thumbnail_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['thumbnail_image'] = null;
             }
-            // If thumbnail_image is not in request, it means keep existing value (don't update)
 
             $trainingProgram->update($validated);
             TranslationSyncService::sync($trainingProgram, $translations);

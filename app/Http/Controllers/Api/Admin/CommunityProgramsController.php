@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\CommunityProgram;
 use App\Services\TranslationSyncService;
-use App\Services\FileUploadService;
 use App\Http\Requests\CommunityProgramRequest;
 use App\Http\Resources\CommunityProgramResource;
 use Illuminate\Support\Facades\Storage;
@@ -74,55 +73,25 @@ class CommunityProgramsController extends Controller
 
             // Handle featured image upload if provided
             if ($request->hasFile('featured_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('featured_image'), 'cover_image');
-                    $validated['featured_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Featured image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload featured image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('featured_image') || $request->input('featured_image') === '') {
+                $path = $request->file('featured_image')->store('cover_images', 'public');
+                $validated['featured_image'] = Storage::url($path);
+            } else {
                 $validated['featured_image'] = null;
             }
 
             // Handle cover image upload if provided
             if ($request->hasFile('cover_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('cover_image'), 'cover_image');
-                    $validated['cover_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Cover image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload cover image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('cover_image') || $request->input('cover_image') === '') {
+                $path = $request->file('cover_image')->store('cover_images', 'public');
+                $validated['cover_image'] = Storage::url($path);
+            } else {
                 $validated['cover_image'] = null;
             }
 
             // Handle thumbnail image upload if provided
             if ($request->hasFile('thumbnail_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $imagePath = $uploadService->upload($request->file('thumbnail_image'), 'cover_image');
-                    $validated['thumbnail_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Thumbnail image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload thumbnail image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('thumbnail_image') || $request->input('thumbnail_image') === '') {
+                $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
+                $validated['thumbnail_image'] = Storage::url($path);
+            } else {
                 $validated['thumbnail_image'] = null;
             }
 
@@ -178,27 +147,19 @@ class CommunityProgramsController extends Controller
 
             // Handle featured image upload/removal
             if ($request->hasFile('featured_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $oldImagePath = null;
-                    if ($communityProgram->featured_image) {
-                        $oldImagePath = str_replace('/storage/', '', parse_url($communityProgram->featured_image, PHP_URL_PATH));
+                if ($communityProgram->featured_image) {
+                    $oldPath = str_replace('/storage/', '', parse_url($communityProgram->featured_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
-                    $imagePath = $uploadService->replace($request->file('featured_image'), 'cover_image', $oldImagePath);
-                    $validated['featured_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Featured image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload featured image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
                 }
+                $path = $request->file('featured_image')->store('cover_images', 'public');
+                $validated['featured_image'] = Storage::url($path);
             } elseif ($request->has('featured_image') && $request->input('featured_image') === '') {
                 if ($communityProgram->featured_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($communityProgram->featured_image, PHP_URL_PATH));
-                    if (Storage::disk('public')->exists($oldImagePath)) {
-                        Storage::disk('public')->delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($communityProgram->featured_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['featured_image'] = null;
@@ -206,27 +167,19 @@ class CommunityProgramsController extends Controller
 
             // Handle cover image upload/removal
             if ($request->hasFile('cover_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $oldImagePath = null;
-                    if ($communityProgram->cover_image) {
-                        $oldImagePath = str_replace('/storage/', '', parse_url($communityProgram->cover_image, PHP_URL_PATH));
+                if ($communityProgram->cover_image) {
+                    $oldPath = str_replace('/storage/', '', parse_url($communityProgram->cover_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
-                    $imagePath = $uploadService->replace($request->file('cover_image'), 'cover_image', $oldImagePath);
-                    $validated['cover_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Cover image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload cover image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
                 }
+                $path = $request->file('cover_image')->store('cover_images', 'public');
+                $validated['cover_image'] = Storage::url($path);
             } elseif ($request->has('cover_image') && $request->input('cover_image') === '') {
                 if ($communityProgram->cover_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($communityProgram->cover_image, PHP_URL_PATH));
-                    if (Storage::disk('public')->exists($oldImagePath)) {
-                        Storage::disk('public')->delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($communityProgram->cover_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['cover_image'] = null;
@@ -234,27 +187,19 @@ class CommunityProgramsController extends Controller
 
             // Handle thumbnail image upload/removal
             if ($request->hasFile('thumbnail_image')) {
-                try {
-                    $uploadService = app(FileUploadService::class);
-                    $oldImagePath = null;
-                    if ($communityProgram->thumbnail_image) {
-                        $oldImagePath = str_replace('/storage/', '', parse_url($communityProgram->thumbnail_image, PHP_URL_PATH));
+                if ($communityProgram->thumbnail_image) {
+                    $oldPath = str_replace('/storage/', '', parse_url($communityProgram->thumbnail_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
-                    $imagePath = $uploadService->replace($request->file('thumbnail_image'), 'cover_image', $oldImagePath);
-                    $validated['thumbnail_image'] = Storage::url($imagePath);
-                } catch (\Exception $e) {
-                    Log::error('Thumbnail image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload thumbnail image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
                 }
+                $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
+                $validated['thumbnail_image'] = Storage::url($path);
             } elseif ($request->has('thumbnail_image') && $request->input('thumbnail_image') === '') {
                 if ($communityProgram->thumbnail_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($communityProgram->thumbnail_image, PHP_URL_PATH));
-                    if (Storage::disk('public')->exists($oldImagePath)) {
-                        Storage::disk('public')->delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($communityProgram->thumbnail_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['thumbnail_image'] = null;
