@@ -8,7 +8,6 @@ use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Services\TranslationSyncService;
-use App\Services\FileUploadService;
 use App\Http\Resources\NewsResource;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -100,24 +99,9 @@ class NewsController extends Controller
 
             // Handle featured image upload if provided
             if ($request->hasFile('featured_image')) {
-                try {
-                    if ($request->hasFile('featured_image')) {
-                        $file = $request->file('featured_image');
-                        $path = $file->store('featured_images', 'public'); // stores in storage/app/public/featured_images
-                        $validated['featured_image'] = Storage::url($path); // generates URL
-                    } else {
-                        $validated['featured_image'] = null;
-                    }
-                } catch (\Exception $e) {
-                    Log::error('Image upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Failed to upload image: ' . $e->getMessage(),
-                        'error' => $e->getMessage()
-                    ], 422);
-                }
-            } elseif (!$request->has('featured_image') || $request->input('featured_image') === '') {
-                // No image provided - set to null for new records
+                $path = $request->file('featured_image')->store('cover_images', 'public');
+                $validated['featured_image'] = Storage::url($path);
+            } else {
                 $validated['featured_image'] = null;
             }
 
@@ -197,28 +181,23 @@ class NewsController extends Controller
 
             // Handle featured image upload/removal
             if ($request->hasFile('featured_image')) {
-                // New file uploaded - replace existing image
-                $uploadService = app(FileUploadService::class);
-                // Extract old image path if exists
-                $oldImagePath = null;
                 if ($news->featured_image) {
-                    // Remove leading /storage/ if present, or extract path after /storage/
-                    $oldImagePath = str_replace('/storage/', '', parse_url($news->featured_image, PHP_URL_PATH));
+                    $oldPath = str_replace('/storage/', '', parse_url($news->featured_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
+                    }
                 }
-                $imagePath = $uploadService->replace($request->file('featured_image'), 'featured_image', $oldImagePath);
-                $validated['featured_image'] = Storage::url($imagePath);
+                $path = $request->file('featured_image')->store('cover_images', 'public');
+                $validated['featured_image'] = Storage::url($path);
             } elseif ($request->has('featured_image') && $request->input('featured_image') === '') {
-                // Empty string sent - clear the existing image
                 if ($news->featured_image) {
-                    // Delete old image file if exists
-                    $oldImagePath = str_replace('/storage/', '', parse_url($news->featured_image, PHP_URL_PATH));
-                    if (Storage::exists($oldImagePath)) {
-                        Storage::delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($news->featured_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['featured_image'] = null;
             }
-            // If featured_image is not in request, it means keep existing value (don't update)
 
             // Prepare JSON translations
             $farsiTranslations = $translations['farsi'] ?? [];

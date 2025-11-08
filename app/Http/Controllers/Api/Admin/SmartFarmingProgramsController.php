@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\SmartFarmingProgram;
 use App\Services\TranslationSyncService;
-use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
@@ -117,7 +116,6 @@ class SmartFarmingProgramsController extends Controller
                         Storage::disk('public')->delete($oldPath);
                     }
                 }
-
                 $path = $request->file('cover_image')->store('cover_images', 'public');
                 $validated['cover_image'] = Storage::url($path);
             } elseif ($request->has('cover_image') && $request->input('cover_image') === '') {
@@ -139,7 +137,6 @@ class SmartFarmingProgramsController extends Controller
                         Storage::disk('public')->delete($oldPath);
                     }
                 }
-
                 $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
                 $validated['thumbnail_image'] = Storage::url($path);
             } elseif ($request->has('thumbnail_image') && $request->input('thumbnail_image') === '') {

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\AgriTechTool;
 use App\Services\TranslationSyncService;
-use App\Services\FileUploadService;
 use App\Http\Requests\AgriTechToolRequest;
 use App\Http\Resources\AgriTechToolResource;
 use Illuminate\Support\Facades\Storage;
@@ -72,8 +71,7 @@ class AgriTechToolsController extends Controller
 
             // Handle cover image upload directly
             if ($request->hasFile('cover_image')) {
-                $file = $request->file('cover_image');
-                $path = $file->store('cover_images', 'public'); // stores in storage/app/public/cover_images
+                $path = $request->file('cover_image')->store('cover_images', 'public');
                 $validated['cover_image'] = Storage::url($path);
             } else {
                 $validated['cover_image'] = null;
@@ -81,8 +79,7 @@ class AgriTechToolsController extends Controller
 
             // Handle thumbnail image upload directly
             if ($request->hasFile('thumbnail_image')) {
-                $file = $request->file('thumbnail_image');
-                $path = $file->store('thumbnail_images', 'public'); // stores in storage/app/public/thumbnail_images
+                $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
                 $validated['thumbnail_image'] = Storage::url($path);
             } else {
                 $validated['thumbnail_image'] = null;
@@ -139,53 +136,43 @@ class AgriTechToolsController extends Controller
 
             // --- Handle cover image ---
             if ($request->hasFile('cover_image')) {
-                // Delete old image if exists
                 if ($agriTechTool->cover_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($agriTechTool->cover_image, PHP_URL_PATH));
-                    if (Storage::disk('public')->exists($oldImagePath)) {
-                        Storage::disk('public')->delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($agriTechTool->cover_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
-
-                $file = $request->file('cover_image');
-                $path = $file->store('cover_images', 'public');
+                $path = $request->file('cover_image')->store('cover_images', 'public');
                 $validated['cover_image'] = Storage::url($path);
             } elseif ($request->has('cover_image') && $request->input('cover_image') === '') {
-                // Clear existing image
                 if ($agriTechTool->cover_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($agriTechTool->cover_image, PHP_URL_PATH));
-                    if (Storage::disk('public')->exists($oldImagePath)) {
-                        Storage::disk('public')->delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($agriTechTool->cover_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['cover_image'] = null;
             }
-            // If cover_image not in request, keep existing value
 
             // --- Handle thumbnail image ---
             if ($request->hasFile('thumbnail_image')) {
-                // Delete old image if exists
                 if ($agriTechTool->thumbnail_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($agriTechTool->thumbnail_image, PHP_URL_PATH));
-                    if (Storage::disk('public')->exists($oldImagePath)) {
-                        Storage::disk('public')->delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($agriTechTool->thumbnail_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
-
-                $file = $request->file('thumbnail_image');
-                $path = $file->store('thumbnail_images', 'public');
+                $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
                 $validated['thumbnail_image'] = Storage::url($path);
             } elseif ($request->has('thumbnail_image') && $request->input('thumbnail_image') === '') {
-                // Clear existing image
                 if ($agriTechTool->thumbnail_image) {
-                    $oldImagePath = str_replace('/storage/', '', parse_url($agriTechTool->thumbnail_image, PHP_URL_PATH));
-                    if (Storage::disk('public')->exists($oldImagePath)) {
-                        Storage::disk('public')->delete($oldImagePath);
+                    $oldPath = str_replace('/storage/', '', parse_url($agriTechTool->thumbnail_image, PHP_URL_PATH));
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
                     }
                 }
                 $validated['thumbnail_image'] = null;
             }
-            // If thumbnail_image not in request, keep existing value
 
             // Update the record
             $agriTechTool->update($validated);
