@@ -116,7 +116,7 @@
                                     </h3>
                                     <p class="text-gray-600">
                                         {{ t("contact.phone_line1") }}<br />
-                                        {{ t("contact.phone_line2") }}
+                                        <!-- {{ t("contact.phone_line2") }} -->
                                     </p>
                                 </div>
                             </div>
