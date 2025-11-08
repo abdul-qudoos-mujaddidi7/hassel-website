@@ -31,14 +31,14 @@ class AgriTechToolsController extends Controller
             $query->where('status', $status);
         }
         $items = $query->paginate($perPage);
-        
+
         // Always include translations for admin list
         $request->merge(['include_translations' => true]);
-        
+
         $data = collect($items->items())->map(function ($item) use ($request) {
             return (new AgriTechToolResource($item))->resolve($request);
         });
-        
+
         return response()->json([
             'success' => true,
             'data' => $data,
@@ -62,7 +62,6 @@ class AgriTechToolsController extends Controller
                         $request->merge(['translations' => $translationsArray]);
                     }
                 } catch (\Exception $e) {
-                    // If parsing fails, set to empty array
                     $request->merge(['translations' => []]);
                 }
             }
@@ -70,7 +69,7 @@ class AgriTechToolsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
-            // Handle cover image upload if provided
+            // Handle cover image upload directly
             if ($request->hasFile('cover_image')) {
                 $path = $request->file('cover_image')->store('cover_images', 'public');
                 $validated['cover_image'] = Storage::url($path);
@@ -78,7 +77,7 @@ class AgriTechToolsController extends Controller
                 $validated['cover_image'] = null;
             }
 
-            // Handle thumbnail image upload if provided
+            // Handle thumbnail image upload directly
             if ($request->hasFile('thumbnail_image')) {
                 $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
                 $validated['thumbnail_image'] = Storage::url($path);
@@ -110,7 +109,7 @@ class AgriTechToolsController extends Controller
         if ($request->boolean('include_translations')) {
             $request->merge(['include_translations' => true]);
         }
-        
+
         return response()->json([
             'success' => true,
             'data' => (new AgriTechToolResource($agriTechTool))->resolve($request)
@@ -128,7 +127,6 @@ class AgriTechToolsController extends Controller
                         $request->merge(['translations' => $translationsArray]);
                     }
                 } catch (\Exception $e) {
-                    // If parsing fails, set to empty array
                     $request->merge(['translations' => []]);
                 }
             }
@@ -136,7 +134,7 @@ class AgriTechToolsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
-            // Handle cover image upload/removal
+            // --- Handle cover image ---
             if ($request->hasFile('cover_image')) {
                 if ($agriTechTool->cover_image) {
                     $oldPath = str_replace('/storage/', '', parse_url($agriTechTool->cover_image, PHP_URL_PATH));
@@ -156,7 +154,7 @@ class AgriTechToolsController extends Controller
                 $validated['cover_image'] = null;
             }
 
-            // Handle thumbnail image upload/removal
+            // --- Handle thumbnail image ---
             if ($request->hasFile('thumbnail_image')) {
                 if ($agriTechTool->thumbnail_image) {
                     $oldPath = str_replace('/storage/', '', parse_url($agriTechTool->thumbnail_image, PHP_URL_PATH));
@@ -176,6 +174,7 @@ class AgriTechToolsController extends Controller
                 $validated['thumbnail_image'] = null;
             }
 
+            // Update the record
             $agriTechTool->update($validated);
             TranslationSyncService::sync($agriTechTool, $translations);
 

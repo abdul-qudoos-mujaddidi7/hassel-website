@@ -48,7 +48,7 @@ class SmartFarmingProgramsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
-            // Handle cover image upload if provided
+            // Handle cover image upload
             if ($request->hasFile('cover_image')) {
                 $path = $request->file('cover_image')->store('cover_images', 'public');
                 $validated['cover_image'] = Storage::url($path);
@@ -56,7 +56,7 @@ class SmartFarmingProgramsController extends Controller
                 $validated['cover_image'] = null;
             }
 
-            // Handle thumbnail image upload if provided
+            // Handle thumbnail image upload
             if ($request->hasFile('thumbnail_image')) {
                 $path = $request->file('thumbnail_image')->store('thumbnail_images', 'public');
                 $validated['thumbnail_image'] = Storage::url($path);
@@ -64,10 +64,15 @@ class SmartFarmingProgramsController extends Controller
                 $validated['thumbnail_image'] = null;
             }
 
-            $item = SmartFarmingProgram::create($validated);
-            TranslationSyncService::sync($item, $translations);
+            // Create program
+            $program = SmartFarmingProgram::create($validated);
+            TranslationSyncService::sync($program, $translations);
 
-            return response()->json(['success' => true, 'data' => $item], 201);
+            return response()->json([
+                'success' => true,
+                'data' => $program,
+                'message' => 'Smart farming program created successfully'
+            ], 201);
         } catch (\Exception $e) {
             Log::error('Smart farming program creation error: ' . $e->getMessage());
             return response()->json([
@@ -77,6 +82,7 @@ class SmartFarmingProgramsController extends Controller
             ], 500);
         }
     }
+
 
     public function show(SmartFarmingProgram $smartFarmingProgram): JsonResponse
     {
@@ -101,8 +107,9 @@ class SmartFarmingProgramsController extends Controller
             $validated = $request->validated();
             $translations = $request->input('translations', []);
 
-            // Handle cover image upload/removal
+            // --- Handle cover image upload/removal ---
             if ($request->hasFile('cover_image')) {
+                // Delete old image if exists
                 if ($smartFarmingProgram->cover_image) {
                     $oldPath = str_replace('/storage/', '', parse_url($smartFarmingProgram->cover_image, PHP_URL_PATH));
                     if (Storage::disk('public')->exists($oldPath)) {
@@ -112,6 +119,7 @@ class SmartFarmingProgramsController extends Controller
                 $path = $request->file('cover_image')->store('cover_images', 'public');
                 $validated['cover_image'] = Storage::url($path);
             } elseif ($request->has('cover_image') && $request->input('cover_image') === '') {
+                // Clear existing image
                 if ($smartFarmingProgram->cover_image) {
                     $oldPath = str_replace('/storage/', '', parse_url($smartFarmingProgram->cover_image, PHP_URL_PATH));
                     if (Storage::disk('public')->exists($oldPath)) {
@@ -121,7 +129,7 @@ class SmartFarmingProgramsController extends Controller
                 $validated['cover_image'] = null;
             }
 
-            // Handle thumbnail image upload/removal
+            // --- Handle thumbnail image upload/removal ---
             if ($request->hasFile('thumbnail_image')) {
                 if ($smartFarmingProgram->thumbnail_image) {
                     $oldPath = str_replace('/storage/', '', parse_url($smartFarmingProgram->thumbnail_image, PHP_URL_PATH));
@@ -141,10 +149,15 @@ class SmartFarmingProgramsController extends Controller
                 $validated['thumbnail_image'] = null;
             }
 
+            // Update record
             $smartFarmingProgram->update($validated);
             TranslationSyncService::sync($smartFarmingProgram, $translations);
 
-            return response()->json(['success' => true, 'data' => $smartFarmingProgram]);
+            return response()->json([
+                'success' => true,
+                'data' => $smartFarmingProgram,
+                'message' => 'Smart farming program updated successfully'
+            ]);
         } catch (\Exception $e) {
             Log::error('Smart farming program update error: ' . $e->getMessage());
             return response()->json([

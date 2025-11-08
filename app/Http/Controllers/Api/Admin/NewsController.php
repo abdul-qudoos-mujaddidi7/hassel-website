@@ -108,7 +108,7 @@ class NewsController extends Controller
             // Prepare JSON translations
             $farsiTranslations = $translations['farsi'] ?? [];
             $pashtoTranslations = $translations['pashto'] ?? [];
-            
+
             // Add translations to validated data
             $validated['farsi_translations'] = $farsiTranslations;
             $validated['pashto_translations'] = $pashtoTranslations;
@@ -202,7 +202,7 @@ class NewsController extends Controller
             // Prepare JSON translations
             $farsiTranslations = $translations['farsi'] ?? [];
             $pashtoTranslations = $translations['pashto'] ?? [];
-            
+
             // Add translations to validated data
             $validated['farsi_translations'] = $farsiTranslations;
             $validated['pashto_translations'] = $pashtoTranslations;
