@@ -50,9 +50,9 @@ export default {
     "footer.contact": "اړیکه",
     "footer.company_tagline":
         "د نن ورځې د ستونزو لپاره مسلکي حل لارې. موږ د راتلونکي تخنیک نن جوړوو.",
-    "footer.address": "د سوداګرۍ کوڅه 123",
+    "footer.address": "لومړۍ کوڅه، کارته چهار، د ۵ شمېرې کور",
     "footer.city_state": "ښار، ولایت 12345",
-    "footer.phone": "تلیفون: (555) 123-4567",
+    "footer.phone": " تلیفون:93783820753+ ",
     "footer.email": "بریښنالیک: info@mountagro.com",
     "footer.privacy_policy": "د محرمیت پالیسي",
     "footer.terms_of_service": "د خدماتو شرطونه",

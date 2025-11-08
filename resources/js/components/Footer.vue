@@ -153,7 +153,7 @@
                     </h3>
                     <div class="space-y-2 text-brand-cream">
                         <p>{{ t("footer.address") }}</p>
-                        <p>{{ t("footer.city_state") }}</p>
+                        <!-- <p>{{ t("footer.city_state") }}</p> -->
                         <p>{{ t("footer.phone") }}</p>
                         <p>{{ t("footer.email") }}</p>
                     </div>

@@ -50,9 +50,9 @@ export default {
     "footer.contact": "تماس",
     "footer.company_tagline":
         "راه حل های حرفه ای برای چالش های مدرن. ما فناوری فردا را امروز می سازیم.",
-    "footer.address": "خیابان تجاری 123",
-    "footer.city_state": "شهر، استان 12345",
-    "footer.phone": "تلفن: (555) 123-4567",
+    "footer.address": "کوچه اول، کارته چهار، خانه شماره ۵",
+    // "footer.city_state": "شهر، استان 12345",
+    "footer.phone": "تلفن:93783820753+",
     "footer.email": "ایمیل: info@mountagro.com",
     "footer.privacy_policy": "سیاست حریم خصوصی",
     "footer.terms_of_service": "شرایط خدمات",
