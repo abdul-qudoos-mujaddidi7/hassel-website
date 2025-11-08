@@ -1,0 +1,1 @@
+.loading-spinner[data-v-2a585741]{border:2px solid #f3f4f6;border-top:2px solid var(--brand-primary);border-radius:50%;animation:spin-2a585741 1s linear infinite}@keyframes spin-2a585741{0%{transform:rotate(0)}to{transform:rotate(360deg)}}.loading-container[data-v-2a585741]{transition:all .3s ease}
