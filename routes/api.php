@@ -201,7 +201,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->name('api.admin.'
   Route::apiResource('job-announcements', App\Http\Controllers\Api\Admin\JobAnnouncementController::class);
   Route::apiResource('publications', App\Http\Controllers\Api\Admin\PublicationsController::class);
   Route::apiResource('programs', App\Http\Controllers\Api\Admin\ProgramsController::class);
-  Route::apiResource('agri-tech-tools', App\Http\Controllers\Api\Admin\AgriTechToolsController::class);
+  // Route::apiResource('agri-tech-tools', App\Http\Controllers\Api\Admin\AgriTechToolsController::class);
   Route::post('market-access-programs/{marketAccessProgram}', [App\Http\Controllers\Api\Admin\MarketAccessProgramsController::class, 'update'])->name('market-access-programs.update');
   Route::apiResource('market-access-programs', App\Http\Controllers\Api\Admin\MarketAccessProgramsController::class)->except('update');
   Route::post('smart-farming-programs/{smartFarmingProgram}', [App\Http\Controllers\Api\Admin\SmartFarmingProgramsController::class, 'update'])->name('smart-farming-programs.update');
