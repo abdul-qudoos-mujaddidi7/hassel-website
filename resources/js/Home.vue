@@ -419,7 +419,11 @@
                         <p
                             class="text-gray-700 leading-relaxed text-left rtl:text-right"
                         >
-                            {{ t("home.foundation.values.body") }}
+                             <ul>
+                                <li v-for="(item, index) in t('home.foundation.values.body')" :key="index">
+                                    {{ index + 1 }}. {{ item }}
+                                </li>
+                            </ul>
                         </p>
                     </div>
                 </div>

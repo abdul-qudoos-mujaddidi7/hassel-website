@@ -108,13 +108,16 @@ export default {
         "Built on strong principles that guide everything we do",
     "home.foundation.vision.title": "Vision",
     "home.foundation.vision.body":
-        "Our vision is to create a prosperous, self-reliant agricultural sector where every farmer has access to knowledge, technology, and fair markets. Mount Agro strives to build a sustainable future in which agriculture becomes a source of growth, dignity, and stability for communities across the nation.",
+        "To be a leading force in transforming Afghanistan’s agriculture into a smart, sustainable, and inclusive sector that ensures food security, prosperity, and environmental balance.",
     "home.foundation.mission.title": "Mission",
     "home.foundation.mission.body":
-        "Mount Agro’s mission is to empower farmers and rural communities by promoting modern agricultural technologies, providing high-quality seeds, practical training, and sustainable farming practices. Through these initiatives, we aim to strengthen food security, improve livelihoods, and preserve environmental balance for future generations.",
-    "home.foundation.values.title": "Values",
-    "home.foundation.values.body":
-        "At Mount Agro, we are guided by a strong commitment to sustainability, innovation, and community empowerment. We believe in transparency, integrity, and collaboration as the foundation of our work. By prioritizing quality, inclusiveness, and environmental care, we continue to foster trust, productivity, and long-term progress in every project we undertake.",
+        "Our mission is to empower farmers and rural communities through innovation, education, and sustainable farming solutions. We aim to enhance productivity, strengthen value chains, and create fair market access while promoting environmental stewardship and community inclusion.",
+    "home.foundation.values.title": "Core Principals",
+    "home.foundation.values.body": [
+        "Professionalism",
+        "Quality",
+        "Transparency",
+    ],
 
     // Business pillars section intro
     "home.pillars.title": "Our Business Pillars",
