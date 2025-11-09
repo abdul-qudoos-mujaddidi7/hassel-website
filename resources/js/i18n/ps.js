@@ -53,7 +53,7 @@ export default {
     "footer.address": "لومړۍ کوڅه، کارته چهار، د ۵ شمېرې کور",
     "footer.city_state": "ښار، ولایت 12345",
     "footer.phone": " تلیفون:93783820753+ ",
-    "footer.email": "بریښنالیک: info@mountagro.com",
+    "footer.email": "بریښنالیک: info@mountagro-af.com",
     "footer.privacy_policy": "د محرمیت پالیسي",
     "footer.terms_of_service": "د خدماتو شرطونه",
 
@@ -98,7 +98,7 @@ export default {
     "contact.phone_line1": "93783820753+",
     // "contact.phone_line2": "+1 (555) 987-6543",
     "contact.email_line1": "Director@mountagro-af.com",
-    "contact.email_line2": "info@mountagro.com",
+    "contact.email_line2": "info@mountagro-af.com",
     "contact.hours_line1": "دوشنبه - جمعه: 9:00 سهار - 6:00 ماښام",
     "contact.hours_line2": "شنبه: 10:00 سهار - 4:00 ماښام",
     "contact.hours_line3": "یکشنبه: بند",

@@ -53,7 +53,7 @@ export default {
     "footer.address": "کوچه اول، کارته چهار، خانه شماره ۵",
     // "footer.city_state": "شهر، استان 12345",
     "footer.phone": "تلفن:93783820753+",
-    "footer.email": "ایمیل: info@mountagro.com",
+    "footer.email": "ایمیل: info@mountagro-af.com",
     "footer.privacy_policy": "سیاست حریم خصوصی",
     "footer.terms_of_service": "شرایط خدمات",
 
@@ -97,7 +97,7 @@ export default {
     // "contact.address_line3": "ایالات متحده",
     "contact.phone_line1": "93783820753+",
     "contact.phone_line2": "+1 (555) 987-6543",
-    "contact.email_line2": "info@mountagro.com",
+    "contact.email_line2": "info@mountagro-af.com",
     "contact.email_line1": "Director@mountagro-af.com",
     "contact.hours_line1": "دوشنبه - جمعه: 9:00 صبح - 6:00 عصر",
     "contact.hours_line2": "شنبه: 10:00 صبح - 4:00 عصر",

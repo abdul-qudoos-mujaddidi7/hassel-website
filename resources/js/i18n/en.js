@@ -354,7 +354,7 @@ export default {
     // "contact.address_line3": "Postal Code: 100613-36-31",
     "contact.phone_line1": "+93 78 3820753",
     // "contact.phone_line2": "+1 (555) 987-6543",
-    "contact.email_line1": "Director@mountagro-af.com",
+    // "contact.email_line1": "Director@mountagro-af.com",
     "contact.email_line2": "info@mountagro-af.com",
     "contact.hours_line1": "Monday - Friday: 9:00 AM - 6:00 PM",
     "contact.hours_line2": "Saturday: 10:00 AM - 4:00 PM",

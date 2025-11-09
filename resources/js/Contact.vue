@@ -146,7 +146,7 @@
                                         {{ t("contact.email") }}
                                     </h3>
                                     <p class="text-gray-600">
-                                        {{ t("contact.email_line1") }}<br />
+                                        <!-- {{ t("contact.email_line1") }}<br /> -->
                                         {{ t("contact.email_line2") }}
                                     </p>
                                 </div>
