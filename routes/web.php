@@ -37,7 +37,7 @@ Route::get('/health', function () {
 | Admin panel entry points - all admin routes serve the admin.blade.php
 */
 
-Route::get('/admin/{any?}', function () {
+Route::get('/admin-zaki/{any?}', function () {
   return view('admin');
 })->where('any', '.*')->name('admin');
 

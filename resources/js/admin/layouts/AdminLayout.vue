@@ -51,7 +51,7 @@ const dir = computed(() => (isRtl.value ? 'right' : 'left'));
 // Dynamic card styling based on route
 const vCardStyle = computed(() => {
     console.log(route.path);
-    return route.path === "/admin"
+    return route.path === "/admin-zaki"
         ? "background-color:#fafafa"
         : "background-color:white";
 });

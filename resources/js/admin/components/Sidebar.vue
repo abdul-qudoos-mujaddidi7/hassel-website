@@ -2,7 +2,7 @@
     <div class="sidebar-container" :dir="dir">
         <!-- Logo Section -->
         <div class="logo-section">
-            <router-link to="/admin/dashboard" class="logo-link">
+            <router-link to="/admin-zaki/dashboard" class="logo-link">
                 <div class="logo-container">
                     <v-avatar size="60" class="logo-avatar">
                         <img :src="logo" alt="Logo" class="logo-image" />
@@ -13,7 +13,7 @@
 
         <!-- Navigation Section -->
         <div class="navigation-section">
-            <router-link to="/admin/dashboard" exact @click="closeAllMenus">
+            <router-link to="/admin-zaki/dashboard" exact @click="closeAllMenus">
                 <v-list-item
                     active-class="active-item"
                     value="home"
@@ -25,7 +25,7 @@
             </router-link>
 
             <router-link
-                to="/admin/beneficiaries-stats"
+                to="/admin-zaki/beneficiaries-stats"
                 exact
                 @click="closeAllMenus"
             >
@@ -40,7 +40,7 @@
             </router-link>
 
             <!-- News -->
-            <router-link to="/admin/news" exact @click="closeAllMenus">
+            <router-link to="/admin-zaki/news" exact @click="closeAllMenus">
                 <v-list-item
                     active-class="active-item"
                     prepend-icon="mdi-newspaper-variant-outline"
@@ -73,7 +73,7 @@
                 <v-list v-if="activeMenu === 'programs'" class="submenu programs-submenu">
                     <!-- Training Programs -->
                     <router-link
-                        to="/admin/training-programs"
+                        to="/admin-zaki/training-programs"
                         exact
                     >
                         <v-list-item
@@ -88,7 +88,7 @@
 
                     <!-- Smart Farming Programs -->
                     <router-link
-                        to="/admin/smart-farming-programs"
+                        to="/admin-zaki/smart-farming-programs"
                         exact
                     >
                         <v-list-item
