@@ -55,9 +55,9 @@ export default {
     "home.hero.contact": "Contact Us",
 
     // Welcome section
-    "home.welcome.title": "Welcome to Mount Agro",
+    "home.welcome.title": "Empowering Afghanistan’s Agricultural Future",
     "home.welcome.body":
-        "Empowering Afghanistan's agricultural communities through innovative microfinance solutions, comprehensive training programs, and sustainable development initiatives. We are committed to building stronger, more resilient farming communities across the nation.",
+        "At Mount Agro, we strengthen rural communities through innovation, education, and sustainable agricultural services — helping farmers grow with dignity, prosperity, and care for the land.",
 
     // About section
     "home.about.title": "About Us",
@@ -112,7 +112,7 @@ export default {
     "home.foundation.mission.title": "Mission",
     "home.foundation.mission.body":
         "Our mission is to empower farmers and rural communities through innovation, education, and sustainable farming solutions. We aim to enhance productivity, strengthen value chains, and create fair market access while promoting environmental stewardship and community inclusion.",
-    "home.foundation.values.title": "Core Principals",
+    "home.foundation.values.title": "Core Principles",
     "home.foundation.values.body": [
         "Professionalism",
         "Quality",
@@ -355,7 +355,7 @@ export default {
     "contact.phone_line1": "+93 78 3820753",
     // "contact.phone_line2": "+1 (555) 987-6543",
     "contact.email_line1": "Director@mountagro-af.com",
-    "contact.email_line2": "info@mountagro.com",
+    "contact.email_line2": "info@mountagro-af.com",
     "contact.hours_line1": "Monday - Friday: 9:00 AM - 6:00 PM",
     "contact.hours_line2": "Saturday: 10:00 AM - 4:00 PM",
     "contact.hours_line3": "Sunday: Closed",
@@ -381,7 +381,7 @@ export default {
     "footer.address": "Street 1, Karte Chahar, House 5",
     "footer.city_state": "Postal Code: 1001",
     "footer.phone": "+93 78 382 0753",
-    "footer.email": "info@mountagro.com",
+    "footer.email": "info@mountagro-af.com",
     "footer.copyright": "All rights reserved",
     "footer.privacy_policy": "Privacy Policy",
     "footer.terms_of_service": "Terms of Service",

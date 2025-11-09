@@ -168,7 +168,7 @@
                         © {{ currentYear }} Mount Agro.
                         {{ t("footer.copyright") }}
                     </p>
-                    <div class="flex space-x-6 mt-4 md:mt-0">
+                    <!-- <div class="flex space-x-6 mt-4 md:mt-0">
                         <a
                             href="#"
                             class="text-brand-cream hover:text-white text-sm transition-colors"
@@ -179,7 +179,7 @@
                             class="text-brand-cream hover:text-white text-sm transition-colors"
                             >{{ t("footer.terms_of_service") }}</a
                         >
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
