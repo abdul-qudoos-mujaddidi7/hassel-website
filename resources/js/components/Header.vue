@@ -8,13 +8,13 @@
                 <div class="flex-shrink-0">
                     <router-link to="/" class="flex items-center">
                         <img
-                            :src="'/mountagro-logo1.jpg'"
+                            :src="'/mountagro-logo.jpg'"
                             alt="Mount Agro Logo"
-                            width="64"
-                            height="64"
+                            width="112"
+                            height="112"
                             decoding="async"
                             fetchpriority="high"
-                            class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-contain"
+                            class="w-24 h-32 md:w-28 md:h-28 rounded-lg object-contain"
                         />
                     </router-link>
                 </div>
