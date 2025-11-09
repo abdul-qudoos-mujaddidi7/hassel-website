@@ -24,14 +24,14 @@ const router = createRouter({
     routes: [
         // Admin Login Route
         {
-            path: "/admin/login",
+            path: "/admin-zaki/login",
             name: "admin.login",
             component: AdminLogin,
             meta: { requiresGuest: true }
         },
         // Admin Dashboard and Management Routes
         {
-            path: "/admin",
+            path: "/admin-zaki",
             component: AdminLayout,
             
             meta: { requiresAuth: true },
@@ -76,13 +76,13 @@ router.beforeEach((to, from, next) => {
     
     // Check if route requires authentication
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-        next('/admin/login');
+        next('/admin-zaki/login');
         return;
     }
     
     // Check if route requires guest (like login page)
     if (to.meta.requiresGuest && authStore.isAuthenticated) {
-        next('/admin');
+        next('/admin-zaki');
         return;
     }
     
