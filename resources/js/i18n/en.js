@@ -349,7 +349,7 @@ export default {
     "contact.success_title": "Message Sent!",
     "contact.success_message":
         "Thank you for your message. We'll get back to you soon.",
-    "contact.address_line1": " Street 1, Karte Chahar, House 5",
+    "contact.address_line1": "Kabul, Karte Chahar, Street 1, House 5",
     "contact.address_line2": "Kabul, Afghanistan",
     // "contact.address_line3": "Postal Code: 100613-36-31",
     "contact.phone_line1": "+93 78 3820753",
@@ -378,7 +378,7 @@ export default {
     "footer.quick_links": "Quick Links",
     "footer.programs": "Programs",
     "footer.contact": "Contact",
-    "footer.address": "Street 1, Karte Chahar, House 5",
+    "footer.address": "Kabul, Karte Chahar, Street 1, House 5",
     "footer.city_state": "Postal Code: 1001",
     "footer.phone": "+93 78 382 0753",
     "footer.email": "info@mountagro-af.com",

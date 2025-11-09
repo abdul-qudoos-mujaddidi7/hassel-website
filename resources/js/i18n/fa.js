@@ -50,7 +50,7 @@ export default {
     "footer.contact": "تماس",
     "footer.company_tagline":
         "راه حل های حرفه ای برای چالش های مدرن. ما فناوری فردا را امروز می سازیم.",
-    "footer.address": "کوچه اول، کارته چهار، خانه شماره ۵",
+    "footer.address": "کابل، کارته چهار، سرک اول، خانه شماره 5",
     // "footer.city_state": "شهر، استان 12345",
     "footer.phone": "تلفن:93783820753+",
     "footer.email": "ایمیل: info@mountagro-af.com",
@@ -92,7 +92,7 @@ export default {
     "contact.success_title": "پیام با موفقیت ارسال شد!",
     "contact.success_message":
         "از تماس شما متشکریم. ظرف 24 ساعت با شما تماس خواهیم گرفت.",
-    "contact.address_line1": "کوچه اول، کارته چهار، خانه شماره ۵",
+    "contact.address_line1": "کابل، کارته چهار، سرک اول، خانه شماره 5",
     "contact.address_line2": "کابل، افغانستان",
     // "contact.address_line3": "ایالات متحده",
     "contact.phone_line1": "93783820753+",

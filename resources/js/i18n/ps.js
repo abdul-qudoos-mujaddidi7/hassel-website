@@ -50,7 +50,7 @@ export default {
     "footer.contact": "اړیکه",
     "footer.company_tagline":
         "د نن ورځې د ستونزو لپاره مسلکي حل لارې. موږ د راتلونکي تخنیک نن جوړوو.",
-    "footer.address": "لومړۍ کوڅه، کارته چهار، د ۵ شمېرې کور",
+    "footer.address": "کابل، کارته چهار، لومړی سرک، 5 نمبر کور",
     "footer.city_state": "ښار، ولایت 12345",
     "footer.phone": " تلیفون:93783820753+ ",
     "footer.email": "بریښنالیک: info@mountagro-af.com",
@@ -92,9 +92,9 @@ export default {
     "contact.success_title": "پیغام په بریالیتوب سره واستول شو!",
     "contact.success_message":
         "د تاسو د اړیکې نیولو څخه مننه. موږ به په 24 ساعتونو کې ستاسو سره اړیکه ونیسو.",
-    "contact.address_line1": "لومړۍ کوڅه، کارته چهار، د ۵ شمېرې کور",
+    "contact.address_line1": "کابل، کارته چهار، لومړی سرک، 5 نمبر کور",
     "contact.address_line2": "کابل، افغانستان",
-    "contact.address_line3": "د امریکا متحده ایالات",
+    // "contact.address_line3": "د امریکا متحده ایالات",
     "contact.phone_line1": "93783820753+",
     // "contact.phone_line2": "+1 (555) 987-6543",
     "contact.email_line1": "Director@mountagro-af.com",
