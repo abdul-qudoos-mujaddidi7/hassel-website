@@ -113,57 +113,66 @@
                 ></button>
             </div>
         </section>
+    
+        <!-- welcome section -->
 
         <!-- Welcome Section -->
-        <section class="section-padding bg-gray-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="self-start text-center mb-16">
-                    <h2 class="heading-lg text-green-600 mb-6 text-center">
-                        {{ t("home.welcome.title") }}
-                    </h2>
-                    <p
-                        class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed text-left rtl:text-right"
-                    >
-                        {{ t("home.welcome.body") }}
-                    </p>
-                </div>
+<section class="section-padding bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="heading-lg text-green-600 mb-4">
+                {{ t("home.welcome.title") }}
+            </h2>
+            <div class="mx-auto max-w-2xl">
+                <p
+                    class="text-lg sm:text-xl text-gray-600 leading-relaxed text-center rtl:text-right"
+                >
+                    {{ t("home.welcome.body") }}
+                </p>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
+
 
         <!-- About Us Section -->
         <section class="section-padding bg-white about-section">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-8">
-                    <h2 class="heading-lg text-green-600 mb-16 text-center">
-                        {{ t("home.about.title") }}
-                    </h2>
-                </div>
-                <div
-                    class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-                >
-                    <div class="self-start">
-                        <p
-                            class="text-xl text-gray-600 mb-6 text-left rtl:text-right"
-                        >
-                            {{ t("home.about.p1") }}
-                        </p>
-                        <p
-                            class="text-lg text-gray-600 text-left rtl:text-right"
-                        >
-                            {{ t("home.about.p2") }}
-                        </p>
-                    </div>
-                    <div class="space-y-6 rtl:order-1 ltr:order-2">
-                        <img
-                            :src="'/images/about/who_we_are_1.avif'"
-                            alt="Mount Agro field operations"
-                            class="w-full h-64 md:h-80 lg:h-96 rounded-professional-lg shadow-professional object-cover"
-                            loading="lazy"
-                        />
-                    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8">
+            <h2 class="heading-lg text-green-600 mb-16 text-center">
+                {{ t("home.about.title") }}
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+            <!-- Image Column - First on small screens -->
+            <div class="order-1 lg:order-2 flex items-center">
+                <img
+                    :src="'/images/about/who_we_are_1.avif'"
+                    alt="Mount Agro agricultural operations"
+                    class="w-full h-full max-h-[500px] object-cover rounded-professional-lg shadow-professional"
+                    loading="lazy"
+                />
+            </div>
+
+            <!-- Text Column - Second on small screens -->
+            <div class="order-2 lg:order-1 flex flex-col justify-center h-full">
+                <div class="h-full flex flex-col justify-center">
+                    <p
+                        class="text-xl text-gray-600 mb-6 text-left rtl:text-right leading-relaxed"
+                    >
+                        {{ t("home.about.p1") }}
+                    </p>
+                    <p
+                        class="text-lg text-gray-600 text-left rtl:text-right leading-relaxed"
+                    >
+                        {{ t("home.about.p2") }}
+                    </p>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
         <!-- Key Statistics Section -->
         <section class="section-padding bg-white">
@@ -419,7 +428,11 @@
                         <p
                             class="text-gray-700 leading-relaxed text-left rtl:text-right"
                         >
-                            {{ t("home.foundation.values.body") }}
+                             <ul>
+                                <li v-for="(item, index) in t('home.foundation.values.body')" :key="index">
+                                    {{ index + 1 }}. {{ item }}
+                                </li>
+                            </ul>
                         </p>
                     </div>
                 </div>
@@ -772,7 +785,7 @@
         </section>
 
         <!-- Stakeholders Section -->
-        <section class="section-padding bg-gray-50">
+        <!-- <section class="section-padding bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="heading-lg text-green-600 mb-6 text-center">
@@ -785,8 +798,8 @@
                     </p>
                 </div>
 
-                <!-- Icon badges for partners -->
-                <div
+                Icon badges for partners -->
+        <!-- <div
                     class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 md:gap-8 items-center"
                 >
                     <div class="flex items-center justify-center">
@@ -838,11 +851,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </div> 
+        </section> -->
 
         <!-- Leadership Team -->
-        <section class="pt-16 bg-white">
+        <!-- <section class="pt-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
                     <h2 class="heading-lg text-green-600 mb-4 text-center">
@@ -909,7 +922,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- Closing CTA Section -->
         <section class="section-padding text-white">

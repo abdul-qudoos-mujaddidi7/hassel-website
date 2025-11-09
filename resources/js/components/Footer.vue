@@ -1,6 +1,6 @@
 <template>
     <footer class="bg-brand-primary text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Company Info -->
                 <div>
@@ -11,10 +11,10 @@
                         height="90"
                         decoding="async"
                         fetchpriority="high"
-                        class="rounded-full object-contain bg-white p-2"
+                        class="rounded-full object-contain bg-white p-2 mb-2"
                     />
 
-                    <p class="text-brand-cream mb-4 max-w-md">
+                    <p class="text-brand-cream mb-4 max-w-md pr-4">
                         {{ t("footer.company_tagline") }}
                     </p>
                     <div class="flex space-x-4 rtl:space-x-6 ltr:space-x-4">
@@ -153,7 +153,7 @@
                     </h3>
                     <div class="space-y-2 text-brand-cream">
                         <p>{{ t("footer.address") }}</p>
-                        <p>{{ t("footer.city_state") }}</p>
+                        <!-- <p>{{ t("footer.city_state") }}</p> -->
                         <p>{{ t("footer.phone") }}</p>
                         <p>{{ t("footer.email") }}</p>
                     </div>
@@ -168,7 +168,7 @@
                         © {{ currentYear }} Mount Agro.
                         {{ t("footer.copyright") }}
                     </p>
-                    <div class="flex space-x-6 mt-4 md:mt-0">
+                    <!-- <div class="flex space-x-6 mt-4 md:mt-0">
                         <a
                             href="#"
                             class="text-brand-cream hover:text-white text-sm transition-colors"
@@ -179,7 +179,7 @@
                             class="text-brand-cream hover:text-white text-sm transition-colors"
                             >{{ t("footer.terms_of_service") }}</a
                         >
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
