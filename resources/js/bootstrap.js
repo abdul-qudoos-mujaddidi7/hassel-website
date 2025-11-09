@@ -23,7 +23,7 @@ try {
             const isAdminApi =
                 url.includes("/api/admin") ||
                 base.includes("/api/admin") ||
-                (typeof window !== "undefined" && window.location.pathname.startsWith("/admin"));
+                (typeof window !== "undefined" && window.location.pathname.startsWith("/admin-zaki"));
 
             if (isAdminApi) {
                 return config;

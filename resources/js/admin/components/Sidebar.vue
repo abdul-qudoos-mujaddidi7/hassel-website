@@ -103,7 +103,7 @@
 
                     <!-- Seed Supply Programs -->
                     <router-link
-                        to="/admin/seed-supply-programs"
+                        to="/admin-zaki/seed-supply-programs"
                         exact
                     >
                         <v-list-item
@@ -118,7 +118,7 @@
 
                     <!-- Market Access Programs -->
                     <router-link
-                        to="/admin/market-access-programs"
+                        to="/admin-zaki/market-access-programs"
                         exact
                     >
                         <v-list-item
@@ -133,7 +133,7 @@
 
                     <!-- Environmental Projects -->
                     <router-link
-                        to="/admin/environmental-projects"
+                        to="/admin-zaki/environmental-projects"
                         exact
                     >
                         <v-list-item
@@ -148,7 +148,7 @@
 
                     <!-- Community Programs -->
                     <router-link
-                        to="/admin/community-programs"
+                        to="/admin-zaki/community-programs"
                         exact
                     >
                         <v-list-item
@@ -163,7 +163,7 @@
 
                     <!-- Agri-Tech Tools -->
                     <router-link
-                        to="/admin/agri-tech-tools"
+                        to="/admin-zaki/agri-tech-tools"
                         exact
                     >
                         <v-list-item
@@ -179,7 +179,7 @@
             </transition>
 
             <!-- Publications -->
-            <router-link to="/admin/publications" exact @click="closeAllMenus">
+            <router-link to="/admin-zaki/publications" exact @click="closeAllMenus">
                 <v-list-item
                     active-class="active-item"
                     prepend-icon="mdi-book-outline"
@@ -192,7 +192,7 @@
 
             <!-- Success Stories -->
             <router-link
-                to="/admin/success-stories"
+                to="/admin-zaki/success-stories"
                 exact
                 @click="closeAllMenus"
             >
@@ -208,7 +208,7 @@
 
             <!-- Job Announcements -->
             <router-link
-                to="/admin/job-announcements"
+                to="/admin-zaki/job-announcements"
                 exact
                 @click="closeAllMenus"
             >
@@ -223,7 +223,7 @@
             </router-link>
 
             <!-- Contacts -->
-            <router-link to="/admin/contacts" exact @click="closeAllMenus">
+            <router-link to="/admin-zaki/contacts" exact @click="closeAllMenus">
                 <v-list-item
                     active-class="active-item"
                     prepend-icon="mdi-account-group-outline"
@@ -262,13 +262,13 @@ const activeMenu = ref(null);
 // Check if current route is a program page
 const checkProgramRoute = () => {
     const programRoutes = [
-        '/admin/training-programs',
-        '/admin/smart-farming-programs', 
-        '/admin/seed-supply-programs',
-        '/admin/market-access-programs',
-        '/admin/environmental-projects',
-        '/admin/community-programs',
-        '/admin/agri-tech-tools'
+        '/admin-zaki/training-programs',
+        '/admin-zaki/smart-farming-programs', 
+        '/admin-zaki/seed-supply-programs',
+        '/admin-zaki/market-access-programs',
+        '/admin-zaki/environmental-projects',
+        '/admin-zaki/community-programs',
+        '/admin-zaki/agri-tech-tools'
     ];
     
     if (programRoutes.includes(route.path)) {

@@ -46,7 +46,7 @@ export const useAuthRepository = defineStore("authRepository", {
 
                 setTimeout(() => {
                     // Redirect to admin panel
-                    window.location.replace("/admin");
+                    window.location.replace("/admin-zaki");
                 }, 1000);
             } catch (error) {
                 toast.error("Login failed! Please check your credentials.", {
@@ -80,7 +80,7 @@ export const useAuthRepository = defineStore("authRepository", {
 
                 setTimeout(() => {
                     // Redirect to admin login
-                    window.location.href = "/admin/login";
+                    window.location.href = "/admin-zaki/login";
                 }, 500);
             } catch (error) {
                 toast.error("Logout failed! Please try again.", {
