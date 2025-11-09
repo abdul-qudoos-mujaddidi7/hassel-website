@@ -29,7 +29,7 @@
                         {{ t("contact.hero.subtitle") }}
                     </p>
                     <div
-                        class="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp"
+                        class="justify-center animate-fadeInUp"
                         style="animation-delay: 0.35s"
                     >
                         <a

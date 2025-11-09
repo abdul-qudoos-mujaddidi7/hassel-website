@@ -935,7 +935,7 @@
                         {{ t("home.cta.body") }}
                     </p>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <div class=" gap-4 justify-center">
                     <router-link
                         to="/contact"
                         class="btn btn-cta text-lg px-8 py-4 inline-flex items-center"
