@@ -7,8 +7,8 @@
                     <img
                         :src="'/mountagro-logo.jpg'"
                         alt="Mount Agro Logo"
-                        width="90"
-                        height="90"
+                        width="72"
+                        height="72"
                         decoding="async"
                         fetchpriority="high"
                         class="rounded-full object-contain bg-white p-2 mb-2"
