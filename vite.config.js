@@ -15,6 +15,9 @@ export default defineConfig({
         }),
         vue(),
     ],
+    esbuild: {
+        drop: ["console", "debugger"], // removes all console.log & debugger
+    },
     resolve: {
         alias: {
             vue: "vue/dist/vue.esm-bundler.js",
