@@ -679,6 +679,30 @@
                 </div>
 
                 <!-- News Articles -->
+                 <div
+                    v-if="!newsLoading && (!latestNews || latestNews.length === 0)"
+                    class="text-center py-12"
+                    role="status"
+                    aria-live="polite"
+                >
+                    <svg
+                        class="mx-auto mb-4 w-12 h-12 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                    </svg>
+                    <p class="text-gray-600 text-lg">
+                        {{ t("No news available yet.") }}
+                    </p>
+
+                </div>
                 <div
                     v-else
                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
@@ -774,13 +798,17 @@
                             </div>
                         </div>
                     </article>
+                    
+               
                 </div>
-
-                <div class="text-center mt-12">
+                <div v-if="!newsLoading && (latestNews.length > 0)"
+                 class="text-center mt-12 " >
                     <router-link to="/resources" class="btn btn-primary">{{
                         t("home.news.view_all")
                     }}</router-link>
                 </div>
+                
+
             </div>
         </section>
 

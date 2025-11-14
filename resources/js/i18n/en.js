@@ -399,6 +399,7 @@ export default {
     "file_type.manual": "Manual",
     "file_type.report": "Report",
     "file_type.guideline": "Guideline",
+    "No news available yet.": "No news available yet.",
 
     // Careers
     "careers.hero.badge": "Building Afghanistan's Future",

@@ -107,6 +107,8 @@ export default {
     "contact.job_message_placeholder":
         "مهرباني وکړئ د خپلې غوښتنې په اړه اضافي معلومات ورکړئ...",
 
+    // new fallback message
+    "No news available yet.": "اوس مهال هیڅ خبر شتون نلري.",
     // File Types
     "file_type.pdf": "د PDF سند",
     "file_type.doc": "د Word سند",
