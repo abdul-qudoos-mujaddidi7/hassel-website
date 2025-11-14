@@ -1368,42 +1368,42 @@ const fetchLatestNews = async () => {
     } catch (error) {
         console.error("NEWS API ERROR:", error);
         // Fallback news data
-        latestNews.value = [
-            {
-                id: 1,
-                title: "New Training Program Launched in Herat Province",
-                excerpt:
-                    "Mount Agro launches comprehensive agricultural training program reaching 500 farmers in Herat, focusing on modern irrigation techniques and crop diversification.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date().toISOString(),
-                slug: "new-training-program-launch",
-            },
-            {
-                id: 2,
-                title: "AgriTech Mobile App Reaches 10,000 Users",
-                excerpt:
-                    "Our innovative mobile application providing weather forecasts, market prices, and agricultural advice has successfully reached 10,000 active users across Afghanistan.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 7 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "agritech-app-milestone",
-            },
-            {
-                id: 3,
-                title: "Women's Cooperative Program Shows Remarkable Success",
-                excerpt:
-                    "Our women's agricultural cooperative program has empowered over 200 women farmers, increasing their income by an average of 40% through collective farming and marketing initiatives.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 14 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "womens-cooperative-success",
-            },
-        ];
+        // // latestNews.value = [
+        // //     {
+        // //         id: 1,
+        // //         title: "New Training Program Launched in Herat Province",
+        // //         excerpt:
+        // //             "Mount Agro launches comprehensive agricultural training program reaching 500 farmers in Herat, focusing on modern irrigation techniques and crop diversification.",
+        // //         featured_image:
+        // //             "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=250&fit=crop&crop=center&auto=format",
+        // //         published_at: new Date().toISOString(),
+        // //         slug: "new-training-program-launch",
+        // //     },
+        // //     {
+        // //         id: 2,
+        // //         title: "AgriTech Mobile App Reaches 10,000 Users",
+        // //         excerpt:
+        // //             "Our innovative mobile application providing weather forecasts, market prices, and agricultural advice has successfully reached 10,000 active users across Afghanistan.",
+        // //         featured_image:
+        // //             "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop&crop=center&auto=format",
+        // //         published_at: new Date(
+        // //             Date.now() - 7 * 24 * 60 * 60 * 1000
+        // //         ).toISOString(),
+        // //         slug: "agritech-app-milestone",
+        // //     },
+        // //     {
+        // //         id: 3,
+        // //         title: "Women's Cooperative Program Shows Remarkable Success",
+        // //         excerpt:
+        // //             "Our women's agricultural cooperative program has empowered over 200 women farmers, increasing their income by an average of 40% through collective farming and marketing initiatives.",
+        // //         featured_image:
+        // //             "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=250&fit=crop&crop=center&auto=format",
+        // //         published_at: new Date(
+        // //             Date.now() - 14 * 24 * 60 * 60 * 1000
+        // //         ).toISOString(),
+        // //         slug: "womens-cooperative-success",
+        // //     },
+        // ];
     } finally {
         newsLoading.value = false;
     }
