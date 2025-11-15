@@ -1193,7 +1193,7 @@ const stats = ref({
 
 // News data
 const latestNews = ref([]);
-const newsLoading = ref(true);
+const newsLoading = ref(false);
 
 // Business pillar counts
 const pillarCounts = ref({
@@ -1205,7 +1205,15 @@ const pillarCounts = ref({
     environmental: 0,
     community: 0,
 });
-const pillarLoading = ref(true);
+const pillarLoading = ref(false);
+
+// Cache and loading flags to prevent duplicate API calls
+const statsCache = ref(null);
+const newsCache = ref({});
+const pillarCountsCache = ref({});
+const isFetchingStats = ref(false);
+const isFetchingNews = ref(false);
+const isFetchingPillars = ref(false);
 
 // Auto-slide timers
 let slideInterval = null;
@@ -1322,7 +1330,19 @@ const stopPillarAutoSlide = () => {
 
 // Fetch statistics from API (handles summary + historical shapes)
 const fetchStatistics = async () => {
+    // Return cached data if available (stats don't change with language)
+    if (statsCache.value) {
+        stats.value = statsCache.value;
+        return;
+    }
+
+    // Prevent duplicate concurrent requests
+    if (isFetchingStats.value) {
+        return;
+    }
+
     try {
+        isFetchingStats.value = true;
         const response = await axios.get("/api/stats", { timeout: 5000 });
         const payload = response.data?.data ?? response.data ?? {};
 
@@ -1340,7 +1360,7 @@ const fetchStatistics = async () => {
             }
         };
 
-        stats.value = {
+        const statsData = {
             total_beneficiaries:
                 Number(summary.total_beneficiaries) ||
                 sumFromHist("total_beneficiaries") ||
@@ -1351,9 +1371,12 @@ const fetchStatistics = async () => {
             provinces_reached: sumFromHist("provinces_reached") || 0,
             cooperatives_formed: sumFromHist("cooperatives_formed") || 0,
         };
+
+        stats.value = statsData;
+        statsCache.value = statsData; // Cache for future use
     } catch (error) {
         console.log("Using fallback beneficiaries_stats data");
-        stats.value = {
+        const fallbackStats = {
             total_beneficiaries: 2500,
             male_beneficiaries: 1400,
             female_beneficiaries: 1100,
@@ -1361,12 +1384,30 @@ const fetchStatistics = async () => {
             provinces_reached: 12,
             cooperatives_formed: 25,
         };
+        stats.value = fallbackStats;
+        statsCache.value = fallbackStats; // Cache fallback too
+    } finally {
+        isFetchingStats.value = false;
     }
 };
 
 // Fetch latest news
-const fetchLatestNews = async () => {
+const fetchLatestNews = async (forceRefresh = false) => {
+    const lang = currentLang.value || localStorage.getItem("preferred_language") || "en";
+    
+    // Return cached data if available and not forcing refresh
+    if (!forceRefresh && newsCache.value[lang]) {
+        latestNews.value = newsCache.value[lang];
+        return;
+    }
+
+    // Prevent duplicate concurrent requests
+    if (isFetchingNews.value) {
+        return;
+    }
+
     try {
+        isFetchingNews.value = true;
         newsLoading.value = true;
         const response = await axios.get("/api/news", {
             params: {
@@ -1392,54 +1433,36 @@ const fetchLatestNews = async () => {
             return db - da;
         });
 
-        latestNews.value = sorted.slice(0, 3);
+        const newsData = sorted.slice(0, 3);
+        latestNews.value = newsData;
+        newsCache.value[lang] = newsData; // Cache by language
     } catch (error) {
         console.error("NEWS API ERROR:", error);
-        // Fallback news data
-        // // latestNews.value = [
-        // //     {
-        // //         id: 1,
-        // //         title: "New Training Program Launched in Herat Province",
-        // //         excerpt:
-        // //             "Mount Agro launches comprehensive agricultural training program reaching 500 farmers in Herat, focusing on modern irrigation techniques and crop diversification.",
-        // //         featured_image:
-        // //             "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=250&fit=crop&crop=center&auto=format",
-        // //         published_at: new Date().toISOString(),
-        // //         slug: "new-training-program-launch",
-        // //     },
-        // //     {
-        // //         id: 2,
-        // //         title: "AgriTech Mobile App Reaches 10,000 Users",
-        // //         excerpt:
-        // //             "Our innovative mobile application providing weather forecasts, market prices, and agricultural advice has successfully reached 10,000 active users across Afghanistan.",
-        // //         featured_image:
-        // //             "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop&crop=center&auto=format",
-        // //         published_at: new Date(
-        // //             Date.now() - 7 * 24 * 60 * 60 * 1000
-        // //         ).toISOString(),
-        // //         slug: "agritech-app-milestone",
-        // //     },
-        // //     {
-        // //         id: 3,
-        // //         title: "Women's Cooperative Program Shows Remarkable Success",
-        // //         excerpt:
-        // //             "Our women's agricultural cooperative program has empowered over 200 women farmers, increasing their income by an average of 40% through collective farming and marketing initiatives.",
-        // //         featured_image:
-        // //             "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=250&fit=crop&crop=center&auto=format",
-        // //         published_at: new Date(
-        // //             Date.now() - 14 * 24 * 60 * 60 * 1000
-        // //         ).toISOString(),
-        // //         slug: "womens-cooperative-success",
-        // //     },
-        // ];
+        latestNews.value = [];
     } finally {
         newsLoading.value = false;
+        isFetchingNews.value = false;
     }
 };
 
 // Fetch business pillar counts
-const fetchPillarCounts = async () => {
+const fetchPillarCounts = async (forceRefresh = false) => {
+    const lang = currentLang.value || localStorage.getItem("preferred_language") || "en";
+    
+    // Return cached data if available and not forcing refresh
+    // Note: Counts might be language-agnostic, but we cache by language to be safe
+    if (!forceRefresh && pillarCountsCache.value[lang]) {
+        pillarCounts.value = pillarCountsCache.value[lang];
+        return;
+    }
+
+    // Prevent duplicate concurrent requests
+    if (isFetchingPillars.value) {
+        return;
+    }
+
     try {
+        isFetchingPillars.value = true;
         pillarLoading.value = true;
 
         const [
@@ -1481,7 +1504,7 @@ const fetchPillarCounts = async () => {
             }),
         ]);
 
-        pillarCounts.value = {
+        const countsData = {
             trainingPrograms:
                 training.data.total || training.data.data?.length || 18,
             agriTechTools:
@@ -1498,10 +1521,13 @@ const fetchPillarCounts = async () => {
                 3,
             community: community.data.total || community.data.data?.length || 3,
         };
+
+        pillarCounts.value = countsData;
+        pillarCountsCache.value[lang] = countsData; // Cache by language
     } catch (error) {
         console.error("PILLAR COUNTS API ERROR:", error);
         // Fallback counts
-        pillarCounts.value = {
+        const fallbackCounts = {
             trainingPrograms: 18,
             agriTechTools: 8,
             smartFarming: 6,
@@ -1510,8 +1536,11 @@ const fetchPillarCounts = async () => {
             environmental: 3,
             community: 3,
         };
+        pillarCounts.value = fallbackCounts;
+        pillarCountsCache.value[lang] = fallbackCounts; // Cache fallback too
     } finally {
         pillarLoading.value = false;
+        isFetchingPillars.value = false;
     }
 };
 
@@ -1623,18 +1652,30 @@ onMounted(async () => {
     setTimeout(initializeStats, 100);
 
     // Refetch translatable dynamic data when language changes
+    // Use a debounced handler to prevent rapid-fire duplicate calls
+    let languageChangeTimeout = null;
     const handleLanguageChanged = () => {
-        fetchLatestNews();
-        fetchPillarCounts();
+        // Clear any pending language change handler
+        if (languageChangeTimeout) {
+            clearTimeout(languageChangeTimeout);
+        }
+        
+        // Debounce: wait 100ms before refetching (in case multiple events fire)
+        languageChangeTimeout = setTimeout(() => {
+            // Force refresh when language changes (don't use cache)
+            fetchLatestNews(true);
+            fetchPillarCounts(true);
+        }, 100);
     };
     window.addEventListener("language:changed", handleLanguageChanged);
 
-    // Cleanup on unmount
-    const cleanup = () => {
+    // Store cleanup function for unmount
+    const cleanupLanguageHandler = () => {
+        if (languageChangeTimeout) {
+            clearTimeout(languageChangeTimeout);
+        }
         window.removeEventListener("language:changed", handleLanguageChanged);
     };
-    // Ensure cleanup is called
-    window.addEventListener("beforeunload", cleanup);
 });
 
 onUnmounted(() => {
@@ -1650,7 +1691,7 @@ onUnmounted(() => {
     }
     window.removeEventListener("resize", updateCardsPerView);
     window.removeEventListener("resize", updateWindowWidth);
-    // Remove beforeunload cleanup listener (no-op if not set)
-    window.removeEventListener("beforeunload", () => {});
+    // Cleanup language change handler
+    cleanupLanguageHandler();
 });
 </script>
