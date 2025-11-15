@@ -1,9 +1,9 @@
 {
-  "_Header-CiPE5FKx.js": {
-    "file": "assets/Header-CiPE5FKx.js",
+  "_Header-Dc2gjrUc.js": {
+    "file": "assets/Header-Dc2gjrUc.js",
     "name": "Header",
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/admin.js"
     ],
     "css": [
@@ -14,25 +14,25 @@
     "file": "assets/Header-nB7VIMo1.css",
     "src": "_Header-nB7VIMo1.css"
   },
-  "_LoadingSpinner-BZ3NQAje.css": {
-    "file": "assets/LoadingSpinner-BZ3NQAje.css",
-    "src": "_LoadingSpinner-BZ3NQAje.css"
-  },
-  "_LoadingSpinner-QCflChT1.js": {
-    "file": "assets/LoadingSpinner-QCflChT1.js",
+  "_LoadingSpinner-B84D320r.js": {
+    "file": "assets/LoadingSpinner-B84D320r.js",
     "name": "LoadingSpinner",
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js"
+      "__plugin-vue_export-helper-P6s7mfAX.js"
     ],
     "css": [
       "assets/LoadingSpinner-BZ3NQAje.css"
     ]
   },
-  "_TranslationField-CGTZUZqR.js": {
-    "file": "assets/TranslationField-CGTZUZqR.js",
+  "_LoadingSpinner-BZ3NQAje.css": {
+    "file": "assets/LoadingSpinner-BZ3NQAje.css",
+    "src": "_LoadingSpinner-BZ3NQAje.css"
+  },
+  "_TranslationField-DYZ6aUjw.js": {
+    "file": "assets/TranslationField-DYZ6aUjw.js",
     "name": "TranslationField",
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/admin.js"
     ],
     "css": [
@@ -43,8 +43,8 @@
     "file": "assets/TranslationField-pMJQePWy.css",
     "src": "_TranslationField-pMJQePWy.css"
   },
-  "__plugin-vue_export-helper-P2oMpLHC.js": {
-    "file": "assets/_plugin-vue_export-helper-P2oMpLHC.js",
+  "__plugin-vue_export-helper-P6s7mfAX.js": {
+    "file": "assets/_plugin-vue_export-helper-P6s7mfAX.js",
     "name": "_plugin-vue_export-helper"
   },
   "node_modules/@mdi/font/fonts/materialdesignicons-webfont.eot": {
@@ -80,12 +80,12 @@
     ]
   },
   "resources/js/AgriTechToolDetail.vue": {
-    "file": "assets/AgriTechToolDetail-DZKDhEYd.js",
+    "file": "assets/AgriTechToolDetail-CPa2xgUW.js",
     "name": "AgriTechToolDetail",
     "src": "resources/js/AgriTechToolDetail.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -93,12 +93,12 @@
     ]
   },
   "resources/js/AgriTechTools.vue": {
-    "file": "assets/AgriTechTools-DoKXo6om.js",
+    "file": "assets/AgriTechTools-DfYnb-jT.js",
     "name": "AgriTechTools",
     "src": "resources/js/AgriTechTools.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -106,13 +106,13 @@
     ]
   },
   "resources/js/Careers.vue": {
-    "file": "assets/Careers-CGRmtxAS.js",
+    "file": "assets/Careers-B8yIAHl8.js",
     "name": "Careers",
     "src": "resources/js/Careers.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_LoadingSpinner-QCflChT1.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_LoadingSpinner-B84D320r.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -120,12 +120,12 @@
     ]
   },
   "resources/js/CommunityProgramDetail.vue": {
-    "file": "assets/CommunityProgramDetail-BtRrlrPh.js",
+    "file": "assets/CommunityProgramDetail-C_M_DQl-.js",
     "name": "CommunityProgramDetail",
     "src": "resources/js/CommunityProgramDetail.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -133,12 +133,12 @@
     ]
   },
   "resources/js/CommunityPrograms.vue": {
-    "file": "assets/CommunityPrograms-Cnejr5CN.js",
+    "file": "assets/CommunityPrograms-CwO89N7I.js",
     "name": "CommunityPrograms",
     "src": "resources/js/CommunityPrograms.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -146,13 +146,13 @@
     ]
   },
   "resources/js/Contact.vue": {
-    "file": "assets/Contact-B6aspW_7.js",
+    "file": "assets/Contact-Ciu67fSx.js",
     "name": "Contact",
     "src": "resources/js/Contact.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_LoadingSpinner-QCflChT1.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_LoadingSpinner-B84D320r.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -160,12 +160,12 @@
     ]
   },
   "resources/js/EnvironmentalProjectDetail.vue": {
-    "file": "assets/EnvironmentalProjectDetail-KS1qOcsE.js",
+    "file": "assets/EnvironmentalProjectDetail-CFV8EePY.js",
     "name": "EnvironmentalProjectDetail",
     "src": "resources/js/EnvironmentalProjectDetail.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -173,12 +173,12 @@
     ]
   },
   "resources/js/EnvironmentalProjects.vue": {
-    "file": "assets/EnvironmentalProjects-B8r20v0R.js",
+    "file": "assets/EnvironmentalProjects-Bf44i5Rq.js",
     "name": "EnvironmentalProjects",
     "src": "resources/js/EnvironmentalProjects.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -186,12 +186,12 @@
     ]
   },
   "resources/js/MarketAccessProgramDetail.vue": {
-    "file": "assets/MarketAccessProgramDetail-8K7sakbB.js",
+    "file": "assets/MarketAccessProgramDetail-BHtkRqgY.js",
     "name": "MarketAccessProgramDetail",
     "src": "resources/js/MarketAccessProgramDetail.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -199,12 +199,12 @@
     ]
   },
   "resources/js/MarketAccessPrograms.vue": {
-    "file": "assets/MarketAccessPrograms-QfpulYiR.js",
+    "file": "assets/MarketAccessPrograms-LvaaGSjX.js",
     "name": "MarketAccessPrograms",
     "src": "resources/js/MarketAccessPrograms.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -212,24 +212,24 @@
     ]
   },
   "resources/js/NewsDetail.vue": {
-    "file": "assets/NewsDetail-CEU7k2ZD.js",
+    "file": "assets/NewsDetail-DsaVcUhp.js",
     "name": "NewsDetail",
     "src": "resources/js/NewsDetail.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js"
+      "__plugin-vue_export-helper-P6s7mfAX.js"
     ],
     "css": [
       "assets/NewsDetail-B1cZ4ESV.css"
     ]
   },
   "resources/js/Resources.vue": {
-    "file": "assets/Resources-jHQ8GFbp.js",
+    "file": "assets/Resources-BPTAxjgb.js",
     "name": "Resources",
     "src": "resources/js/Resources.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -238,12 +238,12 @@
     ]
   },
   "resources/js/SeedSupply.vue": {
-    "file": "assets/SeedSupply-CfLRHXNF.js",
+    "file": "assets/SeedSupply-TS2Obv8o.js",
     "name": "SeedSupply",
     "src": "resources/js/SeedSupply.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -251,12 +251,12 @@
     ]
   },
   "resources/js/SeedSupplyDetail.vue": {
-    "file": "assets/SeedSupplyDetail-BbTF1pSs.js",
+    "file": "assets/SeedSupplyDetail-BEaU_dFH.js",
     "name": "SeedSupplyDetail",
     "src": "resources/js/SeedSupplyDetail.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -264,12 +264,12 @@
     ]
   },
   "resources/js/SmartFarming.vue": {
-    "file": "assets/SmartFarming-B_WBNRLg.js",
+    "file": "assets/SmartFarming-D-mBsKsO.js",
     "name": "SmartFarming",
     "src": "resources/js/SmartFarming.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -277,12 +277,12 @@
     ]
   },
   "resources/js/SmartFarmingDetail.vue": {
-    "file": "assets/SmartFarmingDetail-BlcC5Dv6.js",
+    "file": "assets/SmartFarmingDetail-Dxn272Aj.js",
     "name": "SmartFarmingDetail",
     "src": "resources/js/SmartFarmingDetail.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -290,24 +290,24 @@
     ]
   },
   "resources/js/SuccessStoryDetail.vue": {
-    "file": "assets/SuccessStoryDetail-nipv-TXy.js",
+    "file": "assets/SuccessStoryDetail-CbGbrSW2.js",
     "name": "SuccessStoryDetail",
     "src": "resources/js/SuccessStoryDetail.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js"
+      "__plugin-vue_export-helper-P6s7mfAX.js"
     ],
     "css": [
       "assets/SuccessStoryDetail-CIpR5pKg.css"
     ]
   },
   "resources/js/TrainingProgramDetail.vue": {
-    "file": "assets/TrainingProgramDetail-CTOK4KOb.js",
+    "file": "assets/TrainingProgramDetail-2ms9x_vp.js",
     "name": "TrainingProgramDetail",
     "src": "resources/js/TrainingProgramDetail.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -315,12 +315,12 @@
     ]
   },
   "resources/js/TrainingPrograms.vue": {
-    "file": "assets/TrainingPrograms-BTFsoVZu.js",
+    "file": "assets/TrainingPrograms-C7VbZPbn.js",
     "name": "TrainingPrograms",
     "src": "resources/js/TrainingPrograms.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [
@@ -329,21 +329,21 @@
     ]
   },
   "resources/js/Work.vue": {
-    "file": "assets/Work-BShMaZa-.js",
+    "file": "assets/Work-CkN1Py2w.js",
     "name": "Work",
     "src": "resources/js/Work.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js"
+      "__plugin-vue_export-helper-P6s7mfAX.js"
     ]
   },
   "resources/js/admin.js": {
-    "file": "assets/admin-LHx5b8IY.js",
+    "file": "assets/admin-C1tUPR0Q.js",
     "name": "admin",
     "src": "resources/js/admin.js",
     "isEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js"
+      "__plugin-vue_export-helper-P6s7mfAX.js"
     ],
     "dynamicImports": [
       "resources/js/admin/layouts/AdminLayout.vue",
@@ -375,28 +375,28 @@
     ]
   },
   "resources/js/admin/layouts/AdminLayout.vue": {
-    "file": "assets/AdminLayout-CRNcMFzr.js",
+    "file": "assets/AdminLayout-B1X2gprE.js",
     "name": "AdminLayout",
     "src": "resources/js/admin/layouts/AdminLayout.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/admin.js"
     ],
     "css": [
-      "assets/AdminLayout-D3epZl9G.css",
+      "assets/AdminLayout-CsOpTpi1.css",
       "assets/Header-nB7VIMo1.css",
       "assets/admin-B42TYPTc.css"
     ]
   },
   "resources/js/admin/pages/Dashboard.vue": {
-    "file": "assets/Dashboard-nen52HB4.js",
+    "file": "assets/Dashboard-DXrtUG6v.js",
     "name": "Dashboard",
     "src": "resources/js/admin/pages/Dashboard.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js"
     ],
     "css": [
@@ -406,15 +406,15 @@
     ]
   },
   "resources/js/admin/pages/agri-tech-tools/AgriTechTools.vue": {
-    "file": "assets/AgriTechTools-DU2CGWG-.js",
+    "file": "assets/AgriTechTools-zOxKSKWd.js",
     "name": "AgriTechTools",
     "src": "resources/js/admin/pages/agri-tech-tools/AgriTechTools.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js",
-      "_TranslationField-CGTZUZqR.js"
+      "_TranslationField-DYZ6aUjw.js"
     ],
     "css": [
       "assets/AgriTechTools-D4LqTxAl.css",
@@ -423,12 +423,12 @@
     ]
   },
   "resources/js/admin/pages/auth/AdminLogin.vue": {
-    "file": "assets/AdminLogin-DS_vGS6J.js",
+    "file": "assets/AdminLogin-CDnOUPum.js",
     "name": "AdminLogin",
     "src": "resources/js/admin/pages/auth/AdminLogin.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/admin.js"
     ],
     "css": [
@@ -437,15 +437,15 @@
     ]
   },
   "resources/js/admin/pages/community-programs/CommunityPrograms.vue": {
-    "file": "assets/CommunityPrograms-DVMsIGJB.js",
+    "file": "assets/CommunityPrograms-DPCn_5Yh.js",
     "name": "CommunityPrograms",
     "src": "resources/js/admin/pages/community-programs/CommunityPrograms.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js",
-      "_TranslationField-CGTZUZqR.js"
+      "_TranslationField-DYZ6aUjw.js"
     ],
     "css": [
       "assets/CommunityPrograms-CLYWHubT.css",
@@ -454,13 +454,13 @@
     ]
   },
   "resources/js/admin/pages/contacts/Contacts.vue": {
-    "file": "assets/Contacts-CJNBAl3R.js",
+    "file": "assets/Contacts-Dz0k2AJu.js",
     "name": "Contacts",
     "src": "resources/js/admin/pages/contacts/Contacts.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js"
     ],
     "css": [
@@ -470,15 +470,15 @@
     ]
   },
   "resources/js/admin/pages/environmental-projects/EnvironmentalProjects.vue": {
-    "file": "assets/EnvironmentalProjects-DN6Z7p9L.js",
+    "file": "assets/EnvironmentalProjects-CKZ4W0Xq.js",
     "name": "EnvironmentalProjects",
     "src": "resources/js/admin/pages/environmental-projects/EnvironmentalProjects.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js",
-      "_TranslationField-CGTZUZqR.js"
+      "_TranslationField-DYZ6aUjw.js"
     ],
     "css": [
       "assets/EnvironmentalProjects-BO0dtVny.css",
@@ -487,15 +487,15 @@
     ]
   },
   "resources/js/admin/pages/job-announcements/JobAnnouncements.vue": {
-    "file": "assets/JobAnnouncements-B5HB_ytu.js",
+    "file": "assets/JobAnnouncements-DjVfK3AW.js",
     "name": "JobAnnouncements",
     "src": "resources/js/admin/pages/job-announcements/JobAnnouncements.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js",
-      "_TranslationField-CGTZUZqR.js"
+      "_TranslationField-DYZ6aUjw.js"
     ],
     "css": [
       "assets/JobAnnouncements-CDm7VkRy.css",
@@ -504,15 +504,15 @@
     ]
   },
   "resources/js/admin/pages/market-access-programs/MarketAccessPrograms.vue": {
-    "file": "assets/MarketAccessPrograms-DAJsBt7S.js",
+    "file": "assets/MarketAccessPrograms-Cf9AQeFV.js",
     "name": "MarketAccessPrograms",
     "src": "resources/js/admin/pages/market-access-programs/MarketAccessPrograms.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js",
-      "_TranslationField-CGTZUZqR.js"
+      "_TranslationField-DYZ6aUjw.js"
     ],
     "css": [
       "assets/MarketAccessPrograms-DAD_ZQT5.css",
@@ -521,15 +521,15 @@
     ]
   },
   "resources/js/admin/pages/news/News.vue": {
-    "file": "assets/News-IBZJzGXR.js",
+    "file": "assets/News-UkqC4eSo.js",
     "name": "News",
     "src": "resources/js/admin/pages/news/News.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js",
-      "_TranslationField-CGTZUZqR.js"
+      "_TranslationField-DYZ6aUjw.js"
     ],
     "css": [
       "assets/News-CBXrKyd2.css",
@@ -538,15 +538,15 @@
     ]
   },
   "resources/js/admin/pages/publications/Publications.vue": {
-    "file": "assets/Publications-DP7vHdqP.js",
+    "file": "assets/Publications-Bl7WqLBx.js",
     "name": "Publications",
     "src": "resources/js/admin/pages/publications/Publications.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js",
-      "_TranslationField-CGTZUZqR.js"
+      "_TranslationField-DYZ6aUjw.js"
     ],
     "css": [
       "assets/Publications-CxKXiDvv.css",
@@ -555,15 +555,15 @@
     ]
   },
   "resources/js/admin/pages/seed-supply-programs/SeedSupplyPrograms.vue": {
-    "file": "assets/SeedSupplyPrograms-m3KLwtMJ.js",
+    "file": "assets/SeedSupplyPrograms-DjtgKEw2.js",
     "name": "SeedSupplyPrograms",
     "src": "resources/js/admin/pages/seed-supply-programs/SeedSupplyPrograms.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js",
-      "_TranslationField-CGTZUZqR.js"
+      "_TranslationField-DYZ6aUjw.js"
     ],
     "css": [
       "assets/SeedSupplyPrograms-ObZ1LPCm.css",
@@ -572,15 +572,15 @@
     ]
   },
   "resources/js/admin/pages/smart-farming-programs/SmartFarmingPrograms.vue": {
-    "file": "assets/SmartFarmingPrograms-BiUsrRQZ.js",
+    "file": "assets/SmartFarmingPrograms-Cuavm-hg.js",
     "name": "SmartFarmingPrograms",
     "src": "resources/js/admin/pages/smart-farming-programs/SmartFarmingPrograms.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js",
-      "_TranslationField-CGTZUZqR.js"
+      "_TranslationField-DYZ6aUjw.js"
     ],
     "css": [
       "assets/SmartFarmingPrograms-B-qEhFtL.css",
@@ -589,13 +589,13 @@
     ]
   },
   "resources/js/admin/pages/states/BeneficiariesStats.vue": {
-    "file": "assets/BeneficiariesStats-Ds6YVGCE.js",
+    "file": "assets/BeneficiariesStats-DInFUXE9.js",
     "name": "BeneficiariesStats",
     "src": "resources/js/admin/pages/states/BeneficiariesStats.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js"
     ],
     "css": [
@@ -605,15 +605,15 @@
     ]
   },
   "resources/js/admin/pages/success-stories/SuccessStories.vue": {
-    "file": "assets/SuccessStories-Bvt4UH4Z.js",
+    "file": "assets/SuccessStories-CM026Ji1.js",
     "name": "SuccessStories",
     "src": "resources/js/admin/pages/success-stories/SuccessStories.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js",
-      "_TranslationField-CGTZUZqR.js"
+      "_TranslationField-DYZ6aUjw.js"
     ],
     "css": [
       "assets/SuccessStories--Sw_zdmm.css",
@@ -622,15 +622,15 @@
     ]
   },
   "resources/js/admin/pages/training-programs/TrainingPrograms.vue": {
-    "file": "assets/TrainingPrograms-DSR4xhsQ.js",
+    "file": "assets/TrainingPrograms-BgFATxq0.js",
     "name": "TrainingPrograms",
     "src": "resources/js/admin/pages/training-programs/TrainingPrograms.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
-      "_Header-CiPE5FKx.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
+      "_Header-Dc2gjrUc.js",
       "resources/js/admin.js",
-      "_TranslationField-CGTZUZqR.js"
+      "_TranslationField-DYZ6aUjw.js"
     ],
     "css": [
       "assets/TrainingPrograms-x6UrAzMX.css",
@@ -639,12 +639,12 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-BXj6Os_o.js",
+    "file": "assets/app-CYUAO4Hi.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js"
+      "__plugin-vue_export-helper-P6s7mfAX.js"
     ],
     "dynamicImports": [
       "resources/js/Work.vue",
@@ -678,12 +678,12 @@
     ]
   },
   "resources/js/pages/RTLTest.vue": {
-    "file": "assets/RTLTest-BImwUJwA.js",
+    "file": "assets/RTLTest-lTbjZNbt.js",
     "name": "RTLTest",
     "src": "resources/js/pages/RTLTest.vue",
     "isDynamicEntry": true,
     "imports": [
-      "__plugin-vue_export-helper-P2oMpLHC.js",
+      "__plugin-vue_export-helper-P6s7mfAX.js",
       "resources/js/app.js"
     ],
     "css": [

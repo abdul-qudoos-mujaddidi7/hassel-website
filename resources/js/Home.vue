@@ -679,6 +679,30 @@
                 </div>
 
                 <!-- News Articles -->
+                 <div
+                    v-if="!newsLoading && (!latestNews || latestNews.length === 0)"
+                    class="text-center py-12"
+                    role="status"
+                    aria-live="polite"
+                >
+                    <svg
+                        class="mx-auto mb-4 w-12 h-12 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                    </svg>
+                    <p class="text-gray-600 text-lg">
+                        {{ t("No news available yet.") }}
+                    </p>
+
+                </div>
                 <div
                     v-else
                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
@@ -774,13 +798,17 @@
                             </div>
                         </div>
                     </article>
+                    
+               
                 </div>
-
-                <div class="text-center mt-12">
+                <div v-if="!newsLoading && (latestNews.length > 0)"
+                 class="text-center mt-12 " >
                     <router-link to="/resources" class="btn btn-primary">{{
                         t("home.news.view_all")
                     }}</router-link>
                 </div>
+                
+
             </div>
         </section>
 
@@ -935,7 +963,7 @@
                         {{ t("home.cta.body") }}
                     </p>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <div class=" gap-4 justify-center">
                     <router-link
                         to="/contact"
                         class="btn btn-cta text-lg px-8 py-4 inline-flex items-center"
@@ -1368,42 +1396,42 @@ const fetchLatestNews = async () => {
     } catch (error) {
         console.error("NEWS API ERROR:", error);
         // Fallback news data
-        latestNews.value = [
-            {
-                id: 1,
-                title: "New Training Program Launched in Herat Province",
-                excerpt:
-                    "Mount Agro launches comprehensive agricultural training program reaching 500 farmers in Herat, focusing on modern irrigation techniques and crop diversification.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date().toISOString(),
-                slug: "new-training-program-launch",
-            },
-            {
-                id: 2,
-                title: "AgriTech Mobile App Reaches 10,000 Users",
-                excerpt:
-                    "Our innovative mobile application providing weather forecasts, market prices, and agricultural advice has successfully reached 10,000 active users across Afghanistan.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 7 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "agritech-app-milestone",
-            },
-            {
-                id: 3,
-                title: "Women's Cooperative Program Shows Remarkable Success",
-                excerpt:
-                    "Our women's agricultural cooperative program has empowered over 200 women farmers, increasing their income by an average of 40% through collective farming and marketing initiatives.",
-                featured_image:
-                    "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=250&fit=crop&crop=center&auto=format",
-                published_at: new Date(
-                    Date.now() - 14 * 24 * 60 * 60 * 1000
-                ).toISOString(),
-                slug: "womens-cooperative-success",
-            },
-        ];
+        // // latestNews.value = [
+        // //     {
+        // //         id: 1,
+        // //         title: "New Training Program Launched in Herat Province",
+        // //         excerpt:
+        // //             "Mount Agro launches comprehensive agricultural training program reaching 500 farmers in Herat, focusing on modern irrigation techniques and crop diversification.",
+        // //         featured_image:
+        // //             "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=250&fit=crop&crop=center&auto=format",
+        // //         published_at: new Date().toISOString(),
+        // //         slug: "new-training-program-launch",
+        // //     },
+        // //     {
+        // //         id: 2,
+        // //         title: "AgriTech Mobile App Reaches 10,000 Users",
+        // //         excerpt:
+        // //             "Our innovative mobile application providing weather forecasts, market prices, and agricultural advice has successfully reached 10,000 active users across Afghanistan.",
+        // //         featured_image:
+        // //             "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop&crop=center&auto=format",
+        // //         published_at: new Date(
+        // //             Date.now() - 7 * 24 * 60 * 60 * 1000
+        // //         ).toISOString(),
+        // //         slug: "agritech-app-milestone",
+        // //     },
+        // //     {
+        // //         id: 3,
+        // //         title: "Women's Cooperative Program Shows Remarkable Success",
+        // //         excerpt:
+        // //             "Our women's agricultural cooperative program has empowered over 200 women farmers, increasing their income by an average of 40% through collective farming and marketing initiatives.",
+        // //         featured_image:
+        // //             "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=250&fit=crop&crop=center&auto=format",
+        // //         published_at: new Date(
+        // //             Date.now() - 14 * 24 * 60 * 60 * 1000
+        // //         ).toISOString(),
+        // //         slug: "womens-cooperative-success",
+        // //     },
+        // ];
     } finally {
         newsLoading.value = false;
     }

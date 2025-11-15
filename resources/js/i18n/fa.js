@@ -106,6 +106,9 @@ export default {
     "contact.job_message_placeholder":
         "لطفاً اطلاعات اضافی در مورد درخواست خود ارائه دهید...",
 
+    // news fallback message
+    "No news available yet.": "هنوز خبری موجود نیست.",
+
     // File Types
     "file_type.pdf": "سند PDF",
     "file_type.doc": "سند Word",

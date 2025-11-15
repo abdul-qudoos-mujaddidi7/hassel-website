@@ -14,7 +14,7 @@
                             height="112"
                             decoding="async"
                             fetchpriority="high"
-                            class="w-24 h-24 md:w-28 md:h-28 rounded-lg object-contain"
+                            class="w-24 h-32 md:w-28 md:h-28 rounded-lg object-contain"
                         />
                     </router-link>
                 </div>
