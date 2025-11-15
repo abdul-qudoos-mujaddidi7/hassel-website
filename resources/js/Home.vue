@@ -344,7 +344,7 @@
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 616 0z"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                                 />
                                 <path
                                     stroke-linecap="round"
@@ -1157,7 +1157,7 @@ const businessPillars = computed(() => [
     {
         id: "community",
         title: t("home.pillars.community.title"),
-        icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 919.288 0M15 7a3 3 0 11-6 0 3 3 0 616 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
+        icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
         bgColor: "bg-green-100",
         textColor: "text-green-600",
         countColor: "text-green-600",
@@ -1180,6 +1180,10 @@ const pillarsSectionRef = ref(null);
 
 // IntersectionObserver instance for pillars (will be initialized on mount)
 let pillarsObserver = null;
+
+// Language change handler variables (for cleanup)
+let languageChangeTimeout = null;
+let handleLanguageChanged = null;
 
 // Statistics data aligned to beneficiaries_stats
 const stats = ref({
@@ -1393,7 +1397,7 @@ const fetchStatistics = async () => {
 
 // Fetch latest news
 const fetchLatestNews = async (forceRefresh = false) => {
-    const lang = currentLang.value || localStorage.getItem("preferred_language") || "en";
+    const lang = (currentLang?.value) || localStorage.getItem("preferred_language") || "en";
     
     // Return cached data if available and not forcing refresh
     if (!forceRefresh && newsCache.value[lang]) {
@@ -1447,7 +1451,7 @@ const fetchLatestNews = async (forceRefresh = false) => {
 
 // Fetch business pillar counts
 const fetchPillarCounts = async (forceRefresh = false) => {
-    const lang = currentLang.value || localStorage.getItem("preferred_language") || "en";
+    const lang = (currentLang?.value) || localStorage.getItem("preferred_language") || "en";
     
     // Return cached data if available and not forcing refresh
     // Note: Counts might be language-agnostic, but we cache by language to be safe
@@ -1653,8 +1657,7 @@ onMounted(async () => {
 
     // Refetch translatable dynamic data when language changes
     // Use a debounced handler to prevent rapid-fire duplicate calls
-    let languageChangeTimeout = null;
-    const handleLanguageChanged = () => {
+    handleLanguageChanged = () => {
         // Clear any pending language change handler
         if (languageChangeTimeout) {
             clearTimeout(languageChangeTimeout);
@@ -1668,14 +1671,6 @@ onMounted(async () => {
         }, 100);
     };
     window.addEventListener("language:changed", handleLanguageChanged);
-
-    // Store cleanup function for unmount
-    const cleanupLanguageHandler = () => {
-        if (languageChangeTimeout) {
-            clearTimeout(languageChangeTimeout);
-        }
-        window.removeEventListener("language:changed", handleLanguageChanged);
-    };
 });
 
 onUnmounted(() => {
@@ -1692,6 +1687,13 @@ onUnmounted(() => {
     window.removeEventListener("resize", updateCardsPerView);
     window.removeEventListener("resize", updateWindowWidth);
     // Cleanup language change handler
-    cleanupLanguageHandler();
+    if (languageChangeTimeout) {
+        clearTimeout(languageChangeTimeout);
+        languageChangeTimeout = null;
+    }
+    if (handleLanguageChanged) {
+        window.removeEventListener("language:changed", handleLanguageChanged);
+        handleLanguageChanged = null;
+    }
 });
 </script>
