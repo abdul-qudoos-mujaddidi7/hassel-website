@@ -17,6 +17,12 @@ export default defineConfig({
             },
         }),
     ],
+
+    // Remove console and debugger statements in production build
+    esbuild: {
+        drop: ["console", "debugger"],
+    },
+
     build: {
         manifest: true, // Ensure manifest is generated
         outDir: "public/build",
