@@ -163,7 +163,7 @@
                             <div class="flex flex-wrap gap-4">
                                 <!-- Facebook -->
                                 <a
-                                    href="https://facebook.com/mountagro"
+                                    href="https://www.facebook.com/share/1EXcKty2vX/?mibextid=wwXIfr"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 hover:shadow-lg"
@@ -181,7 +181,7 @@
 
                                 <!-- Twitter -->
                                 <a
-                                    href="https://twitter.com/mountagro"
+                                    href="https://x.com/MountAgroAfg"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="w-12 h-12 bg-gradient-to-br from-sky-400 to-sky-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 hover:shadow-lg"
@@ -199,7 +199,7 @@
 
                                 <!-- LinkedIn -->
                                 <a
-                                    href="https://linkedin.com/company/mountagro"
+                                    href="https://www.linkedin.com/in/mount-agro-afghanistan-ab6388396/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="w-12 h-12 bg-gradient-to-br from-blue-700 to-blue-800 rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 hover:shadow-lg"
