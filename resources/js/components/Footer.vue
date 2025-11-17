@@ -11,7 +11,7 @@
                         height="72"
                         decoding="async"
                         fetchpriority="high"
-                        class="rounded-full object-contain bg-white p-2 mb-2"
+                        class="object-cover rounded-xl mb-2"
                     />
 
                     <p class="text-brand-cream mb-4 max-w-md pr-4">

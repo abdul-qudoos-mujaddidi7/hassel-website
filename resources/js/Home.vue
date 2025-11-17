@@ -148,7 +148,7 @@
             <!-- Image Column - First on small screens -->
             <div class="order-1 lg:order-2 flex items-center">
                 <img
-                    :src="'/images/about/who_we_are_1.avif'"
+                    :src="'/images/about/about.jpg'"
                     alt="Mount Agro agricultural operations"
                     class="w-full h-full max-h-[500px] object-cover rounded-professional-lg shadow-professional"
                     loading="lazy"
