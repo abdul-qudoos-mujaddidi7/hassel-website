@@ -1,6 +1,10 @@
 {
-  "_LoadingSpinner-BKYA9Ikc.js": {
-    "file": "assets/LoadingSpinner-BKYA9Ikc.js",
+  "_LoadingSpinner-BZ3NQAje.css": {
+    "file": "assets/LoadingSpinner-BZ3NQAje.css",
+    "src": "_LoadingSpinner-BZ3NQAje.css"
+  },
+  "_LoadingSpinner-DbLprDhC.js": {
+    "file": "assets/LoadingSpinner-DbLprDhC.js",
     "name": "LoadingSpinner",
     "imports": [
       "resources/js/app.js"
@@ -8,10 +12,6 @@
     "css": [
       "assets/LoadingSpinner-BZ3NQAje.css"
     ]
-  },
-  "_LoadingSpinner-BZ3NQAje.css": {
-    "file": "assets/LoadingSpinner-BZ3NQAje.css",
-    "src": "_LoadingSpinner-BZ3NQAje.css"
   },
   "resources/css/app.css": {
     "file": "assets/app-BY-VSlpW.css",
@@ -22,7 +22,7 @@
     ]
   },
   "resources/js/AgriTechToolDetail.vue": {
-    "file": "assets/AgriTechToolDetail-BWUcT5kC.js",
+    "file": "assets/AgriTechToolDetail-BE5aoWYk.js",
     "name": "AgriTechToolDetail",
     "src": "resources/js/AgriTechToolDetail.vue",
     "isDynamicEntry": true,
@@ -34,7 +34,7 @@
     ]
   },
   "resources/js/AgriTechTools.vue": {
-    "file": "assets/AgriTechTools-DXBPfOLh.js",
+    "file": "assets/AgriTechTools-2n0zWHBI.js",
     "name": "AgriTechTools",
     "src": "resources/js/AgriTechTools.vue",
     "isDynamicEntry": true,
@@ -46,20 +46,20 @@
     ]
   },
   "resources/js/Careers.vue": {
-    "file": "assets/Careers-DfFZPXKO.js",
+    "file": "assets/Careers-BKLiFy46.js",
     "name": "Careers",
     "src": "resources/js/Careers.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_LoadingSpinner-BKYA9Ikc.js"
+      "_LoadingSpinner-DbLprDhC.js"
     ],
     "css": [
       "assets/app-BY-VSlpW.css"
     ]
   },
   "resources/js/CommunityProgramDetail.vue": {
-    "file": "assets/CommunityProgramDetail-Bujv9AX1.js",
+    "file": "assets/CommunityProgramDetail-DJePod7x.js",
     "name": "CommunityProgramDetail",
     "src": "resources/js/CommunityProgramDetail.vue",
     "isDynamicEntry": true,
@@ -71,7 +71,7 @@
     ]
   },
   "resources/js/CommunityPrograms.vue": {
-    "file": "assets/CommunityPrograms-BZh90gZW.js",
+    "file": "assets/CommunityPrograms-BHyQU9ux.js",
     "name": "CommunityPrograms",
     "src": "resources/js/CommunityPrograms.vue",
     "isDynamicEntry": true,
@@ -83,20 +83,20 @@
     ]
   },
   "resources/js/Contact.vue": {
-    "file": "assets/Contact-CJxkzq9N.js",
+    "file": "assets/Contact-BR3DP9_l.js",
     "name": "Contact",
     "src": "resources/js/Contact.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_LoadingSpinner-BKYA9Ikc.js"
+      "_LoadingSpinner-DbLprDhC.js"
     ],
     "css": [
       "assets/app-BY-VSlpW.css"
     ]
   },
   "resources/js/EnvironmentalProjectDetail.vue": {
-    "file": "assets/EnvironmentalProjectDetail-B3UauueJ.js",
+    "file": "assets/EnvironmentalProjectDetail-CZDV57W-.js",
     "name": "EnvironmentalProjectDetail",
     "src": "resources/js/EnvironmentalProjectDetail.vue",
     "isDynamicEntry": true,
@@ -108,7 +108,7 @@
     ]
   },
   "resources/js/EnvironmentalProjects.vue": {
-    "file": "assets/EnvironmentalProjects-B2D_uWON.js",
+    "file": "assets/EnvironmentalProjects-aLcl5P9u.js",
     "name": "EnvironmentalProjects",
     "src": "resources/js/EnvironmentalProjects.vue",
     "isDynamicEntry": true,
@@ -120,7 +120,7 @@
     ]
   },
   "resources/js/MarketAccessProgramDetail.vue": {
-    "file": "assets/MarketAccessProgramDetail-D4KS0Znv.js",
+    "file": "assets/MarketAccessProgramDetail-D99lQAKk.js",
     "name": "MarketAccessProgramDetail",
     "src": "resources/js/MarketAccessProgramDetail.vue",
     "isDynamicEntry": true,
@@ -132,7 +132,7 @@
     ]
   },
   "resources/js/MarketAccessPrograms.vue": {
-    "file": "assets/MarketAccessPrograms-D5Alxsdr.js",
+    "file": "assets/MarketAccessPrograms-BXNmksSr.js",
     "name": "MarketAccessPrograms",
     "src": "resources/js/MarketAccessPrograms.vue",
     "isDynamicEntry": true,
@@ -144,7 +144,7 @@
     ]
   },
   "resources/js/NewsDetail.vue": {
-    "file": "assets/NewsDetail-vcSN9r3f.js",
+    "file": "assets/NewsDetail-CmM65vb7.js",
     "name": "NewsDetail",
     "src": "resources/js/NewsDetail.vue",
     "isDynamicEntry": true,
@@ -157,7 +157,7 @@
     ]
   },
   "resources/js/Resources.vue": {
-    "file": "assets/Resources-DQhQd5qz.js",
+    "file": "assets/Resources-DEreSLzF.js",
     "name": "Resources",
     "src": "resources/js/Resources.vue",
     "isDynamicEntry": true,
@@ -170,7 +170,7 @@
     ]
   },
   "resources/js/SeedSupply.vue": {
-    "file": "assets/SeedSupply-C0KgfxNh.js",
+    "file": "assets/SeedSupply-DIJ1z7QW.js",
     "name": "SeedSupply",
     "src": "resources/js/SeedSupply.vue",
     "isDynamicEntry": true,
@@ -182,7 +182,7 @@
     ]
   },
   "resources/js/SeedSupplyDetail.vue": {
-    "file": "assets/SeedSupplyDetail-BgU3x_Ar.js",
+    "file": "assets/SeedSupplyDetail-Db0n5uu4.js",
     "name": "SeedSupplyDetail",
     "src": "resources/js/SeedSupplyDetail.vue",
     "isDynamicEntry": true,
@@ -194,7 +194,7 @@
     ]
   },
   "resources/js/SmartFarming.vue": {
-    "file": "assets/SmartFarming-Bt0-UGOF.js",
+    "file": "assets/SmartFarming-XbAj7cWw.js",
     "name": "SmartFarming",
     "src": "resources/js/SmartFarming.vue",
     "isDynamicEntry": true,
@@ -206,7 +206,7 @@
     ]
   },
   "resources/js/SmartFarmingDetail.vue": {
-    "file": "assets/SmartFarmingDetail-C4Xe2xgB.js",
+    "file": "assets/SmartFarmingDetail-JVzRRXzL.js",
     "name": "SmartFarmingDetail",
     "src": "resources/js/SmartFarmingDetail.vue",
     "isDynamicEntry": true,
@@ -218,7 +218,7 @@
     ]
   },
   "resources/js/SuccessStoryDetail.vue": {
-    "file": "assets/SuccessStoryDetail-CcJ0U2y5.js",
+    "file": "assets/SuccessStoryDetail-D0qvu9DE.js",
     "name": "SuccessStoryDetail",
     "src": "resources/js/SuccessStoryDetail.vue",
     "isDynamicEntry": true,
@@ -231,7 +231,7 @@
     ]
   },
   "resources/js/TrainingProgramDetail.vue": {
-    "file": "assets/TrainingProgramDetail-DehYtPpq.js",
+    "file": "assets/TrainingProgramDetail-BK7_XP6s.js",
     "name": "TrainingProgramDetail",
     "src": "resources/js/TrainingProgramDetail.vue",
     "isDynamicEntry": true,
@@ -243,7 +243,7 @@
     ]
   },
   "resources/js/TrainingPrograms.vue": {
-    "file": "assets/TrainingPrograms-C7mrFbIz.js",
+    "file": "assets/TrainingPrograms-DmWEXIcd.js",
     "name": "TrainingPrograms",
     "src": "resources/js/TrainingPrograms.vue",
     "isDynamicEntry": true,
@@ -256,7 +256,7 @@
     ]
   },
   "resources/js/Work.vue": {
-    "file": "assets/Work-DVz7THnq.js",
+    "file": "assets/Work-Bm5aU3vi.js",
     "name": "Work",
     "src": "resources/js/Work.vue",
     "isDynamicEntry": true,
@@ -268,7 +268,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-YYNAs5te.js",
+    "file": "assets/app-Bfqn3ssb.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -304,7 +304,7 @@
     ]
   },
   "resources/js/pages/RTLTest.vue": {
-    "file": "assets/RTLTest-1YLzcA0y.js",
+    "file": "assets/RTLTest-Ckfe39fx.js",
     "name": "RTLTest",
     "src": "resources/js/pages/RTLTest.vue",
     "isDynamicEntry": true,
