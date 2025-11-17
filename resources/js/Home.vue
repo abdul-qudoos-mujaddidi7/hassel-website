@@ -917,11 +917,7 @@
                     <div
                         class="text-center p-8 rounded-professional-lg bg-gradient-to-br from-green-50 to-green-100 card-hover"
                     >
-                        <img
-                            :src="'/images/about/Directorprograms.avif'"
-                            alt="Director Programs"
-                            class="w-28 h-28 mx-auto mb-5 rounded-full bg-brand-primary"
-                        />
+                       
                         <h3
                             class="text-lg font-semibold mb-1 text-brand-primary text-center"
                         >
