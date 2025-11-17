@@ -5,6 +5,11 @@
 
     RewriteEngine On
 
+    
+    # Allow Vite build files
+    RewriteCond %{REQUEST_URI} ^/build/
+    RewriteRule ^ - [L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
