@@ -153,7 +153,7 @@ export default {
     // Closing CTA
     "home.cta.title": "Ready to Transform Agricultural Communities?",
     "home.cta.body":
-        "Join us in our mission to empower farmers and strengthen Afghanistan's agricultural sector through innovative microfinance solutions.",
+        "Join us in our mission to enhance farmers’ livelihoods and strengthen Afghanistan’s agricultural sector through modern farming solutions, capacity building, and sustainable agricultural development.",
     "home.cta.get_started": "Get Started",
 
     // AgriTech Tools (list)
