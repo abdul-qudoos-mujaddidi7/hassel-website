@@ -56,12 +56,12 @@
                     >
                         <router-link
                             to="/contact"
-                            class="btn btn-cta inline-flex items-center justify-center text-xs px-3 py-2 md:text-lg md:px-8 md:py-4 rounded-md"
+                            class="btn btn-cta inline-flex items-center justify-center text-xs px-2.5 py-1.5 md:text-sm md:px-5 md:py-2.5 rounded-md"
                         >
                             <template v-if="!isRTL">
                                 {{ t("home.hero.contact") }}
                                 <svg
-                                    class="w-5 h-5 ml-2"
+                                    class="w-4 h-4 ml-1.5"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -76,7 +76,7 @@
                             </template>
                             <template v-else>
                                 <svg
-                                    class="w-5 h-5 mr-2"
+                                    class="w-4 h-4 mr-1.5"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -962,12 +962,12 @@
                 <div class=" gap-4 justify-center">
                     <router-link
                         to="/contact"
-                        class="btn btn-cta text-lg px-8 py-4 inline-flex items-center"
+                        class="btn btn-cta text-sm px-5 py-2.5 inline-flex items-center"
                     >
                         <template v-if="!isRTL">
                             {{ t("home.cta.get_started") }}
                             <svg
-                                class="w-5 h-5 ml-2"
+                                class="w-4 h-4 ml-1.5"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -982,7 +982,7 @@
                         </template>
                         <template v-else>
                             <svg
-                                class="w-5 h-5 mr-2"
+                                class="w-4 h-4 mr-1.5"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"

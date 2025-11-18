@@ -7,18 +7,29 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useRoute } from "vue-router";
+import { ref, watch, onMounted, computed, onBeforeUnmount } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import PageLoader from "./PageLoader.vue";
 import { useI18n } from "../composables/useI18n.js";
 import { useLoading } from "../composables/useLoading.js";
 
 const route = useRoute();
-const { isLoading } = useLoading();
+const router = useRouter();
+const { isLoading, setLoading } = useLoading();
 const { t, currentLanguage } = useI18n();
 
+// Wait for i18n to be ready
+const isI18nReady = ref(false);
 
-
+// Watch for language changes to ensure i18n is working
+watch(
+    currentLanguage,
+    (newLang) => {
+        console.log("Language changed to:", newLang);
+        isI18nReady.value = true;
+    },
+    { immediate: true }
+);
 
 // Debug function to manually test the loader
 const testLoader = () => {
