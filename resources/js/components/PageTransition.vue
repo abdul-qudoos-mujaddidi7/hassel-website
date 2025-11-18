@@ -7,35 +7,25 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 import PageLoader from "./PageLoader.vue";
 import { useI18n } from "../composables/useI18n.js";
+import { useLoading } from "../composables/useLoading.js";
 
 const route = useRoute();
-const router = useRouter();
-const isLoading = ref(false);
+const { isLoading } = useLoading();
 const { t, currentLanguage } = useI18n();
 
-// Wait for i18n to be ready
-const isI18nReady = ref(false);
 
-// Watch for language changes to ensure i18n is working
-watch(
-    currentLanguage,
-    (newLang) => {
-        console.log("Language changed to:", newLang);
-        isI18nReady.value = true;
-    },
-    { immediate: true }
-);
+
 
 // Debug function to manually test the loader
 const testLoader = () => {
     console.log("Testing loader manually");
-    isLoading.value = true;
+    setLoading(true);
     setTimeout(() => {
-        isLoading.value = false;
+        setLoading(false);
         console.log("Manual test loader hidden");
     }, 2000);
 };
@@ -47,6 +37,14 @@ if (typeof window !== "undefined") {
 
 // Watch for route changes using a more reliable approach
 let isNavigating = false;
+let loadingTimeout = null;
+
+// Clean up timeout on unmount
+onBeforeUnmount(() => {
+    if (loadingTimeout) {
+        clearTimeout(loadingTimeout);
+    }
+});
 
 // Watch for route changes
 watch(
@@ -56,12 +54,17 @@ watch(
         if (oldPath && newPath !== oldPath && !isNavigating) {
             console.log("Route change detected:", oldPath, "->", newPath);
             isNavigating = true;
-            isLoading.value = true;
+            setLoading(true);
+
+            // Clear any existing timeout
+            if (loadingTimeout) {
+                clearTimeout(loadingTimeout);
+            }
 
             // Simulate loading time (you can adjust this)
             // In a real app, you might want to wait for actual data loading
-            setTimeout(() => {
-                isLoading.value = false;
+            loadingTimeout = setTimeout(() => {
+                setLoading(false);
                 isNavigating = false;
                 console.log("Loader hidden");
             }, 800); // Faster loader for better UX
@@ -72,12 +75,12 @@ watch(
 
 // Add router navigation guards for more reliable loader triggering
 onMounted(() => {
-    // Before each route change
+    // Before each route change - show loader IMMEDIATELY
     router.beforeEach((to, from, next) => {
         console.log("Router beforeEach:", from.path, "->", to.path);
         if (from.path !== to.path && !isNavigating) {
             isNavigating = true;
-            isLoading.value = true;
+            setLoading(true);
         }
         next();
     });
@@ -86,9 +89,13 @@ onMounted(() => {
     router.afterEach((to, from) => {
         console.log("Router afterEach:", from.path, "->", to.path);
         if (from.path !== to.path && isNavigating) {
-            // Add a small delay to ensure the loader is visible
-            setTimeout(() => {
-                isLoading.value = false;
+            // Clear any existing timeout
+            if (loadingTimeout) {
+                clearTimeout(loadingTimeout);
+            }
+            // Add a small delay to ensure the loader is visible and content is ready
+            loadingTimeout = setTimeout(() => {
+                setLoading(false);
                 isNavigating = false;
                 console.log("Loader hidden via router guard");
             }, 300);
@@ -96,17 +103,27 @@ onMounted(() => {
     });
 
     // Fallback: Listen for popstate events (browser back/forward)
-    window.addEventListener("popstate", () => {
+    const handlePopstate = () => {
         console.log("Popstate event detected");
         if (!isNavigating) {
             isNavigating = true;
-            isLoading.value = true;
-            setTimeout(() => {
-                isLoading.value = false;
+            setLoading(true);
+            if (loadingTimeout) {
+                clearTimeout(loadingTimeout);
+            }
+            loadingTimeout = setTimeout(() => {
+                setLoading(false);
                 isNavigating = false;
                 console.log("Loader hidden via popstate");
             }, 300);
         }
+    };
+    
+    window.addEventListener("popstate", handlePopstate);
+    
+    // Cleanup on unmount
+    onBeforeUnmount(() => {
+        window.removeEventListener("popstate", handlePopstate);
     });
 });
 

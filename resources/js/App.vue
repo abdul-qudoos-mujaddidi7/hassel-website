@@ -3,7 +3,7 @@
     <Header />
 
     <!-- Main Content -->
-    <main>
+    <main v-show="!isLoading">
         <router-view v-slot="{ Component, route }">
             <transition name="page" mode="out-in">
                 <component :is="Component" :key="route.path" />
@@ -12,7 +12,7 @@
     </main>
 
     <!-- Footer Component -->
-    <Footer />
+    <Footer v-show="!isLoading" />
 
     <!-- Page Transition Loading -->
     <PageTransition />
@@ -26,8 +26,10 @@ import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import PageTransition from "./components/PageTransition.vue";
 import { useI18n } from "./composables/useI18n.js";
+import { useLoading } from "./composables/useLoading.js";
 
 const { init, isRTL, currentLanguage } = useI18n();
+const { isLoading } = useLoading();
 
 function applyDirection() {
     const html = document.documentElement;
