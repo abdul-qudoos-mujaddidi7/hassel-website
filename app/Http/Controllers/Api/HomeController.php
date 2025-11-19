@@ -43,10 +43,10 @@ class HomeController extends Controller
                 ]
             ],
             'stats' => [
-                ['label' => 'Beneficiaries', 'value' => $stats['beneficiaries']->value ?? 15000, 'icon' => 'fa-solid fa-people-group'],
-                ['label' => 'Projects', 'value' => $stats['projects']->value ?? 120, 'icon' => 'fa-solid fa-diagram-project'],
+                ['label' => 'Beneficiaries', 'value' => $stats['beneficiaries']->value ?? 0, 'icon' => 'fa-solid fa-people-group'],
+                ['label' => 'Projects', 'value' => $stats['projects']->value ?? 0, 'icon' => 'fa-solid fa-diagram-project'],
                 ['label' => 'Staff', 'value' => $stats['staff']->value ?? 75, 'icon' => 'fa-solid fa-user-tie'],
-                ['label' => 'Partners', 'value' => $stats['partners']->value ?? 25, 'icon' => 'fa-solid fa-handshake'],
+                ['label' => 'Partners', 'value' => $stats['partners']->value ?? 0, 'icon' => 'fa-solid fa-handshake'],
             ],
             'latest_news' => $latestNews,
             'featured_galleries' => $featuredGalleries
