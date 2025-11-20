@@ -18,6 +18,9 @@ const router = useRouter();
 const { isLoading, setLoading } = useLoading();
 const { t, currentLanguage } = useI18n();
 
+// Track the route we're navigating to so the loader can show its message immediately
+const pendingRoutePath = ref(null);
+
 // Wait for i18n to be ready
 const isI18nReady = ref(false);
 
@@ -93,6 +96,10 @@ onMounted(() => {
             isNavigating = true;
             setLoading(true);
         }
+        // store destination path immediately so loader text updates even before component resolves
+        if (to.path !== pendingRoutePath.value) {
+            pendingRoutePath.value = to.path;
+        }
         next();
     });
 
@@ -111,6 +118,7 @@ onMounted(() => {
                 console.log("Loader hidden via router guard");
             }, 300);
         }
+        pendingRoutePath.value = null;
     });
 
     // Fallback: Listen for popstate events (browser back/forward)
@@ -140,6 +148,7 @@ onMounted(() => {
 
 // Get loading message based on route - using computed for reactivity
 const getLoadingMessage = computed(() => {
+    const activePath = pendingRoutePath.value || route.path;
     try {
         console.log("Current language:", currentLanguage.value);
         console.log("i18n ready:", isI18nReady.value);
@@ -161,7 +170,7 @@ const getLoadingMessage = computed(() => {
                 "/careers": "Preparing Career Opportunities",
                 "/contact": "Loading Contact Information",
             };
-            return fallbackMessages[route.path] || "Loading Page";
+            return fallbackMessages[activePath] || "Loading Page";
         }
 
         // Test if t function is working
@@ -186,7 +195,7 @@ const getLoadingMessage = computed(() => {
                 "/careers": "Preparing Career Opportunities",
                 "/contact": "Loading Contact Information",
             };
-            return fallbackMessages[route.path] || "Loading Page";
+            return fallbackMessages[activePath] || "Loading Page";
         }
 
         const routeMessages = {
@@ -204,8 +213,8 @@ const getLoadingMessage = computed(() => {
             "/contact": t("loader.contact"),
         };
 
-        const message = routeMessages[route.path] || t("loader.default");
-        console.log("Loading message for", route.path, ":", message);
+        const message = routeMessages[activePath] || t("loader.default");
+        console.log("Loading message for", activePath, ":", message);
         return message;
     } catch (error) {
         console.error("Error getting loading message:", error);
@@ -214,6 +223,7 @@ const getLoadingMessage = computed(() => {
 });
 
 const getSubMessage = computed(() => {
+    const activePath = pendingRoutePath.value || route.path;
     try {
         // If i18n is not ready, use fallback
         if (!isI18nReady.value) {
@@ -241,7 +251,7 @@ const getSubMessage = computed(() => {
                 "/contact": "Getting in touch with our team",
             };
             return (
-                fallbackSubMessages[route.path] ||
+                fallbackSubMessages[activePath] ||
                 "Please wait while we prepare everything for you"
             );
         }
@@ -275,7 +285,7 @@ const getSubMessage = computed(() => {
                 "/contact": "Getting in touch with our team",
             };
             return (
-                fallbackSubMessages[route.path] ||
+                fallbackSubMessages[activePath] ||
                 "Please wait while we prepare everything for you"
             );
         }
@@ -295,8 +305,8 @@ const getSubMessage = computed(() => {
             "/contact": t("loader.sub_contact"),
         };
 
-        const message = routeSubMessages[route.path] || t("loader.sub_default");
-        console.log("Sub message for", route.path, ":", message);
+        const message = routeSubMessages[activePath] || t("loader.sub_default");
+        console.log("Sub message for", activePath, ":", message);
         return message;
     } catch (error) {
         console.error("Error getting sub message:", error);

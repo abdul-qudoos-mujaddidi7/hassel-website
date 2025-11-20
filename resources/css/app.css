@@ -648,6 +648,16 @@ html[dir="ltr"] .about-section p {
     margin-bottom: 1.5rem;
 }
 
+/* Mobile-specific adjustments for About Us text */
+@media (max-width: 640px) {
+    .about-section p {
+        letter-spacing: normal;
+        word-spacing: normal;
+        line-height: 1.7;
+        text-align: left;
+    }
+}
+
 /* Foundation section cards text justification */
 .foundation-section p {
     text-align: justify;
